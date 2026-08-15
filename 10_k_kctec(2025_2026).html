@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[케이씨텍] 2025년 vs 2026년 분기/반기 실적 비교 분석 보고서</title>
+    <!-- Google Fonts & Chart.js -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --accent-blue: #0284c7;
+            --accent-indigo: #4f46e5;
+            --accent-green: #059669;
+            --accent-red: #dc2626;
+            --border-color: #e2e8f0;
+            --card-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
+            --card-hover-shadow: 0 12px 30px -4px rgba(15, 23, 42, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 2.5rem 1.5rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .header-title h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.4rem;
+        }
+
+        .header-title p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .badge-source {
+            background-color: rgba(2, 132, 199, 0.08);
+            color: var(--accent-blue);
+            border: 1px solid rgba(2, 132, 199, 0.25);
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        /* Control Bar & Tabs */
+        .controls-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.75rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .tabs {
+            display: flex;
+            background: #e2e8f0;
+            padding: 0.35rem;
+            border-radius: 12px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 0.65rem 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            border-radius: 9px;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn.active {
+            background: #ffffff;
+            color: var(--accent-blue);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .unit-toggle-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.6rem 1.2rem;
+            border-radius: 10px;
+            font-size: 0.92rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: var(--card-shadow);
+            transition: all 0.2s;
+        }
+
+        .unit-toggle-btn:hover {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+            background: #f0f9ff;
+        }
+
+        /* KPI Cards Grid */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .kpi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--card-hover-shadow);
+        }
+
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--accent-blue);
+        }
+
+        .kpi-card.green::before { background: var(--accent-green); }
+        .kpi-card.indigo::before { background: var(--accent-indigo); }
+
+        .kpi-title {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .kpi-value {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.4rem;
+        }
+
+        .kpi-sub {
+            font-size: 0.88rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--text-secondary);
+        }
+
+        .growth-up {
+            color: var(--accent-green);
+            font-weight: 800;
+        }
+
+        /* Main Section & Tables */
+        .section-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.75rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 20px;
+            background: var(--accent-blue);
+            border-radius: 4px;
+        }
+
+        /* Table Design */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: right;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 1rem 1.1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: #334155;
+            font-weight: 700;
+            font-size: 0.88rem;
+            letter-spacing: 0.3px;
+        }
+
+        th:first-child, td:first-child {
+            text-align: left;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        tbody tr {
+            transition: background 0.15s ease;
+        }
+
+        tbody tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .highlight-row {
+            background-color: #f0f9ff;
+            font-weight: 700;
+        }
+
+        .growth-badge {
+            display: inline-block;
+            padding: 0.25rem 0.65rem;
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 0.88rem;
+        }
+
+        .growth-badge.up {
+            background-color: #d1fae5;
+            color: #047857;
+        }
+
+        .growth-badge.down {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+
+        /* Charts Layout */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 290px;
+            margin-top: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+            .charts-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <header>
+        <div class="header-title">
+            <h1>(주)케이씨텍 실적 분석 보고서</h1>
+            <p>2025년 vs 2026년 1분기 · 2분기 · 반기 매출액 & 영업이익 비교</p>
+        </div>
+        <div>
+            <span class="badge-source">📄 참조: [케이씨텍]반기보고서 (2026.08.13)</span>
+        </div>
+    </header>
+
+    <!-- Controls Bar -->
+    <div class="controls-bar">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('consolidated')">연결 손익 (Consolidated)</button>
+            <button class="tab-btn" onclick="switchTab('separate')">별도 손익 (Separate)</button>
+        </div>
+        <div>
+            <button class="unit-toggle-btn" onclick="toggleUnit()" id="unitToggleBtn">단위 변경: 억 원 기준 (원 단위 보기)</button>
+        </div>
+    </div>
+
+    <!-- KPI Cards Grid -->
+    <div class="kpi-grid" id="kpiCards">
+        <!-- JS Dynamic Population -->
+    </div>
+
+    <!-- Charts Grid -->
+    <div class="charts-grid">
+        <div class="chart-card">
+            <div class="section-title">매출액 (Revenue) 비교</div>
+            <div class="chart-container">
+                <canvas id="revChart"></canvas>
+            </div>
+        </div>
+        <div class="chart-card">
+            <div class="section-title">영업이익 (Operating Profit) 비교</div>
+            <div class="chart-container">
+                <canvas id="opChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Section -->
+    <div class="section-card">
+        <div class="section-header">
+            <div class="section-title" id="tableSectionTitle">연결 손익 세부 실적 및 증감률</div>
+        </div>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>구분</th>
+                        <th>항목</th>
+                        <th>2025년 실적</th>
+                        <th>2026년 실적</th>
+                        <th>YoY 증감액</th>
+                        <th>YoY 증감률 (%)</th>
+                    </tr>
+                </thead>
+                <tbody id="financialTableBody">
+                    <!-- JS Dynamic Population -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 KCTECH Financial Analysis Report | Data Source: Financial Supervisory Service (DART) Half-Year Report</p>
+    </footer>
+</div>
+
+<script>
+    // Financial Raw Data (Exact values from Dart PDF)
+    const rawData = {
+        consolidated: {
+            name: "연결 손익",
+            q1: { rev25: 77662728341, rev26: 156114880339, op25: 7835488904, op26: 34810833489 },
+            q2: { rev25: 97529632802, rev26: 112688832955, op25: 15557553762, op26: 23521741082 },
+            half: { rev25: 175192361143, rev26: 268803713294, op25: 23393042666, op26: 58332574571 }
+        },
+        separate: {
+            name: "별도 손익",
+            q1: { rev25: 77662728341, rev26: 156284506076, op25: 7835488904, op26: 34866686296 },
+            q2: { rev25: 97529632802, rev26: 112721423643, op25: 15563083114, op26: 23716812364 },
+            half: { rev25: 175192361143, rev26: 269005929719, op25: 23398572018, op26: 58583498660 }
+        }
+    };
+
+    let currentTab = 'consolidated';
+    let isEokUnit = true; // Default: 억 원
+
+    let revChartInstance = null;
+    let opChartInstance = null;
+
+    function formatNum(val) {
+        if (isEokUnit) {
+            const eok = val / 100000000;
+            return eok.toLocaleString('ko-KR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " 억";
+        } else {
+            return val.toLocaleString('ko-KR') + " 원";
+        }
+    }
+
+    function calcYoY(v26, v25) {
+        const diff = v26 - v25;
+        const rate = (diff / v25) * 100;
+        return { diff, rate };
+    }
+
+    function updateKPI() {
+        const d = rawData[currentTab].half;
+        const revYoY = calcYoY(d.rev26, d.rev25);
+        const opYoY = calcYoY(d.op26, d.op25);
+
+        const html = `
+            <div class="kpi-card">
+                <div class="kpi-title">2026년 반기 매출액 (${rawData[currentTab].name})</div>
+                <div class="kpi-value">${formatNum(d.rev26)}</div>
+                <div class="kpi-sub">
+                    전년비 <span class="growth-up">▲ ${revYoY.rate.toFixed(2)}%</span> (+${formatNum(revYoY.diff)})
+                </div>
+            </div>
+            <div class="kpi-card green">
+                <div class="kpi-title">2026년 반기 영업이익 (${rawData[currentTab].name})</div>
+                <div class="kpi-value">${formatNum(d.op26)}</div>
+                <div class="kpi-sub">
+                    전년비 <span class="growth-up">▲ ${opYoY.rate.toFixed(2)}%</span> (+${formatNum(opYoY.diff)})
+                </div>
+            </div>
+            <div class="kpi-card indigo">
+                <div class="kpi-title">1분기 영업이익 성장률</div>
+                <div class="kpi-value">${calcYoY(rawData[currentTab].q1.op26, rawData[currentTab].q1.op25).rate.toFixed(2)}%</div>
+                <div class="kpi-sub">
+                    1분기 영업이익: ${formatNum(rawData[currentTab].q1.op26)}
+                </div>
+            </div>
+        `;
+        document.getElementById('kpiCards').innerHTML = html;
+    }
+
+    function updateTable() {
+        const d = rawData[currentTab];
+        document.getElementById('tableSectionTitle').innerText = `${d.name} 세부 실적 및 증감률`;
+
+        const periods = [
+            { key: 'q1', label: '1분기 (Q1)' },
+            { key: 'q2', label: '2분기 (Q2)' },
+            { key: 'half', label: '반기 누적 (1H)' }
+        ];
+
+        let tbody = '';
+        periods.forEach(p => {
+            const item = d[p.key];
+
+            // Revenue
+            const revCalc = calcYoY(item.rev26, item.rev25);
+            tbody += `
+                <tr ${p.key === 'half' ? 'class="highlight-row"' : ''}>
+                    <td>${p.label}</td>
+                    <td>매출액</td>
+                    <td>${formatNum(item.rev25)}</td>
+                    <td>${formatNum(item.rev26)}</td>
+                    <td style="color:var(--accent-green); font-weight:700;">+${formatNum(revCalc.diff)}</td>
+                    <td><span class="growth-badge up">+${revCalc.rate.toFixed(2)}%</span></td>
+                </tr>
+            `;
+
+            // Operating Profit
+            const opCalc = calcYoY(item.op26, item.op25);
+            tbody += `
+                <tr ${p.key === 'half' ? 'class="highlight-row"' : ''}>
+                    <td>${p.label}</td>
+                    <td>영업이익</td>
+                    <td>${formatNum(item.op25)}</td>
+                    <td>${formatNum(item.op26)}</td>
+                    <td style="color:var(--accent-green); font-weight:700;">+${formatNum(opCalc.diff)}</td>
+                    <td><span class="growth-badge up">+${opCalc.rate.toFixed(2)}%</span></td>
+                </tr>
+            `;
+        });
+
+        document.getElementById('financialTableBody').innerHTML = tbody;
+    }
+
+    function initCharts() {
+        const d = rawData[currentTab];
+        const labels = ['1분기', '2분기', '반기 누적'];
+
+        const rev25Data = [d.q1.rev25/1e8, d.q2.rev25/1e8, d.half.rev25/1e8];
+        const rev26Data = [d.q1.rev26/1e8, d.q2.rev26/1e8, d.half.rev26/1e8];
+
+        const op25Data = [d.q1.op25/1e8, d.q2.op25/1e8, d.half.op25/1e8];
+        const op26Data = [d.q1.op26/1e8, d.q2.op26/1e8, d.half.op26/1e8];
+
+        // Rev Chart
+        const ctxRev = document.getElementById('revChart').getContext('2d');
+        if (revChartInstance) revChartInstance.destroy();
+        revChartInstance = new Chart(ctxRev, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [
+                    { label: '2025년 (억원)', data: rev25Data, backgroundColor: '#94a3b8', borderRadius: 6 },
+                    { label: '2026년 (억원)', data: rev26Data, backgroundColor: '#0284c7', borderRadius: 6 }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: '#334155', font: { weight: 'bold' } } } },
+                scales: {
+                    x: { ticks: { color: '#475569' }, grid: { color: '#e2e8f0' } },
+                    y: { ticks: { color: '#475569' }, grid: { color: '#e2e8f0' } }
+                }
+            }
+        });
+
+        // Op Chart
+        const ctxOp = document.getElementById('opChart').getContext('2d');
+        if (opChartInstance) opChartInstance.destroy();
+        opChartInstance = new Chart(ctxOp, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [
+                    { label: '2025년 (억원)', data: op25Data, backgroundColor: '#94a3b8', borderRadius: 6 },
+                    { label: '2026년 (억원)', data: op26Data, backgroundColor: '#059669', borderRadius: 6 }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: '#334155', font: { weight: 'bold' } } } },
+                scales: {
+                    x: { ticks: { color: '#475569' }, grid: { color: '#e2e8f0' } },
+                    y: { ticks: { color: '#475569' }, grid: { color: '#e2e8f0' } }
+                }
+            }
+        });
+    }
+
+    function switchTab(tab) {
+        currentTab = tab;
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        if (tab === 'consolidated') {
+            document.querySelectorAll('.tab-btn')[0].classList.add('active');
+        } else {
+            document.querySelectorAll('.tab-btn')[1].classList.add('active');
+        }
+        updateKPI();
+        updateTable();
+        initCharts();
+    }
+
+    function toggleUnit() {
+        isEokUnit = !isEokUnit;
+        document.getElementById('unitToggleBtn').innerText = isEokUnit ? "단위 변경: 억 원 기준 (원 단위 보기)" : "단위 변경: 원 기준 (억 원 단위 보기)";
+        updateKPI();
+        updateTable();
+    }
+
+    window.onload = function() {
+        updateKPI();
+        updateTable();
+        initCharts();
+    };
+</script>
+</body>
+</html>
