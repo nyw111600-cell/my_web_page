@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>솔브레인(Soulbrain) 2025-2026 분기 및 반기 실적 비교 분석 리포트</title>
+  <!-- Chart.js CDN for interactive visualization -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-light: #3b82f6;
+      --primary-dark: #0f172a;
+      --accent: #0284c7;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-subtle: #f1f5f9;
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --up-color: #dc2626;
+      --up-bg: #fef2f2;
+      --down-color: #2563eb;
+      --down-bg: #eff6ff;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 30px 20px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Header Section */
+    .header-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .badge-wrap {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+    }
+
+    .badge-primary {
+      background-color: #dbeafe;
+      color: var(--primary);
+    }
+
+    .badge-source {
+      background-color: var(--surface-subtle);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .report-meta {
+      display: flex;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* Controls: Tab & Unit Selector */
+    .controls-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 20px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tabs-group {
+      display: flex;
+      gap: 8px;
+      background: var(--surface-subtle);
+      padding: 4px;
+      border-radius: var(--radius-sm);
+    }
+
+    .tab-btn {
+      padding: 8px 18px;
+      border: none;
+      background: transparent;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn.active {
+      background: var(--surface);
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .unit-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .unit-btns {
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+
+    .unit-btn {
+      padding: 6px 12px;
+      border: none;
+      background: var(--surface);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-right: 1px solid var(--border);
+      transition: all 0.15s;
+    }
+
+    .unit-btn:last-child {
+      border-right: none;
+    }
+
+    .unit-btn.active {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .action-btns {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid var(--border-strong);
+      background: var(--surface);
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-action:hover {
+      background: var(--surface-subtle);
+    }
+
+    /* KPI Highlights */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .kpi-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .kpi-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .kpi-sub {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .rate-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      font-weight: 600;
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .rate-up {
+      color: var(--up-color);
+      background: var(--up-bg);
+    }
+
+    .rate-down {
+      color: var(--down-color);
+      background: var(--down-bg);
+    }
+
+    /* Data Table Section */
+    .section-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: right;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    thead th {
+      background-color: var(--surface-subtle);
+      color: var(--text-main);
+      font-weight: 600;
+      white-space: nowrap;
+      text-align: center;
+      border-bottom: 2px solid var(--border-strong);
+    }
+
+    thead tr:first-child th {
+      border-bottom: 1px solid var(--border);
+    }
+
+    tbody th {
+      text-align: left;
+      font-weight: 600;
+      background: var(--surface-subtle);
+      white-space: nowrap;
+    }
+
+    tbody tr:hover {
+      background-color: #f8fafc;
+    }
+
+    .col-highlight {
+      background-color: #f0f9ff !important;
+      font-weight: 600;
+    }
+
+    .row-summary {
+      background-color: #fafafa;
+      font-weight: 700;
+    }
+
+    .row-opm {
+      background-color: #fcfcfc;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .num-cell {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Charts Section */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .charts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .chart-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .chart-box-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--primary-dark);
+    }
+
+    .chart-canvas-wrap {
+      position: relative;
+      height: 300px;
+      width: 100%;
+    }
+
+    /* Insights Section */
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .insight-card {
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--primary-light);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+    }
+
+    .insight-card.success {
+      border-left-color: #10b981;
+    }
+
+    .insight-card.warning {
+      border-left-color: #f59e0b;
+    }
+
+    .insight-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 6px;
+    }
+
+    .insight-desc {
+      font-size: 13px;
+      color: #475569;
+      line-height: 1.5;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+        color: #000;
+      }
+      .controls-bar, .action-btns, .btn-action {
+        display: none !important;
+      }
+      .section-card, .header-card, .chart-box {
+        box-shadow: none;
+        border: 1px solid #ccc;
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Header -->
+  <header class="header-card">
+    <div class="header-top">
+      <div>
+        <div class="badge-wrap">
+          <span class="badge badge-primary">KOSDAQ: 357780</span>
+          <span class="badge badge-source">공시원문: 반기보고서 (제7기 반기)</span>
+          <span class="badge badge-source">제출일: 2026.08.14</span>
+        </div>
+        <h1>솔브레인(Soulbrain) 분기 및 반기 실적 비교 분석</h1>
+        <p class="subtitle">2025년 vs 2026년 1분기 · 2분기 · 반기 매출액 & 영업이익 증감률(YoY) 비교</p>
+      </div>
+      <div class="action-btns">
+        <button class="btn-action" onclick="window.print()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
+          리포트 인쇄
+        </button>
+        <button class="btn-action" onclick="exportToCSV()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          CSV 내보내기
+        </button>
+      </div>
+    </div>
+    <div class="report-meta">
+      <span><strong>참조문서:</strong> [솔브레인]반기보고서(2026.08.14) & [솔브레인]분기보고서(2026.05.15)</span>
+      <span><strong>기준 통화:</strong> KRW (대한민국 원)</span>
+      <span><strong>회계 기준:</strong> 한국채택국제회계기준 (K-IFRS)</span>
+    </div>
+  </header>
+
+  <!-- Controls Bar -->
+  <div class="controls-bar">
+    <div class="tabs-group">
+      <button class="tab-btn active" id="tab-cons" onclick="switchTab('consolidated')">연결 재무제표 기준 (Consolidated)</button>
+      <button class="tab-btn" id="tab-sep" onclick="switchTab('separate')">별도 재무제표 기준 (Separate)</button>
+    </div>
+    <div class="unit-controls">
+      <span>금액 표시 단위:</span>
+      <div class="unit-btns">
+        <button class="unit-btn active" id="unit-100m" onclick="switchUnit('100m')">억원 (100M)</button>
+        <button class="unit-btn" id="unit-1m" onclick="switchUnit('1m')">백만원 (1M)</button>
+        <button class="unit-btn" id="unit-raw" onclick="switchUnit('raw')">원 (KRW)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- KPI Summary Cards -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-title">
+        <span>2026년 2분기 매출액</span>
+        <span class="badge badge-primary">2Q26</span>
+      </div>
+      <div class="kpi-value" id="kpi-q2-sales">3,119.7 억원</div>
+      <div class="kpi-sub">
+        <span class="rate-badge rate-up" id="kpi-q2-sales-rate">▲ +36.34%</span>
+        <span class="text-muted" id="kpi-q2-sales-prev">전년동기 2,288.3 억원</span>
+      </div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-title">
+        <span>2026년 2분기 영업이익</span>
+        <span class="badge badge-primary">2Q26</span>
+      </div>
+      <div class="kpi-value" id="kpi-q2-op">460.2 억원</div>
+      <div class="kpi-sub">
+        <span class="rate-badge rate-up" id="kpi-q2-op-rate">▲ +128.17%</span>
+        <span class="text-muted" id="kpi-q2-op-prev">전년동기 201.7 억원</span>
+      </div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-title">
+        <span>2026년 상반기(반기) 누적 매출액</span>
+        <span class="badge badge-primary">1H26</span>
+      </div>
+      <div class="kpi-value" id="kpi-h1-sales">5,757.8 억원</div>
+      <div class="kpi-sub">
+        <span class="rate-badge rate-up" id="kpi-h1-sales-rate">▲ +31.37%</span>
+        <span class="text-muted" id="kpi-h1-sales-prev">전년동기 4,383.0 억원</span>
+      </div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-title">
+        <span>2026년 상반기(반기) 누적 영업이익</span>
+        <span class="badge badge-primary">1H26</span>
+      </div>
+      <div class="kpi-value" id="kpi-h1-op">907.2 억원</div>
+      <div class="kpi-sub">
+        <span class="rate-badge rate-up" id="kpi-h1-op-rate">▲ +61.37%</span>
+        <span class="text-muted" id="kpi-h1-op-prev">전년동기 562.2 억원</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Performance Comparison Table -->
+  <section class="section-card">
+    <div class="section-header">
+      <h2 class="section-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+        <span id="table-title-text">솔브레인 2025년 vs 2026년 실적 및 YoY 증감률 비교표 (연결)</span>
+      </h2>
+      <span class="subtitle" id="table-unit-indicator">단위: 억원 (증감률: %)</span>
+    </div>
+
+    <div class="table-container">
+      <table id="performance-table">
+        <thead>
+          <tr>
+            <th rowspan="2" style="width: 140px;">구분</th>
+            <th colspan="3">2026년 실적 (당기)</th>
+            <th colspan="3">2025년 실적 (전기)</th>
+            <th colspan="3">전년 동기 대비 증감률 (YoY)</th>
+          </tr>
+          <tr>
+            <th>1분기 (1Q)</th>
+            <th>2분기 (2Q)</th>
+            <th class="col-highlight">상반기 (반기누적)</th>
+            <th>1분기 (1Q)</th>
+            <th>2분기 (2Q)</th>
+            <th>상반기 (반기누적)</th>
+            <th>1분기 YoY</th>
+            <th>2분기 YoY</th>
+            <th class="col-highlight">반기 YoY</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+          <!-- Dynamically populated via JS -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Charts Grid -->
+  <div class="charts-grid">
+    <div class="chart-box">
+      <h3 class="chart-box-title">분기 및 반기 실적 추이 비교 (매출액 & 영업이익)</h3>
+      <div class="chart-canvas-wrap">
+        <canvas id="performanceChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-box">
+      <h3 class="chart-box-title">2026년 반기 사업부문별 매출 비중</h3>
+      <div class="chart-canvas-wrap">
+        <canvas id="segmentChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key Insights & Analysis -->
+  <section class="section-card">
+    <div class="section-header">
+      <h2 class="section-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        반기보고서 핵심 요약 및 실적 분석 인사이트
+      </h2>
+    </div>
+    <div class="insights-grid">
+      <div class="insight-card success">
+        <div class="insight-title">1. 반도체 전방 수요 회복 및 2분기 영업이익 급증 (+128.2%)</div>
+        <div class="insight-desc">
+          AI 데이터센터 및 HBM(고대역폭메모리), GAA 공정 전환에 따라 선단공정용 특수 식각액(Etchant)과 차세대 CMP Slurry의 수요가 급증하였습니다. 2026년 2분기 연결 영업이익은 전년 동기 202억원에서 460억원으로 +128.2% 대폭 상승하였습니다.
+        </div>
+      </div>
+
+      <div class="insight-card success">
+        <div class="insight-title">2. 종속기업 편입 효과 (디엔에프 지배력 획득)</div>
+        <div class="insight-desc">
+          2026년 상반기 중 (주)디엔에프(지분율 36.10%)에 대한 지배력을 획득하여 관계기업에서 종속기업으로 신규 편입되었습니다. 이에 따라 연결 매출액 및 이익 체력이 강화되며 상반기 누적 매출 5,758억원(YoY +31.4%)을 달성했습니다.
+        </div>
+      </div>
+
+      <div class="insight-card">
+        <div class="insight-title">3. 사업부문별 포트폴리오 다각화</div>
+        <div class="insight-desc">
+          2026년 반기 연결 매출 기준 반도체 부문이 4,928억원(85%)으로 주력 성장 동력 역할을 담당하고 있으며, 디스플레이 부문 266억원(5%), 2차전지 전해액 부문 349억원(6%), 장비 유지관리 등 기타 215억원(4%)으로 구성되어 있습니다.
+        </div>
+      </div>
+
+      <div class="insight-card warning">
+        <div class="insight-title">4. 영업이익률(OPM) 개선 추세</div>
+        <div class="insight-desc">
+          연결 기준 영업이익률은 2025년 2분기 8.81%에서 2026년 2분기 14.75%(+5.94%p 상승), 반기 누적 기준 12.83%에서 15.76%(+2.93%p 상승)로 개선되며 고부가가치 제품군 중심의 믹스 개선 효과가 뚜렷하게 나타나고 있습니다.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>본 문서는 금융감독원 전자공시시스템(DART)에 공시된 솔브레인 주식회사의 [2026.08.14 반기보고서] 및 [2026.05.15 분기보고서]를 토대로 정확하게 산출·작성되었습니다.</p>
+    <p style="margin-top: 4px;">Generated by Antigravity AI &copy; 2026</p>
+  </footer>
+</div>
+
+<script>
+  // Financial Dataset (Raw values in KRW)
+  const financialData = {
+    consolidated: {
+      sales: {
+        q1_2025: 209470158720,
+        q2_2025: 228825971310,
+        h1_2025: 438296130030,
+        q1_2026: 263804789927,
+        q2_2026: 311971038922,
+        h1_2026: 575775828849
+      },
+      op: {
+        q1_2025: 36048750035,
+        q2_2025: 20169987141,
+        h1_2025: 56218737176,
+        q1_2026: 44700376084,
+        q2_2026: 46021560811,
+        h1_2026: 90721936895
+      }
+    },
+    separate: {
+      sales: {
+        q1_2025: 192603565675,
+        q2_2025: 186439123222,
+        h1_2025: 379042688897,
+        q1_2026: 213776702270,
+        q2_2026: 238890559853,
+        h1_2026: 452667262123
+      },
+      op: {
+        q1_2025: 33075690042,
+        q2_2025: 17906653784,
+        h1_2025: 50982343826,
+        q1_2026: 33800480472,
+        q2_2026: 34393149888,
+        h1_2026: 68193630360
+      }
+    }
+  };
+
+  let currentMode = 'consolidated'; // 'consolidated' | 'separate'
+  let currentUnit = '100m'; // '100m' | '1m' | 'raw'
+  let mainChart = null;
+  let segChart = null;
+
+  // Format Helper
+  function formatVal(val, unit) {
+    if (unit === '100m') {
+      return (val / 100000000).toLocaleString('ko-KR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+    } else if (unit === '1m') {
+      return Math.round(val / 1000000).toLocaleString('ko-KR');
+    } else {
+      return val.toLocaleString('ko-KR');
+    }
+  }
+
+  function calcRate(curr, prev) {
+    const rate = ((curr - prev) / prev) * 100;
+    return rate;
+  }
+
+  function formatRateBadge(rate) {
+    const isUp = rate >= 0;
+    const sign = isUp ? '+' : '';
+    const arrow = isUp ? '▲' : '▼';
+    const cls = isUp ? 'rate-up' : 'rate-down';
+    return `<span class="rate-badge ${cls}">${arrow} ${sign}${rate.toFixed(2)}%</span>`;
+  }
+
+  function renderTable() {
+    const data = financialData[currentMode];
+    const unit = currentUnit;
+    const tbody = document.getElementById('table-body');
+
+    // Rates
+    const salesQ1Rate = calcRate(data.sales.q1_2026, data.sales.q1_2025);
+    const salesQ2Rate = calcRate(data.sales.q2_2026, data.sales.q2_2025);
+    const salesH1Rate = calcRate(data.sales.h1_2026, data.sales.h1_2025);
+
+    const opQ1Rate = calcRate(data.op.q1_2026, data.op.q1_2025);
+    const opQ2Rate = calcRate(data.op.q2_2026, data.op.q2_2025);
+    const opH1Rate = calcRate(data.op.h1_2026, data.op.h1_2025);
+
+    // OPM
+    const opmQ1_26 = (data.op.q1_2026 / data.sales.q1_2026) * 100;
+    const opmQ2_26 = (data.op.q2_2026 / data.sales.q2_2026) * 100;
+    const opmH1_26 = (data.op.h1_2026 / data.sales.h1_2026) * 100;
+
+    const opmQ1_25 = (data.op.q1_2025 / data.sales.q1_2025) * 100;
+    const opmQ2_25 = (data.op.q2_2025 / data.sales.q2_2025) * 100;
+    const opmH1_25 = (data.op.h1_2025 / data.sales.h1_2025) * 100;
+
+    const opmQ1Diff = opmQ1_26 - opmQ1_25;
+    const opmQ2Diff = opmQ2_26 - opmQ2_25;
+    const opmH1Diff = opmH1_26 - opmH1_25;
+
+    tbody.innerHTML = `
+      <tr class="row-summary">
+        <th>매출액</th>
+        <td class="num-cell">${formatVal(data.sales.q1_2026, unit)}</td>
+        <td class="num-cell">${formatVal(data.sales.q2_2026, unit)}</td>
+        <td class="num-cell col-highlight">${formatVal(data.sales.h1_2026, unit)}</td>
+        <td class="num-cell">${formatVal(data.sales.q1_2025, unit)}</td>
+        <td class="num-cell">${formatVal(data.sales.q2_2025, unit)}</td>
+        <td class="num-cell">${formatVal(data.sales.h1_2025, unit)}</td>
+        <td style="text-align:center;">${formatRateBadge(salesQ1Rate)}</td>
+        <td style="text-align:center;">${formatRateBadge(salesQ2Rate)}</td>
+        <td style="text-align:center;" class="col-highlight">${formatRateBadge(salesH1Rate)}</td>
+      </tr>
+      <tr class="row-summary">
+        <th>영업이익</th>
+        <td class="num-cell">${formatVal(data.op.q1_2026, unit)}</td>
+        <td class="num-cell">${formatVal(data.op.q2_2026, unit)}</td>
+        <td class="num-cell col-highlight">${formatVal(data.op.h1_2026, unit)}</td>
+        <td class="num-cell">${formatVal(data.op.q1_2025, unit)}</td>
+        <td class="num-cell">${formatVal(data.op.q2_2025, unit)}</td>
+        <td class="num-cell">${formatVal(data.op.h1_2025, unit)}</td>
+        <td style="text-align:center;">${formatRateBadge(opQ1Rate)}</td>
+        <td style="text-align:center;">${formatRateBadge(opQ2Rate)}</td>
+        <td style="text-align:center;" class="col-highlight">${formatRateBadge(opH1Rate)}</td>
+      </tr>
+      <tr class="row-opm">
+        <th>영업이익률 (OPM)</th>
+        <td class="num-cell">${opmQ1_26.toFixed(2)}%</td>
+        <td class="num-cell">${opmQ2_26.toFixed(2)}%</td>
+        <td class="num-cell col-highlight">${opmH1_26.toFixed(2)}%</td>
+        <td class="num-cell">${opmQ1_25.toFixed(2)}%</td>
+        <td class="num-cell">${opmQ2_25.toFixed(2)}%</td>
+        <td class="num-cell">${opmH1_25.toFixed(2)}%</td>
+        <td style="text-align:center; font-size:12px;">${(opmQ1Diff >= 0 ? '+' : '') + opmQ1Diff.toFixed(2)}%p</td>
+        <td style="text-align:center; font-size:12px;">${(opmQ2Diff >= 0 ? '+' : '') + opmQ2Diff.toFixed(2)}%p</td>
+        <td style="text-align:center; font-size:12px;" class="col-highlight">${(opmH1Diff >= 0 ? '+' : '') + opmH1Diff.toFixed(2)}%p</td>
+      </tr>
+    `;
+
+    // Update KPI Cards
+    const unitSuffix = unit === '100m' ? ' 억원' : unit === '1m' ? ' 백만원' : ' 원';
+    document.getElementById('kpi-q2-sales').innerText = formatVal(data.sales.q2_2026, unit) + unitSuffix;
+    document.getElementById('kpi-q2-sales-rate').innerHTML = (salesQ2Rate >= 0 ? '▲ +' : '▼ ') + salesQ2Rate.toFixed(2) + '%';
+    document.getElementById('kpi-q2-sales-prev').innerText = '전년동기 ' + formatVal(data.sales.q2_2025, unit) + unitSuffix;
+
+    document.getElementById('kpi-q2-op').innerText = formatVal(data.op.q2_2026, unit) + unitSuffix;
+    document.getElementById('kpi-q2-op-rate').innerHTML = (opQ2Rate >= 0 ? '▲ +' : '▼ ') + opQ2Rate.toFixed(2) + '%';
+    document.getElementById('kpi-q2-op-prev').innerText = '전년동기 ' + formatVal(data.op.q2_2025, unit) + unitSuffix;
+
+    document.getElementById('kpi-h1-sales').innerText = formatVal(data.sales.h1_2026, unit) + unitSuffix;
+    document.getElementById('kpi-h1-sales-rate').innerHTML = (salesH1Rate >= 0 ? '▲ +' : '▼ ') + salesH1Rate.toFixed(2) + '%';
+    document.getElementById('kpi-h1-sales-prev').innerText = '전년동기 ' + formatVal(data.sales.h1_2025, unit) + unitSuffix;
+
+    document.getElementById('kpi-h1-op').innerText = formatVal(data.op.h1_2026, unit) + unitSuffix;
+    document.getElementById('kpi-h1-op-rate').innerHTML = (opH1Rate >= 0 ? '▲ +' : '▼ ') + opH1Rate.toFixed(2) + '%';
+    document.getElementById('kpi-h1-op-prev').innerText = '전년동기 ' + formatVal(data.op.h1_2025, unit) + unitSuffix;
+
+    // Table title
+    const modeName = currentMode === 'consolidated' ? '연결' : '별도';
+    document.getElementById('table-title-text').innerText = `솔브레인 2025년 vs 2026년 실적 및 YoY 증감률 비교표 (${modeName})`;
+    const unitDesc = unit === '100m' ? '억원' : unit === '1m' ? '백만원' : '원';
+    document.getElementById('table-unit-indicator').innerText = `단위: ${unitDesc} (증감률: %)`;
+  }
+
+  function initCharts() {
+    // 1. Performance Bar/Line Chart
+    const ctx = document.getElementById('performanceChart').getContext('2d');
+    const data = financialData[currentMode];
+
+    const labels = ['2025년 1분기', '2025년 2분기', '2025년 반기', '2026년 1분기', '2026년 2분기', '2026년 반기'];
+    const salesValues = [
+      data.sales.q1_2025 / 100000000,
+      data.sales.q2_2025 / 100000000,
+      data.sales.h1_2025 / 100000000,
+      data.sales.q1_2026 / 100000000,
+      data.sales.q2_2026 / 100000000,
+      data.sales.h1_2026 / 100000000
+    ];
+    const opValues = [
+      data.op.q1_2025 / 100000000,
+      data.op.q2_2025 / 100000000,
+      data.op.h1_2025 / 100000000,
+      data.op.q1_2026 / 100000000,
+      data.op.q2_2026 / 100000000,
+      data.op.h1_2026 / 100000000
+    ];
+
+    if (mainChart) mainChart.destroy();
+
+    mainChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: '매출액 (억원)',
+            data: salesValues,
+            backgroundColor: 'rgba(59, 130, 246, 0.75)',
+            borderColor: '#2563eb',
+            borderWidth: 1,
+            borderRadius: 4,
+            yAxisID: 'y'
+          },
+          {
+            label: '영업이익 (억원)',
+            data: opValues,
+            backgroundColor: 'rgba(239, 68, 68, 0.85)',
+            borderColor: '#dc2626',
+            borderWidth: 1,
+            borderRadius: 4,
+            yAxisID: 'y'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: {
+          mode: 'index',
+          intersect: false
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: '금액 (억원)'
+            },
+            grid: {
+              color: '#f1f5f9'
+            }
+          },
+          x: {
+            grid: {
+              display: false
+            }
+          }
+        },
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return context.dataset.label + ': ' + context.parsed.y.toLocaleString() + ' 억원';
+              }
+            }
+          },
+          legend: {
+            position: 'top',
+            labels: {
+              font: { family: 'sans-serif', size: 12 }
+            }
+          }
+        }
+      }
+    });
+
+    // 2. Segment Donut Chart
+    const ctxSeg = document.getElementById('segmentChart').getContext('2d');
+    if (segChart) segChart.destroy();
+
+    segChart = new Chart(ctxSeg, {
+      type: 'doughnut',
+      data: {
+        labels: ['반도체 부문', '2차전지 부문', '디스플레이 부문', '기타 부문'],
+        datasets: [{
+          data: [4928, 349, 266, 215],
+          backgroundColor: [
+            '#1e3a8a',
+            '#10b981',
+            '#f59e0b',
+            '#94a3b8'
+          ],
+          borderWidth: 2,
+          borderColor: '#ffffff'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              boxWidth: 12,
+              font: { size: 11 }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                const val = context.raw;
+                const pct = ((val / total) * 100).toFixed(1);
+                return `${context.label}: ${val.toLocaleString()} 억원 (${pct}%)`;
+              }
+            }
+          }
+        },
+        cutout: '62%'
+      }
+    });
+  }
+
+  function switchTab(mode) {
+    currentMode = mode;
+    document.getElementById('tab-cons').classList.toggle('active', mode === 'consolidated');
+    document.getElementById('tab-sep').classList.toggle('active', mode === 'separate');
+    renderTable();
+    initCharts();
+  }
+
+  function switchUnit(unit) {
+    currentUnit = unit;
+    document.getElementById('unit-100m').classList.toggle('active', unit === '100m');
+    document.getElementById('unit-1m').classList.toggle('active', unit === '1m');
+    document.getElementById('unit-raw').classList.toggle('active', unit === 'raw');
+    renderTable();
+  }
+
+  function exportToCSV() {
+    const data = financialData[currentMode];
+    const modeName = currentMode === 'consolidated' ? '연결' : '별도';
+    
+    let csv = `\uFEFF솔브레인 실적 비교 (${modeName} 기준)\n`;
+    csv += `구분,2026년 1분기,2026년 2분기,2026년 반기누적,2025년 1분기,2025년 2분기,2025년 반기누적,1분기 YoY 증감률(%),2분기 YoY 증감률(%),반기 YoY 증감률(%)\n`;
+    
+    // Sales
+    const sQ1Rate = calcRate(data.sales.q1_2026, data.sales.q1_2025).toFixed(2);
+    const sQ2Rate = calcRate(data.sales.q2_2026, data.sales.q2_2025).toFixed(2);
+    const sH1Rate = calcRate(data.sales.h1_2026, data.sales.h1_2025).toFixed(2);
+    csv += `매출액(원),${data.sales.q1_2026},${data.sales.q2_2026},${data.sales.h1_2026},${data.sales.q1_2025},${data.sales.q2_2025},${data.sales.h1_2025},${sQ1Rate}%,${sQ2Rate}%,${sH1Rate}%\n`;
+
+    // OP
+    const opQ1Rate = calcRate(data.op.q1_2026, data.op.q1_2025).toFixed(2);
+    const opQ2Rate = calcRate(data.op.q2_2026, data.op.q2_2025).toFixed(2);
+    const opH1Rate = calcRate(data.op.h1_2026, data.op.h1_2025).toFixed(2);
+    csv += `영업이익(원),${data.op.q1_2026},${data.op.q2_2026},${data.op.h1_2026},${data.op.q1_2025},${data.op.q2_2025},${data.op.h1_2025},${opQ1Rate}%,${opQ2Rate}%,${opH1Rate}%\n`;
+
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `솔브레인_실적비교_${modeName}_2026반기.csv`;
+    link.click();
+  }
+
+  // Initial Execution
+  window.addEventListener('DOMContentLoaded', () => {
+    renderTable();
+    initCharts();
+  });
+</script>
+
+</body>
+</html>
