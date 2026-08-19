@@ -1,15 +1,177 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>내 웹페이지</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>기업 분석 및 리서치 아카이브</title>
+  <style>
+    :root {
+      --primary: #1a73e8;
+      --primary-hover: #1557b0;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #1e293b;
+      --text-sub: #64748b;
+      --border: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    /* 헤더 스타일 */
+    header {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      color: #ffffff;
+      padding: 48px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    header p {
+      color: #94a3b8;
+      font-size: 15px;
+    }
+
+    /* 본문 컨테이너 */
+    .container {
+      max-width: 900px;
+      margin: -24px auto 60px;
+      padding: 0 20px;
+    }
+
+    /* 카드 그리드 */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    /* 개별 카드 */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+      border-color: var(--primary);
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--primary);
+      background-color: #e8f0fe;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      width: fit-content;
+    }
+
+    .card h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+
+    .card p {
+      font-size: 14px;
+      color: var(--text-sub);
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+
+    /* 열람 버튼 */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--primary);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 16px;
+      border-radius: 8px;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-hover);
+    }
+
+    /* 푸터 */
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-sub);
+      padding: 24px 20px;
+      border-top: 1px solid var(--border);
+    }
+  </style>
 </head>
 <body>
-  <h1>📑 자료 및 보고서 목록</h1>
-  <hr>
-  <ul>
-    <li><a href="kctec.html">케이씨텍 보고서 열람하기</a></li>
-    <li><a href="solbrain.html">솔브레인 보고서 열람하기</a></li>
-  </ul>
+
+  <header>
+    <h1>📊 Research & Analysis Archive</h1>
+    <p>주요 기업 재무 분석 및 정기 보고서 모음</p>
+  </header>
+
+  <div class="container">
+    <div class="grid">
+      
+      <!-- เค이씨텍 카드 -->
+      <div class="card">
+        <div>
+          <span class="tag">반도체 / 디스플레이 장비</span>
+          <h2>케이씨텍 (KC Tech)</h2>
+          <p>케이씨텍 기업 개요, 재무 지표 및 상세 분석 보고서 열람</p>
+        </div>
+        <a href="kctec.html" class="btn">보고서 열람하기 →</a>
+      </div>
+
+      <!-- 솔브레인 카드 -->
+      <div class="card">
+        <div>
+          <span class="tag">반도체 / 전자 소재</span>
+          <h2>솔브레인 (SoulBrain)</h2>
+          <p>솔브레인 반기 실적 및 주요 경영 지표 보고서 열람</p>
+        </div>
+        <a href="solbrain.html" class="btn">보고서 열람하기 →</a>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 my_web_page. Hosted on GitHub Pages.</p>
+  </footer>
+
 </body>
 </html>
