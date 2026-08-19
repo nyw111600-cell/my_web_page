@@ -13,6 +13,8 @@
       --text-main: #1e293b;
       --text-sub: #64748b;
       --border: #e2e8f0;
+      --header-bg: #eef2f6; /* 밝고 차분한 블루 그레이 톤 */
+      --header-border: #dbeafe;
     }
 
     * {
@@ -28,30 +30,31 @@
       line-height: 1.6;
     }
 
-    /* 헤더 스타일 */
+    /* 밝은 톤의 상단 헤더 */
     header {
-      background: linear-gradient(135deg, #1e293b, #0f172a);
-      color: #ffffff;
-      padding: 48px 20px;
+      background-color: var(--header-bg);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 20px;
       text-align: center;
     }
 
     header h1 {
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 700;
+      color: #0f172a;
       margin-bottom: 8px;
       letter-spacing: -0.5px;
     }
 
     header p {
-      color: #94a3b8;
+      color: #475569;
       font-size: 15px;
     }
 
-    /* 본문 컨테이너 */
+    /* 본문 컨테이너 (헤더와 겹치지 않고 자연스럽게 아래로 배치) */
     .container {
       max-width: 900px;
-      margin: -24px auto 60px;
+      margin: 36px auto 60px;
       padding: 0 20px;
     }
 
@@ -59,7 +62,7 @@
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
+      gap: 24px;
     }
 
     /* 개별 카드 */
@@ -68,7 +71,7 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 24px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
       transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
       display: flex;
       flex-direction: column;
