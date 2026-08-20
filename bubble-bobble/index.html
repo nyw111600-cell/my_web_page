@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Bubble Bobble (버블보블 미니)</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="arcade-container">
+    <!-- Arcade Header / Marquee -->
+    <header class="arcade-marquee">
+      <div class="marquee-title">
+        <span class="letter-b1">B</span><span class="letter-u">U</span><span class="letter-b2">B</span><span class="letter-b3">B</span><span class="letter-l">L</span><span class="letter-e">E</span>
+        <span class="letter-space"> </span>
+        <span class="letter-b1">B</span><span class="letter-o">O</span><span class="letter-b2">B</span><span class="letter-b3">B</span><span class="letter-l">L</span><span class="letter-e">E</span>
+      </div>
+      <div class="marquee-subtitle">MINI ARCADE EDITION</div>
+    </header>
+
+    <!-- Top Scoreboard -->
+    <div class="score-board">
+      <div class="score-box">
+        <span class="label">1P SCORE</span>
+        <span id="score-display" class="value">000000</span>
+      </div>
+      <div class="score-box">
+        <span class="label">HIGH SCORE</span>
+        <span id="high-score-display" class="value">020000</span>
+      </div>
+      <div class="score-box">
+        <span class="label">STAGE</span>
+        <span id="stage-display" class="value">01 / 05</span>
+      </div>
+      <div class="score-box">
+        <span class="label">LIVES</span>
+        <div id="lives-display" class="lives-icons">
+          <span class="life-icon">🦖</span>
+          <span class="life-icon">🦖</span>
+          <span class="life-icon">🦖</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Screen Wrapper -->
+    <div class="screen-wrapper">
+      <canvas id="gameCanvas" width="640" height="480"></canvas>
+
+      <!-- CRT Overlay Effect -->
+      <div class="crt-overlay"></div>
+
+      <!-- Start / Pause / Game Over Overlays -->
+      <div id="overlay-screen" class="game-overlay">
+        <div class="overlay-content">
+          <h1 id="overlay-title">BUBBLE BOBBLE</h1>
+          <p id="overlay-subtitle">CLASSIC MINI ARCADE</p>
+          <div class="instruction-box">
+            <p><strong>[ 키보드 조작법 ]</strong></p>
+            <p>◀ ▶ 또는 <strong>A / D</strong> : 좌우 이동</p>
+            <p>▲ / <strong>Space / W / Z</strong> : 점프 (방울 위에서 점프시 높이 도약!)</p>
+            <p>▼ + 점프 : 발판 아래로 내려가기</p>
+            <p><strong>X / J / Enter</strong> : 방울(버블) 발사!</p>
+            <p><strong>P</strong> : 일시정지 | <strong>M</strong> : 사운드 ON/OFF</p>
+          </div>
+          <button id="start-btn" class="arcade-btn">PRESS TO START</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Arcade Controls & Help Bar -->
+    <div class="control-bar">
+      <button id="sound-btn" class="utility-btn">🔊 사운드 ON</button>
+      <button id="pause-btn" class="utility-btn">⏸ 일시정지</button>
+      <button id="restart-btn" class="utility-btn">🔄 다시 시작</button>
+    </div>
+
+    <!-- Mobile Touch Controls -->
+    <div class="touch-controls" id="touch-controls">
+      <div class="touch-dpad">
+        <button id="btn-left" class="t-btn">◀</button>
+        <button id="btn-down" class="t-btn">▼</button>
+        <button id="btn-right" class="t-btn">▶</button>
+      </div>
+      <div class="touch-actions">
+        <button id="btn-shoot" class="t-btn action-shoot">🫧 발사 (X)</button>
+        <button id="btn-jump" class="t-btn action-jump">⬆ 점프 (Z)</button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="arcade-footer">
+      <p>© 1986 TAITO CORP. / Mini Remake for Web (HTML5 Canvas)</p>
+    </footer>
+  </div>
+
+  <script src="audio.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
