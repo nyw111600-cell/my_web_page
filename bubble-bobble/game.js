@@ -44,43 +44,82 @@
     shoot: false
   };
 
+  // Helper functions for universal key matching (including Korean IME and keyCodes)
+  function isJumpKey(e) {
+    return (
+      e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW' || e.code === 'KeyZ' ||
+      e.key === ' ' || e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W' || e.key === 'z' || e.key === 'Z' ||
+      e.key === 'ㅈ' || e.key === 'ㅉ' || e.key === 'ㅋ' ||
+      e.keyCode === 32 || e.keyCode === 38 || e.keyCode === 87 || e.keyCode === 90
+    );
+  }
+
+  function isLeftKey(e) {
+    return e.code === 'ArrowLeft' || e.key === 'ArrowLeft' || e.code === 'KeyA' || e.key === 'a' || e.key === 'A' || e.key === 'ㅁ' || e.keyCode === 37 || e.keyCode === 65;
+  }
+
+  function isRightKey(e) {
+    return e.code === 'ArrowRight' || e.key === 'ArrowRight' || e.code === 'KeyD' || e.key === 'd' || e.key === 'D' || e.key === 'ㅇ' || e.keyCode === 39 || e.keyCode === 68;
+  }
+
+  function isDownKey(e) {
+    return e.code === 'ArrowDown' || e.key === 'ArrowDown' || e.code === 'KeyS' || e.key === 's' || e.key === 'S' || e.key === 'ㄴ' || e.keyCode === 40 || e.keyCode === 83;
+  }
+
+  function isShootKey(e) {
+    return e.code === 'KeyX' || e.key === 'x' || e.key === 'X' || e.code === 'KeyJ' || e.key === 'j' || e.key === 'J' || e.code === 'Enter' || e.key === 'Enter' || e.key === 'ㅌ' || e.key === 'ㅓ' || e.keyCode === 88 || e.keyCode === 74 || e.keyCode === 13;
+  }
+
   // Keyboard Listeners
   window.addEventListener('keydown', (e) => {
     window.soundEngine.init();
 
-    if (e.code === 'ArrowLeft' || e.code === 'KeyA') keys.left = true;
-    if (e.code === 'ArrowRight' || e.code === 'KeyD') keys.right = true;
-    if (e.code === 'ArrowDown' || e.code === 'KeyS') keys.down = true;
-    if (e.code === 'ArrowUp' || e.code === 'KeyW' || e.code === 'Space' || e.code === 'KeyZ') {
+    if (e.code === 'Space' || (e.code && e.code.startsWith('Arrow'))) {
+      e.preventDefault();
+    }
+
+    if (isLeftKey(e)) keys.left = true;
+    if (isRightKey(e)) keys.right = true;
+    if (isDownKey(e)) keys.down = true;
+
+    if (isJumpKey(e)) {
       keys.jump = true;
       keys.up = true;
-      if (gameState === 'PLAYING') {
+      if (gameState === 'START' || gameState === 'GAME_OVER' || gameState === 'VICTORY') {
+        startGame();
+      } else if (gameState === 'PAUSED') {
+        togglePause();
+      } else if (gameState === 'PLAYING') {
         player.jump();
       }
     }
-    if (e.code === 'KeyX' || e.code === 'KeyJ' || e.code === 'Enter') {
+
+    if (isShootKey(e)) {
       keys.shoot = true;
-      if (gameState === 'PLAYING') {
+      if (gameState === 'START' || gameState === 'GAME_OVER' || gameState === 'VICTORY') {
+        startGame();
+      } else if (gameState === 'PLAYING') {
         player.shoot();
       }
     }
-    if (e.code === 'KeyP') {
+
+    if (e.code === 'KeyP' || e.key === 'p' || e.key === 'P' || e.key === 'ㅔ') {
       togglePause();
     }
-    if (e.code === 'KeyM') {
+    if (e.code === 'KeyM' || e.key === 'm' || e.key === 'M' || e.key === 'ㅡ') {
       toggleSound();
     }
   });
 
   window.addEventListener('keyup', (e) => {
-    if (e.code === 'ArrowLeft' || e.code === 'KeyA') keys.left = false;
-    if (e.code === 'ArrowRight' || e.code === 'KeyD') keys.right = false;
-    if (e.code === 'ArrowDown' || e.code === 'KeyS') keys.down = false;
-    if (e.code === 'ArrowUp' || e.code === 'KeyW' || e.code === 'Space' || e.code === 'KeyZ') {
+    if (isLeftKey(e)) keys.left = false;
+    if (isRightKey(e)) keys.right = false;
+    if (isDownKey(e)) keys.down = false;
+    if (isJumpKey(e)) {
       keys.jump = false;
       keys.up = false;
     }
-    if (e.code === 'KeyX' || e.code === 'KeyJ' || e.code === 'Enter') keys.shoot = false;
+    if (isShootKey(e)) keys.shoot = false;
   });
 
   // Touch Controls Binding
@@ -108,12 +147,18 @@
   bindTouch('btn-right', 'right');
   bindTouch('btn-down', 'down');
   bindTouch('btn-jump', 'jump', true, () => {
-    if (gameState === 'PLAYING') {
+    if (gameState === 'START' || gameState === 'GAME_OVER' || gameState === 'VICTORY') {
+      startGame();
+    } else if (gameState === 'PLAYING') {
       player.jump();
     }
   });
   bindTouch('btn-shoot', 'shoot', true, () => {
-    if (gameState === 'PLAYING') player.shoot();
+    if (gameState === 'START' || gameState === 'GAME_OVER' || gameState === 'VICTORY') {
+      startGame();
+    } else if (gameState === 'PLAYING') {
+      player.shoot();
+    }
   });
 
   // Stage Maps (1 = Solid Platform, 2 = Outer Wall, 0 = Empty)
@@ -262,7 +307,7 @@
   // Player Object (Bub)
   const player = {
     x: 80,
-    y: 380,
+    y: 340,
     w: 24,
     h: 24,
     vx: 0,
@@ -271,19 +316,23 @@
     jumpStrength: 8.5,
     facing: 1, // 1 = right, -1 = left
     grounded: false,
+    coyoteTime: 0,
+    jumpBuffer: 0,
     shootCooldown: 0,
     mouthTimer: 0,
     invincibleTimer: 0,
     animFrame: 0,
     animTimer: 0,
 
-    reset(x = 80, y = 380) {
+    reset(x = 80, y = 340) {
       this.x = x;
       this.y = y;
       this.vx = 0;
       this.vy = 0;
       this.facing = 1;
       this.grounded = false;
+      this.coyoteTime = 0;
+      this.jumpBuffer = 0;
       this.invincibleTimer = 180; // 3 seconds invulnerability
       this.mouthTimer = 0;
     },
@@ -306,12 +355,17 @@
         this.y += 6;
         this.vy = 2;
         this.grounded = false;
+        this.coyoteTime = 0;
         return;
       }
-      if (this.grounded) {
+      if (this.grounded || this.coyoteTime > 0) {
         this.vy = -this.jumpStrength;
         this.grounded = false;
+        this.coyoteTime = 0;
+        this.jumpBuffer = 0;
         window.soundEngine.playJump();
+      } else {
+        this.jumpBuffer = 12;
       }
     },
 
@@ -320,6 +374,32 @@
       if (this.shootCooldown > 0) this.shootCooldown--;
       if (this.mouthTimer > 0) this.mouthTimer--;
       if (this.invincibleTimer > 0) this.invincibleTimer--;
+
+      // Coyote time & Jump buffer
+      if (this.grounded) {
+        this.coyoteTime = 8;
+      } else if (this.coyoteTime > 0) {
+        this.coyoteTime--;
+      }
+
+      if (this.jumpBuffer > 0) {
+        this.jumpBuffer--;
+        if (this.grounded || this.coyoteTime > 0) {
+          if (keys.down) {
+            this.y += 6;
+            this.vy = 2;
+            this.grounded = false;
+            this.coyoteTime = 0;
+            this.jumpBuffer = 0;
+          } else {
+            this.vy = -this.jumpStrength;
+            this.grounded = false;
+            this.coyoteTime = 0;
+            this.jumpBuffer = 0;
+            window.soundEngine.playJump();
+          }
+        }
+      }
 
       // Horizontal movement
       if (keys.left) {
@@ -367,7 +447,7 @@
         if (!b.popped && this.vy > 0 && this.y + this.h >= b.y && this.y + this.h <= b.y + 14 &&
             this.x + this.w > b.x - 4 && this.x < b.x + b.r * 2 + 4) {
           // Bounce!
-          this.vy = keys.jump ? -player.jumpStrength * 1.15 : -player.jumpStrength * 0.7;
+          this.vy = (keys.jump || keys.up) ? -player.jumpStrength * 1.15 : -player.jumpStrength * 0.7;
           this.grounded = false;
           window.soundEngine.playJump();
           break;
@@ -402,14 +482,14 @@
       const botRow = Math.floor((this.y + this.h) / TILE_SIZE);
 
       // Dropping through platform with Down + Jump
-      const isDroppingDown = keys.down && keys.jump;
+      const isDroppingDown = keys.down && (keys.jump || keys.up);
 
       // Platform check
       if (this.vy >= 0 && !isDroppingDown) {
         for (let c = leftCol; c <= rightCol; c++) {
           if (botRow >= 0 && botRow < ROWS && currentGrid[botRow]) {
             const tile = currentGrid[botRow][c];
-            if ((tile === 1 || tile === 2) && prevY + this.h <= botRow * TILE_SIZE + 8) {
+            if ((tile === 1 || tile === 2) && prevY + this.h <= botRow * TILE_SIZE + 10) {
               this.y = botRow * TILE_SIZE - this.h;
               this.vy = 0;
               this.grounded = true;
@@ -981,7 +1061,7 @@
     if (lives <= 0) {
       gameOver();
     } else {
-      player.reset(80, 380);
+      player.reset(80, 340);
     }
   }
 
@@ -1003,7 +1083,7 @@
     currentEnemies = stage.enemies.map(e => new Enemy(e.x, e.y, e.vx, e.type));
 
     // Reset player position
-    player.reset(80, 380);
+    player.reset(80, 340);
     updateScoreBoard();
   }
 

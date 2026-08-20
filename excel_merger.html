@@ -436,7 +436,24 @@
 
         try {
           const arrayBuffer = await file.arrayBuffer();
-          const workbook = XLSX.read(arrayBuffer, { type: 'array', cellDates: true });
+          const ext = file.name.split('.').pop().toLowerCase();
+          let workbook;
+
+          if (ext === 'csv') {
+            // CSV 파일 인코딩 자동 감지: UTF-8 strict 시도 후 실패 시 한국어 표준 EUC-KR(CP949)로 디코딩
+            let text;
+            try {
+              const utf8Decoder = new TextDecoder('utf-8', { fatal: true });
+              text = utf8Decoder.decode(new Uint8Array(arrayBuffer));
+            } catch (e) {
+              const eucDecoder = new TextDecoder('euc-kr');
+              text = eucDecoder.decode(new Uint8Array(arrayBuffer));
+            }
+            workbook = XLSX.read(text, { type: 'string', cellDates: true });
+          } else {
+            workbook = XLSX.read(arrayBuffer, { type: 'array', cellDates: true });
+          }
+
           fileObj.workbook = workbook;
           fileObj.sheets = workbook.SheetNames;
           fileObj.selectedSheet = workbook.SheetNames[0] || '';
@@ -647,13 +664,17 @@
             if (raw.length <= headerRowIdx) continue;
 
             const headers = raw[headerRowIdx].map(h => optTrimSpace ? String(h || '').trim() : String(h || ''));
-            const rows = raw.slice(headerRowIdx + 1);
+            let rows = raw.slice(headerRowIdx + 1);
+            if (optSkipEmpty) {
+              rows = rows.filter(r => r.some(c => c !== '' && c !== null && c !== undefined));
+            }
 
             if (fIdx === 0) {
               baseHeaders = [...headers];
               baseRows = rows.map(r => r.map(c => {
                 const num = Number(c);
-                return (!isNaN(num) && c !== '' && c !== null) ? num : c;
+                if (!isNaN(num) && c !== '' && c !== null) return num;
+                return typeof c === 'string' && optTrimSpace ? c.trim() : c;
               }));
             } else {
               // 이전 파일 데이터와 누적 합산
