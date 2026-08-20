@@ -50,14 +50,12 @@
 
     if (e.code === 'ArrowLeft' || e.code === 'KeyA') keys.left = true;
     if (e.code === 'ArrowRight' || e.code === 'KeyD') keys.right = true;
-    if (e.code === 'ArrowUp' || e.code === 'KeyW') keys.up = true;
     if (e.code === 'ArrowDown' || e.code === 'KeyS') keys.down = true;
-    if (e.code === 'Space' || e.code === 'KeyZ') {
+    if (e.code === 'ArrowUp' || e.code === 'KeyW' || e.code === 'Space' || e.code === 'KeyZ') {
       keys.jump = true;
-      if (gameState === 'PLAYING' && player.canJump && player.grounded) {
-        player.vy = -player.jumpStrength;
-        player.grounded = false;
-        window.soundEngine.playJump();
+      keys.up = true;
+      if (gameState === 'PLAYING') {
+        player.jump();
       }
     }
     if (e.code === 'KeyX' || e.code === 'KeyJ' || e.code === 'Enter') {
@@ -77,9 +75,11 @@
   window.addEventListener('keyup', (e) => {
     if (e.code === 'ArrowLeft' || e.code === 'KeyA') keys.left = false;
     if (e.code === 'ArrowRight' || e.code === 'KeyD') keys.right = false;
-    if (e.code === 'ArrowUp' || e.code === 'KeyW') keys.up = false;
     if (e.code === 'ArrowDown' || e.code === 'KeyS') keys.down = false;
-    if (e.code === 'Space' || e.code === 'KeyZ') keys.jump = false;
+    if (e.code === 'ArrowUp' || e.code === 'KeyW' || e.code === 'Space' || e.code === 'KeyZ') {
+      keys.jump = false;
+      keys.up = false;
+    }
     if (e.code === 'KeyX' || e.code === 'KeyJ' || e.code === 'Enter') keys.shoot = false;
   });
 
@@ -108,10 +108,8 @@
   bindTouch('btn-right', 'right');
   bindTouch('btn-down', 'down');
   bindTouch('btn-jump', 'jump', true, () => {
-    if (gameState === 'PLAYING' && player.grounded) {
-      player.vy = -player.jumpStrength;
-      player.grounded = false;
-      window.soundEngine.playJump();
+    if (gameState === 'PLAYING') {
+      player.jump();
     }
   });
   bindTouch('btn-shoot', 'shoot', true, () => {
@@ -300,6 +298,21 @@
       const by = this.y + 2;
       bubbles.push(new Bubble(bx, by, this.facing));
       window.soundEngine.playShoot();
+    },
+
+    jump() {
+      if (keys.down) {
+        // Drop down through platform
+        this.y += 6;
+        this.vy = 2;
+        this.grounded = false;
+        return;
+      }
+      if (this.grounded) {
+        this.vy = -this.jumpStrength;
+        this.grounded = false;
+        window.soundEngine.playJump();
+      }
     },
 
     update() {
