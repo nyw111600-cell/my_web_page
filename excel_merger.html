@@ -53,7 +53,13 @@
         </div>
       </div>
       <div class="flex items-center space-x-2">
-        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
+        <button id="headerResetBtn" class="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 text-slate-700 transition-colors border border-slate-300 shadow-sm" title="모든 파일과 결과를 초기화하고 처음부터 다시 시작">
+          <svg class="w-3.5 h-3.5 mr-1 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+          </svg>
+          전체 초기화
+        </button>
+        <span class="hidden sm:inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
           브라우저 로컬 연산 (보안 안전)
         </span>
@@ -222,8 +228,14 @@
           <p class="text-xs text-slate-500 mt-0.5">데이터가 성공적으로 취합되었습니다. 미리보기를 확인하고 엑셀 파일로 다운로드하세요.</p>
         </div>
 
-        <!-- 다운로드 버튼 그룹 -->
-        <div class="flex items-center space-x-2">
+        <!-- 다운로드 및 재시작 버튼 그룹 -->
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="resultResetBtn" class="px-3.5 py-2 bg-slate-100 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 text-slate-700 text-xs font-bold rounded-lg border border-slate-300 shadow-sm transition-all flex items-center space-x-1.5" title="현재 결과를 지우고 새로운 파일로 다시 취합">
+            <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+            <span>처음부터 다시하기</span>
+          </button>
           <button id="downloadXlsxBtn" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center space-x-1.5">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
@@ -324,7 +336,8 @@
     const fileList = document.getElementById('fileList');
     const fileListCount = document.getElementById('fileListCount');
     const fileSummaryBadge = document.getElementById('fileSummaryBadge');
-    const fileCountText = document.getElementById('fileCountText');
+    const headerResetBtn = document.getElementById('headerResetBtn');
+    const resultResetBtn = document.getElementById('resultResetBtn');
     const clearFilesBtn = document.getElementById('clearFilesBtn');
     const runMergeBtn = document.getElementById('runMergeBtn');
     const modeCards = document.querySelectorAll('.mode-card');
@@ -350,6 +363,54 @@
     const downloadXlsxBtn = document.getElementById('downloadXlsxBtn');
     const downloadCsvBtn = document.getElementById('downloadCsvBtn');
 
+    // 전체 초기화 (처음부터 다시하기) 함수
+    function resetAll(promptConfirm = false) {
+      if (promptConfirm && (state.files.length > 0 || state.mergedResult)) {
+        const ok = confirm('업로드된 모든 파일과 취합 결과를 초기화하고 처음부터 다시 시작하시겠습니까?');
+        if (!ok) return;
+      }
+
+      state.files = [];
+      state.mergedResult = null;
+      state.filteredRows = [];
+      state.currentPage = 1;
+
+      fileInput.value = '';
+      previewSearchInput.value = '';
+      headerRowInput.value = 1;
+
+      // 옵션 초기화
+      document.getElementById('optAddSource').checked = true;
+      document.getElementById('optTrimSpace').checked = true;
+      document.getElementById('optSkipEmpty').checked = true;
+
+      // 기본 모드(세로 병합)로 초기화
+      const firstRadio = document.querySelector('input[name="mergeMode"][value="append"]');
+      if (firstRadio) {
+        firstRadio.checked = true;
+        state.mode = 'append';
+        updateModeUI();
+      }
+
+      // UI 및 테이블 초기화
+      updateFileListUI();
+      updateAvailableColumns();
+      previewThead.innerHTML = '';
+      previewTbody.innerHTML = '';
+      resultSection.classList.add('hidden');
+
+      // 최상단으로 스크롤 이동
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    if (headerResetBtn) {
+      headerResetBtn.addEventListener('click', () => resetAll(true));
+    }
+    if (resultResetBtn) {
+      resultResetBtn.addEventListener('click', () => resetAll(true));
+    }
+    clearFilesBtn.addEventListener('click', () => resetAll(true));
+
     // 드래그 앤 드롭 및 파일 업로드 리스너
     dropZone.addEventListener('click', () => fileInput.click());
     dropZone.addEventListener('dragover', (e) => {
@@ -371,12 +432,6 @@
         handleFiles(Array.from(e.target.files));
       }
       fileInput.value = ''; // 재선택 가능하게 리셋
-    });
-
-    clearFilesBtn.addEventListener('click', () => {
-      state.files = [];
-      updateFileListUI();
-      updateAvailableColumns();
     });
 
     // 모드 탭 변경 리스너
