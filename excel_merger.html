@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>스마트 엑셀 데이터 취합 도구 | Excel Merger</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- SheetJS (xlsx) -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+  <!-- 상단 네비게이션 & 헤더 -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <a href="index.html" class="flex items-center text-slate-500 hover:text-blue-600 transition-colors text-sm font-medium pr-2 border-r border-slate-200">
+          <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          메인으로
+        </a>
+        <div class="flex items-center space-x-2">
+          <div class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white shadow-sm font-bold text-sm">
+            📊
+          </div>
+          <div>
+            <h1 class="text-lg font-bold text-slate-900 leading-tight">엑셀 데이터 취합 도구</h1>
+            <p class="text-xs text-slate-500">Excel & CSV Multi-File Aggregator</p>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center space-x-2">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
+          브라우저 로컬 연산 (보안 안전)
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- 메인 컨테이너 -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full space-y-6">
+
+    <!-- 1단계: 파일 업로드 영역 -->
+    <section class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs font-bold flex items-center justify-center">1</span>
+            엑셀/CSV 파일 업로드
+          </h2>
+          <p class="text-xs text-slate-500 mt-0.5">취합할 여러 개의 엑셀(.xlsx, .xls) 또는 CSV 파일을 드래그하거나 선택하세요.</p>
+        </div>
+        <div id="fileSummaryBadge" class="hidden text-xs font-medium text-slate-600 bg-slate-100 px-3 py-1 rounded-lg">
+          선택된 파일: <span id="fileCountText" class="font-bold text-blue-600">0</span>개
+        </div>
+      </div>
+
+      <!-- 드래그 앤 드롭 존 -->
+      <div id="dropZone" class="border-2 border-dashed border-slate-300 hover:border-blue-500 bg-slate-50 hover:bg-blue-50/40 rounded-xl p-8 text-center transition-all cursor-pointer">
+        <input type="file" id="fileInput" multiple accept=".xlsx, .xls, .csv" class="hidden">
+        <div class="flex flex-col items-center justify-center space-y-2">
+          <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mb-1">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+            </svg>
+          </div>
+          <p class="text-sm font-semibold text-slate-700">
+            파일들을 여기에 드래그하거나 <span class="text-blue-600 underline">컴퓨터에서 선택</span>하세요
+          </p>
+          <p class="text-xs text-slate-400">지원 형식: .xlsx, .xls, .csv (동시에 여러 개 선택 가능)</p>
+        </div>
+      </div>
+
+      <!-- 업로드된 파일 목록 -->
+      <div id="fileListContainer" class="hidden mt-4">
+        <div class="flex items-center justify-between text-xs font-medium text-slate-500 mb-2 px-1">
+          <span>업로드된 파일 목록 (<span id="fileListCount">0</span>)</span>
+          <button id="clearFilesBtn" class="text-rose-500 hover:text-rose-700 hover:underline">전체 파일 삭제</button>
+        </div>
+        <div id="fileList" class="space-y-2 max-h-60 overflow-y-auto custom-scrollbar p-1">
+          <!-- JS로 동적 생성 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 2단계: 취합 모드 및 세부 옵션 -->
+    <section class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+      <h2 class="text-base font-bold text-slate-900 flex items-center gap-2 mb-4">
+        <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs font-bold flex items-center justify-center">2</span>
+        취합 모드 및 옵션 설정
+      </h2>
+
+      <!-- 모드 선택 탭 카드 -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <!-- 모드 1: 세로 병합 (Append) -->
+        <label class="mode-card relative flex flex-col p-4 bg-slate-50 border-2 border-blue-600 rounded-xl cursor-pointer hover:bg-blue-50/30 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+              <span class="text-base">📑</span> 밑으로 이어 붙이기
+            </span>
+            <input type="radio" name="mergeMode" value="append" checked class="w-4 h-4 text-blue-600 focus:ring-blue-500">
+          </div>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            모든 파일의 데이터를 아래(세로)로 차례대로 결합합니다. 동일한 컬럼 헤더 기준으로 병합됩니다.
+          </p>
+          <span class="mt-3 text-[11px] font-semibold text-blue-700 bg-blue-100 px-2 py-0.5 rounded w-fit">세로 병합 (Append)</span>
+        </label>
+
+        <!-- 모드 2: 셀 값 합산 (동일 위치) -->
+        <label class="mode-card relative flex flex-col p-4 bg-slate-50 border-2 border-transparent rounded-xl cursor-pointer hover:bg-blue-50/30 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+              <span class="text-base">➕</span> 셀 위치별 값 합산
+            </span>
+            <input type="radio" name="mergeMode" value="cell_sum" class="w-4 h-4 text-blue-600 focus:ring-blue-500">
+          </div>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            모든 파일의 양식(행/열 위치)이 동일할 때, 동일한 위치의 숫자 데이터를 누적하여 더합니다.
+          </p>
+          <span class="mt-3 text-[11px] font-semibold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded w-fit">동일 양식 합산 (Sum)</span>
+        </label>
+
+        <!-- 모드 3: 기준 키(Key) 기준 합산 -->
+        <label class="mode-card relative flex flex-col p-4 bg-slate-50 border-2 border-transparent rounded-xl cursor-pointer hover:bg-blue-50/30 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+              <span class="text-base">🔑</span> 기준 키(Key)별 값 합산
+            </span>
+            <input type="radio" name="mergeMode" value="key_sum" class="w-4 h-4 text-blue-600 focus:ring-blue-500">
+          </div>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            특정 기준 열(예: 품목코드, 이름 등)의 값이 일치하는 행끼리 묶어서 숫자 데이터를 자동으로 합산합니다.
+          </p>
+          <span class="mt-3 text-[11px] font-semibold text-purple-700 bg-purple-100 px-2 py-0.5 rounded w-fit">키 기준 집계 (Group & Sum)</span>
+        </label>
+      </div>
+
+      <!-- 세부 옵션 패널 -->
+      <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 text-xs space-y-4">
+        
+        <!-- 공통 옵션 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">헤더(제목) 시작 행</label>
+            <div class="flex items-center space-x-2">
+              <input type="number" id="headerRowInput" value="1" min="1" max="20" class="w-24 px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs focus:ring-1 focus:ring-blue-500 focus:border-blue-500 bg-white">
+              <span class="text-slate-500">번째 줄 (기본 1행)</span>
+            </div>
+          </div>
+
+          <div id="keyColumnGroup" class="hidden sm:col-span-2">
+            <label class="block font-semibold text-slate-700 mb-1">합산 기준 키(Key) 컬럼 선택</label>
+            <select id="keyColumnSelect" class="w-full max-w-xs px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs focus:ring-1 focus:ring-blue-500 focus:border-blue-500 bg-white">
+              <option value="">(파일 업로드 후 컬럼 목록이 표시됩니다)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="pt-2 border-t border-slate-200 flex flex-wrap gap-4 items-center">
+          <!-- 모드 1 전용 옵션 -->
+          <label id="optAddSourceGroup" class="flex items-center space-x-2 cursor-pointer select-none">
+            <input type="checkbox" id="optAddSource" checked class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300">
+            <span class="text-slate-700 font-medium">출처 파일명 컬럼 추가 ([출처_파일명])</span>
+          </label>
+
+          <label class="flex items-center space-x-2 cursor-pointer select-none">
+            <input type="checkbox" id="optTrimSpace" checked class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300">
+            <span class="text-slate-700 font-medium">문자열 앞뒤 공백 자동 제거</span>
+          </label>
+
+          <label class="flex items-center space-x-2 cursor-pointer select-none">
+            <input type="checkbox" id="optSkipEmpty" checked class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300">
+            <span class="text-slate-700 font-medium">빈 행(Empty Row) 자동 제외</span>
+          </label>
+        </div>
+
+      </div>
+
+      <!-- 실행 버튼 -->
+      <div class="mt-6 flex justify-end">
+        <button id="runMergeBtn" disabled class="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center space-x-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+          </svg>
+          <span>데이터 취합 실행하기</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 3단계: 결과 미리보기 & 다운로드 -->
+    <section id="resultSection" class="hidden bg-white rounded-xl border border-slate-200 shadow-sm p-6 space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+        <div>
+          <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold flex items-center justify-center">3</span>
+            취합 결과 미리보기 & 다운로드
+          </h2>
+          <p class="text-xs text-slate-500 mt-0.5">데이터가 성공적으로 취합되었습니다. 미리보기를 확인하고 엑셀 파일로 다운로드하세요.</p>
+        </div>
+
+        <!-- 다운로드 버튼 그룹 -->
+        <div class="flex items-center space-x-2">
+          <button id="downloadXlsxBtn" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center space-x-1.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+            </svg>
+            <span>Excel (.xlsx) 다운로드</span>
+          </button>
+          <button id="downloadCsvBtn" class="px-3.5 py-2 bg-slate-700 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg shadow transition-all flex items-center space-x-1.5">
+            <span>CSV 다운로드</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 통계 배지 -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="bg-slate-50 p-3 rounded-lg border border-slate-100 text-center">
+          <div class="text-xs text-slate-500 font-medium">취합된 파일 수</div>
+          <div id="statFileCount" class="text-base font-extrabold text-blue-600">0개</div>
+        </div>
+        <div class="bg-slate-50 p-3 rounded-lg border border-slate-100 text-center">
+          <div class="text-xs text-slate-500 font-medium">총 행(Rows) 수</div>
+          <div id="statRowCount" class="text-base font-extrabold text-emerald-600">0행</div>
+        </div>
+        <div class="bg-slate-50 p-3 rounded-lg border border-slate-100 text-center">
+          <div class="text-xs text-slate-500 font-medium">총 열(Cols) 수</div>
+          <div id="statColCount" class="text-base font-extrabold text-purple-600">0열</div>
+        </div>
+        <div class="bg-slate-50 p-3 rounded-lg border border-slate-100 text-center">
+          <div class="text-xs text-slate-500 font-medium">처리 시간</div>
+          <div id="statProcessTime" class="text-base font-extrabold text-amber-600">0ms</div>
+        </div>
+      </div>
+
+      <!-- 검색 및 테이블 컨트롤 -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-2 pt-2">
+        <div class="relative w-full sm:w-64">
+          <input type="text" id="previewSearchInput" placeholder="결과 내 검색..." class="w-full pl-8 pr-3 py-1.5 border border-slate-300 rounded-lg text-xs focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+          <svg class="w-3.5 h-3.5 absolute left-2.5 top-2.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </div>
+        <div class="flex items-center space-x-2 text-xs text-slate-500">
+          <span>페이지당 표시:</span>
+          <select id="pageSizeSelect" class="border border-slate-300 rounded px-2 py-1 bg-white">
+            <option value="10">10개</option>
+            <option value="25" selected>25개</option>
+            <option value="50">50개</option>
+            <option value="100">100개</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 데이터 테이블 -->
+      <div class="overflow-x-auto border border-slate-200 rounded-lg max-h-96 custom-scrollbar">
+        <table id="previewTable" class="min-w-full divide-y divide-slate-200 text-left text-xs">
+          <thead id="previewThead" class="bg-slate-100 text-slate-700 sticky top-0 font-semibold">
+            <!-- JS 동적 생성 -->
+          </thead>
+          <tbody id="previewTbody" class="divide-y divide-slate-100 bg-white text-slate-800 font-normal">
+            <!-- JS 동적 생성 -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 페이지네이션 컨트롤 -->
+      <div class="flex items-center justify-between pt-2 text-xs text-slate-500">
+        <div id="paginationInfo">1 - 25 / 총 0개 행</div>
+        <div class="flex items-center space-x-1">
+          <button id="prevPageBtn" class="px-2.5 py-1 border border-slate-300 rounded hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed">이전</button>
+          <span id="currentPageText" class="px-2 font-semibold text-slate-800">1 / 1</span>
+          <button id="nextPageBtn" class="px-2.5 py-1 border border-slate-300 rounded hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed">다음</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 푸터 -->
+  <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-400 mt-auto">
+    <p>© 2026 my_web_page. Hosted on GitHub Pages.</p>
+  </footer>
+
+  <!-- 앱 로직 스크립트 -->
+  <script>
+    // 전역 상태 관리
+    const state = {
+      files: [], // { id, file, name, size, data, sheets, selectedSheet }
+      mergedResult: null, // { headers: [], rows: [[]] }
+      filteredRows: [],
+      currentPage: 1,
+      pageSize: 25,
+      mode: 'append'
+    };
+
+    // DOM 요소 캐싱
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const fileListContainer = document.getElementById('fileListContainer');
+    const fileList = document.getElementById('fileList');
+    const fileListCount = document.getElementById('fileListCount');
+    const fileSummaryBadge = document.getElementById('fileSummaryBadge');
+    const fileCountText = document.getElementById('fileCountText');
+    const clearFilesBtn = document.getElementById('clearFilesBtn');
+    const runMergeBtn = document.getElementById('runMergeBtn');
+    const modeCards = document.querySelectorAll('.mode-card');
+    const modeRadios = document.querySelectorAll('input[name="mergeMode"]');
+    const keyColumnGroup = document.getElementById('keyColumnGroup');
+    const keyColumnSelect = document.getElementById('keyColumnSelect');
+    const optAddSourceGroup = document.getElementById('optAddSourceGroup');
+    const headerRowInput = document.getElementById('headerRowInput');
+
+    const resultSection = document.getElementById('resultSection');
+    const statFileCount = document.getElementById('statFileCount');
+    const statRowCount = document.getElementById('statRowCount');
+    const statColCount = document.getElementById('statColCount');
+    const statProcessTime = document.getElementById('statProcessTime');
+    const previewThead = document.getElementById('previewThead');
+    const previewTbody = document.getElementById('previewTbody');
+    const previewSearchInput = document.getElementById('previewSearchInput');
+    const pageSizeSelect = document.getElementById('pageSizeSelect');
+    const paginationInfo = document.getElementById('paginationInfo');
+    const currentPageText = document.getElementById('currentPageText');
+    const prevPageBtn = document.getElementById('prevPageBtn');
+    const nextPageBtn = document.getElementById('nextPageBtn');
+    const downloadXlsxBtn = document.getElementById('downloadXlsxBtn');
+    const downloadCsvBtn = document.getElementById('downloadCsvBtn');
+
+    // 드래그 앤 드롭 및 파일 업로드 리스너
+    dropZone.addEventListener('click', () => fileInput.click());
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('border-blue-500', 'bg-blue-50');
+    });
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.classList.remove('border-blue-500', 'bg-blue-50');
+    });
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('border-blue-500', 'bg-blue-50');
+      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        handleFiles(Array.from(e.dataTransfer.files));
+      }
+    });
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files.length > 0) {
+        handleFiles(Array.from(e.target.files));
+      }
+      fileInput.value = ''; // 재선택 가능하게 리셋
+    });
+
+    clearFilesBtn.addEventListener('click', () => {
+      state.files = [];
+      updateFileListUI();
+      updateAvailableColumns();
+    });
+
+    // 모드 탭 변경 리스너
+    modeRadios.forEach(radio => {
+      radio.addEventListener('change', (e) => {
+        state.mode = e.target.value;
+        updateModeUI();
+      });
+    });
+
+    function updateModeUI() {
+      modeCards.forEach(card => {
+        const radio = card.querySelector('input[type="radio"]');
+        if (radio.checked) {
+          card.classList.add('border-blue-600', 'bg-blue-50/40');
+          card.classList.remove('border-transparent');
+        } else {
+          card.classList.remove('border-blue-600', 'bg-blue-50/40');
+          card.classList.add('border-transparent');
+        }
+      });
+
+      if (state.mode === 'key_sum') {
+        keyColumnGroup.classList.remove('hidden');
+        optAddSourceGroup.classList.add('hidden');
+      } else if (state.mode === 'cell_sum') {
+        keyColumnGroup.classList.add('hidden');
+        optAddSourceGroup.classList.add('hidden');
+      } else {
+        keyColumnGroup.classList.add('hidden');
+        optAddSourceGroup.classList.remove('hidden');
+      }
+    }
+
+    // 파일 로드 및 파싱 함수
+    async function handleFiles(newFiles) {
+      const validFiles = newFiles.filter(f => {
+        const ext = f.name.split('.').pop().toLowerCase();
+        return ['xlsx', 'xls', 'csv'].includes(ext);
+      });
+
+      if (validFiles.length === 0) {
+        alert('올바른 엑셀(.xlsx, .xls) 또는 CSV 파일을 선택해주세요.');
+        return;
+      }
+
+      for (const file of validFiles) {
+        const fileObj = {
+          id: Math.random().toString(36).substring(2, 9),
+          file: file,
+          name: file.name,
+          size: (file.size / 1024).toFixed(1) + ' KB',
+          workbook: null,
+          sheets: [],
+          selectedSheet: ''
+        };
+
+        try {
+          const arrayBuffer = await file.arrayBuffer();
+          const workbook = XLSX.read(arrayBuffer, { type: 'array', cellDates: true });
+          fileObj.workbook = workbook;
+          fileObj.sheets = workbook.SheetNames;
+          fileObj.selectedSheet = workbook.SheetNames[0] || '';
+          state.files.push(fileObj);
+        } catch (err) {
+          console.error('파일 읽기 오류:', file.name, err);
+          alert(`[${file.name}] 파일을 읽는 중 오류가 발생했습니다.`);
+        }
+      }
+
+      updateFileListUI();
+      updateAvailableColumns();
+    }
+
+    // 파일 목록 UI 갱신
+    function updateFileListUI() {
+      const count = state.files.length;
+      fileListCount.textContent = count;
+      fileCountText.textContent = count;
+
+      if (count > 0) {
+        fileListContainer.classList.remove('hidden');
+        fileSummaryBadge.classList.remove('hidden');
+        runMergeBtn.disabled = false;
+      } else {
+        fileListContainer.classList.add('hidden');
+        fileSummaryBadge.classList.add('hidden');
+        runMergeBtn.disabled = true;
+      }
+
+      fileList.innerHTML = '';
+      state.files.forEach((fileObj, idx) => {
+        const item = document.createElement('div');
+        item.className = 'flex items-center justify-between p-2.5 bg-slate-50 hover:bg-slate-100/80 rounded-lg border border-slate-200 text-xs transition-colors';
+        
+        let sheetSelectHtml = '';
+        if (fileObj.sheets.length > 1) {
+          sheetSelectHtml = `
+            <select class="sheet-select border border-slate-300 rounded px-1.5 py-0.5 text-[11px] bg-white text-slate-700" data-id="${fileObj.id}">
+              ${fileObj.sheets.map(s => `<option value="${s}" ${s === fileObj.selectedSheet ? 'selected' : ''}>시트: ${s}</option>`).join('')}
+            </select>
+          `;
+        }
+
+        item.innerHTML = `
+          <div class="flex items-center space-x-2.5 overflow-hidden">
+            <span class="w-5 h-5 rounded bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-[10px] flex-shrink-0">
+              ${idx + 1}
+            </span>
+            <div class="truncate">
+              <span class="font-medium text-slate-800">${fileObj.name}</span>
+              <span class="text-slate-400 text-[11px] ml-1">(${fileObj.size})</span>
+            </div>
+            ${sheetSelectHtml}
+          </div>
+          <div class="flex items-center space-x-1 flex-shrink-0">
+            <button class="move-up-btn text-slate-400 hover:text-slate-700 p-1" data-idx="${idx}" title="위로 이동" ${idx === 0 ? 'disabled style="opacity:0.3"' : ''}>▲</button>
+            <button class="move-down-btn text-slate-400 hover:text-slate-700 p-1" data-idx="${idx}" title="아래로 이동" ${idx === state.files.length - 1 ? 'disabled style="opacity:0.3"' : ''}>▼</button>
+            <button class="del-file-btn text-rose-500 hover:text-rose-700 p-1 font-bold ml-1" data-id="${fileObj.id}" title="삭제">✕</button>
+          </div>
+        `;
+        fileList.appendChild(item);
+      });
+
+      // 이벤트 바인딩
+      fileList.querySelectorAll('.sheet-select').forEach(sel => {
+        sel.addEventListener('change', (e) => {
+          const f = state.files.find(x => x.id === e.target.dataset.id);
+          if (f) {
+            f.selectedSheet = e.target.value;
+            updateAvailableColumns();
+          }
+        });
+      });
+
+      fileList.querySelectorAll('.del-file-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          state.files = state.files.filter(x => x.id !== e.target.dataset.id);
+          updateFileListUI();
+          updateAvailableColumns();
+        });
+      });
+
+      fileList.querySelectorAll('.move-up-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const idx = parseInt(btn.dataset.idx);
+          if (idx > 0) {
+            const temp = state.files[idx];
+            state.files[idx] = state.files[idx - 1];
+            state.files[idx - 1] = temp;
+            updateFileListUI();
+          }
+        });
+      });
+
+      fileList.querySelectorAll('.move-down-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const idx = parseInt(btn.dataset.idx);
+          if (idx < state.files.length - 1) {
+            const temp = state.files[idx];
+            state.files[idx] = state.files[idx + 1];
+            state.files[idx + 1] = temp;
+            updateFileListUI();
+          }
+        });
+      });
+    }
+
+    // 첫 번째 파일의 컬럼 목록을 읽어 Key 선택 드롭다운 채우기
+    function updateAvailableColumns() {
+      if (state.files.length === 0) {
+        keyColumnSelect.innerHTML = '<option value="">(파일 업로드 후 컬럼 목록이 표시됩니다)</option>';
+        return;
+      }
+
+      const first = state.files[0];
+      const sheet = first.workbook.Sheets[first.selectedSheet];
+      const headerRowIdx = Math.max(1, parseInt(headerRowInput.value) || 1) - 1;
+      const rawData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+      if (rawData.length > headerRowIdx) {
+        const headers = rawData[headerRowIdx].map(h => String(h || '').trim()).filter(h => h.length > 0);
+        keyColumnSelect.innerHTML = headers.map(h => `<option value="${h}">${h}</option>`).join('');
+      }
+    }
+
+    headerRowInput.addEventListener('change', updateAvailableColumns);
+
+    // 취합 실행 로직
+    runMergeBtn.addEventListener('click', async () => {
+      if (state.files.length === 0) return;
+
+      const startTime = performance.now();
+      const headerRowIdx = Math.max(1, parseInt(headerRowInput.value) || 1) - 1;
+      const optAddSource = document.getElementById('optAddSource').checked;
+      const optTrimSpace = document.getElementById('optTrimSpace').checked;
+      const optSkipEmpty = document.getElementById('optSkipEmpty').checked;
+
+      try {
+        let resultHeaders = [];
+        let resultRows = [];
+
+        if (state.mode === 'append') {
+          // --- 모드 1: 밑으로 이어 붙이기 (세로 병합) ---
+          const headerSet = new Set();
+          const fileParsedData = [];
+
+          // 1) 모든 파일의 컬럼 헤더 수집
+          for (const fileObj of state.files) {
+            const sheet = fileObj.workbook.Sheets[fileObj.selectedSheet];
+            const raw = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
+            if (raw.length <= headerRowIdx) continue;
+
+            const headers = raw[headerRowIdx].map(h => {
+              let str = String(h || '');
+              return optTrimSpace ? str.trim() : str;
+            });
+
+            headers.forEach(h => { if (h) headerSet.add(h); });
+
+            const rows = raw.slice(headerRowIdx + 1);
+            fileParsedData.push({ fileName: fileObj.name, headers, rows });
+          }
+
+          resultHeaders = Array.from(headerSet);
+          if (optAddSource) {
+            resultHeaders.unshift('[출처_파일명]');
+          }
+
+          // 2) 행 데이터 취합
+          for (const item of fileParsedData) {
+            const colIndexMap = {};
+            item.headers.forEach((h, i) => {
+              if (h) colIndexMap[h] = i;
+            });
+
+            for (const row of item.rows) {
+              if (optSkipEmpty && row.every(cell => cell === '' || cell === null || cell === undefined)) {
+                continue; // 빈 행 건너뛰기
+              }
+
+              const newRow = [];
+              if (optAddSource) {
+                newRow.push(item.fileName);
+              }
+
+              for (const header of Array.from(headerSet)) {
+                const srcColIdx = colIndexMap[header];
+                let val = (srcColIdx !== undefined && srcColIdx < row.length) ? row[srcColIdx] : '';
+                if (typeof val === 'string' && optTrimSpace) {
+                  val = val.trim();
+                }
+                newRow.push(val);
+              }
+              resultRows.push(newRow);
+            }
+          }
+
+        } else if (state.mode === 'cell_sum') {
+          // --- 모드 2: 셀 위치별 값 누적 합산 ---
+          let baseHeaders = null;
+          let baseRows = [];
+
+          for (let fIdx = 0; fIdx < state.files.length; fIdx++) {
+            const fileObj = state.files[fIdx];
+            const sheet = fileObj.workbook.Sheets[fileObj.selectedSheet];
+            const raw = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
+            if (raw.length <= headerRowIdx) continue;
+
+            const headers = raw[headerRowIdx].map(h => optTrimSpace ? String(h || '').trim() : String(h || ''));
+            const rows = raw.slice(headerRowIdx + 1);
+
+            if (fIdx === 0) {
+              baseHeaders = [...headers];
+              baseRows = rows.map(r => r.map(c => {
+                const num = Number(c);
+                return (!isNaN(num) && c !== '' && c !== null) ? num : c;
+              }));
+            } else {
+              // 이전 파일 데이터와 누적 합산
+              for (let r = 0; r < rows.length; r++) {
+                if (!baseRows[r]) {
+                  baseRows[r] = [...rows[r]];
+                  continue;
+                }
+                for (let c = 0; c < rows[r].length; c++) {
+                  const val = rows[r][c];
+                  const num = Number(val);
+                  if (!isNaN(num) && val !== '' && val !== null) {
+                    if (typeof baseRows[r][c] === 'number') {
+                      baseRows[r][c] += num;
+                    } else if (!isNaN(Number(baseRows[r][c])) && baseRows[r][c] !== '') {
+                      baseRows[r][c] = Number(baseRows[r][c]) + num;
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          resultHeaders = baseHeaders || [];
+          resultRows = baseRows || [];
+
+        } else if (state.mode === 'key_sum') {
+          // --- 모드 3: 기준 키(Key) 기준 행 그룹화 및 숫자 합산 ---
+          const keyCol = keyColumnSelect.value;
+          if (!keyCol) {
+            alert('합산 기준이 될 키(Key) 컬럼을 선택해주세요.');
+            return;
+          }
+
+          const headerSet = new Set();
+          const parsedFiles = [];
+
+          for (const fileObj of state.files) {
+            const sheet = fileObj.workbook.Sheets[fileObj.selectedSheet];
+            const raw = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
+            if (raw.length <= headerRowIdx) continue;
+
+            const headers = raw[headerRowIdx].map(h => optTrimSpace ? String(h || '').trim() : String(h || ''));
+            headers.forEach(h => { if (h) headerSet.add(h); });
+            const rows = raw.slice(headerRowIdx + 1);
+            parsedFiles.push({ headers, rows });
+          }
+
+          resultHeaders = Array.from(headerSet);
+          const keyMap = new Map(); // key -> row object { [col]: val }
+
+          for (const item of parsedFiles) {
+            const keyIdx = item.headers.indexOf(keyCol);
+            if (keyIdx === -1) continue;
+
+            for (const row of item.rows) {
+              const keyVal = String(row[keyIdx] || '').trim();
+              if (!keyVal && optSkipEmpty) continue;
+
+              if (!keyMap.has(keyVal)) {
+                // 초기 생성
+                const rowObj = {};
+                resultHeaders.forEach(h => { rowObj[h] = ''; });
+                rowObj[keyCol] = keyVal;
+
+                item.headers.forEach((h, idx) => {
+                  if (idx < row.length) {
+                    const val = row[idx];
+                    const num = Number(val);
+                    rowObj[h] = (!isNaN(num) && val !== '' && val !== null) ? num : val;
+                  }
+                });
+                keyMap.set(keyVal, rowObj);
+              } else {
+                // 기존 데이터에 합산
+                const existing = keyMap.get(keyVal);
+                item.headers.forEach((h, idx) => {
+                  if (idx < row.length && h !== keyCol) {
+                    const val = row[idx];
+                    const num = Number(val);
+                    if (!isNaN(num) && val !== '' && val !== null) {
+                      if (typeof existing[h] === 'number') {
+                        existing[h] += num;
+                      } else {
+                        existing[h] = num;
+                      }
+                    } else if (!existing[h] && val) {
+                      existing[h] = val;
+                    }
+                  }
+                });
+              }
+            }
+          }
+
+          // Map을 배열로 변환
+          resultRows = Array.from(keyMap.values()).map(obj => {
+            return resultHeaders.map(h => obj[h] !== undefined ? obj[h] : '');
+          });
+        }
+
+        const endTime = performance.now();
+        const duration = Math.round(endTime - startTime);
+
+        // 결과 저장 및 미리보기 렌더링
+        state.mergedResult = { headers: resultHeaders, rows: resultRows };
+        state.filteredRows = [...resultRows];
+        state.currentPage = 1;
+
+        statFileCount.textContent = `${state.files.length}개`;
+        statRowCount.textContent = `${resultRows.length.toLocaleString()}행`;
+        statColCount.textContent = `${resultHeaders.length}열`;
+        statProcessTime.textContent = `${duration}ms`;
+
+        renderPreviewTable();
+        resultSection.classList.remove('hidden');
+        resultSection.scrollIntoView({ behavior: 'smooth' });
+
+      } catch (error) {
+        console.error('취합 중 오류 발생:', error);
+        alert('데이터 취합 중 오류가 발생했습니다: ' + error.message);
+      }
+    });
+
+    // 미리보기 테이블 렌더링
+    function renderPreviewTable() {
+      if (!state.mergedResult) return;
+
+      const { headers } = state.mergedResult;
+      const rows = state.filteredRows;
+
+      // 헤더 생성
+      previewThead.innerHTML = `
+        <tr>
+          <th class="px-3 py-2 border-b border-slate-200 bg-slate-100 text-slate-500 w-12 text-center">#</th>
+          ${headers.map(h => `<th class="px-3 py-2 border-b border-slate-200 whitespace-nowrap">${h}</th>`).join('')}
+        </tr>
+      `;
+
+      // 페이지네이션 슬라이스
+      const totalRows = rows.length;
+      const totalPages = Math.max(1, Math.ceil(totalRows / state.pageSize));
+      if (state.currentPage > totalPages) state.currentPage = totalPages;
+
+      const startIdx = (state.currentPage - 1) * state.pageSize;
+      const endIdx = Math.min(startIdx + state.pageSize, totalRows);
+      const pageRows = rows.slice(startIdx, endIdx);
+
+      if (pageRows.length === 0) {
+        previewTbody.innerHTML = `
+          <tr>
+            <td colspan="${headers.length + 1}" class="px-4 py-8 text-center text-slate-400">
+              표시할 데이터가 없습니다.
+            </td>
+          </tr>
+        `;
+      } else {
+        previewTbody.innerHTML = pageRows.map((row, idx) => `
+          <tr class="hover:bg-slate-50/80 transition-colors">
+            <td class="px-3 py-2 text-center text-slate-400 text-[11px] bg-slate-50/50">${startIdx + idx + 1}</td>
+            ${row.map(cell => {
+              const isNum = typeof cell === 'number';
+              const displayVal = isNum ? cell.toLocaleString() : (cell !== null && cell !== undefined ? String(cell) : '');
+              return `<td class="px-3 py-2 whitespace-nowrap ${isNum ? 'text-right font-mono' : ''}">${displayVal}</td>`;
+            }).join('')}
+          </tr>
+        `).join('');
+      }
+
+      // 페이지네이션 컨트롤 업데이트
+      paginationInfo.textContent = totalRows > 0 ? `${startIdx + 1} - ${endIdx} / 총 ${totalRows.toLocaleString()}개 행` : '총 0개 행';
+      currentPageText.textContent = `${state.currentPage} / ${totalPages}`;
+      prevPageBtn.disabled = state.currentPage <= 1;
+      nextPageBtn.disabled = state.currentPage >= totalPages;
+    }
+
+    // 검색 필터 리스너
+    previewSearchInput.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      if (!state.mergedResult) return;
+
+      if (!q) {
+        state.filteredRows = [...state.mergedResult.rows];
+      } else {
+        state.filteredRows = state.mergedResult.rows.filter(row => {
+          return row.some(cell => String(cell).toLowerCase().includes(q));
+        });
+      }
+      state.currentPage = 1;
+      renderPreviewTable();
+    });
+
+    pageSizeSelect.addEventListener('change', (e) => {
+      state.pageSize = parseInt(e.target.value);
+      state.currentPage = 1;
+      renderPreviewTable();
+    });
+
+    prevPageBtn.addEventListener('click', () => {
+      if (state.currentPage > 1) {
+        state.currentPage--;
+        renderPreviewTable();
+      }
+    });
+
+    nextPageBtn.addEventListener('click', () => {
+      const totalPages = Math.ceil(state.filteredRows.length / state.pageSize);
+      if (state.currentPage < totalPages) {
+        state.currentPage++;
+        renderPreviewTable();
+      }
+    });
+
+    // 엑셀(.xlsx) 다운로드
+    downloadXlsxBtn.addEventListener('click', () => {
+      if (!state.mergedResult || state.mergedResult.rows.length === 0) {
+        alert('다운로드할 취합 데이터가 없습니다.');
+        return;
+      }
+
+      const { headers, rows } = state.mergedResult;
+      const aoa = [headers, ...rows];
+      const ws = XLSX.utils.aoa_to_sheet(aoa);
+
+      // 열 너비 자동 조정
+      const colWidths = headers.map((h, i) => {
+        let maxLen = String(h).length;
+        for (let r = 0; r < Math.min(rows.length, 50); r++) {
+          const valStr = String(rows[r][i] || '');
+          if (valStr.length > maxLen) maxLen = valStr.length;
+        }
+        return { wch: Math.min(Math.max(maxLen + 4, 10), 50) };
+      });
+      ws['!cols'] = colWidths;
+
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, '취합결과');
+
+      const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+      const timeStr = new Date().toTimeString().slice(0, 8).replace(/:/g, '');
+      XLSX.writeFile(wb, `취합데이터_${dateStr}_${timeStr}.xlsx`);
+    });
+
+    // CSV 다운로드 (UTF-8 with BOM)
+    downloadCsvBtn.addEventListener('click', () => {
+      if (!state.mergedResult || state.mergedResult.rows.length === 0) {
+        alert('다운로드할 취합 데이터가 없습니다.');
+        return;
+      }
+
+      const { headers, rows } = state.mergedResult;
+      const aoa = [headers, ...rows];
+
+      const csvContent = aoa.map(row => {
+        return row.map(cell => {
+          let str = (cell === null || cell === undefined) ? '' : String(cell);
+          if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+            str = `"${str.replace(/"/g, '""')}"`;
+          }
+          return str;
+        }).join(',');
+      }).join('\r\n');
+
+      const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+      a.href = url;
+      a.download = `취합데이터_${dateStr}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+
+    // 초기 모드 세팅
+    updateModeUI();
+  </script>
+</body>
+</html>
