@@ -79,7 +79,7 @@
             <h1 class="text-2xl font-bold tracking-tight">USD / JPY 환율 차트</h1>
             <span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 flex items-center gap-1">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-              매일 자동 동기화
+              실시간 시세 연동
             </span>
           </div>
           <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">10년 시계열 데이터 분석 및 인터랙티브 환율 대시보드</p>
@@ -105,12 +105,27 @@
       </div>
     </header>
 
+    <!-- Data Source Info Banner -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-4 py-2.5 rounded-xl bg-indigo-50/80 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/60 text-xs text-indigo-950 dark:text-indigo-200">
+      <div class="flex items-center gap-2">
+        <i data-lucide="database" class="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0"></i>
+        <span><strong>데이터 출처:</strong> 10년 시계열(유럽중앙은행 ECB 공식) + 실시간 현재가(ExchangeRate-API 글로벌 외환 피드)</span>
+      </div>
+      <div id="live-sync-indicator" class="flex items-center gap-1.5 text-[11px] text-indigo-600 dark:text-indigo-400 font-mono">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span id="live-sync-text">실시간 데이터 연동 중</span>
+      </div>
+    </div>
+
     <!-- Key Metrics Cards Section -->
     <section class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
       <!-- Current Rate Card -->
       <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 shadow-sm relative overflow-hidden">
         <div class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 flex items-center justify-between">
-          <span>현재 환율 (Latest)</span>
+          <span class="flex items-center gap-1.5">
+            <span>현재 실시간 환율</span>
+            <span class="px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">LIVE</span>
+          </span>
           <i data-lucide="dollar-sign" class="w-4 h-4 text-indigo-500 opacity-70"></i>
         </div>
         <div class="flex items-baseline gap-2">
@@ -121,7 +136,7 @@
           <span id="metric-change-icon"></span>
           <span id="metric-change-value">--</span>
           <span id="metric-change-pct">(--%)</span>
-          <span class="text-[10px] text-gray-400 font-normal ml-0.5">전일 대비</span>
+          <span class="text-[10px] text-gray-400 font-normal ml-0.5">전일 종가 대비</span>
         </div>
       </div>
 
@@ -352,7 +367,9 @@
     <!-- Footer -->
     <footer class="pt-6 pb-10 text-center text-xs text-gray-400 space-y-2 border-t border-gray-200 dark:border-gray-800/80">
       <p>USD/JPY 10-Year Realtime & Daily Exchange Rate Dashboard • Standalone Single-File Application</p>
-      <p class="text-[11px] text-gray-500">GitHub Pages 또는 브라우저 로컬 파일로 배포 시 항상 최신 외환 API 데이터를 불러옵니다.</p>
+      <p class="text-[11px] text-gray-500">
+        데이터 출처: <strong>유럽중앙은행 (ECB)</strong> 일일 공식 통계 및 <strong>ExchangeRate-API</strong> 글로벌 외환 시장 실시간 피드
+      </p>
     </footer>
 
   </div>
@@ -623,7 +640,7 @@
       });
     }
 
-    // Fetch USD/JPY 10-Year Data from Frankfurter API
+    // Fetch USD/JPY 10-Year Data (ECB via Frankfurter) + Realtime Rate (ExchangeRate-API)
     async function fetchExchangeRates() {
       chartLoader.classList.remove('hidden');
       chartError.classList.add('hidden');
@@ -636,12 +653,11 @@
         
         const startDateStr = tenYearsAgo.toISOString().split('T')[0];
         
-        // Frankfurter API (CORS enabled, open-source ECB data)
+        // 1. Historical 10-Year Data from Frankfurter API (ECB statistics)
         const apiUrl = `https://api.frankfurter.dev/v1/${startDateStr}..?from=USD&to=JPY`;
-        
         const response = await fetch(apiUrl);
         if (!response.ok) {
-          throw new Error(`API 응답 실패 (Status: ${response.status})`);
+          throw new Error(`과거 데이터 API 응답 실패 (Status: ${response.status})`);
         }
 
         const data = await response.json();
@@ -663,6 +679,50 @@
           throw new Error('수신된 환율 데이터가 비어 있습니다.');
         }
 
+        // 2. Real-time Live Rate from ExchangeRate-API
+        let isLiveApplied = false;
+        let liveUpdateTimeStr = '';
+        try {
+          const liveRes = await fetch('https://open.er-api.com/v6/latest/USD');
+          if (liveRes.ok) {
+            const liveData = await liveRes.json();
+            if (liveData.rates && liveData.rates.JPY) {
+              const liveRate = parseFloat(liveData.rates.JPY.toFixed(2));
+              
+              // Get local today date string (YYYY-MM-DD)
+              const now = new Date();
+              const year = now.getFullYear();
+              const month = String(now.getMonth() + 1).padStart(2, '0');
+              const day = String(now.getDate()).padStart(2, '0');
+              const localTodayStr = `${year}-${month}-${day}`;
+
+              const lastItem = parsed[parsed.length - 1];
+              if (lastItem.time === localTodayStr) {
+                lastItem.value = liveRate;
+              } else {
+                parsed.push({
+                  time: localTodayStr,
+                  value: liveRate
+                });
+              }
+              isLiveApplied = true;
+              liveUpdateTimeStr = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+            }
+          }
+        } catch (liveErr) {
+          console.warn('실시간 환율 API 호출 실패 (ECB 기준 유지):', liveErr);
+        }
+
+        // Update live indicator text
+        const syncTextEl = document.getElementById('live-sync-text');
+        if (syncTextEl) {
+          if (isLiveApplied) {
+            syncTextEl.innerText = `실시간 시세 반영 중 (${liveUpdateTimeStr})`;
+          } else {
+            syncTextEl.innerText = `ECB 공시 환율 기준`;
+          }
+        }
+
         rawData = parsed;
 
         // Set Data to Chart
@@ -674,8 +734,8 @@
         chart.timeScale().fitContent();
 
         // Update Dashboard Cards & Tables
-        updateMetrics(rawData);
-        updateRecentTable(rawData);
+        updateMetrics(rawData, isLiveApplied);
+        updateRecentTable(rawData, isLiveApplied);
         updateLegendToLatest();
 
         // Setup Currency Converter Default
@@ -694,7 +754,7 @@
     }
 
     // Update Top Summary Metric Cards
-    function updateMetrics(data) {
+    function updateMetrics(data, isLive = false) {
       if (data.length === 0) return;
 
       const latest = data[data.length - 1];
@@ -747,7 +807,7 @@
       const totalSum = data.reduce((acc, curr) => acc + curr.value, 0);
       const avg10y = totalSum / data.length;
       document.getElementById('metric-10y-avg').innerText = `${avg10y.toFixed(2)} JPY`;
-      document.getElementById('metric-last-date').innerText = latest.time;
+      document.getElementById('metric-last-date').innerText = isLive ? `${latest.time} (실시간)` : latest.time;
 
       document.getElementById('data-total-count').innerText = `총 ${data.length.toLocaleString()}개 거래일 데이터`;
 
@@ -755,7 +815,7 @@
     }
 
     // Update Recent History Table
-    function updateRecentTable(data) {
+    function updateRecentTable(data, isLive = false) {
       const tbody = document.getElementById('recent-table-body');
       tbody.innerHTML = '';
 
@@ -777,10 +837,15 @@
           diffSign = isPositive ? '+' : '';
         }
 
+        const isTodayLive = isLive && index === 0;
+        const dateDisplay = isTodayLive 
+          ? `<span class="inline-flex items-center gap-1">${item.time} <span class="px-1 py-0.2 text-[9px] font-bold rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">LIVE</span></span>`
+          : item.time;
+
         const tr = document.createElement('tr');
         tr.className = 'hover:bg-gray-50 dark:hover:bg-gray-800/40 transition';
         tr.innerHTML = `
-          <td class="py-2.5 px-3 text-gray-700 dark:text-gray-300 font-medium">${item.time}</td>
+          <td class="py-2.5 px-3 text-gray-700 dark:text-gray-300 font-medium">${dateDisplay}</td>
           <td class="py-2.5 px-3 text-gray-900 dark:text-white font-bold">${item.value.toFixed(2)}</td>
           <td class="py-2.5 px-3 ${diffClass}">${isNeutral ? '-' : `${diffSign}${diff.toFixed(2)}`}</td>
           <td class="py-2.5 px-3 text-right ${diffClass}">${isNeutral ? '0.00%' : `${diffSign}${diffPct.toFixed(2)}%`}</td>
