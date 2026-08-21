@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill과 작업룰 지시내용</title>
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --primary-dark: #1557b0;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-main: #202124;
+            --text-sub: #5f6368;
+            --border-color: #dadce0;
+            --tag-rule: #e8f0fe;
+            --tag-skill: #e6f4ea;
+            --accent-green: #137333;
+            --step-blue: #3b82f6;
+            --step-blue-dark: #2563eb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            line-height: 1.7;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+        }
+
+        .doc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .doc-header h1 {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 9px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: #ffffff;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background: #f1f3f4;
+        }
+
+        .section-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 28px;
+            margin-bottom: 30px;
+        }
+
+        .section-badge-rule {
+            display: inline-block;
+            background: var(--tag-rule);
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .section-badge-skill {
+            display: inline-block;
+            background: var(--tag-skill);
+            color: var(--accent-green);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 18px;
+            color: var(--text-main);
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .content-box {
+            font-size: 14px;
+        }
+
+        .content-box h2 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #202124;
+            margin-top: 22px;
+            margin-bottom: 12px;
+            padding-left: 8px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .section-card:nth-of-type(2) .content-box h2 {
+            border-left-color: var(--accent-green);
+        }
+
+        /* 1단계~5단계 소제목 스타일: 연한 파랑색 적용 및 상하 여백 대폭 확장 */
+        .content-box h3.step-title {
+            font-size: 15.5px;
+            font-weight: 700;
+            color: var(--step-blue-dark);
+            background: #eff6ff;
+            padding: 8px 14px;
+            border-radius: 6px;
+            border-left: 3px solid var(--step-blue);
+            margin-top: 36px;       /* 앞 단계 끝문장과의 위쪽 간격 */
+            margin-bottom: 14px;    /* 아래 본문과의 간격 */
+            display: flex;
+            align-items: center;
+        }
+
+        .content-box h3.step-title.first-step {
+            margin-top: 20px;
+        }
+
+        .content-box p {
+            margin-bottom: 12px;
+        }
+
+        .content-box ul, .content-box ol {
+            margin-left: 22px;
+            margin-bottom: 16px;
+        }
+
+        .content-box li {
+            margin-bottom: 8px;
+        }
+
+        .content-box hr {
+            border: none;
+            border-top: 1px solid #edf0f2;
+            margin: 22px 0;
+        }
+
+        .highlight-list {
+            background: #fafbfc;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 14px 18px 14px 34px;
+            margin-bottom: 12px;
+        }
+
+        .highlight-list-skill {
+            background: #f6fbf7;
+            border: 1px solid #d1eed8;
+            border-radius: 8px;
+            padding: 14px 18px 14px 34px;
+            margin-bottom: 18px;
+        }
+
+        .source-box {
+            background: #f8fafd;
+            border: 1px solid #c2e7ff;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-weight: 600;
+            color: #0b57d0;
+            margin-bottom: 14px;
+        }
+
+        .grid-mapping {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .grid-item {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 13px;
+        }
+
+        .grid-item strong {
+            color: #1a73e8;
+        }
+
+        .footer {
+            border-top: 1px solid var(--border-color);
+            padding-top: 18px;
+            font-size: 12px;
+            color: var(--text-sub);
+            text-align: center;
+        }
+
+        @media print {
+            body { padding: 0; background: #fff; }
+            .container { box-shadow: none; max-width: 100%; padding: 0; }
+            .btn-group { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 상단 헤더 -->
+        <div class="doc-header">
+            <div>
+                <h1>Skill 및 작업 룰 지시내용</h1>
+            </div>
+            <div class="btn-group">
+                <button class="btn" onclick="window.print()">🖨️ 인쇄 / PDF 저장</button>
+            </div>
+        </div>
+
+        <!-- 1. 작업 룰 섹션 -->
+        <div class="section-card">
+            <span class="section-badge-rule">📋 작업 룰 (Rule)</span>
+            <div class="section-title">1. 네이버 증권 국내 종목 재무 컨센서스 자동 수집 규칙</div>
+
+            <div class="content-box">
+                <h2>1. 개요 및 발동 조건 (Trigger)</h2>
+                <p>사용자가 국내 상장 기업의 실적 추정치(컨센서스), 재무 전망치(EPS, 영업이익, 매출액, 순이익, PER, BPS, ROE 등)를 연간 또는 분기 단위로 요청할 때 자동으로 적용된다.</p>
+                <div class="highlight-list">
+                    <strong>예시 요청:</strong>
+                    <ul style="margin-top: 6px; margin-bottom: 0;">
+                        <li>"삼성전자 2026-2027 연간 EPS 가져와줘"</li>
+                        <li>"SK하이닉스 2026년 4분기 매출액, 영업이익 추정치 보여줘"</li>
+                        <li>"현대차 2026년 영업이익 컨센서스 정리해줘"</li>
+                    </ul>
+                </div>
+
+                <hr>
+
+                <h2>2. 데이터 소스 및 추출 경로</h2>
+                <div class="source-box">
+                    출처: 네이버 증권 베타(stock.naver.com) &gt; 삼성전자 &gt; [종목분석] &gt; [컨센서스] 탭
+                </div>
+
+                <hr>
+
+                <h2>3. 지원 지표 및 데이터 매핑</h2>
+                <p>수신된 JsonData 목록에서 사용자가 요구한 지표와 일치하는 항목을 추출한다:</p>
+                <div class="grid-mapping">
+                    <div class="grid-item"><strong>매출액</strong>: SALES (억원)</div>
+                    <div class="grid-item"><strong>전년비</strong>: YOY (%)</div>
+                    <div class="grid-item"><strong>영업이익</strong>: OP (억원)</div>
+                    <div class="grid-item"><strong>당기순이익</strong>: NP (억원)</div>
+                    <div class="grid-item"><strong>EPS</strong>: EPS (원)</div>
+                    <div class="grid-item"><strong>BPS</strong>: BPS (원)</div>
+                    <div class="grid-item"><strong>PER</strong>: PER (배)</div>
+                    <div class="grid-item"><strong>PBR</strong>: PBR (배)</div>
+                    <div class="grid-item"><strong>ROE</strong>: ROE (%)</div>
+                    <div class="grid-item"><strong>EV/EBITDA</strong>: EV (배)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. 스킬 섹션 -->
+        <div class="section-card">
+            <span class="section-badge-skill">🧠 스킬 (Skill)</span>
+            <div class="section-title">2. 기업 분석 및 밸류에이션 스킬 (Stock Company Analysis)</div>
+
+            <div class="content-box">
+                <!-- 스킬 예시 요청 박스 추가 -->
+                <div class="highlight-list-skill">
+                    <strong style="color: var(--accent-green);">예시 요청:</strong>
+                    <ul style="margin-top: 6px; margin-bottom: 0;">
+                        <li>"삼성전자 분석해줘"</li>
+                        <li>"AAPL 밸류에이션 및 실적 분석 보고서 작성해줘"</li>
+                        <li>"NVDA 적정주가 및 투자 가치 평가해줘"</li>
+                        <li>"SK하이닉스 사업 모델과 경제적 해자(Moat) 분석해줘"</li>
+                    </ul>
+                </div>
+
+                <h2>1. 분석 표준 절차 (5-Step Workflow)</h2>
+
+                <h3 class="step-title first-step">1단계: 기업 개요 및 비즈니스 모델(BM) 파악</h3>
+                <ol>
+                    <li><strong>사업 부문 및 매출 비중</strong>: 주요 제품/서비스 라인업 및 부문별 매출/영업이익 기여도 확인.</li>
+                    <li><strong>수익 창출 구조</strong>: 원재료 가격, 판가(P), 판매량(Q), 비용 구조(C) 분석.</li>
+                    <li><strong>전방 산업 및 시장 점유율</strong>: 속한 산업의 사이클 위치 및 시장 점유율(Market Share) 파악.</li>
+                </ol>
+
+                <h3 class="step-title">2단계: 재무제표 및 주요 지표 분석 (최근 3~5개년 &amp; 최근 분기)</h3>
+                <ol>
+                    <li><strong>성장성</strong>: 매출액 증가율, 영업이익 및 순이익 성장률 (YoY, QoQ).</li>
+                    <li><strong>수익성</strong>: 영업이익률(OPM), 순이익률(NPM), 자기자본이익률(ROE), 투하자본이익률(ROIC).</li>
+                    <li><strong>안전성</strong>: 부채비율(100% 이하 권장), 유동비율(150% 이상 권장), 이자보상배율, 순차입금 비율.</li>
+                    <li><strong>현금흐름</strong>: 영업활동현금흐름(지속적인 + 여부), 잉여현금흐름(FCF), CAPEX(설비투자) 추이.</li>
+                </ol>
+
+                <h3 class="step-title">3단계: 경쟁 우위(Economic Moat) 및 산업 환경 평가</h3>
+                <ol>
+                    <li><strong>경제적 해자 요인 검토</strong>:
+                        <ul>
+                            <li>무형자산 (브랜드 가치, 특허, 라이선스)</li>
+                            <li>전환 비용 (고객 락인 효과)</li>
+                            <li>네트워크 효과 (사용자 증가에 따른 가치 증대)</li>
+                            <li>원가 우위 (규모의 경제, 독점적 유통망)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Peer Group(경쟁사) 비교</strong>: 동일 업종 대표 경쟁사 대비 차별화된 강점 및 약점.</li>
+                </ol>
+
+                <h3 class="step-title">4단계: 밸류에이션 및 리스크 점검</h3>
+                <ol>
+                    <li><strong>상대 가치 평가</strong>:
+                        <ul>
+                            <li>PER (주가수익비율), PBR (주가순자산비율), PSR, EV/EBITDA.</li>
+                            <li>과거 5년 밴드(최고/최저/중간값) 및 동종업계 평균 배수와의 비교.</li>
+                        </ul>
+                    </li>
+                    <li><strong>핵심 리스크 요인 도출</strong>:
+                        <ul>
+                            <li>거시경제/환율/금리 리스크, 지정학적 리스크, 규제 및 정책 변수, 지배구조 및 오너 리스크.</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h3 class="step-title">5단계: 표준 보고서 작성 및 출력</h3>
+                <ul>
+                    <li>양식을 기반으로 완성도 높은 투자 분석 보고서를 생성합니다.</li>
+                    <li>단순 낙관론을 지양하고, <strong>상방 기회 요인(Bull Case)</strong>과 <strong>하방 위험 요인(Bear Case)</strong>을 균형 있게 기술합니다.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span>Skill 및 작업 룰 지시내용 대시보드</span>
+        </div>
+    </div>
+</body>
+</html>
