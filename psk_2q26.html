@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>피에스케이(319660) 2026년 2분기(2Q26) 확정 실적 심층 분석 리포트</title>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <!-- FontAwesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0f172a;
+      --primary-light: #38bdf8;
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --accent-amber: #f59e0b;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-subtle: #f1f5f9;
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -2px rgba(0,0,0,0.05);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.05);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 28px 18px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    /* Top Navigation Bar */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .back-btn:hover {
+      background: #f0f9ff;
+      border-color: var(--primary-light);
+      color: var(--primary);
+      transform: translateX(-2px);
+    }
+    .report-date {
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Header Hero Card */
+    .header-card {
+      background: linear-gradient(135deg, #0369a1 0%, #0f172a 60%, #1e293b 100%);
+      color: #ffffff;
+      border-radius: var(--radius-lg);
+      padding: 34px 38px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+    .header-card::after {
+      content: "";
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(56,189,248,0.25) 0%, rgba(0,0,0,0) 70%);
+      pointer-events: none;
+    }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+    .badge-group { display: flex; gap: 8px; flex-wrap: wrap; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .badge-surprise { background: rgba(245,158,11,0.3); color: #fde68a; border: 1px solid rgba(253,230,138,0.4); }
+    .badge-target { background: rgba(16,185,129,0.25); color: #a7f3d0; border: 1px solid rgba(167,243,208,0.3); }
+    .badge-source { background: rgba(255,255,255,0.12); color: #f1f5f9; }
+
+    .company-title h1 {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .ticker-code { font-size: 16px; font-weight: 500; color: #94a3b8; }
+    .company-tagline {
+      font-size: 15px;
+      color: #e2e8f0;
+      max-width: 950px;
+      line-height: 1.55;
+    }
+
+    /* KPI Summary Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 14px;
+      margin-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      padding-top: 20px;
+    }
+    .kpi-item { display: flex; flex-direction: column; gap: 4px; }
+    .kpi-label { font-size: 12px; color: #94a3b8; font-weight: 500; }
+    .kpi-value { font-size: 21px; font-weight: 800; color: #ffffff; }
+    .kpi-sub { font-size: 12px; font-weight: 600; }
+    .kpi-sub.up { color: #f87171; }
+    .kpi-sub.green { color: #4ade80; }
+
+    /* Section Card */
+    .section-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 2px solid var(--surface-subtle);
+      padding-bottom: 10px;
+    }
+    .section-title i { color: var(--primary); }
+
+    /* Highlights Banner */
+    .highlight-box {
+      background: linear-gradient(135deg, #f0f9ff 0%, #f0fdf4 100%);
+      border: 1px solid #bae6fd;
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .highlight-box h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0369a1;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .points-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .point-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14.5px;
+      line-height: 1.55;
+    }
+    .point-num {
+      background: #0284c7;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Grid 2 Column */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 860px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    /* Chart Container */
+    .chart-container {
+      position: relative;
+      height: 310px;
+      width: 100%;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+    }
+
+    /* Tables */
+    .table-responsive {
+      overflow-x: auto;
+      margin-top: 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+      text-align: right;
+      white-space: nowrap;
+    }
+    th, td { padding: 11px 14px; border-bottom: 1px solid var(--border); }
+    th {
+      background: #f8fafc;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-align: center;
+    }
+    th.metric-head, td.metric-name {
+      text-align: left;
+      font-weight: 600;
+      position: sticky;
+      left: 0;
+      background: #ffffff;
+      z-index: 1;
+    }
+    th.metric-head { background: #f8fafc; }
+    tr:hover td { background-color: #f1f5f9; }
+    tr.highlight-row { background-color: #f8fafc; font-weight: 700; }
+    td.highlight-col, th.highlight-col {
+      background-color: #f0f9ff !important;
+      color: #0369a1 !important;
+      font-weight: 700;
+    }
+    .text-up { color: var(--accent-red); font-weight: 600; }
+    .text-down { color: var(--primary); font-weight: 600; }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 30px;
+      padding: 20px;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Top Navigation -->
+    <div class="top-nav">
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a href="index.html" class="back-btn"><i class="fa-solid fa-house"></i> 아카이브 메인</a>
+        <a href="psk.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> 피에스케이 종합 보고서</a>
+      </div>
+      <a href="psk.html" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i> 피에스케이 종합 기업분석 보고서로 이동
+      </a>
+      <div class="report-date">
+        <i class="fa-regular fa-calendar-check"></i> 공시 기준: 2026.06 반기보고서 (2026.08.14 DART 접수)
+      </div>
+    </div>
+
+    <!-- Header Hero Card -->
+    <div class="header-card">
+      <div class="header-top">
+        <div class="company-title">
+          <h1>피에스케이 2026년 2분기 확정 실적 심층 분석</h1>
+          <div class="badge-group">
+            <span class="badge badge-surprise"><i class="fa-solid fa-fire"></i> 어닝 서프라이즈</span>
+            <span class="badge badge-target"><i class="fa-solid fa-percent"></i> 2Q OPM 30.01%</span>
+            <span class="badge badge-source"><i class="fa-solid fa-file-invoice"></i> DART 공시 검증</span>
+          </div>
+        </div>
+      </div>
+      <p class="company-tagline">
+        2026년 2분기 <strong>매출액 1,674.7억 원(+54.3% YoY), 영업이익 502.6억 원(+144.0% YoY)</strong>을 기록하며 분기 사상 최대 실적을 달성했습니다.
+        상반기 누적 영업이익은 <strong>974.4억 원(+125.6% YoY, OPM 30.07%)</strong>에 달해 연간 영업이익 2,000억 원 돌파가 확실시됩니다.
+      </p>
+
+      <!-- KPI Summary -->
+      <div class="kpi-grid">
+        <div class="kpi-item">
+          <span class="kpi-label">2Q26 확정 매출액</span>
+          <span class="kpi-value">1,674.7 억</span>
+          <span class="kpi-sub up">+54.3% YoY | +6.9% QoQ</span>
+        </div>
+        <div class="kpi-item">
+          <span class="kpi-label">2Q26 확정 영업이익</span>
+          <span class="kpi-value">502.6 억</span>
+          <span class="kpi-sub up">+144.0% YoY (OPM 30.01%)</span>
+        </div>
+        <div class="kpi-item">
+          <span class="kpi-label">2Q26 확정 순이익</span>
+          <span class="kpi-value">439.5 억</span>
+          <span class="kpi-sub up">+136.3% YoY (NPM 26.24%)</span>
+        </div>
+        <div class="kpi-item">
+          <span class="kpi-label">2Q26 주당순익 (EPS)</span>
+          <span class="kpi-value">1,516 원</span>
+          <span class="kpi-sub green">상반기 누적 2,933원</span>
+        </div>
+        <div class="kpi-item">
+          <span class="kpi-label">1H26 누적 영업이익</span>
+          <span class="kpi-value">974.4 억</span>
+          <span class="kpi-sub up">+125.6% YoY</span>
+        </div>
+        <div class="kpi-item">
+          <span class="kpi-label">2026.06 말 보유 현금</span>
+          <span class="kpi-value">1,463 억</span>
+          <span class="kpi-sub green">부채비율 22.06%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 1: Detailed Income Statement & Balance Sheet Comparison -->
+    <div class="section-card">
+      <div class="section-title">
+        <i class="fa-solid fa-table"></i> 1. 2026년 2분기 및 상반기 손익계산서 세부 내역 (K-IFRS 연결)
+      </div>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th class="metric-head">주요 계정 (단위: 억원)</th>
+              <th>2025.2Q (전년동기)</th>
+              <th>2026.1Q (전분기)</th>
+              <th class="highlight-col">2026.2Q (당기)</th>
+              <th>YoY 증감률</th>
+              <th>QoQ 증감률</th>
+              <th class="highlight-col">2026 상반기 누적</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="highlight-row">
+              <td class="metric-name">매출액 (수익)</td>
+              <td>1,085.1</td>
+              <td>1,566.0</td>
+              <td class="highlight-col text-up">1,674.7</td>
+              <td class="text-up">+54.3%</td>
+              <td class="text-up">+6.9%</td>
+              <td class="highlight-col text-up">3,240.7 (+54.0%)</td>
+            </tr>
+            <tr>
+              <td class="metric-name">매출원가</td>
+              <td>563.6</td>
+              <td>794.6</td>
+              <td>802.9</td>
+              <td>+42.5%</td>
+              <td>+1.0%</td>
+              <td>1,597.4</td>
+            </tr>
+            <tr class="highlight-row">
+              <td class="metric-name">매출총이익 (GPM)</td>
+              <td>521.5 (48.1%)</td>
+              <td>771.4 (49.3%)</td>
+              <td class="highlight-col text-up">871.9 (52.1%)</td>
+              <td class="text-up">+67.2%</td>
+              <td class="text-up">+13.0%</td>
+              <td class="highlight-col text-up">1,643.2 (50.7%)</td>
+            </tr>
+            <tr>
+              <td class="metric-name">판매비와관리비</td>
+              <td>315.5</td>
+              <td>299.6</td>
+              <td>369.2</td>
+              <td>+17.0%</td>
+              <td>+23.2%</td>
+              <td>668.8</td>
+            </tr>
+            <tr class="highlight-row">
+              <td class="metric-name">영업이익</td>
+              <td>206.0</td>
+              <td>471.8</td>
+              <td class="highlight-col text-up">502.6</td>
+              <td class="text-up">+144.0%</td>
+              <td class="text-up">+6.5%</td>
+              <td class="highlight-col text-up">974.4 (+125.6%)</td>
+            </tr>
+            <tr>
+              <td class="metric-name">영업이익률 (OPM)</td>
+              <td>18.96%</td>
+              <td>30.13%</td>
+              <td class="highlight-col text-up">30.01%</td>
+              <td class="text-up">+11.05%p</td>
+              <td>-0.12%p</td>
+              <td class="highlight-col text-up">30.07% (+9.55%p)</td>
+            </tr>
+            <tr>
+              <td class="metric-name">법인세차감전순이익</td>
+              <td>220.2</td>
+              <td>512.3</td>
+              <td class="highlight-col">548.9</td>
+              <td class="text-up">+149.3%</td>
+              <td>+7.1%</td>
+              <td class="highlight-col">1,061.2 (+146.5%)</td>
+            </tr>
+            <tr class="highlight-row">
+              <td class="metric-name">당기순이익 (지배주주)</td>
+              <td>186.0</td>
+              <td>410.1</td>
+              <td class="highlight-col text-up">439.5</td>
+              <td class="text-up">+136.3%</td>
+              <td class="text-up">+7.2%</td>
+              <td class="highlight-col text-up">849.7 (+120.2%)</td>
+            </tr>
+            <tr>
+              <td class="metric-name">기본 EPS (원)</td>
+              <td>643</td>
+              <td>1,417</td>
+              <td class="highlight-col text-up">1,516</td>
+              <td class="text-up">+135.8%</td>
+              <td class="text-up">+7.0%</td>
+              <td class="highlight-col text-up">2,933 (+120.2%)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Charts Section: Quarterly Trend & Profit Comparison -->
+      <div class="grid-2" style="margin-top: 20px;">
+        <div class="chart-container">
+          <canvas id="chartQuarterlyDetail"></canvas>
+        </div>
+        <div class="chart-container">
+          <canvas id="chartGpmOpm"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2: Key Growth Drivers in 2Q26 -->
+    <div class="section-card">
+      <div class="section-title">
+        <i class="fa-solid fa-lightbulb"></i> 2. 2026년 2분기 실적 폭증의 3대 핵심 요인 분석
+      </div>
+
+      <div class="highlight-box">
+        <h3><i class="fa-solid fa-rocket"></i> 2Q26 어닝 서프라이즈 구조적 배경</h3>
+        <ul class="points-list">
+          <li class="point-item">
+            <span class="point-num">1</span>
+            <div>
+              <strong>Bevel Etcher(베벨 에처)의 폭발적 양산 매출 반영 및 믹스 개선:</strong>
+              기존 램리서치(Lam Research)의 독점 구조를 깨고 삼성전자 평택 P4 라인 및 SK하이닉스 M15X/용인 팹에 베벨에처 납품이 급증했습니다.
+              고부가가치 식각 장비 비중 증가로 2분기 매출총이익률(GPM)이 <strong>52.06%</strong>까지 상승했습니다.
+            </div>
+          </li>
+          <li class="point-item">
+            <span class="point-num">2</span>
+            <div>
+              <strong>3D NAND 300단+ 고단화 & 선단 D램(1b/1c) 미세화 수혜:</strong>
+              3D 낸드 초고적층화에 따라 기존 습식 박리로 불가능한 하드마스크를 제거하는 <strong>New Hardmask Strip(NHMS)</strong> 장비 수요가 풀가동되었으며,
+              DRAM 선단 전환에 따른 Dry Strip 런레이트(Run-rate)가 극대화되었습니다.
+            </div>
+          </li>
+          <li class="point-item">
+            <span class="point-num">3</span>
+            <div>
+              <strong>해외 직수출 비중 62% 유지 및 고환율(달러 강세) 효과:</strong>
+              TSMC, 마이크론, 중화권 탑티어 팹향 수출 물량이 견고하게 유지되었으며, 달러 결제 매출 비중 확대로 영업이익률 30%대 및 외환/금융수익 182억 원이 추가 유입되었습니다.
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Financial Position Summary Card -->
+      <div style="background: var(--surface-subtle); padding: 20px; border-radius: var(--radius-md); border: 1px solid var(--border);">
+        <h4 style="font-size: 16px; font-weight: 700; color: var(--primary); margin-bottom: 12px;">
+          <i class="fa-solid fa-shield-halved"></i> 2026년 6월 말 재무 건전성 점검 (초우량 무차입 구조)
+        </h4>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; font-size: 13.5px;">
+          <div>• <strong>자산 총계:</strong> 7,507억 원 (25말 대비 +1,047억)</div>
+          <div>• <strong>자본 총계:</strong> 6,150억 원 (25말 대비 +760억)</div>
+          <div>• <strong>보유 현금성자산:</strong> 1,463억 원 (순현금 풍부)</div>
+          <div>• <strong>부채비율:</strong> 22.06% (사실상 무차입 상태)</div>
+          <div>• <strong>이익잉여금:</strong> 4,080억 원 (자본 유보율 3,600%+)</div>
+          <div>• <strong>BPS(주당순자산):</strong> 21,232원</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3: 2026 Full-Year Guidance & Valuation Revision -->
+    <div class="section-card">
+      <div class="section-title">
+        <i class="fa-solid fa-chart-line-up"></i> 3. 2026년 하반기 전망 및 연간 실적 가이던스 상향
+      </div>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th class="metric-head">연간 실적 추이 및 전망</th>
+              <th>2023년</th>
+              <th>2024년</th>
+              <th>2025년</th>
+              <th class="highlight-col">2026년 (상향 수정 전망)</th>
+              <th>YoY 증감률</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="highlight-row">
+              <td class="metric-name">연간 매출액 (억원)</td>
+              <td>3,519</td>
+              <td>3,981</td>
+              <td>4,572</td>
+              <td class="highlight-col text-up">6,950</td>
+              <td class="text-up">+52.0%</td>
+            </tr>
+            <tr class="highlight-row">
+              <td class="metric-name">연간 영업이익 (억원)</td>
+              <td>541</td>
+              <td>839</td>
+              <td>885</td>
+              <td class="highlight-col text-up">1,980</td>
+              <td class="text-up">+123.7%</td>
+            </tr>
+            <tr>
+              <td class="metric-name">연간 당기순이익 (억원)</td>
+              <td>525</td>
+              <td>791</td>
+              <td>785</td>
+              <td class="highlight-col text-up">1,720</td>
+              <td class="text-up">+119.1%</td>
+            </tr>
+            <tr>
+              <td class="metric-name">연간 영업이익률 (OPM)</td>
+              <td>15.38%</td>
+              <td>21.08%</td>
+              <td>19.36%</td>
+              <td class="highlight-col text-up">28.49%</td>
+              <td class="text-up">+9.13%p</td>
+            </tr>
+            <tr>
+              <td class="metric-name">연간 EPS (원)</td>
+              <td>1,813</td>
+              <td>2,732</td>
+              <td>2,712</td>
+              <td class="highlight-col text-up">5,938</td>
+              <td class="text-up">+118.9%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="margin-top: 20px; display: flex; justify-content: center;">
+        <a href="psk.html" class="back-btn" style="background: var(--primary); color: #ffffff; padding: 12px 28px; font-size: 15px; border: none;">
+          <i class="fa-solid fa-file-lines"></i> 피에스케이 종합 기업분석 및 밸류에이션 전체 보고서 보기 →
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>© 2026 피에스케이(PSK) 2Q26 확정 실적 심층 분석 보고서 | Source: DART 2026.06 반기보고서</p>
+    </footer>
+
+  </div>
+
+  <!-- Chart.js Scripts -->
+  <script>
+    // 1. Quarterly Detail Chart
+    const ctx1 = document.getElementById('chartQuarterlyDetail').getContext('2d');
+    new Chart(ctx1, {
+      type: 'bar',
+      data: {
+        labels: ['25.2Q', '25.3Q', '25.4Q', '26.1Q(확정)', '26.2Q(확정)'],
+        datasets: [
+          {
+            label: '매출액 (억원)',
+            data: [1085, 1041, 1427, 1566, 1675],
+            backgroundColor: 'rgba(56, 189, 248, 0.7)',
+            borderColor: 'rgb(56, 189, 248)',
+            borderWidth: 1
+          },
+          {
+            label: '영업이익 (억원)',
+            data: [206, 234, 219, 472, 503],
+            backgroundColor: 'rgba(239, 68, 68, 0.8)',
+            borderColor: 'rgb(239, 68, 68)',
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          title: {
+            display: true,
+            text: '분기별 매출액 & 영업이익 급증 추이',
+            font: { size: 13, weight: 'bold' }
+          },
+          legend: { position: 'top' }
+        },
+        scales: {
+          y: { grid: { color: '#f1f5f9' }, title: { display: true, text: '억원' } }
+        }
+      }
+    });
+
+    // 2. GPM vs OPM Chart
+    const ctx2 = document.getElementById('chartGpmOpm').getContext('2d');
+    new Chart(ctx2, {
+      type: 'line',
+      data: {
+        labels: ['25.2Q', '25.3Q', '25.4Q', '26.1Q', '26.2Q'],
+        datasets: [
+          {
+            label: '매출총이익률 GPM (%)',
+            data: [48.06, 49.20, 47.50, 49.26, 52.06],
+            borderColor: 'rgb(2, 132, 199)',
+            backgroundColor: 'rgba(2, 132, 199, 0.1)',
+            borderWidth: 2.5,
+            fill: true,
+            tension: 0.2
+          },
+          {
+            label: '영업이익률 OPM (%)',
+            data: [18.96, 22.47, 15.35, 30.13, 30.01],
+            borderColor: 'rgb(16, 185, 129)',
+            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+            borderWidth: 3,
+            fill: true,
+            tension: 0.2
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          title: {
+            display: true,
+            text: '수익성 지표 추이 (GPM 52% 돌파 & OPM 30% 유지)',
+            font: { size: 13, weight: 'bold' }
+          },
+          legend: { position: 'top' }
+        },
+        scales: {
+          y: { min: 10, max: 60, title: { display: true, text: '%' } }
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
