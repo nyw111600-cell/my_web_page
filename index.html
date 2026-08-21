@@ -13,10 +13,12 @@
       --text-main: #1e293b;
       --text-sub: #64748b;
       --border: #e2e8f0;
-      --header-bg: #eef2f6; /* 밝고 차분한 블루 그레이 톤 */
+      --header-bg: #eef2f6;
       --header-border: #dbeafe;
       --badge-tool: #059669;
       --badge-tool-bg: #d1fae5;
+      --badge-weather: #0284c7;
+      --badge-weather-bg: #e0f2fe;
     }
 
     * {
@@ -55,7 +57,7 @@
 
     /* 본문 컨테이너 */
     .container {
-      max-width: 1000px;
+      max-width: 1050px;
       margin: 36px auto 60px;
       padding: 0 20px;
     }
@@ -63,7 +65,7 @@
     /* 카드 그리드 */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 24px;
     }
 
@@ -95,6 +97,23 @@
       border-color: #059669;
     }
 
+    .card.weather-card {
+      border-color: #7dd3fc;
+      background: linear-gradient(to bottom, #ffffff, #f0f9ff);
+    }
+    .card.weather-card:hover {
+      border-color: #0284c7;
+    }
+
+    .card.game-card {
+      border-color: #f0abfc;
+      background: linear-gradient(to bottom, #ffffff, #fdf4ff);
+    }
+
+    .card.game-card:hover {
+      border-color: #c026d3;
+    }
+
     .tag {
       display: inline-block;
       font-size: 12px;
@@ -105,6 +124,11 @@
       border-radius: 20px;
       margin-bottom: 12px;
       width: fit-content;
+    }
+
+    .tag.weather {
+      color: var(--badge-weather);
+      background-color: var(--badge-weather-bg);
     }
 
     .tag.tool {
@@ -150,6 +174,13 @@
       background-color: var(--primary-hover);
     }
 
+    .btn.weather {
+      background-color: #0284c7;
+    }
+    .btn.weather:hover {
+      background-color: #0369a1;
+    }
+
     .btn.tool {
       background-color: #059669;
     }
@@ -164,15 +195,6 @@
 
     .btn.game:hover {
       background-color: #a21caf;
-    }
-
-    .card.game-card {
-      border-color: #f0abfc;
-      background: linear-gradient(to bottom, #ffffff, #fdf4ff);
-    }
-
-    .card.game-card:hover {
-      border-color: #c026d3;
     }
 
     /* 푸터 */
@@ -195,27 +217,27 @@
   <div class="container">
     <div class="grid">
       
-      <!-- 신규: Skill 및 작업 룰 가이드 카드 -->
-      <div class="card highlight">
+      <!-- 1. 전국 일기예보 카드 (맨 앞) -->
+      <div class="card weather-card">
         <div>
-          <span class="tag tool">AI 에이전트 가이드</span>
-          <h2>📋 Skill & 작업 룰 지시내용</h2>
-          <p>네이버 증권 재무 컨센서스 자동 수집 룰 및 5단계 기업 분석/밸류에이션 스킬 표준 지시문서</p>
+          <span class="tag weather">🌤️ 기상 정보</span>
+          <h2>전국 일기예보</h2>
+          <p>실시간 전국 주요 도시 기상 현황 및 주간 날씨 예보 상세 조회</p>
         </div>
-        <a href="skill_rules.html" class="btn tool">지시내용 열람하기 →</a>
+        <a href="korea_weather.html" class="btn weather">일기예보 열람하기 →</a>
       </div>
 
-      <!-- 신규: 엑셀 데이터 취합 도구 카드 -->
+      <!-- 2. 엑셀 데이터 취합 도구 카드 (맨 앞) -->
       <div class="card highlight">
         <div>
-          <span class="tag tool">업무 자동화 도구</span>
-          <h2>📊 엑셀 데이터 취합기</h2>
+          <span class="tag tool">📊 업무 자동화 도구</span>
+          <h2>엑셀 데이터 취합기</h2>
           <p>여러 엑셀/CSV 파일 세로 병합(Append), 셀 위치별 누적 합산 및 키 기준 데이터 자동 집계</p>
         </div>
         <a href="excel_merger.html" class="btn tool">도구 실행하기 →</a>
       </div>
 
-      <!-- 신규: 버블보블 미니 아케이드 게임 카드 -->
+      <!-- 3. 버블보블 게임 카드 (맨 앞) -->
       <div class="card game-card">
         <div>
           <span class="tag game">🎮 레트로 아케이드 게임</span>
@@ -225,9 +247,17 @@
         <a href="bubble-bobble/index.html" class="btn game">게임 시작하기 →</a>
       </div>
 
-      
+      <!-- 4. Skill 및 작업 룰 가이드 카드 -->
+      <div class="card highlight">
+        <div>
+          <span class="tag tool">AI 에이전트 가이드</span>
+          <h2>📋 Skill & 작업 룰 지시내용</h2>
+          <p>네이버 증권 재무 컨센서스 자동 수집 룰 및 5단계 기업 분석/밸류에이션 스킬 표준 지시문서</p>
+        </div>
+        <a href="skill_rules.html" class="btn tool">지시내용 열람하기 →</a>
+      </div>
 
-      <!-- 심텍 카드 (신규) -->
+      <!-- 5. 심텍 카드 (신규) -->
       <div class="card highlight">
         <div>
           <span class="tag">반도체 패키지 기판</span>
@@ -237,7 +267,7 @@
         <a href="simmtech_2q26.html" class="btn">보고서 열람하기 →</a>
       </div>
 
-      <!-- 피에스케이 카드 (신규) -->
+      <!-- 6. 피에스케이 카드 -->
       <div class="card highlight">
         <div>
           <span class="tag">반도체 전공정 핵심 장비</span>
@@ -247,7 +277,7 @@
         <a href="psk.html" class="btn">보고서 열람하기 →</a>
       </div>
 
-      <!-- 하나마이크론 카드 (신규) -->
+      <!-- 7. 하나마이크론 카드 -->
       <div class="card highlight">
         <div>
           <span class="tag">반도체 후공정 (OSAT)</span>
@@ -257,7 +287,7 @@
         <a href="hanamicron.html" class="btn">보고서 열람하기 →</a>
       </div>
 
-      <!-- เค이씨텍 카드 -->
+      <!-- 8. 케이씨텍 카드 -->
       <div class="card">
         <div>
           <span class="tag">반도체 / 디스플레이 장비</span>
@@ -267,7 +297,7 @@
         <a href="kctec.html" class="btn">보고서 열람하기 →</a>
       </div>
 
-      <!-- 솔브레인 카드 -->
+      <!-- 9. 솔브레인 카드 -->
       <div class="card">
         <div>
           <span class="tag">반도체 / 전자 소재</span>
@@ -277,7 +307,7 @@
         <a href="solbrain.html" class="btn">보고서 열람하기 →</a>
       </div>
 
-      <!-- VM 카드 -->
+      <!-- 10. VM 카드 -->
       <div class="card">
         <div>
           <span class="tag">기업 분석</span>
@@ -287,7 +317,7 @@
         <a href="vm.html" class="btn">보고서 열람하기 →</a>
       </div>
 
-      <!-- 달러/엔화 카드 -->
+      <!-- 11. 달러/엔화 카드 -->
       <div class="card">
         <div>
           <span class="tag">외환 / 차트</span>
@@ -295,16 +325,6 @@
           <p>달러/엔화 환율 추이 및 분석 차트 열람</p>
         </div>
         <a href="usd_jpy_chart.html" class="btn">차트 열람하기 →</a>
-      </div>
-
-      <!-- 날씨예보 카드 -->
-      <div class="card">
-        <div>
-          <span class="tag">기상 정보</span>
-          <h2>전국 일기예보</h2>
-          <p>실시간 기상 및 주간 날씨 예보 열람</p>
-        </div>
-        <a href="korea_weather.html" class="btn">일기예보 열람하기 →</a>
       </div>
 
     </div>
