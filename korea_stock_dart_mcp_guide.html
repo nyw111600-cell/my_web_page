@@ -1,0 +1,493 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>초보자를 위한 한·미 주식 & 공시(DART/EDGAR) MCP 실전 가이드</title>
+  <style>
+    :root {
+      --base-font-size: 19px;
+      --primary: #2563eb;
+      --primary-light: #eff6ff;
+      --secondary: #0d9488;
+      --secondary-light: #f0fdfa;
+      --purple: #7c3aed;
+      --purple-light: #f5f3ff;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --bg-body: #f1f5f9;
+      --bg-card: #ffffff;
+      --border: #cbd5e1;
+      --radius: 16px;
+      --shadow: 0 6px 12px -2px rgb(0 0 0 / 0.08), 0 3px 6px -3px rgb(0 0 0 / 0.08);
+      --shadow-lg: 0 12px 24px -4px rgb(0 0 0 / 0.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      font-size: var(--base-font-size);
+      line-height: 1.8;
+      padding: 30px 20px 60px;
+      transition: font-size 0.2s ease-in-out;
+    }
+
+    .container { max-width: 1080px; margin: 0 auto; }
+
+    /* 뉴스 기사 스타일 고정 폰트 조절 바 (Floating Controller) */
+    .font-control-bar {
+      position: sticky;
+      top: 16px;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(10px);
+      border: 2px solid #2563eb;
+      border-radius: 9999px;
+      padding: 8px 18px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.25);
+    }
+
+    .font-control-title {
+      font-size: 0.9em;
+      font-weight: 800;
+      color: #1e3a8a;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .font-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .font-btn {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      color: #1e293b;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 0.85em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+
+    .font-btn:hover {
+      background: #e2e8f0;
+      border-color: #94a3b8;
+    }
+
+    .font-btn.active {
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #1d4ed8;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.4);
+    }
+
+    .current-level-text {
+      font-size: 0.82em;
+      font-weight: 700;
+      color: #2563eb;
+      margin-left: 8px;
+      padding: 4px 10px;
+      background: #eff6ff;
+      border-radius: 6px;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #6d28d9 100%);
+      color: white;
+      padding: 42px 36px;
+      border-radius: var(--radius);
+      margin-bottom: 32px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    header h1 {
+      font-size: 1.8em;
+      font-weight: 800;
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+      line-height: 1.35;
+    }
+
+    header p {
+      font-size: 1.05em;
+      color: #e0e7ff;
+      line-height: 1.6;
+    }
+
+    .status-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.22);
+      padding: 6px 16px;
+      border-radius: 9999px;
+      font-size: 0.85em;
+      font-weight: 700;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 36px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h2 {
+      font-size: 1.4em;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 3px solid #e2e8f0;
+      padding-bottom: 12px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 18px;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 860px) {
+      .grid-3 { grid-template-columns: 1fr; }
+      .font-control-bar { flex-direction: column; gap: 10px; border-radius: 16px; padding: 12px; }
+    }
+
+    .tool-box {
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 22px;
+    }
+
+    .tool-box.korea { border-top: 6px solid var(--primary); background: var(--primary-light); }
+    .tool-box.dart { border-top: 6px solid var(--secondary); background: var(--secondary-light); }
+    .tool-box.edgar { border-top: 6px solid var(--purple); background: var(--purple-light); }
+
+    .tool-box h3 {
+      font-size: 1.15em;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .tool-box.korea h3 { color: #1d4ed8; }
+    .tool-box.dart h3 { color: #047857; }
+    .tool-box.edgar h3 { color: #6d28d9; }
+
+    .tool-box .sub-label {
+      font-size: 0.82em;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+
+    .tool-box ul { list-style-type: none; padding: 0; }
+    .tool-box li {
+      font-size: 0.92em;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.5;
+    }
+
+    .tool-box li::before { content: "✔"; font-weight: 900; }
+    .tool-box.korea li::before { color: var(--primary); }
+    .tool-box.dart li::before { color: var(--secondary); }
+    .tool-box.edgar li::before { color: var(--purple); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 0.95em;
+    }
+
+    th, td {
+      border: 1.5px solid var(--border);
+      padding: 14px 18px;
+      text-align: left;
+    }
+
+    th { background: #f1f5f9; font-weight: 700; color: #1e293b; font-size: 1em; }
+    tr:nth-child(even) td { background: #fafafa; }
+
+    .prompt-card {
+      background: #f8fafc;
+      border-left: 6px solid var(--primary);
+      padding: 18px 22px;
+      border-radius: 0 10px 10px 0;
+      margin-bottom: 16px;
+      border-top: 1px solid #e2e8f0;
+      border-right: 1px solid #e2e8f0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .prompt-card.edgar-card { border-left-color: var(--purple); }
+
+    .prompt-title {
+      font-size: 0.85em;
+      font-weight: 800;
+      color: var(--primary);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      letter-spacing: 0.3px;
+    }
+    .prompt-card.edgar-card .prompt-title { color: var(--purple); }
+
+    .prompt-text {
+      font-size: 1em;
+      color: #0f172a;
+      font-weight: 600;
+      line-height: 1.6;
+    }
+
+    .tip-box {
+      background: #f0fdf4;
+      border: 2px solid #bbf7d0;
+      border-left: 6px solid #10b981;
+      padding: 20px 24px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+
+    .tip-box h4 {
+      font-size: 1.05em;
+      font-weight: 800;
+      color: #047857;
+      margin-bottom: 6px;
+    }
+
+    .tip-box p { font-size: 0.95em; color: #064e3b; line-height: 1.7; }
+
+    footer {
+      text-align: center;
+      font-size: 0.85em;
+      color: var(--text-muted);
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 2px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- 뉴스 기사용 글자 크기 조절 툴바 -->
+    <div class="font-control-bar">
+      <div class="font-control-title">
+        <span>🔍 글자 크기 조절</span>
+        <span id="levelLabel" class="current-level-text">보통 (100%)</span>
+      </div>
+      <div class="font-btn-group">
+        <button class="font-btn" onclick="setFontLevel(0)">작게</button>
+        <button class="font-btn active" onclick="setFontLevel(1)">보통 (기본)</button>
+        <button class="font-btn" onclick="setFontLevel(2)">크게</button>
+        <button class="font-btn" onclick="setFontLevel(3)">아주 크게</button>
+        <button class="font-btn" onclick="setFontLevel(4)">최대 (돋보기)</button>
+      </div>
+    </div>
+
+    <header>
+      <h1>🌐 한·미 주식 & 전자공시 MCP 실전 가이드</h1>
+      <p>어려운 명령어 없이 자연어 대화로 한국(KRX/DART)과 미국(SEC EDGAR)의 기업 공시와 주가를 정밀 분석하는 가이드</p>
+      <div class="status-badges">
+        <span class="status-badge">⚡ KRX 시세/수급 연동</span>
+        <span class="status-badge">⚡ DART 전자공시 연동</span>
+        <span class="status-badge">⚡ SEC EDGAR 공시 연동</span>
+      </div>
+    </header>
+
+    <div class="card">
+      <h2>⚖️ 1. 3대 핵심 도구 역할 한눈에 보기</h2>
+      
+      <div class="grid-3">
+        <div class="tool-box korea">
+          <h3>📈 한국 시세 / 수급</h3>
+          <div class="sub-label">출처: 한국거래소 (KRX)</div>
+          <ul>
+            <li>오늘 현재가 및 등락률</li>
+            <li><strong>외인 / 기관 순매수 수급</strong></li>
+            <li>코스피 / 코스닥 거래대금 랭킹</li>
+            <li>공매도 잔고 및 비중 추이</li>
+          </ul>
+        </div>
+
+        <div class="tool-box dart">
+          <h3>📑 한국 기업 공시</h3>
+          <div class="sub-label">출처: 금융감독원 (DART)</div>
+          <ul>
+            <li><strong>사업 / 분기보고서 원문 요약</strong></li>
+            <li>매출, 영업이익, 세부 재무제표</li>
+            <li>유상증자, CB발행, 주요 계약</li>
+            <li>최대주주 지분 변동, 배당 내역</li>
+          </ul>
+        </div>
+
+        <div class="tool-box edgar">
+          <h3>🇺🇸 미국 기업 공시</h3>
+          <div class="sub-label">출처: 미국 증권거래위원회 (SEC)</div>
+          <ul>
+            <li><strong>10-K 연례보고서</strong> (사업/리스크)</li>
+            <li><strong>10-Q 분기 실적보고서</strong></li>
+            <li><strong>8-K 긴급 수시공시</strong> (M&A, CEO)</li>
+            <li><strong>Form 4 내부자(임원) 매매</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📑 2. 미국 SEC 공시 핵심 4대 보고서 코드</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 20%;">보고서 코드</th>
+            <th style="width: 32%;">명칭</th>
+            <th>언제 확인하는가?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>10-K</strong></td>
+            <td>연례 사업보고서<br>(Annual Report)</td>
+            <td>기업의 1년 총결산, 비즈니스 모델, <strong>위험 요인(Risk Factors)</strong> 분석</td>
+          </tr>
+          <tr>
+            <td><strong>10-Q</strong></td>
+            <td>분기 실적보고서<br>(Quarterly Report)</td>
+            <td>최근 3개월 매출, 영업이익, 현금흐름의 분기별 단기 변동 확인</td>
+          </tr>
+          <tr>
+            <td><strong>8-K</strong></td>
+            <td>수시 주요 공시<br>(Current Report)</td>
+            <td>CEO 교체, M&A, 주요 계약, 실적 발표 등 긴급 사건 발생 시 즉시 확인</td>
+          </tr>
+          <tr>
+            <td><strong>Form 4</strong></td>
+            <td>내부자 지분 거래<br>(Insider Trading)</td>
+            <td>CEO, CFO, 주요 이사진이 자사주를 <strong>장내 매수했는지 / 매도했는지</strong> 확인</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>💬 3. 실전 추천 질문 템플릿 (치트시트)</h2>
+      
+      <div class="prompt-card">
+        <div class="prompt-title">🇰🇷 한국 주식: 수급 & 사업보고서 분석</div>
+        <div class="prompt-text">"삼성전자(005930) 최근 1개월 외인/기관 순매수 추이와 최신 사업보고서의 연구개발(R&D) 투자액 요약해줘."</div>
+      </div>
+
+      <div class="prompt-card edgar-card">
+        <div class="prompt-title">🇺🇸 미국 주식: 10-K 사업 부문별 매출 비중 (EDGAR)</div>
+        <div class="prompt-text">"엔비디아(NVDA) 최신 10-K 연례보고서에서 데이터센터와 게이밍 부문 매출 비중 및 전년 대비 성장률 분석해줘."</div>
+      </div>
+
+      <div class="prompt-card edgar-card">
+        <div class="prompt-title">🇺🇸 미국 주식: 기업 공식 위험 요인(Risk Factors) 점검</div>
+        <div class="prompt-text">"애플(AAPL) 최신 10-K 보고서의 'Item 1A. Risk Factors'에서 회사가 가장 우려하는 핵심 리스크 3가지 정리해줘."</div>
+      </div>
+
+      <div class="prompt-card edgar-card">
+        <div class="prompt-title">🇺🇸 미국 주식: 내부자(임원) 자사주 매매 추적 (Form 4)</div>
+        <div class="prompt-text">"최근 3개월간 테슬라(TSLA) 또는 마이크로소프트(MSFT) 임원진의 자사주 매수/매도 내역이 있었는지 알려줘."</div>
+      </div>
+
+      <div class="prompt-card">
+        <div class="prompt-title">🌐 글로벌 교차 비교: 한국 반도체 vs 미국 빅테크</div>
+        <div class="prompt-text">"엔비디아(NVDA)의 데이터센터 실적 성장세와 SK하이닉스(000660) HBM 관련 공시/실적을 함께 비교 분석해줘."</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🎯 4. 초보자를 위한 4가지 실전 꿀팁</h2>
+      
+      <div class="tip-box">
+        <h4>💡 팁 1: 종목코드와 티커(Ticker)를 명시하세요</h4>
+        <p>한국 주식은 6자리 코드(예: <code>005930</code>), 미국 주식은 영문 티커(예: <code>AAPL</code>, <code>NVDA</code>)를 함께 적으면 1초 만에 가장 정확한 보고서를 찾아옵니다.</p>
+      </div>
+
+      <div class="tip-box">
+        <h4>💡 팁 2: 구체적인 기간을 지정하세요</h4>
+        <p>"주가 알려줘"보다는 <strong>"최근 3개월 주가 추이"</strong>, <strong>"최근 5일간 외인 수급"</strong>처럼 기간을 명시하면 훨씬 유용한 분석 표를 제공합니다.</p>
+      </div>
+
+      <div class="tip-box">
+        <h4>💡 팁 3: 긍정(Bull) vs 부정(Bear) 양면 분석을 요청하세요</h4>
+        <p>공시와 재무제표를 바탕으로 <strong>"이 종목의 성장 모멘텀 3가지와 잠재적 리스크 3가지를 짚어줘"</strong>라고 요청하면 균형 잡힌 투자 판단이 가능합니다.</p>
+      </div>
+
+      <div class="tip-box">
+        <h4>💡 팁 4: 뉴스가 아닌 '공식 공시 원문'을 기준으로 판단하세요</h4>
+        <p>인터넷 기사나 소문 대신 DART와 EDGAR 원문 데이터를 조회하면 숫자의 왜곡 없이 정확한 팩트를 파악할 수 있습니다.</p>
+      </div>
+    </div>
+
+    <footer>
+      <p>한·미 주식 & DART / SEC EDGAR MCP 개인 가이드 • 브라우저에서 언제든 북마크해두고 활용하세요.</p>
+    </footer>
+
+  </div>
+
+  <!-- 뉴스 기사 스타일 실시간 폰트 조절 스크립트 -->
+  <script>
+    const fontLevels = [
+      { size: "16px", label: "작게 (85%)" },
+      { size: "19px", label: "보통 (100%)" },
+      { size: "23px", label: "크게 (120%)" },
+      { size: "27px", label: "아주 크게 (140%)" },
+      { size: "32px", label: "최대 돋보기 (170%)" }
+    ];
+
+    function setFontLevel(index) {
+      document.documentElement.style.setProperty('--base-font-size', fontLevels[index].size);
+      document.getElementById('levelLabel').innerText = fontLevels[index].label;
+
+      const buttons = document.querySelectorAll('.font-btn');
+      buttons.forEach((btn, i) => {
+        if (i === index) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      localStorage.setItem('preferred_font_level', index);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem('preferred_font_level');
+      if (saved !== null) {
+        setFontLevel(parseInt(saved, 10));
+      }
+    });
+  </script>
+
+</body>
+</html>
