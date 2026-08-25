@@ -1,1 +1,931 @@
-﻿
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>마벨 테크놀러지 (Marvell Technology) 기업 분석 및 비즈니스 모델 리포트</title>
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --primary-light: #e0f2fe;
+      --navy: #0f172a;
+      --navy-card: #1e293b;
+      --accent-cyan: #06b6d4;
+      --accent-purple: #8b5cf6;
+      --accent-amber: #f59e0b;
+      --accent-emerald: #10b981;
+      --accent-rose: #f43f5e;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-subtle: #f1f5f9;
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --text-main: #0f172a;
+      --text-sub: #475569;
+      --text-muted: #64748b;
+      --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.07);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.06);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.04);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.65;
+      padding: 36px 20px 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .doc-meta {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .hero-header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0369a1 100%);
+      color: #ffffff;
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      margin-bottom: 30px;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-header::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, rgba(255,255,255,0) 70%);
+      pointer-events: none;
+    }
+
+    .badge-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .badge-tech {
+      background: rgba(6, 182, 212, 0.2);
+      color: #67e8f9;
+      border: 1px solid rgba(6, 182, 212, 0.4);
+    }
+
+    .badge-ticker {
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .badge-focus {
+      background: rgba(16, 185, 129, 0.2);
+      color: #6ee7b7;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+
+    .hero-title {
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-subtitle {
+      font-size: 16px;
+      color: #cbd5e1;
+      font-weight: 400;
+      max-width: 850px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .summary-box {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+    }
+
+    .summary-box .label {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+
+    .summary-box .value {
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .summary-box .desc {
+      font-size: 12px;
+      color: #cbd5e1;
+      margin-top: 4px;
+    }
+
+    .section-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--surface-subtle);
+    }
+
+    .section-title i {
+      color: var(--primary);
+    }
+
+    .flow-wrapper {
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      margin: 20px 0;
+    }
+
+    .flow-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    @media (min-width: 768px) {
+      .flow-steps {
+        flex-direction: row;
+        align-items: stretch;
+      }
+    }
+
+    .flow-step {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .flow-step-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .step-num {
+      width: 28px;
+      height: 28px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .step-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .flow-step-body {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.6;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
+      background-color: #f1f5f9;
+      color: var(--navy);
+      font-weight: 700;
+      padding: 14px 16px;
+      border-top: 1px solid var(--border-strong);
+      border-bottom: 1px solid var(--border-strong);
+    }
+
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-sub);
+      vertical-align: top;
+    }
+
+    tr:hover td {
+      background-color: #f8fafc;
+    }
+
+    .highlight-cell {
+      background-color: #f0f9ff;
+      color: var(--primary-dark);
+      font-weight: 600;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .product-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary);
+    }
+
+    .product-badge {
+      align-self: flex-start;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .badge-p1 { background: #fee2e2; color: #b91c1c; }
+    .badge-p2 { background: #e0e7ff; color: #4338ca; }
+    .badge-p3 { background: #ecfdf5; color: #047857; }
+    .badge-p4 { background: #fef3c7; color: #b45309; }
+
+    .product-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .product-desc {
+      font-size: 13.5px;
+      color: var(--text-sub);
+      margin-bottom: 16px;
+      line-height: 1.55;
+    }
+
+    .product-chips {
+      border-top: 1px dashed var(--border);
+      padding-top: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .product-chips strong {
+      color: var(--navy);
+    }
+
+    /* 데이터센터 내부 비중 전용 스타일 */
+    .dc-breakdown-card {
+      background: linear-gradient(to bottom, #ffffff, #f8fafc);
+      border: 1px solid #bae6fd;
+      border-radius: var(--radius-md);
+      padding: 24px;
+      margin-top: 24px;
+    }
+
+    .dc-progress-stacked {
+      display: flex;
+      height: 32px;
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 16px 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .bar-opt { width: 53%; background: linear-gradient(90deg, #0284c7, #38bdf8); color: #fff; }
+    .bar-asic { width: 27%; background: linear-gradient(90deg, #4f46e5, #818cf8); color: #fff; }
+    .bar-sto { width: 10%; background: linear-gradient(90deg, #d97706, #fbbf24); color: #fff; }
+    .bar-sw { width: 10%; background: linear-gradient(90deg, #059669, #34d399); color: #fff; }
+
+    .dc-segment {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+    }
+
+    .market-share-wrap {
+      margin: 24px 0;
+      background: #f8fafc;
+      padding: 20px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+    }
+
+    .progress-stacked {
+      display: flex;
+      height: 28px;
+      border-radius: 9999px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
+    }
+
+    .progress-bar-dc { width: 75%; background: linear-gradient(90deg, #0284c7, #06b6d4); color: #fff; }
+    .progress-bar-ent { width: 13%; background: #6366f1; color: #fff; }
+    .progress-bar-car { width: 7%; background: #10b981; color: #fff; }
+    .progress-bar-etc { width: 5%; background: #94a3b8; color: #fff; }
+
+    .progress-segment {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    .market-legend {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .legend-color {
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+    }
+
+    .bull-bear-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .bull-card {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: var(--radius-md);
+      padding: 24px;
+    }
+
+    .bear-card {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: var(--radius-md);
+      padding: 24px;
+    }
+
+    .card-header-bull {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 17px;
+      font-weight: 700;
+      color: #166534;
+      margin-bottom: 14px;
+    }
+
+    .card-header-bear {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 17px;
+      font-weight: 700;
+      color: #991b1b;
+      margin-bottom: 14px;
+    }
+
+    .point-list {
+      list-style: none;
+    }
+
+    .point-list li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 10px;
+      font-size: 13.5px;
+      line-height: 1.55;
+    }
+
+    .bull-card .point-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #16a34a;
+      font-weight: 700;
+    }
+
+    .bear-card .point-list li::before {
+      content: "!";
+      position: absolute;
+      left: 2px;
+      color: #dc2626;
+      font-weight: 700;
+    }
+
+    .conclusion-callout {
+      background: linear-gradient(to right, #f8fafc, #f1f5f9);
+      border-left: 5px solid var(--primary);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      padding: 24px;
+      margin-top: 10px;
+    }
+
+    .conclusion-callout p {
+      font-size: 15px;
+      color: var(--navy);
+      font-weight: 500;
+      line-height: 1.7;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <div class="top-nav">
+      <div class="doc-meta">
+        <span>발행일: 2026.08</span> | <span>분석 대상: Marvell Technology (NASDAQ: MRVL)</span>
+      </div>
+    </div>
+
+    <!-- 히어로 헤더 -->
+    <header class="hero-header">
+      <div class="badge-group">
+        <span class="badge badge-tech"><i class="fa-solid fa-microchip"></i> 팹리스 시스템 반도체</span>
+        <span class="badge badge-ticker">NASDAQ: MRVL</span>
+        <span class="badge badge-focus"><i class="fa-solid fa-bolt"></i> AI 데이터센터 비중 75%+</span>
+      </div>
+      <h1 class="hero-title">마벨 테크놀러지 (Marvell Technology)</h1>
+      <p class="hero-subtitle">
+        AI 데이터센터의 초고속 광학 인터커넥트(Optical DSP)와 빅테크 자체 가속기(Custom ASIC)를 공급하는 핵심 팹리스 기업의 비즈니스 모델 및 제품군 심층 분석
+      </p>
+
+      <div class="summary-grid">
+        <div class="summary-box">
+          <div class="label">핵심 비즈니스 모델</div>
+          <div class="value">팹리스 완제품 납품</div>
+          <div class="desc">IP 설계 → TSMC 외주 생산 → 실물 칩 대량 판매</div>
+        </div>
+        <div class="summary-box">
+          <div class="label">최대 성장 동력</div>
+          <div class="value">Custom ASIC (XPU)</div>
+          <div class="desc">구글 TPU, 아마존 Trainium 맞춤 칩 공동 개발</div>
+        </div>
+        <div class="summary-box">
+          <div class="label">독점적 경쟁 우위</div>
+          <div class="value">800G / 1.6T 광학 DSP</div>
+          <div class="desc">초고속 광트랜시버 DSP 글로벌 시장 1위권</div>
+        </div>
+        <div class="summary-box">
+          <div class="label">데이터센터 매출 비중</div>
+          <div class="value">약 75% ~ 76%</div>
+          <div class="desc">AI 인프라 중심 체질 전환 완료</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 섹션 1: 비즈니스 모델 작동 메커니즘 -->
+    <section class="section-card">
+      <h2 class="section-title">
+        <i class="fa-solid fa-sitemap"></i> 1. 비즈니스 모델(BM) 및 가치사슬 구조
+      </h2>
+      <p style="font-size: 14.5px; color: var(--text-sub); margin-bottom: 16px;">
+        마벨 테크놀러지는 ARM과 같이 설계도(IP)만 라이선스하는 기업이 아니며, 인텔이나 삼성전자처럼 공장을 직접 짓고 돌리는 종합반도체(IDM)도 아닙니다. 
+        <strong>엔비디아, 퀄컴과 같은 전형적인 '팹리스(Fabless) 반도체 완제품 제조·판매' 모델</strong>을 영위합니다.
+      </p>
+
+      <div class="flow-wrapper">
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="flow-step-header">
+              <div class="step-num">1</div>
+              <div class="step-title">마벨 (R&D / 설계)</div>
+            </div>
+            <div class="flow-step-body">
+              고성능 아날로그/혼성신호 IP, 초고속 SerDes 및 커스텀 가속기 아키텍처 설계
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-header">
+              <div class="step-num">2</div>
+              <div class="step-title">파운드리 (TSMC 등)</div>
+            </div>
+            <div class="flow-step-body">
+              마벨의 설계 데이터를 기반으로 3nm/5nm 첨단 웨이퍼 위탁 제조 (100% 외주 생산)
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-header">
+              <div class="step-num">3</div>
+              <div class="step-title">OSAT (패키징·검사)</div>
+            </div>
+            <div class="flow-step-body">
+              첨단 패키징(CoWoS 등) 및 최종 신뢰성 테스트를 거쳐 '실물 칩셋' 완성
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-header">
+              <div class="step-num">4</div>
+              <div class="step-title">최종 고객사 납품</div>
+            </div>
+            <div class="flow-step-body">
+              완성된 <strong>'실물 실리콘 칩'</strong>을 빅테크 및 모듈사에 완제품 공급 (단가 P × 수량 Q)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>구분</th>
+              <th>종합반도체기업 (IDM)</th>
+              <th style="background-color: #e0f2fe; color: #0369a1;">팹리스 (마벨 테크놀러지)</th>
+              <th>IP 라이선스 기업</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>대표 기업</strong></td>
+              <td>삼성전자(메모리), SK하이닉스, 인텔</td>
+              <td class="highlight-cell"><strong>마벨(Marvell)</strong>, 엔비디아, 브로드컴</td>
+              <td>ARM, 시놉시스, 케이던스</td>
+            </tr>
+            <tr>
+              <td><strong>생산 공장(Fab)</strong></td>
+              <td>자체 대규모 팹 보유 및 직접 가동</td>
+              <td class="highlight-cell"><strong>공장 없음 (TSMC 등에 100% 외주)</strong></td>
+              <td>공장 없음</td>
+            </tr>
+            <tr>
+              <td><strong>실제 판매 품목</strong></td>
+              <td>자체 생산된 실물 반도체 칩</td>
+              <td class="highlight-cell"><strong>외주 생산된 '실물 반도체 완제품 칩'</strong></td>
+              <td>설계도면(IP), 소프트웨어 라이선스</td>
+            </tr>
+            <tr>
+              <td><strong>수익 모델</strong></td>
+              <td>칩 판매 대금</td>
+              <td class="highlight-cell"><strong>칩 납품 대금 (납품단가 × 공급수량)</strong></td>
+              <td>라이선스 계약금 + 로열티(%)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 섹션 2: 4대 핵심 매출 제품군 -->
+    <section class="section-card">
+      <h2 class="section-title">
+        <i class="fa-solid fa-cubes-stacked"></i> 2. 4대 주요 매출 제품군 상세
+      </h2>
+      <p style="font-size: 14.5px; color: var(--text-sub);">
+        마벨의 제품 포트폴리오는 대규모 AI 클러스터의 '연산'과 '초고속 데이터 전송' 병목을 해소하는 4대 영역으로 구성되어 있습니다.
+      </p>
+
+      <div class="product-grid">
+        <div class="product-card">
+          <div>
+            <span class="product-badge badge-p1">최대 성장 동력</span>
+            <h3 class="product-title">1. Custom ASIC (XPU)</h3>
+            <p class="product-desc">
+              빅테크 하이퍼스케일러와 협력하여 자체 워크로드에 최적화된 <strong>맞춤형 AI 가속기</strong> 및 스마트NIC을 공동 설계하고 양산·납품합니다.
+            </p>
+          </div>
+          <div class="product-chips">
+            <strong>주요 적용:</strong> 구글 TPU 맞춤 실리콘, 아마존 AWS Trainium/Inferentia 등
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div>
+            <span class="product-badge badge-p2">글로벌 1위권 독점</span>
+            <h3 class="product-title">2. Optical DSP (광학 칩)</h3>
+            <p class="product-desc">
+              수만 개의 GPU/XPU 간 대용량 데이터를 지연 없이 빛으로 전송할 수 있도록 광트랜시버 내부에서 <strong>신호를 정류·보정하는 핵심 DSP</strong>입니다.
+            </p>
+          </div>
+          <div class="product-chips">
+            <strong>대표 라인업:</strong> 800G/1.6T Nova·Ara 플랫폼, COLORZ® (DCI 장거리 광통신)
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div>
+            <span class="product-badge badge-p3">데이터센터 백본</span>
+            <h3 class="product-title">3. Switching & Retimer</h3>
+            <p class="product-desc">
+              AI 클러스터 내부 스파인/리프 네트워크의 초저지연 스위치 칩 및 메인보드 내 초고속 신호 감쇠를 증폭·복원하는 리타이머 칩입니다.
+            </p>
+          </div>
+          <div class="product-chips">
+            <strong>대표 라인업:</strong> Teralynx® 스위치, Prestera®, PCIe Gen 5/6 & CXL 리타이머
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div>
+            <span class="product-badge badge-p4">스토리지 & 가속</span>
+            <h3 class="product-title">4. Storage & DPU</h3>
+            <p class="product-desc">
+              대규모 클라우드 서버의 초고속 NVMe SSD를 제어하는 스토리지 컨트롤러와 5G 통신망 및 인프라 보안 처리를 가속하는 DPU 프로세서입니다.
+            </p>
+          </div>
+          <div class="product-chips">
+            <strong>대표 라인업:</strong> Bravera™ SC6 NVMe SSD 컨트롤러, OCTEON® 프로세서
+          </div>
+        </div>
+      </div>
+
+              <!-- 광학 DSP 인포그래픽 이미지 추가 -->
+        <div style="margin-top: 20px; text-align: center; background: #0f172a; border-radius: 12px; padding: 16px; border: 1px solid #1e293b;">
+          <h4 style="color: #38bdf8; font-size: 15px; margin-bottom: 10px; text-align: left;">
+            <i class="fa-solid fa-eye"></i> [시각화 다이어그램] 광학 DSP 및 인터커넥트(Optical Interconnect) 작동 메커니즘
+          </h4>
+          <img src="optical_dsp_concept_ko.jpg" alt="광학 DSP 및 인터커넥트 작동 원리 다이어그램" style="width: 100%; max-height: 520px; object-fit: contain; border-radius: 8px;">
+          <p style="color: #94a3b8; font-size: 12px; margin-top: 8px; text-align: left;">
+            * GPU에서 출력된 초고속 전기 신호의 노이즈를 <strong>광학 DSP</strong>가 정류·복원한 후, 레이저 다이오드를 통해 빛(광섬유)으로 변환하여 수만 대의 서버 랙을 초고속 연결합니다.
+          </p>
+        </div>
+
+      <!-- 신규 추가: 데이터센터 향 4대 제품군 내부 매출 비중 심층 표 -->
+      <div class="dc-breakdown-card">
+        <h3 style="font-size: 18px; font-weight: 700; color: #0369a1; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+          <i class="fa-solid fa-chart-column"></i> 데이터센터(Data Center) 내부 4대 제품군별 상세 매출 비중
+        </h3>
+        <p style="font-size: 13.5px; color: var(--text-sub); margin-bottom: 14px;">
+          전체 매출의 약 75%($6.1B ~ $8.5B+)를 차지하는 데이터센터 부문 내 제품별 비중 및 연간 매출 규모 추정치입니다.
+        </p>
+
+        <!-- 데이터센터 내부 스택 바 -->
+        <div class="dc-progress-stacked">
+          <div class="dc-segment bar-opt">광학 DSP (약 50%~55%)</div>
+          <div class="dc-segment bar-asic">Custom ASIC (약 25%~30%)</div>
+          <div class="dc-segment bar-sto">스토리지 (8~10%)</div>
+          <div class="dc-segment bar-sw">스위치 (8~10%)</div>
+        </div>
+
+        <div class="table-container" style="margin-top: 14px;">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 8%; text-align: center;">순위</th>
+                <th style="width: 28%;">데이터센터 제품군</th>
+                <th style="width: 18%; background-color: #e0f2fe; color: #0369a1; text-align: center;">데이터센터 내 비중</th>
+                <th style="width: 18%; text-align: center;">연간 추정 매출 (FY26-27)</th>
+                <th style="width: 28%;">핵심 성장 동력 및 특징</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align: center; font-weight: 700; color: #0284c7;">1위</td>
+                <td>
+                  <strong>광학 DSP & 인터커넥트</strong><br>
+                  <span style="font-size: 12px; color: var(--text-muted);">(800G/1.6T Nova, COLORZ)</span>
+                </td>
+                <td style="text-align: center; font-weight: 700; background-color: #f0f9ff; color: #0369a1;">
+                  약 50% ~ 55%
+                </td>
+                <td style="text-align: center; font-weight: 600;">$30억 ~ $35억+</td>
+                <td style="font-size: 13px;"><strong>[최대 캐시카우]</strong> AI 클러스터 확장 및 800G/1.6T 광모듈 채택 급증으로 연 50%~70% 성장</td>
+              </tr>
+              <tr>
+                <td style="text-align: center; font-weight: 700; color: #4f46e5;">2위</td>
+                <td>
+                  <strong>커스텀 ASIC (XPU)</strong><br>
+                  <span style="font-size: 12px; color: var(--text-muted);">(구글 TPU, AWS Trainium)</span>
+                </td>
+                <td style="text-align: center; font-weight: 700; background-color: #f0f9ff; color: #4f46e5;">
+                  약 25% ~ 30%
+                </td>
+                <td style="text-align: center; font-weight: 600;">$15억 ~ $25억+</td>
+                <td style="font-size: 13px;"><strong>[최고 성장률]</strong> 빅테크의 자체 가속기 내재화 프로젝트 본격 양산으로 2년 만에 2배 이상 폭증</td>
+              </tr>
+              <tr>
+                <td style="text-align: center; font-weight: 700; color: #d97706;">3위</td>
+                <td>
+                  <strong>스토리지 컨트롤러</strong><br>
+                  <span style="font-size: 12px; color: var(--text-muted);">(Bravera NVMe SSD / HDD)</span>
+                </td>
+                <td style="text-align: center; font-weight: 700; background-color: #f0f9ff; color: #d97706;">
+                  약 8% ~ 10%
+                </td>
+                <td style="text-align: center; font-weight: 600;">$5억 ~ $7억</td>
+                <td style="font-size: 13px;"><strong>[전통 인프라]</strong> 클라우드 엔터프라이즈 스토리지 수요 회복 및 AI 서버용 초고속 NVMe 컨트롤러 공급</td>
+              </tr>
+              <tr>
+                <td style="text-align: center; font-weight: 700; color: #059669;">4위</td>
+                <td>
+                  <strong>스위칭 & 리타이머</strong><br>
+                  <span style="font-size: 12px; color: var(--text-muted);">(Teralynx 51.2T, PCIe/CXL)</span>
+                </td>
+                <td style="text-align: center; font-weight: 700; background-color: #f0f9ff; color: #059669;">
+                  약 8% ~ 10%
+                </td>
+                <td style="text-align: center; font-weight: 600;">$5억 ~ $6억+</td>
+                <td style="font-size: 13px;"><strong>[AI 백본]</strong> 51.2Tbps 고대역폭 스위치 실리콘 및 메인보드 고속 신호 증폭 리타이머 칩 수요 증가</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="background: #e0f2fe; border-radius: 8px; padding: 12px 16px; margin-top: 10px; font-size: 13px; color: #0369a1;">
+          💡 <strong>구조적 시사점:</strong> 데이터센터 부문 내에서 <strong>광학 DSP(~50%+)와 커스텀 ASIC(~30%) 두 AI 핵심 제품군이 전체 데이터센터 매출의 80% 이상을 주도</strong>하고 있으며, 스위치 및 SSD 컨트롤러가 나머지 약 20%를 견고하게 지지하고 있습니다.
+        </div>
+      </div>
+    </section>
+
+    <!-- 섹션 3: 전방 시장(End Market)별 매출 비중 -->
+    <section class="section-card">
+      <h2 class="section-title">
+        <i class="fa-solid fa-chart-pie"></i> 3. 전방 시장(End Market)별 전체 매출 구조
+      </h2>
+      <p style="font-size: 14.5px; color: var(--text-sub);">
+        지속적인 M&A(Inphi, Innovium 등)와 비핵심 자산 조정을 통해 <strong>데이터센터 중심의 고수익 AI 순수주(Pure-Play)</strong>로 체질 개선을 완료했습니다.
+      </p>
+
+      <div class="market-share-wrap">
+        <div class="progress-stacked">
+          <div class="progress-segment progress-bar-dc">데이터센터 (75%)</div>
+          <div class="progress-segment progress-bar-ent">엔터프라이즈 (13%)</div>
+          <div class="progress-segment progress-bar-car">통신사 (7%)</div>
+          <div class="progress-segment progress-bar-etc">기타 (5%)</div>
+        </div>
+
+        <div class="market-legend">
+          <div class="legend-item">
+            <div class="legend-color" style="background-color: #0284c7;"></div>
+            <div><strong>데이터센터 (70% ~ 76%)</strong>: Custom ASIC, 광학 DSP, Teralynx, SSD 컨트롤러</div>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background-color: #6366f1;"></div>
+            <div><strong>엔터프라이즈 네트워킹 (10% ~ 15%)</strong>: 기업용 Prestera 스위치, PHY</div>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background-color: #10b981;"></div>
+            <div><strong>통신사 인프라 (5% ~ 10%)</strong>: 5G RAN OCTEON 기지국 프로세서</div>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background-color: #94a3b8;"></div>
+            <div><strong>기타/차량용 (5% 내외)</strong>: 산업용 및 차량용 통신 칩</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 섹션 4: 경쟁 우위 및 기회 / 리스크 -->
+    <section class="section-card">
+      <h2 class="section-title">
+        <i class="fa-solid fa-scale-balanced"></i> 4. 경제적 해자 및 투자 관점 분석
+      </h2>
+
+      <div class="bull-bear-grid">
+        <div class="bull-card">
+          <div class="card-header-bull">
+            <i class="fa-solid fa-arrow-trend-up"></i> 상방 기회 요인 (Bull Case)
+          </div>
+          <ul class="point-list">
+            <li><strong>광학 DSP 세대교체 수혜</strong>: AI 클러스터 규모가 800G에서 1.6T로 전환되면서 대당 광학 칩 탑재량과 ASP(평균판매단가)가 동반 상승 중입니다.</li>
+            <li><strong>빅테크의 자체 칩(ASIC) 내재화 가속</strong>: 엔비디아 GPU 비용 절감을 위해 구글, 아마존, 메타 등이 추진하는 맞춤형 반도체 프로젝트의 직접 수혜를 누립니다.</li>
+            <li><strong>높은 기술적 해자</strong>: 초고속 아날로그/혼성신호 SerDes 기술은 진입장벽이 매우 높아 브로드컴과 함께 글로벌 시장을 과점하고 있습니다.</li>
+          </ul>
+        </div>
+
+        <div class="bear-card">
+          <div class="card-header-bear">
+            <i class="fa-solid fa-triangle-exclamation"></i> 하방 위험 요인 (Bear Case)
+          </div>
+          <ul class="point-list">
+            <li><strong>소수 빅테크 고객사 집중도</strong>: 구글, AWS 등 최상위 하이퍼스케일러의 설비투자(CAPEX) 주기 및 채택 여부에 따라 단기 실적 변동성이 커질 수 있습니다.</li>
+            <li><strong>TSMC 파운드리 단일 의존성</strong>: 최선단 공정(3nm/5nm) 웨이퍼 생산 및 CoWoS 패키징을 TSMC에 전적으로 의존하고 있습니다.</li>
+            <li><strong>브로드컴(Broadcom)과의 경쟁</strong>: 커스텀 ASIC 및 고속 네트워크 스위치 시장에서 절대 강자인 브로드컴과의 치열한 수주전이 지속됩니다.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="conclusion-callout" style="margin-top: 24px;">
+        <p>
+          💡 <strong>핵심 요약 결론:</strong> 마벨 테크놀러지는 직접 공장을 소유하지 않는 <strong>팹리스(Fabless)</strong> 기업이지만, 
+          AI 클러스터 간 '초고속 광통신 연결(Optical DSP)'과 '빅테크 맞춤 가속기(Custom ASIC)'라는 양대 핵심 축을 바탕으로 
+          <strong>실제 반도체 완제품 칩을 대량 공급하는 AI 인프라의 핵심 필수주</strong>입니다.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2026 Marvell Technology Business Model Analysis Report.</p>
+    </footer>
+
+  </div>
+
+</body>
+</html>
