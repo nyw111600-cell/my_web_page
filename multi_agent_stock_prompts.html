@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>멀티 에이전트 주식 투자 리서치 팀 프롬프트 가이드북</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* 기본 테마: 화사하고 선명한 라이트 모드 */
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-light: #eff6ff;
+      --accent-purple: #7c3aed;
+      --accent-emerald: #059669;
+      --accent-rose: #e11d48;
+      --accent-amber: #d97706;
+      --accent-cyan: #0284c7;
+      
+      --bg: #f8fafc;
+      --header-bg: rgba(255, 255, 255, 0.92);
+      --card-bg: #ffffff;
+      --card-inner: #f1f5f9;
+      --border: #e2e8f0;
+      --border-light: #cbd5e1;
+      
+      --text-main: #0f172a;
+      --text-sub: #475569;
+      --text-muted: #64748b;
+      
+      --code-bg: #f8fafc;
+      --code-header-bg: #f1f5f9;
+      --code-border: #cbd5e1;
+      --code-text: #1e293b;
+      
+      --hero-title: #0f172a;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.04);
+    }
+
+    /* 다크 모드 테마 */
+    body.dark-mode {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --primary-light: #1e293b;
+      --accent-purple: #a855f7;
+      --accent-emerald: #10b981;
+      --accent-rose: #f43f5e;
+      --accent-amber: #f59e0b;
+      --accent-cyan: #38bdf8;
+      
+      --bg: #0b0f19;
+      --header-bg: rgba(11, 15, 25, 0.88);
+      --card-bg: #131b2e;
+      --card-inner: #1a243d;
+      --border: #23304d;
+      --border-light: #2d3e64;
+      
+      --text-main: #f1f5f9;
+      --text-sub: #94a3b8;
+      --text-muted: #64748b;
+      
+      --code-bg: #090d16;
+      --code-header-bg: #131b2e;
+      --code-border: #1e293b;
+      --code-text: #cbd5e1;
+      
+      --hero-title: #ffffff;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-md: 0 4px 14px rgba(0,0,0,0.4);
+      --shadow-lg: 0 10px 25px rgba(0,0,0,0.5);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+    }
+
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.65;
+      padding-bottom: 80px;
+    }
+
+    /* 상단 네비게이션 헤더 */
+    .nav-header {
+      background: var(--header-bg);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .nav-logo span {
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    body.dark-mode .nav-logo span {
+      background: linear-gradient(135deg, #60a5fa, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* 화면 밝기 / 테마 토글 버튼 */
+    .theme-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--card-bg);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+      padding: 7px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--primary);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .home-link {
+      color: var(--text-sub);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      transition: all 0.2s;
+    }
+
+    .home-link:hover {
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    /* 메인 히어로 섹션 */
+    .hero {
+      text-align: center;
+      padding: 50px 20px 35px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 30px;
+      background: var(--primary-light);
+      border: 1px solid rgba(37, 99, 235, 0.2);
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: 34px;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 14px;
+      letter-spacing: -0.5px;
+      color: var(--hero-title);
+    }
+
+    .hero p {
+      font-size: 16.5px;
+      color: var(--text-sub);
+      max-width: 720px;
+      margin: 0 auto 28px;
+    }
+
+    /* 바로가기 탭 네비 */
+    .quick-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 36px;
+    }
+
+    .quick-btn {
+      background: var(--card-bg);
+      color: var(--text-sub);
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s;
+    }
+
+    .quick-btn:hover {
+      color: var(--primary);
+      border-color: var(--primary);
+      background: var(--card-inner);
+      transform: translateY(-1px);
+    }
+
+    /* 본문 레이아웃 */
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .section {
+      margin-bottom: 50px;
+      scroll-margin-top: 80px;
+    }
+
+    .section-header {
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .section-title {
+      font-size: 21px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-main);
+    }
+
+    /* 패턴 그리드 카드 */
+    .pattern-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .pattern-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .pattern-icon {
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+
+    .pattern-card h3 {
+      font-size: 16px;
+      color: var(--text-main);
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .pattern-card p {
+      font-size: 13.5px;
+      color: var(--text-sub);
+      line-height: 1.55;
+    }
+
+    /* 에이전트 팀 그리드 */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .agent-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .agent-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+    }
+
+    .agent-card.macro::before { background: var(--accent-cyan); }
+    .agent-card.geo::before { background: var(--accent-amber); }
+    .agent-card.fund::before { background: var(--primary); }
+    .agent-card.quant::before { background: var(--accent-emerald); }
+    .agent-card.risk::before { background: var(--accent-rose); }
+    .agent-card.cio::before { background: var(--accent-purple); }
+
+    .agent-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .agent-card.macro .agent-badge { background: #e0f2fe; color: #0369a1; }
+    .agent-card.geo .agent-badge { background: #fef3c7; color: #b45309; }
+    .agent-card.fund .agent-badge { background: #dbeafe; color: #1d4ed8; }
+    .agent-card.quant .agent-badge { background: #d1fae5; color: #047857; }
+    .agent-card.risk .agent-badge { background: #ffe4e6; color: #be123c; }
+    .agent-card.cio .agent-badge { background: #f3e8ff; color: #7e22ce; }
+
+    body.dark-mode .agent-card.macro .agent-badge { background: rgba(8, 145, 178, 0.25); color: #38bdf8; }
+    body.dark-mode .agent-card.geo .agent-badge { background: rgba(217, 119, 6, 0.25); color: #fbbf24; }
+    body.dark-mode .agent-card.fund .agent-badge { background: rgba(37, 99, 235, 0.25); color: #60a5fa; }
+    body.dark-mode .agent-card.quant .agent-badge { background: rgba(5, 150, 105, 0.25); color: #34d399; }
+    body.dark-mode .agent-card.risk .agent-badge { background: rgba(225, 29, 72, 0.25); color: #fb7185; }
+    body.dark-mode .agent-card.cio .agent-badge { background: rgba(124, 58, 237, 0.25); color: #c084fc; }
+
+    .agent-card h4 {
+      font-size: 16px;
+      color: var(--text-main);
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .agent-card p {
+      font-size: 13.5px;
+      color: var(--text-sub);
+      line-height: 1.55;
+    }
+
+    /* 프롬프트 박스 컴포넌트 */
+    .prompt-box {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .prompt-header {
+      background: var(--code-header-bg);
+      padding: 12px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--code-border);
+    }
+
+    .prompt-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .copy-btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .copy-btn.copied {
+      background: var(--accent-emerald);
+    }
+
+    .prompt-content {
+      padding: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13.5px;
+      color: var(--code-text);
+      white-space: pre-wrap;
+      word-break: break-word;
+      line-height: 1.65;
+      max-height: 480px;
+      overflow-y: auto;
+    }
+
+    /* 단계별 대화형 플로우 */
+    .step-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .step-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .step-badge-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .step-num {
+      background: var(--primary);
+      color: #fff;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* 시뮬레이션 카드 */
+    .sim-card {
+      background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%);
+      border: 1px solid #bfdbfe;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    body.dark-mode .sim-card {
+      background: linear-gradient(135deg, #131b2e 0%, #1e1b4b 100%);
+      border-color: #4338ca;
+    }
+
+    .sim-dialogue {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .bubble {
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+
+    .bubble.bull {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e40af;
+    }
+
+    .bubble.bear {
+      background: #fff1f2;
+      border: 1px solid #fecdd3;
+      color: #9f1239;
+    }
+
+    .bubble.cio {
+      background: #faf5ff;
+      border: 1px solid #e9d5ff;
+      color: #6b21a8;
+    }
+
+    body.dark-mode .bubble.bull {
+      background: rgba(37, 99, 235, 0.15);
+      border-color: rgba(59, 130, 246, 0.3);
+      color: #93c5fd;
+    }
+
+    body.dark-mode .bubble.bear {
+      background: rgba(225, 29, 72, 0.15);
+      border-color: rgba(244, 63, 94, 0.3);
+      color: #fda4af;
+    }
+
+    body.dark-mode .bubble.cio {
+      background: rgba(124, 58, 237, 0.2);
+      border-color: rgba(168, 85, 247, 0.4);
+      color: #e9d5ff;
+    }
+
+    .bubble strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    /* 토스트 알림 */
+    #toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #059669;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    #toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 반응형 */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 26px; }
+      .hero p { font-size: 15px; }
+      .team-grid { grid-template-columns: 1fr; }
+      .nav-header { padding: 12px 16px; }
+      .header-actions { gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 상단 네비게이션 헤더 -->
+  <header class="nav-header">
+    <a href="index.html" class="nav-logo">
+      <span>⚡ Multi-Agent Stock Lab</span>
+    </a>
+    
+    <div class="header-actions">
+      <!-- 테마 밝기 전환 버튼 -->
+      <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="화면 밝기 전환">
+        <span id="themeIcon">🌙</span>
+        <span id="themeText">어둡게</span>
+      </button>
+      <a href="index.html" class="home-link">← 메인 아카이브</a>
+    </div>
+  </header>
+
+  <!-- 메인 히어로 섹션 -->
+  <div class="hero">
+    <div class="hero-badge">🏛️ Institutional-Grade AI Prompt Suite</div>
+    <h1>멀티 에이전트 주식 투자 리서치<br>실전 프롬프트 가이드북</h1>
+    <p>글로벌 헤지펀드 투자 심의 위원회 수준의 5~6대 전문 에이전트 팀을 단 한 줄의 프롬프트로 대화창에 가동하세요.</p>
+    
+    <!-- 퀵 네비게이션 -->
+    <div class="quick-nav">
+      <a href="#patterns" class="quick-btn">협업 패턴 4대 모델</a>
+      <a href="#basic-allinone" class="quick-btn">기본형 5대 에이전트</a>
+      <a href="#practical-examples" class="quick-btn">국내 / 해외 실전 프롬프트</a>
+      <a href="#interactive-pingpong" class="quick-btn">대화형 3단계 워크플로</a>
+      <a href="#global-master" class="quick-btn">글로벌 6대 마스터 프롬프트</a>
+      <a href="#simulation-case" class="quick-btn">TSMC 시뮬레이션 & 결론 템플릿</a>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- 0. 멀티 에이전트 4대 협업 패턴 -->
+    <section id="patterns" class="section">
+      <div class="section-header">
+        <h2 class="section-title">🧩 멀티 에이전트 4대 협업 패턴</h2>
+      </div>
+      <div class="pattern-grid">
+        <div class="pattern-card">
+          <div class="pattern-icon">👑</div>
+          <h3>1. 오케스트레이터 - 워커</h3>
+          <p>총괄 리더 에이전트가 재무, 뉴스, 밸류에이션 작업을 쪼개 서브에이전트들에게 병렬 지시 후 취합</p>
+        </div>
+        <div class="pattern-card">
+          <div class="pattern-icon">⛓️</div>
+          <h3>2. 순차적 파이프라인</h3>
+          <p>매크로 분석 $\rightarrow$ 펀더멘털 분석 $\rightarrow$ 기술적 분석 $\rightarrow$ 포트폴리오 산출 순으로 릴레이 전달</p>
+        </div>
+        <div class="pattern-card">
+          <div class="pattern-icon">🛡️</div>
+          <h3>3. 생성자 - 검증자 (Critic)</h3>
+          <p>분석가가 밸류에이션 모델을 세우면, 리스크 매니저가 엄격하게 취약점과 다운사이드 리스크를 감사</p>
+        </div>
+        <div class="pattern-card">
+          <div class="pattern-icon">⚖️</div>
+          <h3>4. 끝장 토론 (Debate)</h3>
+          <p>성장 관점(Bull)과 위험 관점(Bear)이 치열하게 공방을 벌여 편향을 제거하고 최적의 의사결정 도출</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. [기본형] 5대 에이전트 올인원 프롬프트 -->
+    <section id="basic-allinone" class="section">
+      <div class="section-header">
+        <h2 class="section-title">🏛️ [기본형] 5대 에이전트 투자 심의 올인원 프롬프트</h2>
+      </div>
+      <p style="color: var(--text-sub); margin-bottom: 20px; font-size: 14.5px;">
+        대화창에 복사하여 <code>[ 종목명 입력 ]</code> 부분만 원하는 기업으로 변경하여 사용하는 범용 마스터 프롬프트입니다.
+      </p>
+
+      <div class="prompt-box">
+        <div class="prompt-header">
+          <div class="prompt-title">📄 기본형 올인원 투자 심의 프롬프트</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-basic')">📋 프롬프트 복사</button>
+        </div>
+        <pre class="prompt-content" id="prompt-basic">당신은 최고의 헤지펀드 투자 심의 위원회입니다. 지금부터 아래의 5명 전문 에이전트로 구성된 멀티 리서치 팀을 결성하여 [ 종목명 입력: 예) 삼성전자 or NVDA ]에 대한 심층 투자 분석을 진행해주세요.
+
+[팀 구성 및 역할]
+1. 🌐 매크로/섹터 에이전트: 거시경제(금리, 환율), 산업 사이클, 밸류체인 및 전방 시장 수요 분석
+2. 📊 펀더멘털 에이전트: 3 - 5개년 재무제표, 실적 컨센서스, 해자(Moat), 밸류에이션(PER/PBR/DCF) 및 목표주가 산출
+3. 📈 수급/기술적 에이전트: 기관/외국인 수급 추이, 주요 지지/저항 라인, 거래량, 기술적 매수 타이밍 분석
+4. ⚠️ 리스크/Bear 에이전트: 악마의 대변인 역할. 가장 비관적인 시나리오, 다운사이드 리스크, 매크로/규제 위협 집중 비판
+5. 🏛️ 총괄 CIO 에이전트: 위 4명의 의견과 Bull vs Bear 상호 토론을 종합하여 최종 투자 결정서 작성
+
+[출력 형식]
+- 각 에이전트의 단계별 분석 보고 (1 ~ 4)
+- 펀더멘털(Bull) vs 리스크(Bear) 에이전트 간의 1:1 끝장 토론 요약
+- CIO의 최종 투자 결정서 (투자 의견, 포트폴리오 권장 비중, 분할 매수 밴드, 1차/2차 목표가, 칼손절 기준가)</pre>
+      </div>
+    </section>
+
+    <!-- 2. 국내 및 해외 종목별 실전 예시 프롬프트 -->
+    <section id="practical-examples" class="section">
+      <div class="section-header">
+        <h2 class="section-title">🎯 종목 맞춤형 실전 프롬프트 예시</h2>
+      </div>
+
+      <!-- 국내 주식 예시 -->
+      <div class="prompt-box">
+        <div class="prompt-header">
+          <div class="prompt-title">🇰🇷 국내 주식용 (예시: SK하이닉스 - 네이버 컨센서스 & DART 공시 연계)</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-kr-sk')">📋 프롬프트 복사</button>
+        </div>
+        <pre class="prompt-content" id="prompt-kr-sk">[SK하이닉스 (000660)]에 대한 멀티 에이전트 투자 리서치를 실행해줘.
+
+1. 펀더멘털 에이전트는 네이버 증권 최신 컨센서스(매출, 영업이익, EPS)와 HBM 시장 점유율을 바탕으로 적정 가치를 산출해줘.
+2. 수급 에이전트는 최근 외국인/기관 순매수 동향과 주봉 기준 주요 지지선을 짚어줘.
+3. 리스크 에이전트는 레거시 D램 가격 하락 위험 및 빅테크 CAPEX 둔화 시 발생할 최악의 주가 하락폭을 경고해줘.
+4. CIO 에이전트는 이 모든 것을 종합해 [1차/2차 분할 매수가격]과 [손절가]를 포함한 매매 전략표를 작성해줘.</pre>
+      </div>
+
+      <!-- 해외 주식 예시 -->
+      <div class="prompt-box">
+        <div class="prompt-header">
+          <div class="prompt-title">🇺🇸 해외 주식용 (예시: 테슬라 TSLA - SEC 공시 & 전기차/FSD 밸류에이션)</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-us-tsla')">📋 프롬프트 복사</button>
+        </div>
+        <pre class="prompt-content" id="prompt-us-tsla">미국 나스닥 상장사 [TSLA (테슬라)]에 대해 멀티 에이전트 투자 심의를 진행해줘.
+
+1. 매크로 에이전트: 글로벌 전기차 침투율 둔화 및 자율주행(FSD)/로보택시 규제 환경 분석
+2. 펀더멘털 에이전트: SEC 10-K/10-Q 재무제표 기반 자동차 부문 마진율 추이 및 에너지 저장장치(Megapack) 성장성 밸류에이션
+3. 리스크(Bear) 에이전트: 중국 전기차(BYD 등)와의 가격 경쟁 심화 및 마진 훼손 리스크 집중 공격
+4. CIO 에이전트: Bull/Bear 논쟁을 중재하고, 목표 포트폴리오 비중(%)과 분할 진입 가이드를 제시해줘.</pre>
+      </div>
+    </section>
+
+    <!-- 3. 대화형 3단계 핑퐁 프롬프트 -->
+    <section id="interactive-pingpong" class="section">
+      <div class="section-header">
+        <h2 class="section-title">💬 대화형 핑퐁 방식 (단계별 심층 지시법)</h2>
+      </div>
+      <p style="color: var(--text-sub); margin-bottom: 20px; font-size: 14.5px;">
+        한 번에 모든 결과를 뽑지 않고, 에이전트들을 하나씩 호출하여 심층 검증하는 3단계 인터랙티브 방식입니다.
+      </p>
+
+      <div class="step-flow">
+        <div class="step-item">
+          <div class="step-badge-title">
+            <span class="step-num">1</span>
+            <span>1단계 : 기초 펀더멘털 및 밸류에이션 브리핑 요청</span>
+          </div>
+          <div class="prompt-box" style="margin-bottom:0;">
+            <div class="prompt-header">
+              <span style="font-size:12px; color:var(--text-sub);">입력 프롬프트 1</span>
+              <button class="copy-btn" onclick="copyPrompt('prompt-step1')">📋 복사</button>
+            </div>
+            <pre class="prompt-content" id="prompt-step1" style="max-height:120px;">지금부터 너는 헤지펀드 리서치 팀이야. 먼저 펀더멘털 에이전트가 [엔비디아(NVDA)]의 최근 분기 실적, 마진율 추이, 포워드 PER 밸류에이션만 먼저 브리핑해줘.</pre>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge-title">
+            <span class="step-num">2</span>
+            <span>2단계 : 악마의 대변인(Bear)을 소환하여 치명적 약점 반박 공격</span>
+          </div>
+          <div class="prompt-box" style="margin-bottom:0;">
+            <div class="prompt-header">
+              <span style="font-size:12px; color:var(--text-sub);">입력 프롬프트 2</span>
+              <button class="copy-btn" onclick="copyPrompt('prompt-step2')">📋 복사</button>
+            </div>
+            <pre class="prompt-content" id="prompt-step2" style="max-height:120px;">좋아. 이제 리스크(Bear) 에이전트 나와서 방금 펀더멘털 에이전트의 주장을 정면으로 반박해봐. 경쟁사 진입, 고객사 자체 칩 개발, 대중국 규제 등 가장 치명적인 약점 3가지를 집중 공격해줘.</pre>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge-title">
+            <span class="step-num">3</span>
+            <span>3단계 : CIO 소환 및 최종 분할 매수 매매 전략 확정</span>
+          </div>
+          <div class="prompt-box" style="margin-bottom:0;">
+            <div class="prompt-header">
+              <span style="font-size:12px; color:var(--text-sub);">입력 프롬프트 3</span>
+              <button class="copy-btn" onclick="copyPrompt('prompt-step3')">📋 복사</button>
+            </div>
+            <pre class="prompt-content" id="prompt-step3" style="max-height:120px;">총괄 CIO 나와서 양쪽 의견 듣고 결론을 내려줘. 지금 주가에서 바로 살까, 아니면 조정 올 때까지 기다릴까? 3단계 분할 매수가격 밴드와 손절 기준가를 제시해줘.</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 글로벌 주식 특화 6대 에이전트 마스터 프롬프트 -->
+    <section id="global-master" class="section">
+      <div class="section-header">
+        <h2 class="section-title">🌐 글로벌 주식 특화 6대 에이전트 마스터 아키텍처</h2>
+      </div>
+
+      <div class="team-grid">
+        <div class="agent-card macro">
+          <span class="agent-badge">Macro & FX</span>
+          <h4>1. 매크로 & FX 분석가</h4>
+          <p>미 연준(Fed) 금리 경로, 달러 인덱스(DXY), 10년물 국채 금리 및 원화 투자자 환헤지(Hedged) 전략 판단</p>
+        </div>
+
+        <div class="agent-card geo">
+          <span class="agent-badge">Geopolitics</span>
+          <h4>2. 공급망 & 지정학 분석가</h4>
+          <p>미·중 기술 갈등, 상무부 수출 통제(Entity List), 대만 해협 리스크 및 글로벌 밸류체인 소부장 병목 점검</p>
+        </div>
+
+        <div class="agent-card fund">
+          <span class="agent-badge">Fundamentals</span>
+          <h4>3. 글로벌 펀더멘털 분석가</h4>
+          <p>SEC 10-K/10-Q 원문 검증, FCF(잉여현금흐름) 건전성, 글로벌 피어(Peer) 멀티플 비교 및 목표가 산출</p>
+        </div>
+
+        <div class="agent-card quant">
+          <span class="agent-badge">Global Flow</span>
+          <h4>4. 자금 흐름 & 퀀트 분석가</h4>
+          <p>글로벌 ETF(QQQ, SMH) 자금 유출입, 13F 기관 지분 변화, 옵션 감마 익스포저(GEX) 및 숏 잔고 추적</p>
+        </div>
+
+        <div class="agent-card risk">
+          <span class="agent-badge">Tail Risk</span>
+          <h4>5. 테일 리스크(Bear) 분석가</h4>
+          <p>반독점 소송(DOJ/EU), 고객사 이탈, 블랙스완 발생 시 최악의 다운사이드(-% Max Drawdown) 스트레스 테스트</p>
+        </div>
+
+        <div class="agent-card cio">
+          <span class="agent-badge">Global CIO</span>
+          <h4>6. 멀티에셋 CIO 총괄</h4>
+          <p>보고서 종합, 투자 승인 여부, 포트폴리오 비중, 분할 매수 밴드, 환노출 여부 최종 확정</p>
+        </div>
+      </div>
+
+      <div class="prompt-box">
+        <div class="prompt-header">
+          <div class="prompt-title">🌟 글로벌 주식 특화 마스터 프롬프트 (전문가용 전문)</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-global-master')">📋 프롬프트 복사</button>
+        </div>
+        <pre class="prompt-content" id="prompt-global-master">당신은 최상위 글로벌 멀티에셋 헤지펀드의 '글로벌 투자 심의 위원회'입니다. 
+지금부터 아래 6명의 특화 에이전트로 팀을 구성하여 미국/글로벌 상장 종목 [ 티커 입력: 예) NVDA or TSM ]에 대한 심층 투자 심의를 진행해주세요.
+
+[에이전트 역할 및 분석 지침]
+1. 🌐 글로벌 매크로 & FX 에이전트:
+   - 미 연준(Fed) 통화정책, 달러 인덱스(DXY), 미 국채 금리가 본 종목에 미치는 영향 분석
+   - 원화 투자자 관점에서 환노출(Unhedged) vs 환헤지(Hedged) 전략 권고
+
+2. 🚢 공급망 & 지정학(Geopolitics) 에이전트:
+   - 미·중 기술 갈등, 수출 규제, 글로벌 밸류체인(소부장-파운드리-패키징-빅테크) 병목 현상 점검
+   - 지정학적 사건 발생 시 공급망 차질 가능성 평가
+
+3. 📊 글로벌 펀더멘털 & SEC 공시 에이전트:
+   - SEC 10-K/10-Q 기반 3 - 5개년 매출 성장률, 영업이익률(OPM), 잉여현금흐름(FCF) 추이 분석
+   - 글로벌 Peer 그룹 대비 포워드 PER, EV/EBITDA 밸류에이션 매력도 및 목표주가 산출
+
+4. 🌊 글로벌 수급 & 퀀트 에이전트:
+   - 주요 글로벌 테마 ETF 자금 유입 추세, 13F 기관 매매 동향, 공매도 잔고 및 기술적 지지/저항 라인 진단
+
+5. ⚠️ 테일 리스크(Tail-Risk / Bear) 에이전트:
+   - 악마의 대변인 역할. 반독점 규제, 대체재 등장, 빅테크 CAPEX 축소 등 최악의 시나리오(Bear Case)에서 주가 하락 룸(-% Drawdown) 산출
+
+6. 🏛️ 글로벌 CIO 에이전트:
+   - 펀더멘털(Bull) vs 리스크(Bear) 공방을 종합 평가하여 최종 [글로벌 투자 메모(Global Investment Memo)] 작성
+
+[최종 CIO 출력 양식]
+1. 최종 투자의견 (Strong Buy / Buy / Hold / Sell)
+2. 목표 포트폴리오 비중 (%) 및 적정 목표주가 (달러 기준)
+3. 3단계 분할 매수 진입 가격 밴드 ($)
+4. 손절 기준가 (Stop-Loss $) 및 리스크 헤지(환율/옵션) 가이드</pre>
+      </div>
+    </section>
+
+    <!-- 5. 시뮬레이션 케이스 & CIO 최종 결정서 템플릿 -->
+    <section id="simulation-case" class="section">
+      <div class="section-header">
+        <h2 class="section-title">📊 실전 시뮬레이션 (TSMC 케이스) & CIO 의사결정서</h2>
+      </div>
+
+      <div class="sim-card">
+        <h3 style="font-size:18px; margin-bottom:6px; color:var(--text-main); font-weight:700;">대만 TSMC (TSM) 글로벌 투자 심의 시뮬레이션</h3>
+        <p style="color:var(--text-sub); font-size:13.5px;">글로벌 6대 에이전트가 실제 대화창에서 공방을 벌이는 과정의 요약입니다.</p>
+
+        <div class="sim-dialogue">
+          <div class="bubble bull">
+            <strong>🚢 공급망 & 펀더멘털 에이전트 (Bull)</strong>
+            "3nm 및 CoWoS 첨단 패키징 라인은 2026년까지 주문이 완판(Sold-out) 상태입니다. 엔비디아, 애플, AMD 등 팹리스 고객사들의 락인이 견고하며 40% 이상의 OPM 유지가 확실합니다."
+          </div>
+          <div class="bubble bear">
+            <strong>⚠️ 테일 리스크 에이전트 (Bear)</strong>
+            "지정학적 리스크(대만 해협)로 인해 미국 빅테크 대비 20% 이상의 밸류에이션 디스카운트가 불가피합니다. 또한 미국 애리조나 공장의 건설 원가 상승과 인력난이 중기적 마진을 훼손할 수 있습니다."
+          </div>
+          <div class="bubble cio">
+            <strong>🏛️ 글로벌 CIO 에이전트의 중재 및 결론</strong>
+            "지정학적 디스카운트 20%를 모델에 보수적으로 반영하더라도, 포워드 PER 18배는 글로벌 테크 리더 중 가장 저평가 상태입니다. **달러 환노출(Unhedged) 상태로 3회 분할 매수**를 최종 승인합니다."
+          </div>
+        </div>
+      </div>
+
+      <!-- CIO 최종 결정서 템플릿 -->
+      <div class="prompt-box">
+        <div class="prompt-header">
+          <div class="prompt-title">📝 CIO 최종 투자 결정서 (Global Investment Memo) 표준 양식</div>
+          <button class="copy-btn" onclick="copyPrompt('prompt-memo-template')">📋 서식 복사</button>
+        </div>
+        <pre class="prompt-content" id="prompt-memo-template">========================================================
+[GLOBAL INVESTMENT MEMORANDUM : 최종 투자 심의 결정서]
+========================================================
+1. 대상 종목 : [ 종목명 / 티커 ]
+2. 투자 의견 : BUY (분할 매수) / 포트폴리오 비중 : [ X.X% ]
+3. 적정 가치 및 목표가 : 1차 [$ XXX] / 2차 [$ XXX]
+4. 분할 매수 가격 밴드 :
+   - 1차 매수 (40%) : $ XXX
+   - 2차 매수 (30%) : $ XXX
+   - 3차 매수 (30%) : $ XXX
+5. 칼손절 기준가 (Stop-Loss) : $ XXX (주요 지지선 붕괴 시 즉시 비중 50% 축소)
+6. 환헤지 / 매크로 전략 : [ 달러 환노출 권장 / 환헤지 권장 ]
+7. 실시간 추적 트리거 : [ 리스크 에이전트가 모니터링할 핵심 규제/실적 지표 ]
+========================================================</pre>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- 토스트 알림 메시지 -->
+  <div id="toast">✅ 프롬프트가 클립보드에 복사되었습니다!</div>
+
+  <script>
+    // 테마 전환 및 로컬스토리지 저장 로직
+    function initTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      const body = document.body;
+      const themeIcon = document.getElementById('themeIcon');
+      const themeText = document.getElementById('themeText');
+
+      if (savedTheme === 'dark') {
+        body.classList.add('dark-mode');
+        themeIcon.innerText = '☀️';
+        themeText.innerText = '밝게';
+      } else {
+        body.classList.remove('dark-mode');
+        themeIcon.innerText = '🌙';
+        themeText.innerText = '어둡게';
+      }
+    }
+
+    function toggleTheme() {
+      const body = document.body;
+      const themeIcon = document.getElementById('themeIcon');
+      const themeText = document.getElementById('themeText');
+
+      body.classList.toggle('dark-mode');
+
+      if (body.classList.contains('dark-mode')) {
+        localStorage.setItem('theme', 'dark');
+        themeIcon.innerText = '☀️';
+        themeText.innerText = '밝게';
+      } else {
+        localStorage.setItem('theme', 'light');
+        themeIcon.innerText = '🌙';
+        themeText.innerText = '어둡게';
+      }
+    }
+
+    // 클립보드 복사 함수
+    function copyPrompt(elementId) {
+      const text = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        showToast();
+      }).catch(err => {
+        console.error('복사 실패:', err);
+      });
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2200);
+    }
+
+    // 페이지 로드 시 테마 초기화 실행
+    document.addEventListener('DOMContentLoaded', initTheme);
+  </script>
+</body>
+</html>
