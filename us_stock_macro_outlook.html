@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>미국 주가 전망 매크로 종합 분석 보고서 (부정적 vs 긍정적 관점)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================================================
+       CSS Variables & Themes (Dark & Light Mode Support)
+       ========================================================================== */
+    :root[data-theme="dark"] {
+      --bg-primary: #0b0f19;
+      --bg-secondary: #111827;
+      --bg-card: #1e293b;
+      --bg-card-hover: #27354a;
+      --border-color: #334155;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --header-bg: linear-gradient(180deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.4) 100%);
+      --nav-bg: rgba(15, 23, 42, 0.88);
+      
+      --bear-primary: #ef4444;
+      --bear-secondary: #f87171;
+      --bear-subtle: rgba(239, 68, 68, 0.12);
+      --bear-border: rgba(239, 68, 68, 0.35);
+      --bear-gradient: linear-gradient(135deg, rgba(239, 68, 68, 0.18) 0%, rgba(185, 28, 28, 0.04) 100%);
+      
+      --bull-primary: #10b981;
+      --bull-secondary: #34d399;
+      --bull-subtle: rgba(16, 185, 129, 0.12);
+      --bull-border: rgba(16, 185, 129, 0.35);
+      --bull-gradient: linear-gradient(135deg, rgba(16, 185, 129, 0.18) 0%, rgba(4, 120, 87, 0.04) 100%);
+      
+      --accent-blue: #3b82f6;
+      --accent-purple: #8b5cf6;
+      --panel-bg: #090d16;
+      --shadow-elevation: 0 12px 36px rgba(0, 0, 0, 0.45);
+    }
+
+    :root[data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: #f1f5f9;
+      --bg-card-hover: #e2e8f0;
+      --border-color: #cbd5e1;
+      --border-subtle: rgba(0, 0, 0, 0.06);
+      --text-main: #0f172a;
+      --text-muted: #334155;
+      --text-dim: #64748b;
+      --header-bg: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+      --nav-bg: rgba(255, 255, 255, 0.92);
+      
+      --bear-primary: #dc2626;
+      --bear-secondary: #b91c1c;
+      --bear-subtle: rgba(239, 68, 68, 0.08);
+      --bear-border: rgba(220, 38, 38, 0.3);
+      --bear-gradient: linear-gradient(135deg, #fff5f5 0%, #fee2e2 100%);
+      
+      --bull-primary: #059669;
+      --bull-secondary: #047857;
+      --bull-subtle: rgba(16, 185, 129, 0.08);
+      --bull-border: rgba(5, 150, 105, 0.3);
+      --bull-gradient: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      
+      --accent-blue: #2563eb;
+      --accent-purple: #7c3aed;
+      --panel-bg: #f8fafc;
+      --shadow-elevation: 0 8px 24px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      line-height: 1.75;
+      font-size: 16px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body.large-font {
+      font-size: 17.5px;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 24px 24px 80px;
+    }
+
+    /* Top Utility Bar */
+    .utility-bar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .util-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 15px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.86rem;
+      font-weight: 600;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .util-btn:hover {
+      color: var(--text-main);
+      border-color: var(--text-dim);
+      transform: translateY(-1px);
+    }
+
+    /* Header */
+    header.report-header {
+      text-align: center;
+      padding: 44px 28px;
+      background: var(--header-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      margin-bottom: 32px;
+      box-shadow: var(--shadow-elevation);
+    }
+
+    .report-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      color: var(--accent-blue);
+      font-size: 0.85rem;
+      font-weight: 700;
+      border-radius: 999px;
+      margin-bottom: 16px;
+      letter-spacing: 0.04em;
+    }
+
+    h1.report-title {
+      font-size: 2.25rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      margin-bottom: 12px;
+      color: var(--text-main);
+    }
+
+    p.report-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 820px;
+      margin: 0 auto 20px;
+      word-break: keep-all;
+    }
+
+    .report-meta {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 0.88rem;
+      color: var(--text-dim);
+      font-weight: 500;
+    }
+
+    /* Sticky Navigation */
+    .view-switcher {
+      position: sticky;
+      top: 14px;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      background: var(--nav-bg);
+      padding: 8px 12px;
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+      backdrop-filter: blur(16px);
+      margin-bottom: 36px;
+      box-shadow: var(--shadow-elevation);
+    }
+
+    .tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 20px;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      font-size: 0.94rem;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+      background: var(--bg-card);
+    }
+
+    .tab-btn.active {
+      color: #ffffff;
+      background: var(--bg-card);
+      border-color: var(--border-color);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    [data-theme="light"] .tab-btn.active {
+      color: var(--text-main);
+      background: #ffffff;
+      border-color: var(--border-color);
+    }
+
+    .tab-btn.tab-bear.active {
+      color: var(--bear-secondary) !important;
+      border-color: var(--bear-border);
+      background: var(--bear-subtle);
+    }
+
+    .tab-btn.tab-bull.active {
+      color: var(--bull-secondary) !important;
+      border-color: var(--bull-border);
+      background: var(--bull-subtle);
+    }
+
+    /* Main Section Containers */
+    .report-section {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 22px;
+      padding: 40px;
+      margin-bottom: 48px;
+      box-shadow: var(--shadow-elevation);
+    }
+
+    .section-header-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 30px;
+    }
+
+    .section-headline {
+      font-size: 1.65rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .bear-theme .section-headline { color: var(--bear-primary); }
+    .bull-theme .section-headline { color: var(--bull-primary); }
+
+    .section-tag {
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .bear-theme .section-tag {
+      background: var(--bear-subtle);
+      color: var(--bear-primary);
+      border: 1px solid var(--bear-border);
+    }
+
+    .bull-theme .section-tag {
+      background: var(--bull-subtle);
+      color: var(--bull-primary);
+      border: 1px solid var(--bull-border);
+    }
+
+    /* Executive Callout Boxes */
+    .executive-box {
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin-bottom: 34px;
+      border-left: 5px solid var(--accent-blue);
+      background: var(--bg-card);
+    }
+
+    .bear-theme .executive-box {
+      border-left-color: var(--bear-primary);
+      background: var(--bear-gradient);
+    }
+
+    .bull-theme .executive-box {
+      border-left-color: var(--bull-primary);
+      background: var(--bull-gradient);
+    }
+
+    .executive-title {
+      font-size: 1.08rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .bear-theme .executive-title { color: var(--bear-primary); }
+    .bull-theme .executive-title { color: var(--bull-primary); }
+
+    .executive-box p {
+      font-size: 0.98rem;
+      color: var(--text-main);
+      line-height: 1.75;
+    }
+
+    /* ==========================================================================
+       MODERN INFOGRAPHIC FLOW CHART (원본 텍스트 100% 반영)
+       ========================================================================== */
+    .infographic-container {
+      border-radius: 20px;
+      padding: 30px;
+      margin: 28px 0 40px;
+      position: relative;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-elevation);
+    }
+
+    .infographic-container.bear-infographic {
+      background: linear-gradient(180deg, rgba(239, 68, 68, 0.08) 0%, rgba(15, 23, 42, 0.4) 100%);
+      border-color: var(--bear-border);
+    }
+
+    .infographic-container.bull-infographic {
+      background: linear-gradient(180deg, rgba(16, 185, 129, 0.08) 0%, rgba(15, 23, 42, 0.4) 100%);
+      border-color: var(--bull-border);
+    }
+
+    [data-theme="light"] .infographic-container.bear-infographic {
+      background: linear-gradient(180deg, #fff1f2 0%, #ffffff 100%);
+    }
+
+    [data-theme="light"] .infographic-container.bull-infographic {
+      background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%);
+    }
+
+    .infographic-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px dashed var(--border-color);
+    }
+
+    .infographic-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .bear-infographic .infographic-title { color: var(--bear-primary); }
+    .bull-infographic .infographic-title { color: var(--bull-primary); }
+
+    .infographic-badge {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .bear-infographic .infographic-badge {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--bear-primary);
+      border: 1px solid var(--bear-border);
+    }
+
+    .bull-infographic .infographic-badge {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--bull-primary);
+      border: 1px solid var(--bull-border);
+    }
+
+    /* 3-Step Horizontal Flow */
+    .flow-steps-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 980px) {
+      .flow-steps-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .flow-arrow {
+        transform: rotate(90deg);
+        margin: 4px auto;
+      }
+    }
+
+    .flow-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 22px 18px;
+      transition: all 0.25s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .flow-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    .bear-infographic .flow-card {
+      border-left: 4px solid var(--bear-primary);
+    }
+
+    .bull-infographic .flow-card {
+      border-left: 4px solid var(--bull-primary);
+    }
+
+    .step-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      align-self: flex-start;
+    }
+
+    .bear-infographic .step-badge {
+      background: var(--bear-subtle);
+      color: var(--bear-primary);
+    }
+
+    .bull-infographic .step-badge {
+      background: var(--bull-subtle);
+      color: var(--bull-primary);
+    }
+
+    .step-heading {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 12px;
+    }
+
+    .step-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.92rem;
+      color: var(--text-main);
+    }
+
+    .step-bullets li {
+      position: relative;
+      padding-left: 14px;
+      line-height: 1.5;
+    }
+
+    .step-bullets li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+
+    .bear-infographic .step-bullets li::before { color: var(--bear-primary); }
+    .bull-infographic .step-bullets li::before { color: var(--bull-primary); }
+
+    .flow-arrow {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: var(--text-dim);
+      text-align: center;
+      user-select: none;
+    }
+
+    /* Final Impact Bar */
+    .flow-final-impact {
+      border-radius: 14px;
+      padding: 18px 24px;
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      border: 1px solid transparent;
+    }
+
+    .bear-infographic .flow-final-impact {
+      background: linear-gradient(90deg, rgba(239, 68, 68, 0.2) 0%, rgba(15, 23, 42, 0.6) 100%);
+      border-color: var(--bear-border);
+    }
+
+    .bull-infographic .flow-final-impact {
+      background: linear-gradient(90deg, rgba(16, 185, 129, 0.2) 0%, rgba(15, 23, 42, 0.6) 100%);
+      border-color: var(--bull-border);
+    }
+
+    [data-theme="light"] .bear-infographic .flow-final-impact {
+      background: linear-gradient(90deg, #fee2e2 0%, #ffffff 100%);
+      border-color: var(--bear-border);
+    }
+
+    [data-theme="light"] .bull-infographic .flow-final-impact {
+      background: linear-gradient(90deg, #dcfce7 0%, #ffffff 100%);
+      border-color: var(--bull-border);
+    }
+
+    .impact-indicator {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .bear-infographic .impact-indicator { color: var(--bear-primary); }
+    .bull-infographic .impact-indicator { color: var(--bull-primary); }
+
+    .impact-content strong {
+      display: block;
+      font-size: 1.08rem;
+      color: var(--text-main);
+    }
+
+    /* Subsections & Text */
+    .sub-section {
+      margin-bottom: 36px;
+    }
+
+    .sub-title {
+      font-size: 1.28rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 18px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .item-title {
+      font-size: 1.08rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin: 20px 0 8px 0;
+    }
+
+    .content-p {
+      color: var(--text-main);
+      font-size: 0.97rem;
+      margin-bottom: 12px;
+      line-height: 1.75;
+    }
+
+    /* Metric Panels */
+    .metrics-panel {
+      background: var(--panel-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin: 18px 0 24px;
+    }
+
+    .metrics-panel-header {
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-dim);
+      margin-bottom: 14px;
+    }
+
+    .metrics-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.96rem;
+      color: var(--text-main);
+    }
+
+    .metrics-list li {
+      position: relative;
+      padding-left: 16px;
+    }
+
+    .metrics-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+      color: var(--text-dim);
+    }
+
+    /* Tables */
+    .table-container {
+      overflow-x: auto;
+      margin: 22px 0 30px;
+      border-radius: 14px;
+      border: 1px solid var(--border-color);
+    }
+
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.94rem;
+    }
+
+    table.data-table th {
+      background: var(--panel-bg);
+      color: var(--text-main);
+      padding: 14px 18px;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    table.data-table td {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    table.data-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    table.data-table tr:hover td {
+      background: var(--bg-card);
+    }
+
+    /* Strategy Alert Boxes */
+    .alert-card {
+      border-radius: 16px;
+      padding: 26px;
+      margin-top: 32px;
+      border: 1px solid transparent;
+    }
+
+    .alert-card.warning {
+      background: var(--bear-gradient);
+      border-color: var(--bear-border);
+    }
+
+    .alert-card.tip {
+      background: var(--bull-gradient);
+      border-color: var(--bull-border);
+    }
+
+    .alert-heading {
+      font-size: 1.08rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .alert-card.warning .alert-heading { color: var(--bear-primary); }
+    .alert-card.tip .alert-heading { color: var(--bull-primary); }
+
+    .recommendations-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .recommendations-list li {
+      position: relative;
+      padding-left: 24px;
+      color: var(--text-main);
+      font-size: 0.96rem;
+      line-height: 1.7;
+    }
+
+    .recommendations-list li strong {
+      color: var(--text-main);
+    }
+
+    .recommendations-list li::before {
+      content: "1.";
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+
+    .recommendations-list li:nth-child(2)::before { content: "2."; }
+    .recommendations-list li:nth-child(3)::before { content: "3."; }
+
+    .alert-card.warning .recommendations-list li::before { color: var(--bear-primary); }
+    .alert-card.tip .recommendations-list li::before { color: var(--bull-primary); }
+
+    /* Footer */
+    footer.report-footer {
+      text-align: center;
+      padding: 40px 20px;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-dim);
+      font-size: 0.88rem;
+    }
+
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #111827 !important;
+        font-size: 13px !important;
+      }
+      .utility-bar, .view-switcher { display: none !important; }
+      .report-section {
+        background: #ffffff !important;
+        border: 1px solid #e5e7eb !important;
+        box-shadow: none !important;
+        page-break-after: always;
+      }
+      .infographic-container {
+        border: 1px solid #cbd5e1 !important;
+        background: #f8fafc !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Top Utility Bar (Screen Mode & Options) -->
+    <div class="utility-bar">
+      <button class="util-btn" onclick="toggleFontSize()">
+        <span id="fontIcon">🔍</span> <span id="fontText">글자 크기 (보통)</span>
+      </button>
+      <button class="util-btn" onclick="toggleTheme()">
+        <span id="themeIcon">☀️</span> <span id="themeText">라이트 모드</span>
+      </button>
+      <button class="util-btn" onclick="window.print()">
+        <span>🖨️</span> <span>인쇄 / PDF 저장</span>
+      </button>
+    </div>
+
+    <!-- Report Header -->
+    <header class="report-header">
+      <div class="report-badge">GLOBAL MACRO & EQUITY STRATEGY REPORT</div>
+      <h1 class="report-title">미국 주가 전망 매크로 종합 분석 보고서</h1>
+      <p class="report-subtitle">경제 전문가 및 글로벌 주식투자 전문가 관점에서 분석한 거시경제 하방 리스크(부정적 측면)와 구조적 상승 동력(긍정적 측면)의 심층 비교</p>
+      <div class="report-meta">
+        <span>📅 작성 기준: 2026년 하반기</span>
+        <span>•</span>
+        <span>📊 분석 대상: S&P 500 / NASDAQ / US Macro Economy</span>
+        <span>•</span>
+        <span>📁 저장 폴더: 바탕화면\매크로분석</span>
+      </div>
+    </header>
+
+    <!-- Sticky Navigation Tabs -->
+    <nav class="view-switcher">
+      <button class="tab-btn active" onclick="filterView('all')">전체 종합 보기</button>
+      <button class="tab-btn tab-bear" onclick="filterView('bear')">부정적 관점 (Bearish)</button>
+      <button class="tab-btn tab-bull" onclick="filterView('bull')">긍정적 관점 (Bullish)</button>
+    </nav>
+
+    <!-- ======================================================== -->
+    <!-- SECTION 1: 부정적 관점 분석 (원문 100% 완전 보존) -->
+    <!-- ======================================================== -->
+    <article class="report-section bear-theme" id="bearSection">
+      <div class="section-header-banner">
+        <h2 class="section-headline">[매크로 심층 분석] 미국 주가 전망: 부정적 관점 및 하방 리스크 점검</h2>
+        <span class="section-tag">Bearish Case</span>
+      </div>
+
+      <!-- Executive Summary -->
+      <div class="executive-box">
+        <div class="executive-title">핵심 요약 (Executive Summary)</div>
+        <p>현재 미국 증시는 <strong>'골디락스(견조한 성장 + 완만한 물가 안정 + 공격적 금리 인하)'와 'AI 생산성 혁신'에 대한 낙관론이 가격에 과도하게 선반영(Priced-for-Perfection)</strong> 되어 있습니다.<br>
+        그러나 매크로 내부를 들여다보면 <strong>① 고금리 장기화(Higher-for-Longer)에 따른 누적 긴축 효과, ② 미 연방정부 부채 급증 및 국채 금리 상승(기간 프리미엄 확대), ③ 가계 소비 여력 고갈, ④ AI 투자 대비 수익화(ROI) 지연에 따른 실적 둔화, ⑤ 보호무역주의 및 지정학적 분절화</strong>라는 5대 하방 압력이 지수의 급격한 조정(밸류에이션 디레이팅)을 유발할 위험을 내포하고 있습니다.</p>
+      </div>
+
+      <!-- [개선된 모던 인포그래픽] 미국 증시 매크로 하방 압력 전이 구조 (원문 텍스트 100% 반영) -->
+      <div class="infographic-container bear-infographic">
+        <div class="infographic-header">
+          <div class="infographic-title">
+            <span>📉</span>
+            <span>[미국 증시 매크로 하방 압력 전이 구조]</span>
+          </div>
+          <span class="infographic-badge">DOWNWARD TRANSMISSION</span>
+        </div>
+
+        <div class="flow-steps-grid">
+          <!-- Step 1 -->
+          <div class="flow-card">
+            <span class="step-badge">1단계</span>
+            <div class="step-heading">1. 통화/재정 긴축</div>
+            <ul class="step-bullets">
+              <li>고금리 장기화 지속</li>
+              <li>국채 발행 폭증</li>
+              <li>10년물 금리 4.6%+</li>
+            </ul>
+          </div>
+
+          <div class="flow-arrow">➔</div>
+
+          <!-- Step 2 -->
+          <div class="flow-card">
+            <span class="step-badge">2단계</span>
+            <div class="step-heading">2. 실물 경제 둔화</div>
+            <ul class="step-bullets">
+              <li>초과저축 고갈/연체율</li>
+              <li>고용 질적 악화</li>
+              <li>소비(GDP 70%) 냉각</li>
+            </ul>
+          </div>
+
+          <div class="flow-arrow">➔</div>
+
+          <!-- Step 3 -->
+          <div class="flow-card">
+            <span class="step-badge">3단계</span>
+            <div class="step-heading">3. 기업 밸류에이션</div>
+            <ul class="step-bullets">
+              <li>Forward PER 21배+</li>
+              <li>ERP(위험프리미엄) 역사적 최저치 도달</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Final Impact -->
+        <div class="flow-final-impact">
+          <div class="impact-indicator">최종 전이 귀결</div>
+          <div class="impact-content">
+            <strong>지수 변동성 확대 및 밸류에이션 멀티플 하향 조정</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1. 통화 정책 및 유동성 환경의 구조적 제약 -->
+      <div class="sub-section">
+        <h3 class="sub-title">1. 통화 정책 및 유동성 환경의 구조적 제약</h3>
+        
+        <h4 class="item-title">① 인플레이션 하방 경직성(Sticky Inflation)과 금리 인하 여력 축소</h4>
+        <p class="content-p">• <strong>라스트 마일(Last Mile)의 난제</strong>: 헤드라인 물가가 피크 대비 하락했으나, 서비스 물가, 주거비, 임금 상승률 등 핵심(Core) 지표의 하방 경직성이 지속되고 있습니다.</p>
+        <p class="content-p">• <strong>중립금리(R*)의 구조적 상승</strong>: 탈세계화, 공급망 재편, 국방비 증액, 녹색 전환(Greenflation) 비용 등으로 인해 구조적 중립금리가 과거 저금리 시대(2010년대) 대비 크게 상승하여, 연준이 금리를 대폭 낮출 여력 자체가 제한적입니다.</p>
+
+        <h4 class="item-title">② 양적 긴축(QT) 지속과 유동성 버퍼 소진</h4>
+        <p class="content-p">• 연준의 대차대조표 축소(QT)가 지속되는 가운데, 그동안 금융시장의 완충재 역할을 하던 <strong>역레포(Overnight RRP) 잔고가 바닥 수준에 근접</strong>함에 따라 연준의 긴축 효과가 은행 지준(Bank Reserves) 및 시장 유동성에 직접적인 타격을 주기 시작하는 국면에 진입했습니다.</p>
+      </div>
+
+      <!-- 2. 재정 건전성 악화와 장기 국채 금리 급등 (Supply Shock) -->
+      <div class="sub-section">
+        <h3 class="sub-title">2. 재정 건전성 악화와 장기 국채 금리 급등 (Supply Shock)</h3>
+        
+        <div class="metrics-panel">
+          <div class="metrics-panel-header">[미국 거시 건전성 핵심 지표 현황]</div>
+          <ul class="metrics-list">
+            <li>• 미국 GDP 대비 연방정부 부채 비율: 약 122.6% (역사적 최고 수준)</li>
+            <li>• 미 국채 10년물 금리: 4.60% ~ 4.75% 수준 유지</li>
+            <li>• 주식 위험 프리미엄 (S&P 500 이익수익률 - 국채 10년물): 0% ~ 0.5% 내외 (TINA 소멸)</li>
+          </ul>
+        </div>
+
+        <h4 class="item-title">① 미 국채 공급 과잉(Supply Shock)과 기간 프리미엄(Term Premium) 확대</h4>
+        <p class="content-p">• 미국 연방정부 부채가 <strong>GDP 대비 122%를 상회</strong>하고 연간 재정적자가 수조 달러 규모로 고착화되면서, 재무부의 국채 발행량이 폭증하고 있습니다.</p>
+        <p class="content-p">• 외국인 및 민간 투자자의 국채 소화 능력 한계로 인해 장기물 국채 금리(10년물·30년물)에 대한 <strong>기간 프리미엄 요구가 커지며 장기 금리가 높은 수준(4.6% 이상)을 지속</strong>하고 있습니다.</p>
+
+        <h4 class="item-title">② TINA(There Is No Alternative)의 완전한 종말과 주식 매력도 급감</h4>
+        <p class="content-p">• 무위험 자산인 미국 국채 10년물이 4.6% 이상의 확정 수익을 제공하는 반면, S&P 500의 이익수익률(Earning Yield, 1/PER)은 4.7% ~ 4.8% 수준에 불과합니다.</p>
+        <p class="content-p">• 이에 따라 <strong>주식 위험 프리미엄(ERP, Equity Risk Premium)이 2000년대 닷컴버블 이후 최저치(0%대)</strong> 로 추락하여, 주식의 높은 변동성을 감내할 유인이 사라진 상태입니다.</p>
+      </div>
+
+      <!-- 3. 실물 경제: 가계 소비 여력 고갈 및 고용 둔화 (Late-Cycle Friction) -->
+      <div class="sub-section">
+        <h3 class="sub-title">3. 실물 경제: 가계 소비 여력 고갈 및 고용 둔화 (Late-Cycle Friction)</h3>
+        
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width: 25%;">구분</th>
+                <th>매크로 리스크 요인</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>팬데믹 초과 저축</strong></td>
+                <td>2024년 중 완전 소진 완료, 저축률 3% ~ 4%대로 하락</td>
+              </tr>
+              <tr>
+                <td><strong>신용카드/오토론 연체율</strong></td>
+                <td>상업은행 신용카드 연체율 약 2.8% ~ 3.2% (금융위기급)</td>
+              </tr>
+              <tr>
+                <td><strong>노동 시장(JOLTs)</strong></td>
+                <td>신규 채용 공고 감소, 풀타임 감소 및 파트타임 증가</td>
+              </tr>
+              <tr>
+                <td><strong>소비 양극화(K자형)</strong></td>
+                <td>고소득층(자산효과) 대비 중하위층 실질 가처분소득 위축</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="content-p">• <strong>미국 GDP의 70%를 차지하는 민간 소비의 엔진 냉각</strong>: 저소득·중산층을 중심으로 누적된 고물가와 고금리(신용카드 금리 20% 초과)로 인해 가계 신용 한도가 한계에 봉착했습니다.</p>
+        <p class="content-p">• <strong>고용 시장의 질적 둔화</strong>: 실업률의 급등은 나타나지 않더라도 구인 건수 감소와 자발적 이직률 하락은 노동 시장의 활력이 둔화되고 있음을 보여주며, 이는 시차를 두고 소비 위축으로 직결됩니다.</p>
+      </div>
+
+      <!-- 4. 기업 펀더멘털 및 밸류에이션 부담 -->
+      <div class="sub-section">
+        <h3 class="sub-title">4. 기업 펀더멘털 및 밸류에이션 부담</h3>
+        
+        <div class="metrics-panel">
+          <div class="metrics-panel-header">[S&P 500 지수 편중도 및 밸류에이션 현황]</div>
+          <ul class="metrics-list">
+            <li>• S&P 500 12개월 선행 PER: 21.0배 ~ 22.5배 (10년 평균 18.0배 대비 20% 이상 고평가)</li>
+            <li>• 상위 10개 메가캡 비중: 전체 지수의 약 35% ~ 38% 차지 (역대 최고 쏠림)</li>
+            <li>• 러셀 2000 기업 중 적자 기업 비중: 약 40% 내외 (리파이낸싱 위기 직면)</li>
+          </ul>
+        </div>
+
+        <h4 class="item-title">① 빅테크/AI 쏠림 현상(Extreme Concentration)에 따른 취약성</h4>
+        <p class="content-p">• 지수 상승이 소수 메가캡 빅테크(M7 등)에 과도하게 의존하는 <strong>시장 건전성(Market Breadth) 악화</strong> 상태입니다.</p>
+        <p class="content-p">• <strong>AI CapEx 투자 대비 ROI 회수 지연 리스크</strong>: 빅테크 기업들의 막대한 AI 데이터센터 및 반도체 설비투자(CapEx) 대비 실제 수익화(Monetization) 속도가 시장의 기대에 미치지 못할 경우, 실적 가이던스 하향과 함께 지수 전체가 급격한 조정을 받게 됩니다.</p>
+
+        <h4 class="item-title">② 부채 만기 도래와 중소형/한계기업의 리파이낸싱 쇼크</h4>
+        <p class="content-p">• 저금리 시절 발행했던 기업들의 채권 만기가 본격 도래하면서, <strong>4% ~ 5%p 이상 높아진 금리로 차환(Refinancing)</strong> 을 진행해야 합니다.</p>
+        <p class="content-p">• 이는 비금융 기업들의 이자 비용 급증, 영업이익률(OPM) 훼손, 신규 설비투자 축소 및 고용 감축으로 이어지는 악순환을 유발합니다.</p>
+      </div>
+
+      <!-- 5. 지정학적 리스크 및 보호무역주의의 역풍 -->
+      <div class="sub-section">
+        <h3 class="sub-title">5. 지정학적 리스크 및 보호무역주의의 역풍</h3>
+        <p class="content-p">• <strong>보호무역주의 및 보편 관세 정책</strong>: 관세 부과 확대는 수입 물가를 자극(Cost-Push Inflation)하여 연준의 긴축을 장기화시키고, 글로벌 무역량을 위축시켜 미국 다국적 기업들의 해외 매출 비중(S&P 500 매출의 약 40%)에 직접적인 타격을 줍니다.</p>
+        <p class="content-p">• <strong>지정학적 분쟁 및 원자재 변동성</strong>: 중동 및 동유럽 갈등, 호르무즈 해협 및 주요 항로 리스크는 유가와 해상 운임을 자극하여 공급망 인플레이션을 재점화할 뇌관으로 상존합니다.</p>
+      </div>
+
+      <!-- 6. 종합 시나리오 분석 및 시장 영향 -->
+      <div class="sub-section">
+        <h3 class="sub-title">6. 종합 시나리오 분석 및 시장 영향</h3>
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>구분</th>
+                <th>Scenario A: 스태그플레이션형 하락 (비중 40%)</th>
+                <th>Scenario B: 밸류에이션 디레이팅 (비중 35%)</th>
+                <th>Scenario C: 경기침체형 실적 쇼크 (비중 25%)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>핵심 트리거</strong></td>
+                <td>물가 재상승 + 관세 전쟁 + 금리 인하 중단</td>
+                <td>미 국채 10년물 5.0% 돌파 + AI 수익성 의구심</td>
+                <td>소비 급랭 + 실업률 급등 + 기업 실적 역성장</td>
+              </tr>
+              <tr>
+                <td><strong>시장 반응</strong></td>
+                <td>PER 하향 및 마진 압박 동시 발생</td>
+                <td>고P/E 성장주 중심 멀티플 급락 (-15% ~ -20%)</td>
+                <td>지수 전반의 EPS 급락에 따른 베어마켓 (-20% ~ -30%)</td>
+              </tr>
+              <tr>
+                <td><strong>취약 자산군</strong></td>
+                <td>중소형주(러셀2000), 고부채 소비재, 테크주</td>
+                <td>초고평가 AI/반도체, 무수익 성장주</td>
+                <td>경기민감주, 산업재, 금융주, 하이일드 채권</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 7. 전문가 결론 및 투자 전략적 시사점 -->
+      <div class="alert-card warning">
+        <div class="alert-heading">⚠️ 전문가 결론 및 투자 전략적 시사점</div>
+        <p style="margin-bottom: 12px;"><strong>"완벽한 시나리오에 베팅된 주가 vs 균열이 시작된 매크로 환경"</strong><br>
+        현재의 미국 주식시장은 작은 매크로 충격(인플레이션 반등, 국채 금리 재상승, 메가캡 실적 미스)에도 매우 민감하게 반응할 수 있는 <strong>비대칭적 하방 위험(Asymmetric Downside Risk)</strong> 구간에 위치해 있습니다.</p>
+        
+        <strong style="color: var(--bear-primary); display: block; margin-top: 14px;">리스크 관리 관점의 포트폴리오 대응 권고:</strong>
+        <ul class="recommendations-list">
+          <li><strong>주식 비중 조절 및 현금성 자산 확보</strong>: 머니마켓펀드(MMF) 및 4%대 중후반 무위험 단기 국채를 활용해 안정적인 이자 수익을 취하며 조정 시 매수 여력 확보</li>
+          <li><strong>밸류에이션 버퍼가 있는 퀄리티(Quality) 자산 선호</strong>: 부채비율이 낮고, 잉여현금흐름(FCF) 창출력이 우수하며 가격 결정력(Moat)을 보유한 가치/배당 성장주 비중 확대</li>
+          <li><strong>포트폴리오 변동성 헤지</strong>: 주식과 역상관관계를 보이는 금(Gold) 및 하방 변동성에 대비한 파생상품/옵션 헤지 전략 병행 고려</li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- ======================================================== -->
+    <!-- SECTION 2: 긍정적 관점 분석 (원문 100% 완전 보존) -->
+    <!-- ======================================================== -->
+    <article class="report-section bull-theme" id="bullSection">
+      <div class="section-header-banner">
+        <h2 class="section-headline">[매크로 심층 분석] 미국 주가 전망: 긍정적 관점 및 상승 동력 점검</h2>
+        <span class="section-tag">Bullish Case</span>
+      </div>
+
+      <!-- Executive Summary -->
+      <div class="executive-box">
+        <div class="executive-title">핵심 요약 (Executive Summary)</div>
+        <p>미국 증시는 단순한 유동성 장세를 넘어 <strong>'공급 측면의 생산성 혁명(AI &amp; Tech Capex)'과 '미국 경제 예외주의(US Exceptionalism)'가 결합된 강력한 구조적 확장기</strong>에 진입해 있습니다.<br>
+        주요 상승 동력은 <strong>① 인플레이션 완화에 따른 연준의 보험성 금리 인하(Soft Landing 실현), ② 1990년대 후반을 연상시키는 노동생산성 급등 및 잠재성장률 상향, ③ S&P 500 기업들의 두 자릿수 EPS(주당순이익) 성장 및 사상 최대 자사주 매입, ④ 글로벌 자본의 미국 쏠림과 6조 달러 이상의 MMF(대기 자금) 유입 여력</strong>입니다.</p>
+      </div>
+
+      <!-- [개선된 모던 인포그래픽] 미국 증시 매크로 상승 동력 선순환 구조 (원문 텍스트 100% 반영) -->
+      <div class="infographic-container bull-infographic">
+        <div class="infographic-header">
+          <div class="infographic-title">
+            <span>🚀</span>
+            <span>[미국 증시 매크로 상승 동력 선순환 구조]</span>
+          </div>
+          <span class="infographic-badge">UPWARD EXPANSION</span>
+        </div>
+
+        <div class="flow-steps-grid">
+          <!-- Step 1 -->
+          <div class="flow-card">
+            <span class="step-badge">1단계</span>
+            <div class="step-heading">1. AI 기반 생산성 증대</div>
+            <ul class="step-bullets">
+              <li>노동생산성 지수 상승</li>
+              <li>잠재성장률(GDP) 상향</li>
+            </ul>
+          </div>
+
+          <div class="flow-arrow">➔</div>
+
+          <!-- Step 2 -->
+          <div class="flow-card">
+            <span class="step-badge">2단계</span>
+            <div class="step-heading">2. 견조한 실질 소득</div>
+            <ul class="step-bullets">
+              <li>실질임금 플러스 전환</li>
+              <li>고용 안정 + 부의효과</li>
+            </ul>
+          </div>
+
+          <div class="flow-arrow">➔</div>
+
+          <!-- Step 3 -->
+          <div class="flow-card">
+            <span class="step-badge">3단계</span>
+            <div class="step-heading">3. 기업 실적 퀀텀점프</div>
+            <ul class="step-bullets">
+              <li>S&P 500 EPS 10%+</li>
+              <li>영업이익률(OPM) 방어</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Final Impact -->
+        <div class="flow-final-impact">
+          <div class="impact-indicator">최종 선순환 귀결</div>
+          <div class="impact-content">
+            <strong>연준의 금리 정상화 지원 및 6조 달러 대기자금 증시 유입</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1. 연착륙(Soft Landing) 달성과 연준의 선제적 통화 완화 (Fed Pivot) -->
+      <div class="sub-section">
+        <h3 class="sub-title">1. 연착륙(Soft Landing) 달성과 연준의 선제적 통화 완화 (Fed Pivot)</h3>
+        
+        <div class="metrics-panel">
+          <div class="metrics-panel-header">[미국 실물 경제 및 통화 여건]</div>
+          <ul class="metrics-list">
+            <li>• 실질 GDP 성장률: 분기별 연속 2% ~ 3%대 견조한 확장세 지속</li>
+            <li>• 고용 시장: 대량 해고 없는 안정적 정상화 (구인 배율의 질서 있는 균형 도달)</li>
+            <li>• 실질 정책금리: 인플레이션 하락으로 실질 금리가 긴축 영역에 진입 -> 점진적 정상화(인하) 여력 확보</li>
+          </ul>
+        </div>
+
+        <h4 class="item-title">① 위기 대응이 아닌 '정상화 및 보험성(Insurance) 금리 인하'</h4>
+        <p class="content-p">• 과거 2008년 금융위기나 2020년 팬데믹과 같은 경기 침체기 금리 인하와 달리, 현재의 통화 완화는 <strong>'경기가 양호한 상태에서 물가가 목표치에 접근함에 따라 실질금리 부담을 덜어주는 보험성 금리 인하'</strong> 입니다.</p>
+        <p class="content-p">• 이는 1995년 그린스펀 의장의 성공적인 연착륙 사이클과 유사하며, 금융 비용 완화와 차입 여건 개선을 통해 기업 설비투자와 주식 시장의 멀티플을 안정적으로 지지합니다.</p>
+
+        <h4 class="item-title">② 경기 침체(Hard Landing) 없는 디스인플레이션(Immaculate Disinflation)</h4>
+        <p class="content-p">• 공급망 정상화와 생산성 향상 덕분에 <strong>실업률이 급등하지 않으면서도 물가가 안정되는 '무통증 인플레이션 둔화'</strong> 가 확인되고 있습니다. 이는 기업의 비용(Cost) 부담을 낮추고 이익 마진(Margin)을 회복시키는 핵심 요인입니다.</p>
+      </div>
+
+      <!-- 2. 공급 측면의 생산성 혁명(Productivity Boom)과 잠재성장률 상향 -->
+      <div class="sub-section">
+        <h3 class="sub-title">2. 공급 측면의 생산성 혁명(Productivity Boom)과 잠재성장률 상향</h3>
+        
+        <div class="metrics-panel">
+          <div class="metrics-panel-header">[비농업 부문 노동생산성(Output per Hour) 추이]</div>
+          <ul class="metrics-list">
+            <li>• 노동생산성 지수: 117.3 (2025년 초) -> 120.0 (2026년 상반기) 연속 상승</li>
+            <li>• 1990년대 중후반 인터넷 혁명기(연평균 생산성 +2.5% ~ +3.0%)와 유사한 궤적 형성</li>
+          </ul>
+        </div>
+
+        <h4 class="item-title">① AI 및 자동화 기술이 견인하는 비인플레이션적 성장(Non-inflationary Growth)</h4>
+        <p class="content-p">• AI 데이터센터, 생성형 AI, 자동화 소프트웨어 도입이 가속화되면서 <strong>단위노동비용(Unit Labor Cost)은 억제되고 노동생산성(Productivity)은 지속 상승</strong>하고 있습니다.</p>
+        <p class="content-p">• 생산성 향상은 임금이 올라도 물가를 자극하지 않는 이상적인 경제 구조를 만들어내며, 미국의 잠재 GDP 성장률을 기존 1.8% ~ 2.0% 수준에서 <strong>2.5% 이상으로 끌어올리는 구조적 동력</strong>이 됩니다.</p>
+
+        <h4 class="item-title">② 1990년대 후반 '뉴 이코노미(New Economy)' 패러다임의 재현</h4>
+        <p class="content-p">• 1995년 ~ 1999년 미국 증시가 인터넷 혁명과 생산성 급등을 바탕으로 강력한 장기 강세장을 구가했던 것처럼, 현재의 AI 생태계 확장은 단순 테마를 넘어 전 산업(금융, 헬스케어, 제조업 등)의 영업 효율성을 극대화하고 있습니다.</p>
+      </div>
+
+      <!-- 3. 기업 실적(EPS)의 견조한 성장과 강력한 주주환원 -->
+      <div class="sub-section">
+        <h3 class="sub-title">3. 기업 실적(EPS)의 견조한 성장과 강력한 주주환원</h3>
+        
+        <div class="metrics-panel">
+          <div class="metrics-panel-header">[미국 기업 이익 및 주주환원 지표]</div>
+          <ul class="metrics-list">
+            <li>• S&P 500 연간 EPS 성장률 전망: +10% ~ +12% 내외의 견조한 두 자릿수 성장</li>
+            <li>• S&P 500 자사주 매입(Buyback) 규모: 연간 1조 달러 돌파 (역대 최대 수준)</li>
+            <li>• 빅테크 메가캡 현금보유액: 총 5,000억 달러 이상 (무차입에 준하는 재무 건전성)</li>
+          </ul>
+        </div>
+
+        <h4 class="item-title">① 가격 결정력(Pricing Power)과 마진 방어력</h4>
+        <p class="content-p">• 미국 주요 기업들은 글로벌 독과점적 해자(Moat)를 기반으로 인플레이션 국면에서도 가격 인상분을 최종 소비자에게 성공적으로 전가했습니다.</p>
+        <p class="content-p">• 이제 원자재 및 물류 비용이 하향 안정화되면서 <strong>매출총이익률(Gross Margin)과 영업이익률(OPM)이 오히려 역사적 최고 수준으로 확장</strong>되고 있습니다.</p>
+
+        <h4 class="item-title">② 사상 최대 규모의 자사주 매입·소각과 유통 주식수 감소</h4>
+        <p class="content-p">• 막대한 잉여현금흐름(FCF)을 보유한 빅테크 및 우량 대형주들이 연간 1조 달러가 넘는 자사주 매입을 지속하며 <strong>시장의 주당순이익(EPS)을 구조적으로 밀어올리고 하방 경직성을 제공</strong>합니다.</p>
+      </div>
+
+      <!-- 4. 미국 경제의 독보적 예외주의(US Exceptionalism) 및 글로벌 자금 집중 -->
+      <div class="sub-section">
+        <h3 class="sub-title">4. 미국 경제의 독보적 예외주의(US Exceptionalism) 및 글로벌 자금 집중</h3>
+        
+        <div class="metrics-panel">
+          <div class="metrics-panel-header">[글로벌 자본 유입 및 대기 자금 현황]</div>
+          <ul class="metrics-list">
+            <li>• 미국 vs 주요국(유럽·중국·일본) 성장률 격차: 미국이 압도적 우위 유지</li>
+            <li>• MMF(머니마켓펀드) 총자산: 약 6.0조 ~ 6.5조 달러 (사상 최대 대기성 유동성)</li>
+            <li>• 실질 가계 순자산: 주택 가격 안정 및 주식 자산 증가로 사상 최고치 경신</li>
+          </ul>
+        </div>
+
+        <h4 class="item-title">① 글로벌 대체 투자처 부재(TINA in Global Assets)</h4>
+        <p class="content-p">• 유럽의 저성장/에너지 비용 부담, 중국의 부동산 디레버리징 및 내수 부진 등 타 지역의 경기 둔화로 인해 <strong>전 세계 글로벌 국부펀드, 연기금, 기관투자자의 자금이 가장 안전하고 성장성이 확실한 미국 증시로 집중(Flight to Quality &amp; Growth)</strong> 되고 있습니다.</p>
+
+        <h4 class="item-title">② 6조 달러 MMF(대기 자금)의 증시 유입 잠재력 (Cash on the Sidelines)</h4>
+        <p class="content-p">• 금리 인하 사이클이 진행되면 5%대를 주던 MMF 및 단기 채권의 기대수익률이 점차 낮아지게 됩니다.</p>
+        <p class="content-p">• 이에 따라 <strong>단기 금융상품에 묶여 있던 6조 달러 이상의 막대한 대기 자금이 배당 성장주 및 지수형 ETF로 리밸런싱(Rebalancing)되며 강력한 수급 모멘텀을 형성</strong>할 수 있습니다.</p>
+      </div>
+
+      <!-- 5. 종합 시나리오 분석 및 상승 경로 (Bull Case) -->
+      <div class="sub-section">
+        <h3 class="sub-title">5. 종합 시나리오 분석 및 상승 경로 (Bull Case)</h3>
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>구분</th>
+                <th>Scenario 1: 골디락스 대세 상승 (비중 50%)</th>
+                <th>Scenario 2: 생산성 혁명 가속 (비중 35%)</th>
+                <th>Scenario 3: 완만한 상승 확장 (비중 15%)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>핵심 동력</strong></td>
+                <td>연준 2 ~ 3회 금리 인하 + EPS 11% 성장</td>
+                <td>AI 전 산업 침투 + 노동생산성 급등</td>
+                <td>금리 동결 지속 속 실적 방어 성공</td>
+              </tr>
+              <tr>
+                <td><strong>시장 반응</strong></td>
+                <td>지수 전반의 밸류에이션 리레이팅 (+12% ~ +18%)</td>
+                <td>빅테크 실적 폭발 + 나스닥 신고가 (+20% 이상)</td>
+                <td>배당주 및 가치주 중심 순환매 (+5% ~ +8%)</td>
+              </tr>
+              <tr>
+                <td><strong>주도 섹터</strong></td>
+                <td>빅테크(M7), 반도체, 헬스케어, 금융</td>
+                <td>빅테크, AI 인프라, 사이버보안, 전력망</td>
+                <td>필수소비재, 배당성장, 인프라/유틸리티</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 6. 전문가 결론 및 투자 전략적 시사점 -->
+      <div class="alert-card tip">
+        <div class="alert-heading">💡 전문가 결론 및 투자 전략적 시사점</div>
+        <p style="margin-bottom: 12px;"><strong>"단기 매크로 노이즈를 압도하는 구조적 실적 성장과 생산성 랠리"</strong><br>
+        미국 증시는 고금리 환경에서도 붕괴되지 않고 탄탄한 펀더멘털을 입증했습니다. 금리 정상화와 AI 혁신이 맞물리는 현 국면은 <strong>조정 시 적극적인 분할 매수(Buy on Dips)</strong> 가 유효한 전형적인 구조적 강세장(Secular Bull Market)의 특성을 띱니다.</p>
+        
+        <strong style="color: var(--bull-primary); display: block; margin-top: 14px;">긍정적 관점의 포트폴리오 구축 권고:</strong>
+        <ul class="recommendations-list">
+          <li><strong>AI 생태계 수혜주 지속 보유 (Core Growth)</strong>: AI 인프라(반도체, 하드웨어)에서 소프트웨어, 클라우드, 전력망/인프라(에너지)로 확산되는 밸류체인 핵심 기업 비중 유지</li>
+          <li><strong>금리 인하 수혜 퀄리티 섹터 편입 (Cyclical &amp; Defensive)</strong>: 금리 인하 시 차입 비용 부담이 완화되면서 실적이 턴어라운드하는 우량 헬스케어 및 핀테크/금융주 비중 확대</li>
+          <li><strong>배당 성장 및 자사주 매입 우수 기업 병행</strong>: 강력한 잉여현금흐름(FCF)으로 주주환원을 지속하는 퀄리티 배당성장주를 통해 시장 변동성 흡수 및 복리 수익 극대화</li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- Footer -->
+    <footer class="report-footer">
+      <p>본 보고서는 거시경제 지표 및 시장 펀더멘털에 기반한 학술적·전문적 분석 자료이며, 특정 종목의 매수·매도 추천이 아닙니다.</p>
+      <p style="margin-top: 6px;">© 2026 Global Macro &amp; Equity Investment Strategy. All rights reserved.</p>
+    </footer>
+
+  </div>
+
+  <script>
+    // View Switcher (All / Bearish / Bullish)
+    function filterView(mode) {
+      const bearSec = document.getElementById('bearSection');
+      const bullSec = document.getElementById('bullSection');
+      const buttons = document.querySelectorAll('.tab-btn');
+      
+      buttons.forEach(btn => btn.classList.remove('active'));
+      
+      if (mode === 'all') {
+        bearSec.style.display = 'block';
+        bullSec.style.display = 'block';
+        buttons[0].classList.add('active');
+      } else if (mode === 'bear') {
+        bearSec.style.display = 'block';
+        bullSec.style.display = 'none';
+        buttons[1].classList.add('active');
+        bearSec.scrollIntoView({ behavior: 'smooth' });
+      } else if (mode === 'bull') {
+        bearSec.style.display = 'none';
+        bullSec.style.display = 'block';
+        buttons[2].classList.add('active');
+        bullSec.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // Theme Mode Toggle (Dark / Light)
+    function toggleTheme() {
+      const root = document.documentElement;
+      const currentTheme = root.getAttribute('data-theme') || 'dark';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', newTheme);
+      
+      const themeIcon = document.getElementById('themeIcon');
+      const themeText = document.getElementById('themeText');
+      
+      if (newTheme === 'light') {
+        themeIcon.textContent = '🌙';
+        themeText.textContent = '다크 모드';
+      } else {
+        themeIcon.textContent = '☀️';
+        themeText.textContent = '라이트 모드';
+      }
+    }
+
+    // Font Size Adjuster
+    function toggleFontSize() {
+      const body = document.body;
+      const isLarge = body.classList.toggle('large-font');
+      const fontText = document.getElementById('fontText');
+      fontText.textContent = isLarge ? '글자 크기 (크게)' : '글자 크기 (보통)';
+    }
+  </script>
+</body>
+</html>
