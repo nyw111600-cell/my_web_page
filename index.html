@@ -23,7 +23,7 @@
       --border-focus: #3b82f6;
 
       --sidebar-bg: #ffffff;
-      --sidebar-width: 270px;
+      --sidebar-width: 280px;
       
       --badge-green-bg: #ecfccb;
       --badge-green-text: #3f6212;
@@ -109,11 +109,88 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
       color: var(--text-muted);
-      padding: 0 12px 12px 12px;
+      padding: 0 4px 10px 4px;
       border-bottom: 1px solid var(--border);
       margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
+    /* 검색창 스타일 */
+    .search-container {
+      margin-bottom: 20px;
+    }
+
+    .search-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-box svg {
+      position: absolute;
+      left: 12px;
+      width: 16px;
+      height: 16px;
+      fill: var(--text-muted);
+      pointer-events: none;
+    }
+
+    #searchInput {
+      width: 100%;
+      padding: 10px 32px 10px 36px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 13.5px;
+      font-family: inherit;
+      background: #f8fafc;
+      color: var(--text-main);
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    #searchInput:focus {
+      background: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    #searchInput::placeholder {
+      color: #94a3b8;
+    }
+
+    .search-clear {
+      position: absolute;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 13px;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 2px 6px;
+      border-radius: 50%;
+      line-height: 1;
+    }
+
+    .search-clear:hover {
+      color: var(--text-main);
+      background: #e2e8f0;
+    }
+
+    .search-result-count {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-top: 8px;
+      padding: 5px 10px;
+      background: var(--primary-light);
+      border-radius: 8px;
+      text-align: center;
+      border: 1px solid var(--primary-border);
+    }
+
+    /* 네비게이션 리스트 */
     .nav-list {
       list-style: none;
       display: flex;
@@ -125,11 +202,11 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 14px;
+      padding: 11px 14px;
       border-radius: 10px;
       color: var(--text-sub);
       text-decoration: none;
-      font-size: 14.5px;
+      font-size: 14px;
       font-weight: 600;
       transition: all 0.2s ease;
     }
@@ -154,14 +231,14 @@
     .nav-item a .badge-count {
       font-size: 11px;
       font-weight: 700;
-      padding: 2px 7px;
+      padding: 2px 8px;
       border-radius: 12px;
-      background: rgba(0,0,0,0.06);
+      background: rgba(0, 0, 0, 0.06);
       color: var(--text-sub);
     }
 
     .nav-item a.active .badge-count {
-      background: rgba(255,255,255,0.25);
+      background: rgba(255, 255, 255, 0.25);
       color: #ffffff;
     }
 
@@ -169,6 +246,23 @@
     main.main-content {
       flex: 1;
       min-width: 0;
+    }
+
+    /* 검색 결과 없음 알림 */
+    #noResults {
+      display: none;
+      text-align: center;
+      padding: 60px 20px;
+      background: #ffffff;
+      border: 1px dashed var(--border);
+      border-radius: 16px;
+      color: var(--text-muted);
+      font-size: 15px;
+      margin-bottom: 40px;
+    }
+
+    #noResults strong {
+      color: var(--primary);
     }
 
     /* 섹션 공통 스타일 */
@@ -291,13 +385,22 @@
       margin-bottom: 16px;
     }
 
+    /* 카드 상단 태그 & 날짜 영역 */
+    .card-header-tags {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
     .tag {
       display: inline-block;
       font-size: 12px;
       font-weight: 700;
       padding: 4px 10px;
       border-radius: 20px;
-      margin-bottom: 12px;
       width: fit-content;
       background-color: #e2e8f0;
       color: var(--text-sub);
@@ -326,6 +429,22 @@
     .tag.tool {
       background-color: var(--badge-tool-bg);
       color: var(--badge-tool-text);
+    }
+
+    /* 업로드 일시 뱃지 */
+    .badge-date {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #64748b;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-family: 'JetBrains Mono', 'Pretendard', monospace;
+      letter-spacing: -0.2px;
     }
 
     .card h3 {
@@ -434,7 +553,7 @@
       aside.sidebar {
         width: 100%;
         position: static;
-        padding: 12px;
+        padding: 16px;
       }
 
       .nav-list {
@@ -448,12 +567,8 @@
       }
 
       .nav-item a {
-        font-size: 13.5px;
+        font-size: 13px;
         padding: 8px 12px;
-      }
-
-      .sidebar-title {
-        display: none;
       }
     }
 
@@ -482,37 +597,49 @@
 
   <div class="dashboard-layout">
     
-    <!-- 좌측 고정 사이드바 탭 -->
+    <!-- 좌측 고정 사이드바 -->
     <aside class="sidebar">
-      <div class="sidebar-title">📁 Category Navigation</div>
+      <!-- 실시간 검색 영역 -->
+      <div class="search-container">
+        <div class="sidebar-title">
+          <span>🔍 실시간 검색</span>
+        </div>
+        <div class="search-box">
+          <svg viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+          </svg>
+          <input type="text" id="searchInput" placeholder="보고서·도구·기업명 검색..." autocomplete="off">
+          <button type="button" id="searchClear" class="search-clear" title="검색어 초기화" style="display:none;">✕</button>
+        </div>
+        <div id="searchResultCount" class="search-result-count" style="display:none;"></div>
+      </div>
+
+      <!-- 카테고리 네비게이션 -->
+      <div class="sidebar-title">
+        <span>📁 카테고리</span>
+      </div>
       <ul class="nav-list">
         <li class="nav-item">
-          <a href="#section-quick" class="nav-link active" onclick="setActive(this)">
-            <span class="nav-label">⭐ 최상단 고정 유틸</span>
-            <span class="badge-count">3</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#section-industry" class="nav-link" onclick="setActive(this)">
-            <span class="nav-label">⚡ 카테고리 1: 산업 분석</span>
+          <a href="#section-industry" class="nav-link active" onclick="setActive(this)">
+            <span class="nav-label">산업 분석 보고서</span>
             <span class="badge-count">1</span>
           </a>
         </li>
         <li class="nav-item">
           <a href="#section-corp" class="nav-link" onclick="setActive(this)">
-            <span class="nav-label">🏢 카테고리 2: 기업 분석</span>
+            <span class="nav-label">기업 분석 보고서</span>
             <span class="badge-count">9</span>
           </a>
         </li>
         <li class="nav-item">
           <a href="#section-tool" class="nav-link" onclick="setActive(this)">
-            <span class="nav-label">🛠️ 카테고리 3: AI & 업무도구</span>
+            <span class="nav-label">AI 가이드 & 스마트 업무 도구</span>
             <span class="badge-count">4</span>
           </a>
         </li>
         <li class="nav-item">
           <a href="#section-macro" class="nav-link" onclick="setActive(this)">
-            <span class="nav-label">📈 카테고리 4: 매크로 & 금융</span>
+            <span class="nav-label">매크로 금융 & 환율 차트</span>
             <span class="badge-count">4</span>
           </a>
         </li>
@@ -522,7 +649,12 @@
     <!-- 우측 메인 콘텐츠 영역 -->
     <main class="main-content">
 
-      <!-- ⭐ [최상단 고정 영역] 3종 유틸리티 -->
+      <!-- 검색 결과 없음 메시지 영역 -->
+      <div id="noResults">
+        <p>🔍 '<strong><span id="noResultsKeyword"></span></strong>'에 일치하는 결과가 없습니다.</p>
+      </div>
+
+      <!-- ⭐ [최상단 고정 영역] 3종 유틸리티 (본문 유지) -->
       <section id="section-quick" class="section-block">
         <div class="section-header">
           <div class="section-title-wrap">
@@ -536,7 +668,10 @@
           <!-- 1. 전국 일기예보 -->
           <div class="card weather-card">
             <div class="card-top">
-              <span class="tag blue">🌤️ 실시간 기상 정보</span>
+              <div class="card-header-tags">
+                <span class="tag blue">🌤️ 실시간 기상 정보</span>
+                <span class="badge-date">🕒 2026-08-19 20:08</span>
+              </div>
               <h3>전국 일기예보</h3>
               <p>실시간 전국 주요 도시 기상 현황, 강수 확률 및 주간 날씨 예보 상세 조회</p>
             </div>
@@ -546,7 +681,10 @@
           <!-- 2. 엑셀 데이터 취합기 -->
           <div class="card highlight">
             <div class="card-top">
-              <span class="tag tool">📊 업무 자동화 도구</span>
+              <div class="card-header-tags">
+                <span class="tag tool">📊 업무 자동화 도구</span>
+                <span class="badge-date">🕒 2026-08-20 13:49</span>
+              </div>
               <h3>엑셀 데이터 취합기</h3>
               <p>여러 엑셀/CSV 파일 세로 병합(Append), 셀 위치별 누적 합산 및 키 기준 데이터 자동 집계 도구</p>
             </div>
@@ -556,7 +694,10 @@
           <!-- 3. 버블보블 게임 -->
           <div class="card game-card">
             <div class="card-top">
-              <span class="tag purple">🎮 레트로 아케이드 게임</span>
+              <div class="card-header-tags">
+                <span class="tag purple">🎮 레트로 아케이드 게임</span>
+                <span class="badge-date">🕒 2026-08-20 15:45</span>
+              </div>
               <h3>🦖 버블보블 (Bubble Bobble)</h3>
               <p>고전 명작 버블보블 웹 에디션! 5개 스테이지, 8비트 오리지널 사운드 및 모바일 터치 지원</p>
             </div>
@@ -570,7 +711,7 @@
       <section id="section-industry" class="section-block">
         <div class="section-header">
           <div class="section-title-wrap">
-            <h2>⚡ 카테고리 1: 글로벌 핵심 산업 심층 분석 보고서</h2>
+            <h2>⚡ 산업 분석 보고서</h2>
             <span class="section-badge">1개 산업</span>
           </div>
           <span class="section-desc">에너지, 전력 인프라, AI 슈퍼사이클 및 차세대 핵심 산업 밸류체인 리포트</span>
@@ -580,7 +721,10 @@
           <!-- 1. 미국 전력망 현황 종합 분석 -->
           <div class="card highlight-blue">
             <div class="card-top">
-              <span class="tag blue">⚡ 미국 에너지 & 전력 인프라 (최신)</span>
+              <div class="card-header-tags">
+                <span class="tag blue">⚡ 미국 에너지 & 전력 인프라 (최신)</span>
+                <span class="badge-date">🕒 2026-08-27 15:50</span>
+              </div>
               <h3>미국 전력망 현황 종합 분석</h3>
               <p>AI 데이터센터 전력 수요 폭증, 초고압 변압기(LPT) 160주 공급망 대란, 2,600GW 접속 대기열, 4대 구조적 병목 및 중전기기·유틸리티 밸류체인 심층 리포트</p>
             </div>
@@ -594,7 +738,7 @@
       <section id="section-corp" class="section-block">
         <div class="section-header">
           <div class="section-title-wrap">
-            <h2>🏢 카테고리 2: 국내외 핵심 기업 분석 보고서</h2>
+            <h2>🏢 기업 분석 보고서</h2>
             <span class="section-badge">9개 기업</span>
           </div>
           <span class="section-desc">글로벌 AI 반도체 및 국내 소부장 핵심 기업 펀더멘털·밸류에이션 리포트</span>
@@ -604,7 +748,10 @@
           <!-- 0. 엔비디아 (최신 - 최상단) -->
           <div class="card highlight-nvidia">
             <div class="card-top">
-              <span class="tag green">🟢 글로벌 AI 반도체 (최신)</span>
+              <div class="card-header-tags">
+                <span class="tag green">🟢 글로벌 AI 반도체 (최신)</span>
+                <span class="badge-date">🕒 2026-08-27 13:11</span>
+              </div>
               <h3>엔비디아 (NVIDIA) Q2 실적 분석</h3>
               <p>엔비디아 2027 회계연도 2분기 어닝 서프라이즈 실적 요약, 3분기 1,000억 달러 돌파 가이던스 및 젠슨 황 CEO 핵심 코멘트</p>
             </div>
@@ -614,7 +761,10 @@
           <!-- 1. 마벨 테크놀러지 -->
           <div class="card highlight-blue">
             <div class="card-top">
-              <span class="tag blue">🚀 글로벌 AI 팹리스 반도체</span>
+              <div class="card-header-tags">
+                <span class="tag blue">🚀 글로벌 AI 팹리스 반도체</span>
+                <span class="badge-date">🕒 2026-08-25 13:43</span>
+              </div>
               <h3>마벨 테크놀러지 (Marvell)</h3>
               <p>빅테크 맞춤형 AI 가속기(Custom ASIC) 및 800G/1.6T 광학 DSP(Optical DSP) 팹리스 완제품 비즈니스 모델·매출 제품군 심층 분석</p>
             </div>
@@ -624,7 +774,10 @@
           <!-- 2. 티엘비 -->
           <div class="card highlight-blue">
             <div class="card-top">
-              <span class="tag blue">메모리 모듈 & SSD PCB</span>
+              <div class="card-header-tags">
+                <span class="tag blue">메모리 모듈 & SSD PCB</span>
+                <span class="badge-date">🕒 2026-08-25 15:20</span>
+              </div>
               <h3>티엘비 (TLB)</h3>
               <p>티엘비 2026 기업 분석, DDR5 고다층 기판 + eSSD 고용량화 + 차세대 CXL/SOCAMM 선점 및 사상 최대 실적 경신 리포트</p>
             </div>
@@ -634,7 +787,10 @@
           <!-- 3. 심텍 -->
           <div class="card highlight">
             <div class="card-top">
-              <span class="tag">반도체 패키지 기판</span>
+              <div class="card-header-tags">
+                <span class="tag">반도체 패키지 기판</span>
+                <span class="badge-date">🕒 2026-08-21 20:22</span>
+              </div>
               <h3>심텍 (SIMMTECH)</h3>
               <p>심텍 2026년 2분기(2Q26) 실적 vs 컨센서스 비교 분석, SoCAMM2 공급 본격화 및 MSAP 믹스 개선 리포트</p>
             </div>
@@ -644,7 +800,10 @@
           <!-- 4. 피에스케이 -->
           <div class="card highlight">
             <div class="card-top">
-              <span class="tag">반도체 전공정 핵심 장비</span>
+              <div class="card-header-tags">
+                <span class="tag">반도체 전공정 핵심 장비</span>
+                <span class="badge-date">🕒 2026-08-21 11:13</span>
+              </div>
               <h3>피에스케이 (PSK)</h3>
               <p>피에스케이 2026 기업 분석, PR Strip 글로벌 1위, 베벨에처 양산 및 2Q26 어닝 서프라이즈 리포트</p>
             </div>
@@ -654,7 +813,10 @@
           <!-- 5. 하나마이크론 -->
           <div class="card highlight">
             <div class="card-top">
-              <span class="tag">반도체 후공정 (OSAT)</span>
+              <div class="card-header-tags">
+                <span class="tag">반도체 후공정 (OSAT)</span>
+                <span class="badge-date">🕒 2026-08-21 09:42</span>
+              </div>
               <h3>하나마이크론 (Hana Micron)</h3>
               <p>하나마이크론 2026 기업 분석, SK하이닉스 턴키 후공정 수혜 및 밸류에이션 리포트</p>
             </div>
@@ -664,7 +826,10 @@
           <!-- 6. 케이씨텍 -->
           <div class="card">
             <div class="card-top">
-              <span class="tag">반도체 / 디스플레이 장비</span>
+              <div class="card-header-tags">
+                <span class="tag">반도체 / 디스플레이 장비</span>
+                <span class="badge-date">🕒 2026-08-18 13:26</span>
+              </div>
               <h3>케이씨텍 (KC Tech)</h3>
               <p>케이씨텍 기업 개요, 재무 지표 및 상세 펀더멘털 분석 보고서 열람</p>
             </div>
@@ -674,7 +839,10 @@
           <!-- 7. 솔브레인 -->
           <div class="card">
             <div class="card-top">
-              <span class="tag">반도체 / 전자 소재</span>
+              <div class="card-header-tags">
+                <span class="tag">반도체 / 전자 소재</span>
+                <span class="badge-date">🕒 2026-08-18 13:18</span>
+              </div>
               <h3>솔브레인 (SoulBrain)</h3>
               <p>솔브레인 반기 실적 및 주요 경영 지표 보고서 열람</p>
             </div>
@@ -684,7 +852,10 @@
           <!-- 8. 브이엠 -->
           <div class="card">
             <div class="card-top">
-              <span class="tag">반도체 식각 장비</span>
+              <div class="card-header-tags">
+                <span class="tag">반도체 식각 장비</span>
+                <span class="badge-date">🕒 2026-08-19 11:30</span>
+              </div>
               <h3>브이엠 (VM)</h3>
               <p>브이엠 기업 개요 및 상세 재무·사업 분석 보고서 열람</p>
             </div>
@@ -698,7 +869,7 @@
       <section id="section-tool" class="section-block">
         <div class="section-header">
           <div class="section-title-wrap">
-            <h2>🛠️ 카테고리 3: AI 가이드 & 스마트 업무 도구</h2>
+            <h2>🛠️ AI 가이드 & 스마트 업무 도구</h2>
             <span class="section-badge">4개 항목</span>
           </div>
           <span class="section-desc">주식 분석 MCP 연동 가이드, 프롬프트 템플릿 및 자동화 워크플로우</span>
@@ -708,7 +879,10 @@
           <!-- 1. 국내 & 해외 주식 6대 MCP 실전 가이드 -->
           <div class="card highlight-indigo">
             <div class="card-top">
-              <span class="tag indigo" style="background-color: #e0e7ff; color: #4338ca;">💡 AI 주식 분석 가이드 (최신)</span>
+              <div class="card-header-tags">
+                <span class="tag indigo" style="background-color: #e0e7ff; color: #4338ca;">💡 AI 주식 분석 가이드 (최신)</span>
+                <span class="badge-date">🕒 2026-08-22 20:52</span>
+              </div>
               <h3>국내 & 해외 주식 6대 MCP 실전 가이드</h3>
               <p>국내 4대 MCP(수급·시황·DART 공시·적정주가) 및 해외 2대 MCP(Yahoo Finance·SEC EDGAR 공시) 완벽 실전 가이드, 복합 질문 프롬프트 및 비교표</p>
             </div>
@@ -718,7 +892,10 @@
           <!-- 2. 멀티 에이전트 프롬프트 -->
           <div class="card highlight-blue">
             <div class="card-top">
-              <span class="tag blue">⚡ 멀티 에이전트 프롬프트</span>
+              <div class="card-header-tags">
+                <span class="tag blue">⚡ 멀티 에이전트 프롬프트</span>
+                <span class="badge-date">🕒 2026-08-25 13:43</span>
+              </div>
               <h3>멀티 에이전트 주식 투자 리서치 팀 프롬프트</h3>
               <p>글로벌 헤지펀드 투자 심의 위원회(매크로·공급망·펀더멘털·자금흐름·테일리스크·CIO) 6대 에이전트 실전 프롬프트 및 원클릭 복사</p>
             </div>
@@ -728,7 +905,10 @@
           <!-- 3. Skill & 작업 룰 지시내용 -->
           <div class="card highlight">
             <div class="card-top">
-              <span class="tag tool">📋 AI 에이전트 가이드</span>
+              <div class="card-header-tags">
+                <span class="tag tool">📋 AI 에이전트 가이드</span>
+                <span class="badge-date">🕒 2026-08-21 16:14</span>
+              </div>
               <h3>Skill & 작업 룰 지시내용</h3>
               <p>네이버 증권 재무 컨센서스 자동 수집 룰 및 5단계 기업 분석/밸류에이션 스킬 표준 지시문서</p>
             </div>
@@ -738,7 +918,10 @@
           <!-- 4. 한·미 주식 & 공시 MCP 가이드 -->
           <div class="card highlight">
             <div class="card-top">
-              <span class="tag tool">🔍 실시간 공시 연동</span>
+              <div class="card-header-tags">
+                <span class="tag tool">🔍 실시간 공시 연동</span>
+                <span class="badge-date">🕒 2026-08-22 15:47</span>
+              </div>
               <h3>한·미 주식 & 공시(DART/EDGAR) MCP 가이드</h3>
               <p>실시간 주가 조회 및 기업 공시 MCP 도구 연동·실전 활용법 총정리</p>
             </div>
@@ -752,7 +935,7 @@
       <section id="section-macro" class="section-block">
         <div class="section-header">
           <div class="section-title-wrap">
-            <h2>📈 카테고리 4: 매크로 금융 & 환율 차트</h2>
+            <h2>📈 매크로 금융 & 환율 차트</h2>
             <span class="section-badge">4개 항목</span>
           </div>
           <span class="section-desc">글로벌 금리, 환율, 나스닥 50년 상관관계 및 거시 경제 인터랙티브 차트</span>
@@ -762,7 +945,10 @@
           <!-- 0. 미국 주가 전망 매크로 종합 분석 (최신 - 최상단) -->
           <div class="card highlight-indigo">
             <div class="card-top">
-              <span class="tag indigo" style="background-color: #e0e7ff; color: #4338ca;">🌐 글로벌 매크로 / 증시 전망 (최신)</span>
+              <div class="card-header-tags">
+                <span class="tag indigo" style="background-color: #e0e7ff; color: #4338ca;">🌐 글로벌 매크로 / 증시 전망 (최신)</span>
+                <span class="badge-date">🕒 2026-08-27 15:22</span>
+              </div>
               <h3>미국 주가 전망 매크로 종합 분석 (부정 vs 긍정)</h3>
               <p>거시경제 하방 압력(고금리 장기화·국채 공급 과잉·소비 둔화·AI 과열)과 상승 동력(연착륙·생산성 혁명·EPS 성장·6조$ MMF 유입)의 심층 비교 및 시나리오별 포트폴리오 전략</p>
             </div>
@@ -772,7 +958,10 @@
           <!-- 1. 미국채 10년물 vs 나스닥 50년 분석 -->
           <div class="card highlight-blue">
             <div class="card-top">
-              <span class="tag blue">📈 매크로 / 금리·증시 차트</span>
+              <div class="card-header-tags">
+                <span class="tag blue">📈 매크로 / 금리·증시 차트</span>
+                <span class="badge-date">🕒 2026-08-21 23:17</span>
+              </div>
               <h3>미국채 10년물 vs 나스닥 50년 분석</h3>
               <p>1976~2026년 반세기 미국 10년물 국채 금리와 나스닥 지수의 이중축 인터랙티브 시계열 차트, 밝기 모드 전환 및 5대 국면별 상관관계 심층 분석</p>
             </div>
@@ -782,7 +971,10 @@
           <!-- 2. 미 국채금리 상승 3대 요인 인포그래픽 -->
           <div class="card highlight-blue">
             <div class="card-top">
-              <span class="tag blue">🏛️ 매크로 / 국채금리 인포그래픽</span>
+              <div class="card-header-tags">
+                <span class="tag blue">🏛️ 매크로 / 국채금리 인포그래픽</span>
+                <span class="badge-date">🕒 2026-08-22 10:34</span>
+              </div>
               <h3>미 국채금리 상승 3대 핵심 요인</h3>
               <p>재정 신뢰 저하 및 공급 과잉, AI 회사채 등 대체 투자처 자금 흡수, 인플레·통화정책 불확실성 3대 드라이버 심층 인포그래픽</p>
             </div>
@@ -792,7 +984,10 @@
           <!-- 3. 달러/엔 (USD/JPY) 차트 -->
           <div class="card fx-card">
             <div class="card-top">
-              <span class="tag amber">💱 외환 / 환율 차트</span>
+              <div class="card-header-tags">
+                <span class="tag amber">💱 외환 / 환율 차트</span>
+                <span class="badge-date">🕒 2026-08-19 13:36</span>
+              </div>
               <h3>달러/엔 (USD/JPY) 차트</h3>
               <p>달러/엔화 실시간 환율 추이 및 주요 기술적 지표/분석 차트 열람</p>
             </div>
@@ -826,6 +1021,9 @@
       const navLinks = document.querySelectorAll('.nav-link');
 
       const observer = new IntersectionObserver((entries) => {
+        // 검색 중일 때는 IntersectionObserver 탭 전환을 비활성화
+        if (document.getElementById('searchInput').value.trim() !== '') return;
+
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             const currentId = entry.target.getAttribute('id');
@@ -842,6 +1040,70 @@
       });
 
       sections.forEach(section => observer.observe(section));
+
+      // 실시간 검색 기능 구현
+      const searchInput = document.getElementById('searchInput');
+      const searchClear = document.getElementById('searchClear');
+      const searchResultCount = document.getElementById('searchResultCount');
+      const noResults = document.getElementById('noResults');
+      const noResultsKeyword = document.getElementById('noResultsKeyword');
+      const allCards = document.querySelectorAll('.card');
+      const allSections = document.querySelectorAll('.section-block');
+
+      function filterCards() {
+        const query = searchInput.value.trim().toLowerCase();
+        
+        if (query === '') {
+          searchClear.style.display = 'none';
+          searchResultCount.style.display = 'none';
+          noResults.style.display = 'none';
+          allCards.forEach(card => card.style.display = '');
+          allSections.forEach(section => section.style.display = '');
+          return;
+        }
+
+        searchClear.style.display = 'block';
+        let totalMatches = 0;
+
+        allSections.forEach(section => {
+          const cardsInSection = section.querySelectorAll('.card');
+          let sectionMatches = 0;
+
+          cardsInSection.forEach(card => {
+            const text = card.textContent.toLowerCase();
+            if (text.includes(query)) {
+              card.style.display = '';
+              sectionMatches++;
+              totalMatches++;
+            } else {
+              card.style.display = 'none';
+            }
+          });
+
+          // 섹션 내 일치하는 카드가 없으면 해당 섹션 헤더 숨김
+          section.style.display = sectionMatches > 0 ? '' : 'none';
+        });
+
+        // 결과 개수 뱃지 표시
+        searchResultCount.style.display = 'block';
+        searchResultCount.textContent = `총 ${totalMatches}개 항목 일치`;
+
+        // 검색 결과 없을 때 안내문 노출
+        if (totalMatches === 0) {
+          noResults.style.display = 'block';
+          noResultsKeyword.textContent = query;
+        } else {
+          noResults.style.display = 'none';
+        }
+      }
+
+      searchInput.addEventListener('input', filterCards);
+
+      searchClear.addEventListener('click', () => {
+        searchInput.value = '';
+        searchInput.focus();
+        filterCards();
+      });
     });
   </script>
 </body>
