@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>엔비디아 Q2 FY2027 실적 발표 및 젠슨 황 CEO 코멘트 요약</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --nvidia-green: #76b900;
+      --nvidia-green-light: #8ee000;
+      --nvidia-green-dark: #5b9000;
+      --nvidia-green-glow: rgba(118, 185, 0, 0.2);
+    }
+
+    [data-theme="dark"] {
+      --bg-body: #0d1117;
+      --bg-card: #161b22;
+      --bg-card-hover: #1c2128;
+      --bg-accent: #21262d;
+      --border-color: #30363d;
+      --text-primary: #f0f6fc;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --table-header-bg: #1f242c;
+      --table-stripe: #12161c;
+      --table-border: #30363d;
+      --quote-bg: rgba(118, 185, 0, 0.08);
+      --quote-border: #76b900;
+      --badge-bg: rgba(118, 185, 0, 0.15);
+      --badge-text: #8ee000;
+      --shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      --theme-btn-bg: #21262d;
+      --theme-btn-border: #30363d;
+      --theme-btn-text: #f0f6fc;
+    }
+
+    [data-theme="light"] {
+      --bg-body: #f6f8fa;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f3f4f6;
+      --bg-accent: #eaeef2;
+      --border-color: #d0d7de;
+      --text-primary: #1f2328;
+      --text-secondary: #57606a;
+      --text-muted: #8c959f;
+      --table-header-bg: #f1f5f9;
+      --table-stripe: #f8fafc;
+      --table-border: #e2e8f0;
+      --quote-bg: rgba(118, 185, 0, 0.06);
+      --quote-border: #5b9000;
+      --badge-bg: rgba(118, 185, 0, 0.15);
+      --badge-text: #3c6500;
+      --shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      --theme-btn-bg: #ffffff;
+      --theme-btn-border: #d0d7de;
+      --theme-btn-text: #1f2328;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg-body);
+      color: var(--text-primary);
+      line-height: 1.65;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* Header & Theme Toggle */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 36px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    .header-title-wrap {
+      flex: 1;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: var(--badge-bg);
+      color: var(--badge-text);
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: 1.95rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h1 .nvidia-logo-icon {
+      color: var(--nvidia-green);
+      font-weight: 900;
+    }
+
+    .header-meta {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      margin-top: 6px;
+    }
+
+    /* Theme Toggle Button */
+    .theme-toggle-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--theme-btn-bg);
+      color: var(--theme-btn-text);
+      border: 1px solid var(--theme-btn-border);
+      padding: 9px 16px;
+      border-radius: 24px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--nvidia-green);
+      color: var(--nvidia-green);
+    }
+
+    .theme-icon {
+      font-size: 1.1rem;
+    }
+
+    /* Section & Cards */
+    section {
+      margin-bottom: 36px;
+    }
+
+    .section-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-title::before {
+      content: "";
+      display: inline-block;
+      width: 4px;
+      height: 20px;
+      background-color: var(--nvidia-green);
+      border-radius: 2px;
+    }
+
+    .card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    /* Table Styling */
+    .table-container {
+      overflow-x: auto;
+      border-radius: 8px;
+      border: 1px solid var(--table-border);
+      margin: 16px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+      text-align: left;
+    }
+
+    th {
+      background-color: var(--table-header-bg);
+      color: var(--text-primary);
+      font-weight: 600;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--table-border);
+    }
+
+    td {
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--table-border);
+      color: var(--text-primary);
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: var(--table-stripe);
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .highlight-green {
+      color: var(--nvidia-green);
+      font-weight: 700;
+    }
+
+    .num-val {
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+
+    /* Content Lists */
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    ul.styled-list li {
+      position: relative;
+      padding-left: 24px;
+      margin-bottom: 14px;
+      font-size: 0.98rem;
+    }
+
+    ul.styled-list li::before {
+      content: "•";
+      position: absolute;
+      left: 6px;
+      color: var(--nvidia-green);
+      font-weight: bold;
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    ol.styled-num-list {
+      padding-left: 20px;
+    }
+
+    ol.styled-num-list li {
+      margin-bottom: 16px;
+      font-size: 0.98rem;
+    }
+
+    ol.styled-num-list li strong {
+      color: var(--text-primary);
+    }
+
+    /* Quote Cards for Jensen Huang */
+    .quote-box {
+      background-color: var(--quote-bg);
+      border-left: 4px solid var(--quote-border);
+      padding: 18px 22px;
+      border-radius: 0 10px 10px 0;
+      margin-bottom: 20px;
+    }
+
+    .quote-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--nvidia-green);
+      margin-bottom: 10px;
+    }
+
+    .quote-en {
+      font-style: italic;
+      font-size: 0.97rem;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      line-height: 1.55;
+    }
+
+    .quote-ko {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+
+    .quote-desc {
+      font-size: 0.92rem;
+      color: var(--text-primary);
+      border-top: 1px dashed var(--border-color);
+      padding-top: 10px;
+    }
+
+    .summary-card {
+      background: linear-gradient(135deg, rgba(118, 185, 0, 0.12) 0%, rgba(118, 185, 0, 0.02) 100%);
+      border: 1px solid var(--nvidia-green);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      margin-top: 24px;
+    }
+
+    .summary-card h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--nvidia-green);
+      margin-bottom: 8px;
+    }
+
+    .summary-card p {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 48px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    @media (max-width: 640px) {
+      header {
+        flex-direction: column;
+        gap: 16px;
+      }
+      .theme-toggle-btn {
+        align-self: flex-start;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+      body {
+        padding: 20px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="header-title-wrap">
+        <span class="badge">NVIDIA Financial Report</span>
+        <h1><span class="nvidia-logo-icon">NVIDIA</span> 실적 발표 및 젠슨 황 코멘트 요약</h1>
+        <p class="header-meta">2027 회계연도 2분기 (Q2 FY2027, 2026년 5월 ~ 7월 결산 기준)</p>
+      </div>
+      <button id="themeToggleBtn" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="화면 모드 변경">
+        <span id="themeIcon" class="theme-icon">☀️</span>
+        <span id="themeText">라이트 모드</span>
+      </button>
+    </header>
+
+    <!-- 1. 2분기 핵심 실적 요약 -->
+    <section>
+      <h2 class="section-title">1. 2분기 핵심 실적 요약 (어닝 서프라이즈 달성)</h2>
+      <div class="card">
+        <p style="margin-bottom: 12px; font-size: 0.98rem; color: var(--text-secondary);">
+          엔비디아는 AI 인프라 수요 폭증에 힘입어 <strong>매출과 주당순이익(EPS) 모두 시장 컨센서스를 대폭 상회</strong>하는 호실적을 기록했습니다.
+        </p>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>주요 재무 지표</th>
+                <th>Q2 FY2027 실적</th>
+                <th>시장 예상치 (Consensus)</th>
+                <th>전년 동기 대비 (YoY)</th>
+                <th>전분기 대비 (QoQ)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>총 매출액 (Revenue)</strong></td>
+                <td class="num-val highlight-green">$962.2억</td>
+                <td class="num-val">$919억 ~ $923억</td>
+                <td class="num-val highlight-green">+106%</td>
+                <td class="num-val">+18%</td>
+              </tr>
+              <tr>
+                <td><strong>조정 주당순이익 (Non-GAAP EPS)</strong></td>
+                <td class="num-val highlight-green">$2.22</td>
+                <td class="num-val">$2.08 ~ $2.09</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td><strong>기본 주당순이익 (GAAP EPS)</strong></td>
+                <td class="num-val">$2.46</td>
+                <td>-</td>
+                <td class="num-val highlight-green">+128%</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td><strong>매출총이익률 (Gross Margin)</strong></td>
+                <td class="num-val"><strong>75.0%</strong> (GAAP/Non-GAAP)</td>
+                <td class="num-val">~74.5%</td>
+                <td class="num-val">+2.6%p</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td><strong>영업이익 (GAAP Operating Income)</strong></td>
+                <td class="num-val">$637.3억</td>
+                <td>-</td>
+                <td class="num-val highlight-green">+124%</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td><strong>당기순이익 (GAAP Net Income)</strong></td>
+                <td class="num-val">$596.9억</td>
+                <td>-</td>
+                <td class="num-val highlight-green">+126%</td>
+                <td>-</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. 사업 부문별 실적 분석 -->
+    <section>
+      <h2 class="section-title">2. 사업 부문별 실적 분석</h2>
+      <div class="card">
+        <ul class="styled-list">
+          <li>
+            <strong>데이터센터 (Data Center) — 압도적 성장 견인 ($890억 / +117% YoY)</strong>
+            <p style="margin-top: 4px; color: var(--text-secondary); font-size: 0.94rem;">
+              전체 매출의 약 <strong>92.5%</strong>를 차지하며 성장을 주도했습니다. 글로벌 클라우드 서비스 제공업체(하이퍼스케일러), 소버린 AI(국가 주도 인프라), 대형 AI 모델 개발사들의 차세대 AI 가속기 및 AI 인프라 플랫폼(블랙웰 및 차세대 베라 루빈 플랫폼) 수요가 폭증했습니다.
+            </p>
+          </li>
+          <li>
+            <strong>컴퓨팅 &amp; 네트워킹 (Compute &amp; Networking):</strong> $883.0억 (부문 영업이익 $627.0억)
+          </li>
+          <li>
+            <strong>그래픽스 및 기타 부문 (Graphics &amp; Edge):</strong> $79.2억 (부문 영업이익 $39.0억)
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3. 다음 분기 가이던스 -->
+    <section>
+      <h2 class="section-title">3. 다음 분기(Q3 FY2027) 가이던스 — 분기 매출 1,000억 달러 시대 진입</h2>
+      <div class="card">
+        <ul class="styled-list">
+          <li>
+            <strong>예상 매출액 (Revenue Outlook):</strong> <span class="num-val highlight-green" style="font-size: 1.05rem;">$1,080억</span> (&plusmn; 2%)
+            <p style="margin-top: 4px; color: var(--text-secondary); font-size: 0.94rem;">
+              분기 매출 기준 <strong>사상 최초로 1,000억 달러(약 140조 원 이상)를 돌파</strong>할 것으로 전망했습니다.
+            </p>
+          </li>
+          <li>
+            <strong>매출총이익률 (Gross Margin):</strong> GAAP 및 Non-GAAP 기준 <strong>74.0%</strong> (&plusmn; 50 bps)
+          </li>
+          <li>
+            <strong>영업비용 (Operating Expenses):</strong> Non-GAAP 기준 약 <strong>$90억</strong> 예상
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 4. 주주 환원 정책 및 주요 경영 전략 -->
+    <section>
+      <h2 class="section-title">4. 주주 환원 정책 및 주요 경영 전략</h2>
+      <div class="card">
+        <ol class="styled-num-list">
+          <li>
+            <strong>주주 환원 (자사주 매입 및 배당):</strong>
+            <p style="margin-top: 4px; color: var(--text-secondary); font-size: 0.94rem;">
+              이번 분기 동안 자사주 매입($196.7억) 및 배당금 지급($60.5억)을 통해 총 <strong>약 $260억을 주주에게 환원</strong>했습니다. 분기 배당금은 주당 <strong>$0.25</strong>로 유지·지급되었으며, 현재 잔여 자사주 매입 승인 한도는 <strong>$993억</strong>입니다.
+            </p>
+          </li>
+          <li>
+            <strong>공급망 및 생산 능력(Capacity) 대폭 확대:</strong>
+            <p style="margin-top: 4px; color: var(--text-secondary); font-size: 0.94rem;">
+              장기적인 AI 칩 및 고대역폭 메모리(HBM) 수요에 선제 대응하기 위해 파운드리/메모리 공급 약정(Supply &amp; Capacity Commitments)을 지난 분기 $1,190억에서 <strong>$2,790억으로 대폭 확대</strong>했습니다.
+            </p>
+          </li>
+          <li>
+            <strong>대규모 AI 인프라 프로젝트 지원:</strong>
+            <p style="margin-top: 4px; color: var(--text-secondary); font-size: 0.94rem;">
+              OpenAI 및 SB Energy와의 4.25GW 규모 오하이오 AI 데이터센터 캠퍼스에 대해 엔비디아 인프라 독점 배치를 조건으로 최대 1,050억 달러 한도의 신용 보증 계약을 체결했습니다.
+            </p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 5. 젠슨 황 CEO 코멘트 -->
+    <section>
+      <h2 class="section-title">5. 젠슨 황(Jensen Huang) CEO 실적발표 핵심 코멘트</h2>
+      
+      <!-- Quote 1 -->
+      <div class="quote-box">
+        <div class="quote-title">1. "AI는 변곡점을 넘었다 — 이제 연산량이 곧 매출이다"</div>
+        <div class="quote-en">“AI has reached its inflection point. It's doing useful work. Its tokens are productive and profitable. Now, compute is revenue.”</div>
+        <div class="quote-ko">(AI가 결정적인 변곡점에 도달했습니다. 이제 실질적으로 유용한 작업을 수행하고 있으며, 생성되는 토큰들은 생산적이고 수익을 창출하고 있습니다. 이제 연산 능력은 곧 기업의 매출입니다.)</div>
+        <div class="quote-desc">
+          <strong>핵심 의미:</strong> AI가 단순 실험·연구 단계를 넘어 기업이 실제 업무에 도입해 수익을 창출하는 '생산성 창출 단계'에 진입했으며, 연산 인프라 투자가 곧 비즈니스 매출로 직결되는 시대가 되었음을 강조했습니다.
+        </div>
+      </div>
+
+      <!-- Quote 2 -->
+      <div class="quote-box">
+        <div class="quote-title">2. "소수 빅테크 주도에서 '글로벌 AI 황금기(Golden Age)'로의 확장"</div>
+        <div class="quote-en">“This time last year, one lab alone was driving the buildout; today, we have a golden age of new AI labs and startups, multiple frontier labs scaling in parallel, a thriving open-model ecosystem and physical AI coming online — with strong momentum across the U.S. and around the world.”</div>
+        <div class="quote-ko">(작년 이맘때는 특정 연구소 한 곳이 인프라 확장을 주도했지만, 지금은 새로운 AI 연구소와 스타트업들이 쏟아지는 '황금기'를 맞이했습니다. 다수의 프론티어 연구소가 나란히 규모를 확장하고 있으며, 번창하는 오픈 모델 생태계와 피지컬 AI가 본격 가동되고 있습니다.)</div>
+        <div class="quote-desc">
+          <strong>핵심 의미:</strong> 소수 빅테크에 집중되었던 AI 칩 수요가 전 세계 스타트업, 프론티어 연구소, 각국 정부의 소버린 AI 인프라로 전방위 다변화되고 있음을 설명했습니다.
+        </div>
+      </div>
+
+      <!-- Quote 3 -->
+      <div class="quote-box">
+        <div class="quote-title">3. "성장의 한계는 수요가 아니라 '공급'이다"</div>
+        <div class="quote-en">“We have supply for 70% growth. Our demand is much higher than that.”</div>
+        <div class="quote-ko">(우리가 확보한 공급 능력이 70% 성장을 뒷받침할 뿐, 실제 시장의 수요는 그보다 훨씬 더 높습니다.)</div>
+        <div class="quote-desc">
+          <strong>핵심 의미:</strong> 차기 회계연도(FY2028) 70% 수준의 고성장 전망치 역시 시장 수요를 전부 채운 것이 아닌 HBM(고대역폭 메모리) 및 첨단 패키징 공급 능력에 맞춘 수치임을 명확히 밝혔으며, 공급 약정을 $2,790억으로 2배 이상 확대한 배경을 설명했습니다.
+        </div>
+      </div>
+
+      <!-- Quote 4 -->
+      <div class="quote-box">
+        <div class="quote-title">4. 차세대 성장 동력: 에이전틱 AI(Agentic AI) &amp; 피지컬 AI(로보틱스)</div>
+        <p style="font-size: 0.94rem; color: var(--text-primary); margin-bottom: 8px;">
+          단순 질문 답변형 챗봇을 넘어 복잡한 작업을 스스로 계획·수행하는 <strong>AI 에이전트(Agentic AI)</strong>와 현실 세계에서 물리적으로 작동하는 <strong>휴머노이드/로보틱스/자율주행(Physical AI)</strong>이 차세대 컴퓨팅 수요를 이끌고 있다고 강조했습니다.
+        </p>
+        <div class="quote-desc">
+          이를 뒷받침하기 위해 AWS와 글로벌 인프라 전반에 200만 개의 엔비디아 가속기를 추가 배치하는 등 클라우드 생태계 파트너십을 더욱 강화하고 있습니다.
+        </div>
+      </div>
+
+      <!-- Summary Box -->
+      <div class="summary-card">
+        <h4>💡 젠슨 황 발언 한 줄 요약</h4>
+        <p>"AI는 이제 실제 돈을 버는 생산성 도구가 되었으며, 폭발하는 고객 수요에 비해 여전히 공급이 부족할 정도로 초호황이 지속되고 있다."</p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>NVIDIA Investor Relations &amp; SEC Form 8-K/10-Q Financial Analysis Report</p>
+      <p style="margin-top: 4px; font-size: 0.8rem;">본 문서는 사용자 요청에 따라 생성된 기업 분석 요약 보고서입니다.</p>
+    </footer>
+  </div>
+
+  <script>
+    // Theme Toggle Functionality
+    function toggleTheme() {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('nvda_report_theme', newTheme);
+      updateThemeUI(newTheme);
+    }
+
+    function updateThemeUI(theme) {
+      const themeIcon = document.getElementById('themeIcon');
+      const themeText = document.getElementById('themeText');
+      
+      if (theme === 'dark') {
+        themeIcon.textContent = '☀️';
+        themeText.textContent = '라이트 모드';
+      } else {
+        themeIcon.textContent = '🌙';
+        themeText.textContent = '다크 모드';
+      }
+    }
+
+    // Initialize Theme on Page Load
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('nvda_report_theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      updateThemeUI(savedTheme);
+    });
+  </script>
+</body>
+</html>
