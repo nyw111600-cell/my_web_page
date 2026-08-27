@@ -3,24 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>기업 분석 및 업무 도구 아카이브</title>
+  <title>Research & Analysis Archive</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #1a73e8;
-      --primary-hover: #1557b0;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-light: #eff6ff;
+      --primary-border: #bfdbfe;
+      
       --bg: #f8fafc;
       --card-bg: #ffffff;
-      --text-main: #1e293b;
-      --text-sub: #64748b;
+      --text-main: #0f172a;
+      --text-sub: #475569;
+      --text-muted: #64748b;
       --border: #e2e8f0;
-      --header-bg: #eef2f6;
-      --header-border: #dbeafe;
-      --badge-tool: #059669;
+      --border-focus: #3b82f6;
+
+      --sidebar-bg: #ffffff;
+      --sidebar-width: 270px;
+      
+      --badge-green-bg: #ecfccb;
+      --badge-green-text: #3f6212;
+      --badge-blue-bg: #e0f2fe;
+      --badge-blue-text: #0369a1;
+      --badge-purple-bg: #fdf4ff;
+      --badge-purple-text: #a21caf;
+      --badge-amber-bg: #fef3c7;
+      --badge-amber-text: #b45309;
       --badge-tool-bg: #d1fae5;
-      --badge-weather: #0284c7;
-      --badge-weather-bg: #e0f2fe;
-      --badge-fx: #d97706;
-      --badge-fx-bg: #fef3c7;
+      --badge-tool-text: #047857;
     }
 
     * {
@@ -29,8 +43,12 @@
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background-color: var(--bg);
       color: var(--text-main);
       line-height: 1.6;
@@ -38,46 +56,177 @@
 
     /* 상단 헤더 */
     header {
-      background-color: var(--header-bg);
-      border-bottom: 1px solid var(--border);
-      padding: 40px 20px;
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: #ffffff;
+      padding: 32px 24px;
       text-align: center;
+      border-bottom: 1px solid #334155;
     }
 
     header h1 {
       font-size: 26px;
-      font-weight: 700;
-      color: #0f172a;
-      margin-bottom: 8px;
+      font-weight: 800;
       letter-spacing: -0.5px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
     }
 
     header p {
-      color: #475569;
+      color: #94a3b8;
       font-size: 15px;
+      font-weight: 400;
     }
 
-    /* 본문 컨테이너 */
-    .container {
-      max-width: 1050px;
-      margin: 36px auto 60px;
-      padding: 0 20px;
+    /* 메인 2열 레이아웃 */
+    .dashboard-layout {
+      display: flex;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 32px 24px;
+      gap: 32px;
+      align-items: flex-start;
     }
 
-    /* 카드 그리드 */
+    /* 좌측 고정 사이드바 */
+    aside.sidebar {
+      width: var(--sidebar-width);
+      flex-shrink: 0;
+      position: sticky;
+      top: 24px;
+      background: var(--sidebar-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .sidebar-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      padding: 0 12px 12px 12px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 12px;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .nav-item a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-radius: 10px;
+      color: var(--text-sub);
+      text-decoration: none;
+      font-size: 14.5px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item a:hover {
+      background-color: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .nav-item a.active {
+      background-color: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+    }
+
+    .nav-item a .nav-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-item a .badge-count {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 12px;
+      background: rgba(0,0,0,0.06);
+      color: var(--text-sub);
+    }
+
+    .nav-item a.active .badge-count {
+      background: rgba(255,255,255,0.25);
+      color: #ffffff;
+    }
+
+    /* 우측 메인 콘텐츠 */
+    main.main-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* 섹션 공통 스타일 */
+    .section-block {
+      margin-bottom: 48px;
+      scroll-margin-top: 24px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .section-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title-wrap h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.3px;
+    }
+
+    .section-title-wrap .section-badge {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 14px;
+      background: var(--border);
+      color: var(--text-sub);
+    }
+
+    .section-desc {
+      font-size: 13.5px;
+      color: var(--text-muted);
+    }
+
+    /* 그리드 시스템 */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
     }
 
     /* 개별 카드 */
     .card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
       transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
       display: flex;
       flex-direction: column;
@@ -86,95 +235,114 @@
 
     .card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 12px 20px -4px rgba(0, 0, 0, 0.08);
       border-color: var(--primary);
     }
 
+    /* 최신 및 하이라이트 카드 스타일 */
     .card.highlight {
       border-color: #93c5fd;
-      background: linear-gradient(to bottom, #ffffff, #f0fdf4);
+      background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%);
     }
 
-    .card.highlight:hover {
-      border-color: #059669;
+    .card.highlight-nvidia {
+      border-color: #84cc16;
+      background: linear-gradient(180deg, #ffffff 0%, #f7fee7 100%);
+    }
+    .card.highlight-nvidia:hover {
+      border-color: #65a30d;
     }
 
-    .card.weather-card {
-      border-color: #7dd3fc;
-      background: linear-gradient(to bottom, #ffffff, #f0f9ff);
+    .card.highlight-blue {
+      border-color: #93c5fd;
+      background: linear-gradient(180deg, #ffffff 0%, #eff6ff 100%);
     }
-    .card.weather-card:hover {
-      border-color: #0284c7;
+
+    .card.highlight-indigo {
+      border-color: #a5b4fc;
+      background: linear-gradient(180deg, #ffffff 0%, #eef2ff 100%);
     }
 
     .card.game-card {
       border-color: #f0abfc;
-      background: linear-gradient(to bottom, #ffffff, #fdf4ff);
+      background: linear-gradient(180deg, #ffffff 0%, #fdf4ff 100%);
     }
     .card.game-card:hover {
       border-color: #c026d3;
     }
 
+    .card.weather-card {
+      border-color: #7dd3fc;
+      background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%);
+    }
+    .card.weather-card:hover {
+      border-color: #0284c7;
+    }
+
     .card.fx-card {
-      border-color: #fde68a;
-      background: linear-gradient(to bottom, #ffffff, #fffbeb);
+      border-color: #fcd34d;
+      background: linear-gradient(180deg, #ffffff 0%, #fffbeb 100%);
     }
     .card.fx-card:hover {
       border-color: #d97706;
     }
 
+    .card-top {
+      margin-bottom: 16px;
+    }
+
     .tag {
       display: inline-block;
       font-size: 12px;
-      font-weight: 600;
-      color: var(--primary);
-      background-color: #e8f0fe;
+      font-weight: 700;
       padding: 4px 10px;
       border-radius: 20px;
       margin-bottom: 12px;
       width: fit-content;
+      background-color: #e2e8f0;
+      color: var(--text-sub);
     }
 
-    .tag.weather {
-      color: var(--badge-weather);
-      background-color: var(--badge-weather-bg);
+    .tag.green {
+      background-color: var(--badge-green-bg);
+      color: var(--badge-green-text);
+    }
+
+    .tag.blue {
+      background-color: var(--badge-blue-bg);
+      color: var(--badge-blue-text);
+    }
+
+    .tag.purple {
+      background-color: var(--badge-purple-bg);
+      color: var(--badge-purple-text);
+    }
+
+    .tag.amber {
+      background-color: var(--badge-amber-bg);
+      color: var(--badge-amber-text);
     }
 
     .tag.tool {
-      color: var(--badge-tool);
       background-color: var(--badge-tool-bg);
+      color: var(--badge-tool-text);
     }
 
-    .tag.game {
-      color: #c026d3;
-      background-color: #fdf4ff;
-    }
-
-    .tag.fx {
-      color: var(--badge-fx);
-      background-color: var(--badge-fx-bg);
-    }
-
-    .tag.macro {
-      color: #2563eb;
-      background-color: #dbeafe;
-    }
-
-    .card h2 {
-      font-size: 19px;
+    .card h3 {
+      font-size: 18px;
       font-weight: 700;
       margin-bottom: 8px;
       color: var(--text-main);
+      line-height: 1.35;
     }
 
     .card p {
-      font-size: 14px;
+      font-size: 13.5px;
       color: var(--text-sub);
-      margin-bottom: 20px;
-      flex-grow: 1;
+      line-height: 1.55;
     }
 
-    /* 열람 버튼 */
+    /* 버튼 스타일 */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -182,22 +350,26 @@
       background-color: var(--primary);
       color: #ffffff;
       text-decoration: none;
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 600;
-      padding: 10px 16px;
+      padding: 9px 15px;
       border-radius: 8px;
-      transition: background-color 0.2s ease;
+      transition: all 0.2s ease;
+      width: 100%;
+      text-align: center;
     }
 
     .btn:hover {
       background-color: var(--primary-hover);
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
     }
 
-    .btn.weather {
-      background-color: #0284c7;
+    .btn.nvidia {
+      background-color: #65a30d;
     }
-    .btn.weather:hover {
-      background-color: #0369a1;
+    .btn.nvidia:hover {
+      background-color: #4d7c0f;
+      box-shadow: 0 4px 10px rgba(101, 163, 13, 0.3);
     }
 
     .btn.tool {
@@ -205,6 +377,7 @@
     }
     .btn.tool:hover {
       background-color: #047857;
+      box-shadow: 0 4px 10px rgba(5, 150, 105, 0.3);
     }
 
     .btn.game {
@@ -212,6 +385,15 @@
     }
     .btn.game:hover {
       background-color: #a21caf;
+      box-shadow: 0 4px 10px rgba(192, 38, 211, 0.3);
+    }
+
+    .btn.weather {
+      background-color: #0284c7;
+    }
+    .btn.weather:hover {
+      background-color: #0369a1;
+      box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3);
     }
 
     .btn.fx {
@@ -219,230 +401,408 @@
     }
     .btn.fx:hover {
       background-color: #b45309;
+      box-shadow: 0 4px 10px rgba(217, 119, 6, 0.3);
     }
 
-    .btn.macro {
-      background-color: #2563eb;
+    .btn.indigo {
+      background-color: #4f46e5;
     }
-    .btn.macro:hover {
-      background-color: #1d4ed8;
+    .btn.indigo:hover {
+      background-color: #4338ca;
+      box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
     }
 
     /* 푸터 */
     footer {
       text-align: center;
       font-size: 13px;
-      color: var(--text-sub);
-      padding: 24px 20px;
+      color: var(--text-muted);
+      padding: 36px 20px;
       border-top: 1px solid var(--border);
+      background-color: #ffffff;
+      margin-top: 40px;
+    }
+
+    /* 반응형 레이아웃 */
+    @media (max-width: 992px) {
+      .dashboard-layout {
+        flex-direction: column;
+        padding: 20px 16px;
+        gap: 24px;
+      }
+
+      aside.sidebar {
+        width: 100%;
+        position: static;
+        padding: 12px;
+      }
+
+      .nav-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .nav-item {
+        flex: 1 1 calc(50% - 8px);
+      }
+
+      .nav-item a {
+        font-size: 13.5px;
+        padding: 8px 12px;
+      }
+
+      .sidebar-title {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-item {
+        flex: 1 1 100%;
+      }
+
+      header h1 {
+        font-size: 20px;
+      }
     }
   </style>
 </head>
 <body>
 
+  <!-- 상단 공통 헤더 -->
   <header>
     <h1>📊 Research & Analysis Archive</h1>
-    <p>주요 기업 분석, 금융/기상 데이터 및 스마트 업무 도구 모음</p>
+    <p>주요 기업 분석 리포트, 스마트 AI 업무 도구 및 글로벌 금융·기상 데이터 대시보드</p>
   </header>
 
-  <div class="container">
-    <div class="grid">
-      
-      <!-- 0. 엔비디아 실적 분석 카드 (최신) -->
-      <div class="card highlight" style="border-color: #84cc16; background: linear-gradient(to bottom, #ffffff, #f7fee7);">
-        <div>
-          <span class="tag" style="color: #4d7c0f; background-color: #ecfccb;">🟢 글로벌 AI 반도체</span>
-          <h2>엔비디아 (NVIDIA) Q2 실적 분석</h2>
-          <p>엔비디아 2027 회계연도 2분기 어닝 서프라이즈 실적 요약, 3분기 1,000억 달러 가이던스 및 젠슨 황 CEO 핵심 코멘트</p>
-        </div>
-        <a href="nvidia_q2_2027.html" class="btn" style="background-color: #65a30d;">보고서 열람하기 →</a>
-      </div>
-      
-      <!-- 1. 전국 일기예보 카드 -->
-      <div class="card weather-card">
-        <div>
-          <span class="tag weather">🌤️ 기상 정보</span>
-          <h2>전국 일기예보</h2>
-          <p>실시간 전국 주요 도시 기상 현황 및 주간 날씨 예보 상세 조회</p>
-        </div>
-        <a href="korea_weather.html" class="btn weather">일기예보 열람하기 →</a>
-      </div>
+  <div class="dashboard-layout">
+    
+    <!-- 좌측 고정 사이드바 탭 -->
+    <aside class="sidebar">
+      <div class="sidebar-title">📁 Category Navigation</div>
+      <ul class="nav-list">
+        <li class="nav-item">
+          <a href="#section-quick" class="nav-link active" onclick="setActive(this)">
+            <span class="nav-label">⭐ 최상단 고정 유틸</span>
+            <span class="badge-count">3</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#section-corp" class="nav-link" onclick="setActive(this)">
+            <span class="nav-label">🏢 카테고리 1: 기업 분석</span>
+            <span class="badge-count">9</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#section-tool" class="nav-link" onclick="setActive(this)">
+            <span class="nav-label">🛠️ 카테고리 2: AI & 업무도구</span>
+            <span class="badge-count">4</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#section-macro" class="nav-link" onclick="setActive(this)">
+            <span class="nav-label">📈 카테고리 3: 매크로 & 금융</span>
+            <span class="badge-count">3</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
 
-      <!-- 2. 엑셀 데이터 취합 도구 카드 -->
-      <div class="card highlight">
-        <div>
-          <span class="tag tool">📊 업무 자동화 도구</span>
-          <h2>엑셀 데이터 취합기</h2>
-          <p>여러 엑셀/CSV 파일 세로 병합(Append), 셀 위치별 누적 합산 및 키 기준 데이터 자동 집계</p>
-        </div>
-        <a href="excel_merger.html" class="btn tool">도구 실행하기 →</a>
-      </div>
+    <!-- 우측 메인 콘텐츠 영역 -->
+    <main class="main-content">
 
-      <!-- 3. 버블보블 게임 카드 -->
-      <div class="card game-card">
-        <div>
-          <span class="tag game">🎮 레트로 아케이드 게임</span>
-          <h2>🦖 버블보블 (Bubble Bobble)</h2>
-          <p>고전 명작 버블보블 미니 에디션! 5개 스테이지, 8비트 사운드 및 모바일 터치 지원</p>
+      <!-- ⭐ [최상단 고정 영역] 3종 유틸리티 -->
+      <section id="section-quick" class="section-block">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <h2>⭐ 주요 고정 서비스 (Quick Access)</h2>
+            <span class="section-badge">3개 항목</span>
+          </div>
+          <span class="section-desc">자주 사용하는 실시간 기상, 업무 자동화 및 아케이드 게임</span>
         </div>
-        <a href="bubble-bobble/index.html" class="btn game">게임 시작하기 →</a>
-      </div>
+        <div class="grid">
+          
+          <!-- 1. 전국 일기예보 -->
+          <div class="card weather-card">
+            <div class="card-top">
+              <span class="tag blue">🌤️ 실시간 기상 정보</span>
+              <h3>전국 일기예보</h3>
+              <p>실시간 전국 주요 도시 기상 현황, 강수 확률 및 주간 날씨 예보 상세 조회</p>
+            </div>
+            <a href="korea_weather.html" class="btn weather">일기예보 열람하기 →</a>
+          </div>
 
-      <!-- 4. 달러/엔화 차트 카드 (4번째 배치) -->
-      <div class="card fx-card">
-        <div>
-          <span class="tag fx">💱 외환 / 환율 차트</span>
-          <h2>달러/엔 (USD/JPY) 차트</h2>
-          <p>달러/엔화 실시간 환율 추이 및 주요 기술적 지표/분석 차트 열람</p>
-        </div>
-        <a href="usd_jpy_chart.html" class="btn fx">차트 열람하기 →</a>
-      </div>
+          <!-- 2. 엑셀 데이터 취합기 -->
+          <div class="card highlight">
+            <div class="card-top">
+              <span class="tag tool">📊 업무 자동화 도구</span>
+              <h3>엑셀 데이터 취합기</h3>
+              <p>여러 엑셀/CSV 파일 세로 병합(Append), 셀 위치별 누적 합산 및 키 기준 데이터 자동 집계 도구</p>
+            </div>
+            <a href="excel_merger.html" class="btn tool">도구 실행하기 →</a>
+          </div>
 
-      <!-- 5. 미국채 10년물 vs 나스닥 50년 이중축 차트 카드 -->
-      <div class="card highlight">
-        <div>
-          <span class="tag macro">📈 매크로 / 금리·증시 차트</span>
-          <h2>미국채 10년물 vs 나스닥 50년 분석</h2>
-          <p>1976~2026년 반세기 미국 10년물 국채 금리와 나스닥 지수의 이중축 인터랙티브 시계열 차트, 밝기 모드 전환 및 5대 국면별 상관관계 심층 분석</p>
-        </div>
-        <a href="nasdaq_treasury_50y_chart.html" class="btn macro">차트 열람하기 →</a>
-      </div>
+          <!-- 3. 버블보블 게임 -->
+          <div class="card game-card">
+            <div class="card-top">
+              <span class="tag purple">🎮 레트로 아케이드 게임</span>
+              <h3>🦖 버블보블 (Bubble Bobble)</h3>
+              <p>고전 명작 버블보블 웹 에디션! 5개 스테이지, 8비트 오리지널 사운드 및 모바일 터치 지원</p>
+            </div>
+            <a href="bubble-bobble/index.html" class="btn game">게임 시작하기 →</a>
+          </div>
 
-      <!-- 5-1. 미국 국채금리 상승 3대 요인 인포그래픽 카드 -->
-      <div class="card highlight">
-        <div>
-          <span class="tag macro">🏛️ 매크로 / 국채금리 인포그래픽</span>
-          <h2>미 국채금리 상승 3대 핵심 요인</h2>
-          <p>재정 신뢰 저하 및 공급 과잉, AI 회사채 등 대체 투자처 자금 흡수, 인플레·통화정책 불확실성 3대 드라이버 심층 인포그래픽</p>
         </div>
-        <a href="Top_3_Drivers_of_Rising_US_Treasury_Yields.png" target="_blank" class="btn macro">인포그래픽 열람하기 →</a>
-      </div>
+      </section>
 
-      <!-- 6. Skill 및 작업 룰 가이드 카드 -->
-      <div class="card highlight">
-        <div>
-          <span class="tag tool">AI 에이전트 가이드</span>
-          <h2>📋 Skill & 작업 룰 지시내용</h2>
-          <p>네이버 증권 재무 컨센서스 자동 수집 룰 및 5단계 기업 분석/밸류에이션 스킬 표준 지시문서</p>
+      <!-- 🏢 [카테고리 1] 기업 분석 보고서 -->
+      <section id="section-corp" class="section-block">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <h2>🏢 카테고리 1: 국내외 핵심 기업 분석 보고서</h2>
+            <span class="section-badge">9개 기업</span>
+          </div>
+          <span class="section-desc">글로벌 AI 반도체 및 국내 소부장 핵심 기업 펀더멘털·밸류에이션 리포트</span>
         </div>
-        <a href="skill_rules.html" class="btn tool">지시내용 열람하기 →</a>
-      </div>
-      <!-- 6-1. 한·미 주식 & 공시 MCP 가이드 카드 -->
-      <div class="card highlight">
-        <div>
-          <span class="tag tool">AI 실전 가이드</span>
-          <h2>한·미 주식 & 공시(DART/EDGAR) MCP 가이드</h2>
-          <p>실시간 주가 조회 및 기업 공시 MCP 도구 연동·실전 활용법 총정리</p>
-        </div>
-        <a href="korea_stock_dart_mcp_guide.html" class="btn tool">가이드 보기 →</a>
-      </div>
+        <div class="grid">
+          
+          <!-- 0. 엔비디아 (최신 - 최상단) -->
+          <div class="card highlight-nvidia">
+            <div class="card-top">
+              <span class="tag green">🟢 글로벌 AI 반도체 (최신)</span>
+              <h3>엔비디아 (NVIDIA) Q2 실적 분석</h3>
+              <p>엔비디아 2027 회계연도 2분기 어닝 서프라이즈 실적 요약, 3분기 1,000억 달러 돌파 가이던스 및 젠슨 황 CEO 핵심 코멘트</p>
+            </div>
+            <a href="nvidia_q2_2027.html" class="btn nvidia">보고서 열람하기 →</a>
+          </div>
 
-      <!-- 6-1. 국내 및 해외 주식 6대 MCP 실전 가이드 카드 (신규) -->
-      <div class="card highlight" style="border-color: #6366f1; background: linear-gradient(to bottom, #ffffff, #eef2ff);">
-        <div>
-          <span class="tag" style="color: #4f46e5; background-color: #e0e7ff;">💡 AI 주식 분석 가이드</span>
-          <h2>국내 & 해외 주식 6대 MCP 실전 가이드</h2>
-          <p>국내 4대 MCP(수급·시황·DART 공시·적정주가) 및 해외 2대 MCP(Yahoo Finance·SEC EDGAR 공시) 완벽 실전 가이드, 복합 질문 프롬프트 및 비교표</p>
-        </div>
-        <a href="stock_mcp_guide.html" class="btn" style="background-color: #4f46e5;">가이드 열람하기 →</a>
-      </div>
+          <!-- 1. 마벨 테크놀러지 -->
+          <div class="card highlight-blue">
+            <div class="card-top">
+              <span class="tag blue">🚀 글로벌 AI 팹리스 반도체</span>
+              <h3>마벨 테크놀러지 (Marvell)</h3>
+              <p>빅테크 맞춤형 AI 가속기(Custom ASIC) 및 800G/1.6T 광학 DSP(Optical DSP) 팹리스 완제품 비즈니스 모델·매출 제품군 심층 분석</p>
+            </div>
+            <a href="marvell.html" class="btn">보고서 열람하기 →</a>
+          </div>
 
-      <!-- 6-2. 멀티 에이전트 주식 투자 리서치 팀 프롬프트 가이드 카드 (신규) -->
-      <div class="card highlight" style="border-color: #2563eb; background: linear-gradient(to bottom, #ffffff, #eff6ff);">
-        <div>
-          <span class="tag" style="color: #1d4ed8; background-color: #dbeafe;">⚡ 멀티 에이전트 프롬프트</span>
-          <h2>멀티 에이전트 주식 투자 리서치 팀 프롬프트</h2>
-          <p>글로벌 헤지펀드 투자 심의 위원회(매크로·공급망·펀더멘털·자금흐름·테일리스크·CIO) 6대 에이전트 실전 프롬프트 및 원클릭 복사</p>
-        </div>
-        <a href="multi_agent_stock_prompts.html" class="btn" style="background-color: #2563eb;">프롬프트 모음 보기 →</a>
-      </div>
+          <!-- 2. 티엘비 -->
+          <div class="card highlight-blue">
+            <div class="card-top">
+              <span class="tag blue">메모리 모듈 & SSD PCB</span>
+              <h3>티엘비 (TLB)</h3>
+              <p>티엘비 2026 기업 분석, DDR5 고다층 기판 + eSSD 고용량화 + 차세대 CXL/SOCAMM 선점 및 사상 최대 실적 경신 리포트</p>
+            </div>
+            <a href="tlb.html" class="btn">보고서 열람하기 →</a>
+          </div>
 
-      <!-- 6. 마벨 테크놀러지 (신규) -->
-      <div class="card highlight" style="border-color: #0284c7; background: linear-gradient(to bottom, #ffffff, #f0f9ff);">
-        <div>
-          <span class="tag" style="color: #0369a1; background-color: #e0f2fe;">🚀 글로벌 AI 팹리스 반도체</span>
-          <h2>마벨 테크놀러지 (Marvell)</h2>
-          <p>빅테크 맞춤형 AI 가속기(Custom ASIC) 및 800G/1.6T 광학 DSP(Optical DSP) 팹리스 완제품 비즈니스 모델·매출 제품군 심층 분석</p>
-        </div>
-        <a href="marvell.html" class="btn" style="background-color: #0284c7;">보고서 열람하기 →</a>
-      </div>
+          <!-- 3. 심텍 -->
+          <div class="card highlight">
+            <div class="card-top">
+              <span class="tag">반도체 패키지 기판</span>
+              <h3>심텍 (SIMMTECH)</h3>
+              <p>심텍 2026년 2분기(2Q26) 실적 vs 컨센서스 비교 분석, SoCAMM2 공급 본격화 및 MSAP 믹스 개선 리포트</p>
+            </div>
+            <a href="simmtech_2q26.html" class="btn">보고서 열람하기 →</a>
+          </div>
 
-      <!-- 티엘비 카드 (신규) -->
-      <div class="card highlight" style="border-color: #2563eb; background: linear-gradient(to bottom, #ffffff, #eff6ff);">
-        <div>
-          <span class="tag" style="color: #1d4ed8; background-color: #dbeafe;">메모리 모듈 & SSD PCB</span>
-          <h2>티엘비 (TLB)</h2>
-          <p>티엘비 2026 기업 분석, DDR5 고다층 기판 + eSSD 고용량화 + 차세대 CXL/SOCAMM 선점 및 사상 최대 실적 경신 리포트</p>
-        </div>
-        <a href="tlb.html" class="btn" style="background-color: #2563eb;">보고서 열람하기 →</a>
-      </div>
+          <!-- 4. 피에스케이 -->
+          <div class="card highlight">
+            <div class="card-top">
+              <span class="tag">반도체 전공정 핵심 장비</span>
+              <h3>피에스케이 (PSK)</h3>
+              <p>피에스케이 2026 기업 분석, PR Strip 글로벌 1위, 베벨에처 양산 및 2Q26 어닝 서프라이즈 리포트</p>
+            </div>
+            <a href="psk.html" class="btn">보고서 열람하기 →</a>
+          </div>
 
-      <!-- 6-1. 심텍 카드 -->
-      <div class="card highlight">
-        <div>
-          <span class="tag">반도체 패키지 기판</span>
-          <h2>심텍 (SIMMTECH)</h2>
-          <p>심텍 2026년 2분기(2Q26) 실적 vs 컨센서스 비교 분석, SoCAMM2 공급 본격화 및 MSAP 믹스 개선 리포트</p>
-        </div>
-        <a href="simmtech_2q26.html" class="btn">보고서 열람하기 →</a>
-      </div>
+          <!-- 5. 하나마이크론 -->
+          <div class="card highlight">
+            <div class="card-top">
+              <span class="tag">반도체 후공정 (OSAT)</span>
+              <h3>하나마이크론 (Hana Micron)</h3>
+              <p>하나마이크론 2026 기업 분석, SK하이닉스 턴키 후공정 수혜 및 밸류에이션 리포트</p>
+            </div>
+            <a href="hanamicron.html" class="btn">보고서 열람하기 →</a>
+          </div>
 
-      <!-- 7. 피에스케이 카드 -->
-      <div class="card highlight">
-        <div>
-          <span class="tag">반도체 전공정 핵심 장비</span>
-          <h2>피에스케이 (PSK)</h2>
-          <p>피에스케이 2026 기업 분석, PR Strip 글로벌 1위, 베벨에처 양산 및 2Q26 어닝 서프라이즈 리포트</p>
-        </div>
-        <a href="psk.html" class="btn">보고서 열람하기 →</a>
-      </div>
+          <!-- 6. 케이씨텍 -->
+          <div class="card">
+            <div class="card-top">
+              <span class="tag">반도체 / 디스플레이 장비</span>
+              <h3>케이씨텍 (KC Tech)</h3>
+              <p>케이씨텍 기업 개요, 재무 지표 및 상세 펀더멘털 분석 보고서 열람</p>
+            </div>
+            <a href="kctec.html" class="btn">보고서 열람하기 →</a>
+          </div>
 
-      <!-- 8. 하나마이크론 카드 -->
-      <div class="card highlight">
-        <div>
-          <span class="tag">반도체 후공정 (OSAT)</span>
-          <h2>하나마이크론 (Hana Micron)</h2>
-          <p>하나마이크론 2026 기업 분석, SK하이닉스 턴키 후공정 수혜 및 밸류에이션 리포트</p>
-        </div>
-        <a href="hanamicron.html" class="btn">보고서 열람하기 →</a>
-      </div>
+          <!-- 7. 솔브레인 -->
+          <div class="card">
+            <div class="card-top">
+              <span class="tag">반도체 / 전자 소재</span>
+              <h3>솔브레인 (SoulBrain)</h3>
+              <p>솔브레인 반기 실적 및 주요 경영 지표 보고서 열람</p>
+            </div>
+            <a href="solbrain.html" class="btn">보고서 열람하기 →</a>
+          </div>
 
-      <!-- 9. 케이씨텍 카드 -->
-      <div class="card">
-        <div>
-          <span class="tag">반도체 / 디스플레이 장비</span>
-          <h2>케이씨텍 (KC Tech)</h2>
-          <p>케이씨텍 기업 개요, 재무 지표 및 상세 분석 보고서 열람</p>
-        </div>
-        <a href="kctec.html" class="btn">보고서 열람하기 →</a>
-      </div>
+          <!-- 8. 브이엠 -->
+          <div class="card">
+            <div class="card-top">
+              <span class="tag">반도체 식각 장비</span>
+              <h3>브이엠 (VM)</h3>
+              <p>브이엠 기업 개요 및 상세 재무·사업 분석 보고서 열람</p>
+            </div>
+            <a href="vm.html" class="btn">보고서 열람하기 →</a>
+          </div>
 
-      <!-- 10. 솔브레인 카드 -->
-      <div class="card">
-        <div>
-          <span class="tag">반도체 / 전자 소재</span>
-          <h2>솔브레인 (SoulBrain)</h2>
-          <p>솔브레인 반기 실적 및 주요 경영 지표 보고서 열람</p>
         </div>
-        <a href="solbrain.html" class="btn">보고서 열람하기 →</a>
-      </div>
+      </section>
 
-      <!-- 11. VM 카드 -->
-      <div class="card">
-        <div>
-          <span class="tag">기업 분석</span>
-          <h2>브이엠 (VM)</h2>
-          <p>브이엠 기업 개요 및 상세 분석 보고서 열람</p>
+      <!-- 🛠️ [카테고리 2] AI 가이드 & 스마트 업무 도구 -->
+      <section id="section-tool" class="section-block">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <h2>🛠️ 카테고리 2: AI 가이드 & 스마트 업무 도구</h2>
+            <span class="section-badge">4개 항목</span>
+          </div>
+          <span class="section-desc">주식 분석 MCP 연동 가이드, 프롬프트 템플릿 및 자동화 워크플로우</span>
         </div>
-        <a href="vm.html" class="btn">보고서 열람하기 →</a>
-      </div>
+        <div class="grid">
+          
+          <!-- 1. 국내 & 해외 주식 6대 MCP 실전 가이드 -->
+          <div class="card highlight-indigo">
+            <div class="card-top">
+              <span class="tag indigo" style="background-color: #e0e7ff; color: #4338ca;">💡 AI 주식 분석 가이드 (최신)</span>
+              <h3>국내 & 해외 주식 6대 MCP 실전 가이드</h3>
+              <p>국내 4대 MCP(수급·시황·DART 공시·적정주가) 및 해외 2대 MCP(Yahoo Finance·SEC EDGAR 공시) 완벽 실전 가이드, 복합 질문 프롬프트 및 비교표</p>
+            </div>
+            <a href="stock_mcp_guide.html" class="btn indigo">가이드 열람하기 →</a>
+          </div>
 
-    </div>
+          <!-- 2. 멀티 에이전트 프롬프트 -->
+          <div class="card highlight-blue">
+            <div class="card-top">
+              <span class="tag blue">⚡ 멀티 에이전트 프롬프트</span>
+              <h3>멀티 에이전트 주식 투자 리서치 팀 프롬프트</h3>
+              <p>글로벌 헤지펀드 투자 심의 위원회(매크로·공급망·펀더멘털·자금흐름·테일리스크·CIO) 6대 에이전트 실전 프롬프트 및 원클릭 복사</p>
+            </div>
+            <a href="multi_agent_stock_prompts.html" class="btn">프롬프트 모음 보기 →</a>
+          </div>
+
+          <!-- 3. Skill & 작업 룰 지시내용 -->
+          <div class="card highlight">
+            <div class="card-top">
+              <span class="tag tool">📋 AI 에이전트 가이드</span>
+              <h3>Skill & 작업 룰 지시내용</h3>
+              <p>네이버 증권 재무 컨센서스 자동 수집 룰 및 5단계 기업 분석/밸류에이션 스킬 표준 지시문서</p>
+            </div>
+            <a href="skill_rules.html" class="btn tool">지시내용 열람하기 →</a>
+          </div>
+
+          <!-- 4. 한·미 주식 & 공시 MCP 가이드 -->
+          <div class="card highlight">
+            <div class="card-top">
+              <span class="tag tool">🔍 실시간 공시 연동</span>
+              <h3>한·미 주식 & 공시(DART/EDGAR) MCP 가이드</h3>
+              <p>실시간 주가 조회 및 기업 공시 MCP 도구 연동·실전 활용법 총정리</p>
+            </div>
+            <a href="korea_stock_dart_mcp_guide.html" class="btn tool">가이드 보기 →</a>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 📈 [카테고리 3] 매크로 금융 & 환율 차트 -->
+      <section id="section-macro" class="section-block">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <h2>📈 카테고리 3: 매크로 금융 & 환율 차트</h2>
+            <span class="section-badge">3개 항목</span>
+          </div>
+          <span class="section-desc">글로벌 금리, 환율, 나스닥 50년 상관관계 및 거시 경제 인터랙티브 차트</span>
+        </div>
+        <div class="grid">
+          
+          <!-- 1. 미국채 10년물 vs 나스닥 50년 분석 -->
+          <div class="card highlight-blue">
+            <div class="card-top">
+              <span class="tag blue">📈 매크로 / 금리·증시 차트</span>
+              <h3>미국채 10년물 vs 나스닥 50년 분석</h3>
+              <p>1976~2026년 반세기 미국 10년물 국채 금리와 나스닥 지수의 이중축 인터랙티브 시계열 차트, 밝기 모드 전환 및 5대 국면별 상관관계 심층 분석</p>
+            </div>
+            <a href="nasdaq_treasury_50y_chart.html" class="btn">차트 열람하기 →</a>
+          </div>
+
+          <!-- 2. 미 국채금리 상승 3대 요인 인포그래픽 -->
+          <div class="card highlight-blue">
+            <div class="card-top">
+              <span class="tag blue">🏛️ 매크로 / 국채금리 인포그래픽</span>
+              <h3>미 국채금리 상승 3대 핵심 요인</h3>
+              <p>재정 신뢰 저하 및 공급 과잉, AI 회사채 등 대체 투자처 자금 흡수, 인플레·통화정책 불확실성 3대 드라이버 심층 인포그래픽</p>
+            </div>
+            <a href="Top_3_Drivers_of_Rising_US_Treasury_Yields.png" target="_blank" class="btn">인포그래픽 열람하기 →</a>
+          </div>
+
+          <!-- 3. 달러/엔 (USD/JPY) 차트 -->
+          <div class="card fx-card">
+            <div class="card-top">
+              <span class="tag amber">💱 외환 / 환율 차트</span>
+              <h3>달러/엔 (USD/JPY) 차트</h3>
+              <p>달러/엔화 실시간 환율 추이 및 주요 기술적 지표/분석 차트 열람</p>
+            </div>
+            <a href="usd_jpy_chart.html" class="btn fx">차트 열람하기 →</a>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
   </div>
 
+  <!-- 푸터 -->
   <footer>
-    <p>© 2026 my_web_page. Hosted on GitHub Pages.</p>
+    <p>© 2026 Research & Analysis Archive. Hosted on GitHub Pages.</p>
   </footer>
 
+  <script>
+    // 좌측 탭 수동 클릭 활성화
+    function setActive(element) {
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+      });
+      element.classList.add('active');
+    }
+
+    // 스크롤 시 현재 보고 있는 섹션의 좌측 탭 자동 하이라이트 (IntersectionObserver)
+    document.addEventListener('DOMContentLoaded', () => {
+      const sections = document.querySelectorAll('.section-block');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const currentId = entry.target.getAttribute('id');
+            navLinks.forEach(link => {
+              if (link.getAttribute('href') === '#' + currentId) {
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+              }
+            });
+          }
+        });
+      }, {
+        rootMargin: '-20% 0px -70% 0px'
+      });
+
+      sections.forEach(section => observer.observe(section));
+    });
+  </script>
 </body>
 </html>
