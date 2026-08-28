@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>케이씨텍(281820) 2026년 반기 실적 및 재무 심층 분석 리포트</title>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1e40af;
+      --primary-light: #eff6ff;
+      --accent-green: #059669;
+      --accent-green-bg: #ecfdf5;
+      --accent-red: #dc2626;
+      --accent-red-bg: #fef2f2;
+      --accent-amber: #d97706;
+      --accent-amber-bg: #fffbeb;
+      --accent-purple: #7c3aed;
+      --accent-purple-bg: #f5f3ff;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-subtle: #f1f5f9;
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --text-main: #0f172a;
+      --text-sub: #475569;
+      --text-muted: #64748b;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 28px 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    /* 상단 네비게이션 */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-btn:hover {
+      background: var(--surface-subtle);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .nav-btn.secondary {
+      color: var(--text-sub);
+    }
+
+    .report-date-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #64748b;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* 헤더 카드 */
+    .header-card {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: #ffffff;
+      border-radius: var(--radius-lg);
+      padding: 36px 40px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header-card::after {
+      content: "";
+      position: absolute;
+      top: -40%;
+      right: -10%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.25) 0%, rgba(37, 99, 235, 0) 70%);
+      pointer-events: none;
+    }
+
+    .header-tags {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .tag-pill {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(4px);
+    }
+
+    .tag-pill.blue { background: rgba(59, 130, 246, 0.3); color: #93c5fd; border: 1px solid rgba(147, 197, 253, 0.4); }
+    .tag-pill.green { background: rgba(16, 185, 129, 0.3); color: #a7f3d0; border: 1px solid rgba(167, 243, 208, 0.4); }
+    .tag-pill.purple { background: rgba(168, 85, 247, 0.3); color: #e9d5ff; border: 1px solid rgba(233, 213, 255, 0.4); }
+
+    .header-title {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .header-desc {
+      color: #94a3b8;
+      font-size: 15px;
+      line-height: 1.6;
+      max-width: 900px;
+    }
+
+    /* 4대 핵심 하이라이트 메트릭 그리드 */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .metric-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .metric-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .metric-card.green { border-left: 4px solid var(--accent-green); }
+    .metric-card.blue { border-left: 4px solid var(--primary); }
+    .metric-card.purple { border-left: 4px solid var(--accent-purple); }
+    .metric-card.amber { border-left: 4px solid var(--accent-amber); }
+
+    .metric-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .metric-label {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .metric-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .metric-icon.green { background: var(--accent-green-bg); color: var(--accent-green); }
+    .metric-icon.blue { background: var(--primary-light); color: var(--primary); }
+    .metric-icon.purple { background: var(--accent-purple-bg); color: var(--accent-purple); }
+    .metric-icon.amber { background: var(--accent-amber-bg); color: var(--accent-amber); }
+
+    .metric-value {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+      font-family: 'JetBrains Mono', 'Pretendard', sans-serif;
+    }
+
+    .metric-sub {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .metric-badge-up {
+      color: var(--accent-green);
+      font-weight: 700;
+    }
+
+    /* 본문 섹션 레이아웃 */
+    .section-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .section-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-title-wrap h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.3px;
+    }
+
+    .section-badge-tag {
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: var(--surface-subtle);
+      color: var(--text-sub);
+    }
+
+    /* 테이블 스타일 */
+    .table-container {
+      overflow-x: auto;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f8fafc;
+      color: var(--text-sub);
+      font-weight: 700;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-main);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background-color: #f8fafc;
+    }
+
+    .td-num {
+      text-align: right;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 500;
+    }
+
+    .td-bold {
+      font-weight: 700;
+    }
+
+    .highlight-cell {
+      background-color: var(--accent-green-bg);
+      color: var(--accent-green);
+      font-weight: 700;
+    }
+
+    /* 그리드 2열 분석 박스 */
+    .two-col-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 860px) {
+      .two-col-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .chart-container {
+      position: relative;
+      height: 280px;
+      width: 100%;
+    }
+
+    /* 🔍 [전문가 심층 분석 영역] 글자 크기 대폭 확대 스타일 */
+    .insight-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-md);
+      padding: 24px 28px;
+      margin-top: 18px;
+    }
+
+    .insight-card.blue {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+    }
+
+    .insight-card.green {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+    }
+
+    .insight-card.amber {
+      background: #fffbeb;
+      border-color: #fde68a;
+    }
+
+    .insight-card.purple {
+      background: #faf5ff;
+      border-color: #e9d5ff;
+    }
+
+    .insight-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 17.5px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: var(--text-main);
+      letter-spacing: -0.3px;
+    }
+
+    .insight-list {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    .insight-list li {
+      position: relative;
+      padding-left: 24px;
+      margin-bottom: 12px;
+      font-size: 15.5px; /* 확대된 글자 크기 */
+      color: #1e293b;
+      line-height: 1.75; /* 여유로운 줄간격 */
+      letter-spacing: -0.2px;
+    }
+
+    .insight-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    .insight-list li::before {
+      content: "■";
+      position: absolute;
+      left: 6px;
+      color: var(--primary);
+      font-size: 10px;
+      top: 2px;
+    }
+
+    .insight-card.green .insight-list li::before {
+      color: var(--accent-green);
+    }
+
+    .insight-card.purple .insight-list li::before {
+      color: var(--accent-purple);
+    }
+
+    .insight-card.amber .insight-list li::before {
+      color: var(--accent-amber);
+    }
+
+    .insight-list li strong {
+      color: #0f172a;
+      font-weight: 700;
+    }
+
+    /* 대형 진단 박스 */
+    .expert-box-lg {
+      border-radius: var(--radius-md);
+      padding: 26px 30px;
+    }
+
+    .expert-box-lg h3 {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* 푸터 */
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      padding: 32px 0 16px 0;
+      border-top: 1px solid var(--border);
+      margin-top: 32px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- 상단 네비게이션 -->
+    <div class="top-nav">
+      <div class="nav-buttons">
+        <a href="index.html" class="nav-btn">
+          <i class="fa-solid fa-arrow-left"></i> 대시보드 홈
+        </a>
+        <a href="kctec.html" class="nav-btn secondary">
+          <i class="fa-solid fa-file-lines"></i> 기업 펀더멘털 분석 리포트
+        </a>
+      </div>
+      <div class="report-date-badge">
+        <i class="fa-regular fa-clock"></i> 2026-08-28 DART 반기보고서 분석 기준
+      </div>
+    </div>
+
+    <!-- 헤더 카드 -->
+    <div class="header-card">
+      <div class="header-tags">
+        <span class="tag-pill blue">코스피 281820</span>
+        <span class="tag-pill green">반도체 CMP & 세정 장비</span>
+        <span class="tag-pill purple">2026 반기 실적 어닝 서프라이즈</span>
+      </div>
+      <h1 class="header-title">케이씨텍 2026년 반기 실적 및 재무 건전성 심층 진단</h1>
+      <p class="header-desc">
+        DART 전자공시(2026.06 반기보고서) 데이터를 기반으로 매출채권 및 계약자산 건전성, 반도체 부문 중심 재고자산 셋업, 
+        GPM 39.3% 및 OPM 21.7%의 강력한 수익성 레버리지, S사·H사 수주계약, 그리고 2,676억 원의 무차입 순현금 버퍼를 정밀 분석합니다.
+      </p>
+    </div>
+
+    <!-- 4대 핵심 하이라이트 메트릭 -->
+    <div class="metrics-grid">
+      <div class="metric-card blue">
+        <div class="metric-header">
+          <span class="metric-label">반기 누적 매출액</span>
+          <div class="metric-icon blue"><i class="fa-solid fa-chart-line"></i></div>
+        </div>
+        <div class="metric-value">2,688억</div>
+        <div class="metric-sub">
+          <span class="metric-badge-up"><i class="fa-solid fa-arrow-trend-up"></i> +53.43% YoY</span> (전년동기 1,752억)
+        </div>
+      </div>
+
+      <div class="metric-card green">
+        <div class="metric-header">
+          <span class="metric-label">반기 영업이익 / OPM</span>
+          <div class="metric-icon green"><i class="fa-solid fa-sack-dollar"></i></div>
+        </div>
+        <div class="metric-value">583.3억 <span style="font-size: 18px; color: var(--accent-green);">(21.70%)</span></div>
+        <div class="metric-sub">
+          <span class="metric-badge-up"><i class="fa-solid fa-arrow-trend-up"></i> +149.36% YoY</span> (OPM +8.35%p 확장)
+        </div>
+      </div>
+
+      <div class="metric-card purple">
+        <div class="metric-header">
+          <span class="metric-label">매출채권 회수기간 (DSO)</span>
+          <div class="metric-icon purple"><i class="fa-solid fa-bolt"></i></div>
+        </div>
+        <div class="metric-value">18.6일</div>
+        <div class="metric-sub">
+          <span>6개월 이하 우량채권 비중 <strong>88.4%</strong></span>
+        </div>
+      </div>
+
+      <div class="metric-card amber">
+        <div class="metric-header">
+          <span class="metric-label">순현금 (Net Cash) / 부채비율</span>
+          <div class="metric-icon amber"><i class="fa-solid fa-vault"></i></div>
+        </div>
+        <div class="metric-value">2,676억 <span style="font-size: 18px; color: var(--accent-amber);">(14.1%)</span></div>
+        <div class="metric-sub">
+          <span>금융차입금 <strong>0원 (완전 무차입)</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1. 손익 및 수익성 (GPM / OPM) 분석 -->
+    <div class="section-box">
+      <div class="section-title-wrap">
+        <h2>1. 손익계산서 및 수익성 지표 (GPM & OPM)</h2>
+        <span class="section-badge-tag">연결 기준</span>
+      </div>
+
+      <div class="two-col-grid">
+        <!-- 차트 영역 -->
+        <div>
+          <div class="chart-container">
+            <canvas id="profitChart"></canvas>
+          </div>
+        </div>
+
+        <!-- 테이블 영역 -->
+        <div class="table-container" style="margin-bottom: 0;">
+          <table>
+            <thead>
+              <tr>
+                <th>구분 (단위: 억 원)</th>
+                <th class="td-num">2025 반기</th>
+                <th class="td-num">2026 반기</th>
+                <th class="td-num">증감률 (YoY)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-bold">매출액</td>
+                <td class="td-num">1,751.9</td>
+                <td class="td-num td-bold">2,688.0</td>
+                <td class="td-num highlight-cell">+53.43%</td>
+              </tr>
+              <tr>
+                <td>• 반도체 부문 (장비/소재)</td>
+                <td class="td-num">1,550.4</td>
+                <td class="td-num">2,520.3</td>
+                <td class="td-num">+62.56% (비중 93.8%)</td>
+              </tr>
+              <tr>
+                <td>• Display 부문</td>
+                <td class="td-num">201.4</td>
+                <td class="td-num">167.6</td>
+                <td class="td-num">-16.80% (비중 6.2%)</td>
+              </tr>
+              <tr>
+                <td>매출원가</td>
+                <td class="td-num">1,110.8</td>
+                <td class="td-num">1,631.3</td>
+                <td class="td-num">+46.86%</td>
+              </tr>
+              <tr>
+                <td class="td-bold">매출원가율</td>
+                <td class="td-num">63.41%</td>
+                <td class="td-num td-bold">60.69%</td>
+                <td class="td-num highlight-cell">-2.72%p 개선</td>
+              </tr>
+              <tr>
+                <td class="td-bold">매출총이익 (GPM)</td>
+                <td class="td-num">641.1 (36.59%)</td>
+                <td class="td-num td-bold">1,056.7 (39.31%)</td>
+                <td class="td-num highlight-cell">+2.72%p</td>
+              </tr>
+              <tr>
+                <td>판매비와관리비 (판관비율)</td>
+                <td class="td-num">407.2 (23.24%)</td>
+                <td class="td-num">473.4 (17.61%)</td>
+                <td class="td-num highlight-cell">-5.63%p 하락</td>
+              </tr>
+              <tr>
+                <td class="td-bold">영업이익 (OPM)</td>
+                <td class="td-num">233.9 (13.35%)</td>
+                <td class="td-num td-bold" style="color: var(--accent-green);">583.3 (21.70%)</td>
+                <td class="td-num highlight-cell">+149.36% (2.5배)</td>
+              </tr>
+              <tr>
+                <td>당기순이익 (NPM)</td>
+                <td class="td-num">188.4 (10.75%)</td>
+                <td class="td-num td-bold">527.2 (19.61%)</td>
+                <td class="td-num highlight-cell">+179.90%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="insight-card green">
+        <div class="insight-header">
+          <i class="fa-solid fa-lightbulb" style="color: var(--accent-green);"></i> 💡 재무전문가 심층 분석: 고마진 반도체 장비 믹스 및 강력한 영업 레버리지
+        </div>
+        <ul class="insight-list">
+          <li><strong>고부가가치 반도체 CMP 장비 비중 확대에 따른 GPM 개선</strong>: 매출 비중의 93.8%를 차지하는 반도체 부문 매출이 전년 동기 대비 62.6% 급증하면서 원가율이 60.69%로 2.72%p 낮아져 GPM이 39.31%(2분기 단일 41.33%)로 상승했습니다.</li>
+          <li><strong>판관비 고정비 분산 및 강력한 영업 레버리지</strong>: 매출액이 53.4% 증가하는 동안 판관비 증가는 16.3%로 엄격히 억제되어 판관비율이 23.24%에서 17.61%로 -5.63%p 급감했습니다. 이에 따라 영업이익률(OPM)이 13.35%에서 21.70%로 껑충 뛰며 본업의 이익 창출력이 대폭 향상되었습니다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 2. 매출채권 및 계약자산 건전성 분석 -->
+    <div class="section-box">
+      <div class="section-title-wrap">
+        <h2>2. 매출채권(Trade Receivables) 및 계약자산 건전성 분석</h2>
+        <span class="section-badge-tag">대손위험 점검</span>
+      </div>
+
+      <div class="two-col-grid">
+        <div class="table-container" style="margin-bottom: 0;">
+          <table>
+            <thead>
+              <tr>
+                <th>경과 기간</th>
+                <th class="td-num">채권 잔액 (천원)</th>
+                <th class="td-num">구성 비율</th>
+                <th>건전성 평가</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-bold">6개월 이하</td>
+                <td class="td-num td-bold">25,467,673</td>
+                <td class="td-num highlight-cell">88.4%</td>
+                <td><span class="tag-pill green">초우량 정상채권</span></td>
+              </tr>
+              <tr>
+                <td>6개월 초과 ~ 1년 이하</td>
+                <td class="td-num">189,484</td>
+                <td class="td-num">0.7%</td>
+                <td>정상 회수 진행 중</td>
+              </tr>
+              <tr>
+                <td>1년 초과</td>
+                <td class="td-num">3,142,570</td>
+                <td class="td-num">10.9%</td>
+                <td>충당금 관리 대상</td>
+              </tr>
+              <tr style="background: #f8fafc;">
+                <td class="td-bold">총 매출채권</td>
+                <td class="td-num td-bold">28,799,727</td>
+                <td class="td-num td-bold">100.0%</td>
+                <td>대손충당금 14.3억 (4.96%)</td>
+              </tr>
+              <tr style="background: #eff6ff;">
+                <td class="td-bold">유동 계약자산(미청구공사)</td>
+                <td class="td-num td-bold">79,164,373</td>
+                <td class="td-num">-</td>
+                <td>전기 470.1억 대비 +68.4%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div>
+          <div class="chart-container">
+            <canvas id="receivableChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="insight-card blue">
+        <div class="insight-header">
+          <i class="fa-solid fa-shield-halved" style="color: var(--primary);"></i> 💡 재무전문가 심층 분석: 업계 최상위의 초단기 매출채권 회수 통제력
+        </div>
+        <ul class="insight-list">
+          <li><strong>DSO(매출채권 회수기간) 약 18.6일 (0.6개월)</strong>: 연환산 매출 5,376억 원 대비 순매출채권 잔액이 273.7억 원에 불과하여, 납품 후 평균 19일 이내에 전액 현금으로 회수되는 업계 최상위권의 현금 회수 속도를 기록했습니다.</li>
+          <li><strong>계약자산(791.6억 원) 증가의 성격</strong>: 반도체 장비 제조 진행률에 따라 인식된 유동 계약자산이 470억 원에서 792억 원으로 증가한 것은 대형 반도체 고객사(S사, H사)의 신규 라인 셋업 공정이 활발히 진행 중임을 반영합니다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 3. 재고자산 구성 및 회전율 분석 -->
+    <div class="section-box">
+      <div class="section-title-wrap">
+        <h2>3. 재고자산(Inventories) 세부 구성 및 생산 라인 셋업 진단</h2>
+        <span class="section-badge-tag">반도체 재고 97.1%</span>
+      </div>
+
+      <div class="two-col-grid">
+        <div class="table-container" style="margin-bottom: 0;">
+          <table>
+            <thead>
+              <tr>
+                <th>품목별 구분</th>
+                <th class="td-num">2025년 말 (전기)</th>
+                <th class="td-num">2026년 반기말 (당기)</th>
+                <th class="td-num">증감률</th>
+                <th class="td-num">당기 비중</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-bold">원재료</td>
+                <td class="td-num">333.97억</td>
+                <td class="td-num td-bold">464.92억</td>
+                <td class="td-num highlight-cell">+39.21%</td>
+                <td class="td-num">47.94%</td>
+              </tr>
+              <tr>
+                <td class="td-bold" style="color: var(--accent-purple);">재공품 (제조 공정 중)</td>
+                <td class="td-num">427.56억</td>
+                <td class="td-num td-bold" style="color: var(--accent-purple);">411.27억</td>
+                <td class="td-num">-3.81%</td>
+                <td class="td-num">42.41%</td>
+              </tr>
+              <tr>
+                <td>제품 (완성 장비)</td>
+                <td class="td-num">63.30억</td>
+                <td class="td-num">70.64억</td>
+                <td class="td-num">+11.60%</td>
+                <td class="td-num">7.28%</td>
+              </tr>
+              <tr>
+                <td>미착품 / 상품</td>
+                <td class="td-num">13.11억</td>
+                <td class="td-num">22.91억</td>
+                <td class="td-num">+74.76%</td>
+                <td class="td-num">2.37%</td>
+              </tr>
+              <tr style="background: #f8fafc;">
+                <td class="td-bold">총 재고자산 (장부가액)</td>
+                <td class="td-num td-bold">837.94억</td>
+                <td class="td-num td-bold">969.74억</td>
+                <td class="td-num highlight-cell">+15.73%</td>
+                <td class="td-num td-bold">100.00%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div>
+          <div class="chart-container">
+            <canvas id="inventoryChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="insight-card purple">
+        <div class="insight-header">
+          <i class="fa-solid fa-gears" style="color: var(--accent-purple);"></i> 💡 재무전문가 심층 분석: 반도체 장비 재고 집중 및 원재료 선제 확보
+        </div>
+        <ul class="insight-list">
+          <li><strong>반도체 부문 재고 집중도 97.1% (941.4억 원)</strong>: 총 재고자산의 97% 이상이 반도체 CMP 및 세정 장비용 부품/모듈로 구성되어 있습니다.</li>
+          <li><strong>원재료 선제 확보 (+39.2%)</strong>: 하반기 및 내년 납품 예정인 고객사 전치 CMP 장비 수요에 대비하여 핵심 구매품 및 가공품 원재료를 334억 원에서 465억 원으로 선제 확충했습니다.</li>
+          <li><strong>재고평가충당금 59.5억 원(설정률 5.78%)</strong>: 보수적 회계처리를 통해 반기 중 9.61억 원의 평가손실을 매출원가에 정상 반영하여 자산 건전성을 확보했습니다. (DSI는 약 108.6일 수준으로 장비 셋업 주기에 부합)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 4. 수주 구조 및 생산 실적 분석 -->
+    <div class="section-box">
+      <div class="section-title-wrap">
+        <h2>4. 수주 구조 및 생산 실적 분석</h2>
+        <span class="section-badge-tag">삼성전자 & SK하이닉스</span>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>발주처</th>
+              <th>대상 품목</th>
+              <th>계약일 / 납기</th>
+              <th class="td-num">수주총액 (원)</th>
+              <th class="td-num">진행률</th>
+              <th class="td-num">계약자산 잔액 (원)</th>
+              <th class="td-num">매출채권 (원)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="td-bold">S사 (삼성전자)</td>
+              <td>반도체 제조장비 (CMP 등)</td>
+              <td>2026.01 ~ 2026.07</td>
+              <td class="td-num">22,680,000,000</td>
+              <td class="td-num highlight-cell">97%</td>
+              <td class="td-num">5,854,809,000</td>
+              <td class="td-num">-</td>
+            </tr>
+            <tr>
+              <td class="td-bold">H사 (SK하이닉스)</td>
+              <td>반도체 제조장비 (CMP 등)</td>
+              <td>2026.03 ~ 2026.10</td>
+              <td class="td-num">69,843,180,000</td>
+              <td class="td-num highlight-cell">81%</td>
+              <td class="td-num">26,837,490,000</td>
+              <td class="td-num">7,443,425,000</td>
+            </tr>
+            <tr style="background: #f8fafc;">
+              <td class="td-bold">합계 (주요공시)</td>
+              <td>반도체 제조장비</td>
+              <td>-</td>
+              <td class="td-num td-bold">92,523,180,000</td>
+              <td class="td-num">-</td>
+              <td class="td-num td-bold">32,692,299,000</td>
+              <td class="td-num td-bold">7,443,425,000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="insight-card amber">
+        <div class="insight-header">
+          <i class="fa-solid fa-clipboard-check" style="color: var(--accent-amber);"></i> 💡 수주 및 생산 공급 특징
+        </div>
+        <ul class="insight-list">
+          <li><strong>반기 신규 수주계약 1,645.81억 원</strong>: 기초 375.32억 원 + 신규 수주 1,645.81억 원 - 수익인식 1,676.13억 원 = 기말 공사계약잔액 345.01억 원으로 순조로운 수주-인식 사이클을 유지 중입니다.</li>
+          <li><strong>당반기 생산 공급 실적 2,531.05억 원</strong>: 고객사 발주시마다 제작 공급하는 주문생산 방식으로 제품이 적기에 납품되고 있습니다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 5. 재무 건전성 및 재무전문가 종합 평가 -->
+    <div class="section-box" style="margin-bottom: 0;">
+      <div class="section-title-wrap">
+        <h2>5. 재무 건전성 및 재무전문가 종합 평가</h2>
+        <span class="section-badge-tag">무차입 순현금 버퍼</span>
+      </div>
+
+      <div class="table-container" style="margin-bottom: 24px;">
+        <table>
+          <thead>
+            <tr>
+              <th>재무 안정성 지표</th>
+              <th class="td-num">2025년 말 (전기)</th>
+              <th class="td-num">2026년 반기말 (당기)</th>
+              <th>재무전문가 평가</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="td-bold">자산총계 / 자본총계</td>
+              <td class="td-num">6,004.8억 / 5,302.4억</td>
+              <td class="td-num td-bold">6,553.9억 / 5,743.9억</td>
+              <td>+8.33% 자기자본 축적 (우량)</td>
+            </tr>
+            <tr>
+              <td class="td-bold">부채비율</td>
+              <td class="td-num">13.25%</td>
+              <td class="td-num td-bold" style="color: var(--accent-green);">14.10%</td>
+              <td><span class="tag-pill green">극도의 초저부채 구조</span></td>
+            </tr>
+            <tr>
+              <td class="td-bold">현금성 금융자산 (현금+예치금)</td>
+              <td class="td-num">3,022.2억</td>
+              <td class="td-num td-bold">2,711.6억</td>
+              <td>총자산의 41.4%를 현금성 자산으로 보유</td>
+            </tr>
+            <tr>
+              <td class="td-bold">금융차입금 (단기/장기)</td>
+              <td class="td-num">0 원</td>
+              <td class="td-num td-bold">0 원 (완전 무차입)</td>
+              <td>금융이자 비용 제로 (리스부채 36억만 존재)</td>
+            </tr>
+            <tr>
+              <td class="td-bold">순현금 (Net Cash)</td>
+              <td class="td-num">3,002.0억</td>
+              <td class="td-num td-bold" style="color: var(--accent-green);">2,675.6억</td>
+              <td>시가총액의 상당 부분을 현금으로 방어</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="two-col-grid">
+        <div class="expert-box-lg" style="background: #f0fdf4; border: 1px solid #bbf7d0;">
+          <h3 style="color: var(--accent-green);">
+            <i class="fa-solid fa-circle-check"></i> 🌟 핵심 강점 (Key Strengths)
+          </h3>
+          <ul class="insight-list">
+            <li><strong>수익성 퀀텀점프 (OPM 21.7%)</strong>: 반도체 CMP 및 세정 장비의 국산화 지위 공고화와 레버리지 효과로 20%가 넘는 높은 영업이익률을 달성했습니다.</li>
+            <li><strong>시가총액의 상당 부분을 차지하는 순현금(2,676억 원)</strong>: 금융부채가 전무하며, 안전한 유동금융기관예치금(2,317억 원) 등을 통해 연간 100억 원 수준의 안정적 이자수익(반기 금융수익 48억 원)을 창출하고 있습니다.</li>
+            <li><strong>타이트한 운전자본 회전</strong>: 매출채권 회수기간(DSO 18.6일)과 재고회전기간(DSI 108.6일)을 감안한 현금전환주기(CCC)가 매우 안정적으로 유지되고 있습니다.</li>
+          </ul>
+        </div>
+
+        <div class="expert-box-lg" style="background: #fffbeb; border: 1px solid #fde68a;">
+          <h3 style="color: var(--accent-amber);">
+            <i class="fa-solid fa-triangle-exclamation"></i> ⚠️ 모니터링 체크포인트 (Risks)
+          </h3>
+          <ul class="insight-list">
+            <li><strong>국내 상위 2대 IDM 고객사 의존도 (국내 비중 88.8%)</strong>: 삼성전자 및 SK하이닉스의 HBM·DRAM 팹 증설 및 전환 스케줄에 실적 변동성이 연동되므로 전방 투자 집행 일정을 지속 점검해야 합니다.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer>
+      <p>© 2026 케이씨텍 반기 재무분석 아카이브 • Data Source: DART 전자공시시스템(2026.08)</p>
+    </footer>
+
+  </div>
+
+  <!-- Chart.js 스크립트 -->
+  <script>
+    // 1. 손익 및 OPM 차트
+    const ctxProfit = document.getElementById('profitChart').getContext('2d');
+    new Chart(ctxProfit, {
+      type: 'bar',
+      data: {
+        labels: ['2025 반기', '2026 1Q', '2026 2Q', '2026 반기 누적'],
+        datasets: [
+          {
+            type: 'bar',
+            label: '매출액 (억 원)',
+            data: [1751.9, 1561.1, 1126.9, 2688.0],
+            backgroundColor: '#bfdbfe',
+            borderRadius: 6,
+            yAxisID: 'y'
+          },
+          {
+            type: 'bar',
+            label: '영업이익 (억 원)',
+            data: [233.9, 348.1, 235.2, 583.3],
+            backgroundColor: '#10b981',
+            borderRadius: 6,
+            yAxisID: 'y'
+          },
+          {
+            type: 'line',
+            label: '영업이익률 OPM (%)',
+            data: [13.4, 22.3, 20.9, 21.7],
+            borderColor: '#2563eb',
+            backgroundColor: '#2563eb',
+            borderWidth: 3,
+            pointRadius: 5,
+            yAxisID: 'y1'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'top', labels: { font: { family: 'Pretendard', size: 11 } } }
+        },
+        scales: {
+          y: {
+            type: 'linear',
+            position: 'left',
+            grid: { color: '#f1f5f9' },
+            ticks: { font: { family: 'JetBrains Mono', size: 10 } }
+          },
+          y1: {
+            type: 'linear',
+            position: 'right',
+            grid: { drawOnChartArea: false },
+            ticks: {
+              callback: value => value + '%',
+              font: { family: 'JetBrains Mono', size: 10 }
+            }
+          },
+          x: {
+            ticks: { font: { family: 'Pretendard', size: 11 } }
+          }
+        }
+      }
+    });
+
+    // 2. 매출채권 연령 차트
+    const ctxRec = document.getElementById('receivableChart').getContext('2d');
+    new Chart(ctxRec, {
+      type: 'doughnut',
+      data: {
+        labels: ['6개월 이하 (88.4%)', '6월~1년 (0.7%)', '1년 초과 (10.9%)'],
+        datasets: [{
+          data: [254.7, 1.9, 31.4],
+          backgroundColor: ['#10b981', '#3b82f6', '#f59e0b'],
+          borderWidth: 2,
+          borderColor: '#ffffff'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'right', labels: { font: { family: 'Pretendard', size: 11 } } },
+          tooltip: {
+            callbacks: {
+              label: context => ` ${context.label}: ${context.raw}억 원`
+            }
+          }
+        },
+        cutout: '65%'
+      }
+    });
+
+    // 3. 재고자산 구성 차트
+    const ctxInv = document.getElementById('inventoryChart').getContext('2d');
+    new Chart(ctxInv, {
+      type: 'doughnut',
+      data: {
+        labels: ['원재료 (47.9%)', '재공품 (42.4%)', '제품 (7.3%)', '미착품/상품 (2.4%)'],
+        datasets: [{
+          data: [464.9, 411.3, 70.6, 22.9],
+          backgroundColor: ['#3b82f6', '#8b5cf6', '#10b981', '#94a3b8'],
+          borderWidth: 2,
+          borderColor: '#ffffff'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'right', labels: { font: { family: 'Pretendard', size: 11 } } },
+          tooltip: {
+            callbacks: {
+              label: context => ` ${context.label}: ${context.raw}억 원`
+            }
+          }
+        },
+        cutout: '65%'
+      }
+    });
+  </script>
+</body>
+</html>
