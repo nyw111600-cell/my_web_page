@@ -315,6 +315,20 @@
     }
 
     /* 개별 카드 */
+    
+    .card-footer-date {
+      margin-top: 10px;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      text-align: right;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 4px;
+      opacity: 0.85;
+      font-family: inherit;
+    }
+
     .card {
       background: var(--card-bg);
       border: 1px solid var(--border);
@@ -676,12 +690,12 @@
             <div class="card-top">
               <div class="card-header-tags">
                 <span class="tag blue">🌤️ 실시간 기상 정보</span>
-                <span class="badge-date">🕒 2026-08-19 20:08</span>
               </div>
               <h3>전국 일기예보</h3>
               <p>실시간 전국 주요 도시 기상 현황, 강수 확률 및 주간 날씨 예보 상세 조회</p>
             </div>
             <a href="korea_weather.html" class="btn weather">일기예보 열람하기 →</a>
+            <div class="card-footer-date">🕒 2026-08-19 20:08</div>
           </div>
 
           <!-- 2. 엑셀 데이터 취합기 -->
@@ -689,12 +703,12 @@
             <div class="card-top">
               <div class="card-header-tags">
                 <span class="tag tool">📊 업무 자동화 도구</span>
-                <span class="badge-date">🕒 2026-08-20 13:49</span>
               </div>
               <h3>엑셀 데이터 취합기</h3>
               <p>여러 엑셀/CSV 파일 세로 병합(Append), 셀 위치별 누적 합산 및 키 기준 데이터 자동 집계 도구</p>
             </div>
             <a href="excel_merger.html" class="btn tool">도구 실행하기 →</a>
+            <div class="card-footer-date">🕒 2026-08-20 13:49</div>
           </div>
 
           <!-- 3. 버블보블 게임 -->
@@ -702,12 +716,12 @@
             <div class="card-top">
               <div class="card-header-tags">
                 <span class="tag purple">🎮 레트로 아케이드 게임</span>
-                <span class="badge-date">🕒 2026-08-20 15:45</span>
               </div>
               <h3>🦖 버블보블 (Bubble Bobble)</h3>
               <p>고전 명작 버블보블 웹 에디션! 5개 스테이지, 8비트 오리지널 사운드 및 모바일 터치 지원</p>
             </div>
             <a href="bubble-bobble/index.html" class="btn game">게임 시작하기 →</a>
+            <div class="card-footer-date">🕒 2026-08-20 15:45</div>
           </div>
 
         </div>
@@ -729,12 +743,12 @@
             <div class="card-top">
               <div class="card-header-tags">
                 <span class="tag blue">⚡ 미국 에너지 & 전력 인프라 (최신)</span>
-                <span class="badge-date">🕒 2026-08-27 15:50</span>
               </div>
               <h3>미국 전력망 현황 종합 분석</h3>
               <p>AI 데이터센터 전력 수요 폭증, 초고압 변압기(LPT) 160주 공급망 대란, 2,600GW 접속 대기열, 4대 구조적 병목 및 중전기기·유틸리티 밸류체인 심층 리포트</p>
             </div>
             <a href="us_power_grid_analysis.html" class="btn">보고서 열람하기 →</a>
+            <div class="card-footer-date">🕒 2026-08-27 15:50</div>
           </div>
 
         </div>
@@ -755,12 +769,12 @@
             <div class="card-top">
               <div class="card-header-tags">
                 <span class="tag blue">반도체 세정·코팅·부품 (최신)</span>
-                <span class="badge-date">🕒 2026-08-28 21:18</span>
               </div>
               <h3>코미코 (KoMiCo) 2026 반기 분석</h3>
               <p>2026년 상반기 연결 매출 3,330억 원(역대 최대), 2분기 OPM 15.4% 턴어라운드 및 미코세라믹스(부품 50.8%) 중심 고성장·가동률 심층 진단</p>
             </div>
             <a href="komico_2026_1h_analysis.html" class="btn">보고서 열람하기 →</a>
+            <div class="card-footer-date">🕒 2026-08-28 21:18</div>
           </div>
 
 
@@ -770,12 +784,12 @@
             <div class="card-top">
               <div class="card-header-tags">
                 <span class="tag green">🟢 글로벌 AI 반도체 (최신)</span>
-                <span class="badge-date">🕒 2026-08-27 13:11</span>
               </div>
               <h3>엔비디아 (NVIDIA) Q2 실적 분석</h3>
               <p>엔비디아 2027 회계연도 2분기 어닝 서프라이즈 실적 요약, 3분기 1,000억 달러 돌파 가이던스 및 젠슨 황 CEO 핵심 코멘트</p>
             </div>
             <a href="nvidia_q2_2027.html" class="btn nvidia">보고서 열람하기 →</a>
+            <div class="card-footer-date">🕒 2026-08-27 13:11</div>
           </div>
 
           <!-- 1. 마벨 테크놀러지 -->
@@ -783,12 +797,12 @@
             <div class="card-top">
               <div class="card-header-tags">
                 <span class="tag blue">🚀 글로벌 AI 팹리스 반도체</span>
-                <span class="badge-date">🕒 2026-08-25 13:43</span>
               </div>
               <h3>마벨 테크놀러지 (Marvell)</h3>
               <p>빅테크 맞춤형 AI 가속기(Custom ASIC) 및 800G/1.6T 광학 DSP(Optical DSP) 팹리스 완제품 비즈니스 모델·매출 제품군 심층 분석</p>
             </div>
             <a href="marvell.html" class="btn">보고서 열람하기 →</a>
+            <div class="card-footer-date">🕒 2026-08-25 13:43</div>
           </div>
 
           <!-- 2. 티엘비 -->
@@ -796,12 +810,12 @@
             <div class="card-top">
               <div class="card-header-tags">
                 <span class="tag blue">메모리 모듈 & SSD PCB</span>
-                <span class="badge-date">🕒 2026-08-25 15:20</span>
               </div>
               <h3>티엘비 (TLB)</h3>
               <p>티엘비 2026 기업 분석, DDR5 고다층 기판 + eSSD 고용량화 + 차세대 CXL/SOCAMM 선점 및 사상 최대 실적 경신 리포트</p>
             </div>
             <a href="tlb.html" class="btn">보고서 열람하기 →</a>
+            <div class="card-footer-date">🕒 2026-08-25 15:20</div>
           </div>
 
           <!-- 3. 심텍 -->
@@ -809,12 +823,12 @@
             <div class="card-top">
               <div class="card-header-tags">
                 <span class="tag">반도체 패키지 기판</span>
-                <span class="badge-date">🕒 2026-08-21 20:22</span>
               </div>
               <h3>심텍 (SIMMTECH)</h3>
               <p>심텍 2026년 2분기(2Q26) 실적 vs 컨센서스 비교 분석, SoCAMM2 공급 본격화 및 MSAP 믹스 개선 리포트</p>
             </div>
             <a href="simmtech_2q26.html" class="btn">보고서 열람하기 →</a>
+            <div class="card-footer-date">🕒 2026-08-21 20:22</div>
           </div>
 
           <!-- 4. 피에스케이 -->
@@ -822,12 +836,12 @@
             <div class="card-top">
               <div class="card-header-tags">
                 <span class="tag">반도체 전공정 핵심 장비</span>
-                <span class="badge-date">🕒 2026-08-21 11:13</span>
               </div>
               <h3>피에스케이 (PSK)</h3>
               <p>피에스케이 2026 기업 분석, PR Strip 글로벌 1위, 베벨에처 양산 및 2Q26 어닝 서프라이즈 리포트</p>
             </div>
             <a href="psk.html" class="btn">보고서 열람하기 →</a>
+            <div class="card-footer-date">🕒 2026-08-21 11:13</div>
           </div>
 
           <!-- 5. 하나마이크론 -->
@@ -836,7 +850,6 @@
               <div class="card-header-tags">
                 <span class="tag blue">반도체 후공정 (OSAT)</span>
                 <span class="tag green" style="background-color: #ecfdf5; color: #059669;">2026 반기 실적 반영</span>
-                <span class="badge-date">🕒 2026-08-28 14:18</span>
               </div>
               <h3>하나마이크론 (Hana Micron)</h3>
               <p>하나마이크론 2026 기업 분석, SK하이닉스 턴키 후공정 수혜 및 밸류에이션 리포트</p>
@@ -847,6 +860,7 @@
             </div>
             <div style="display: flex; gap: 8px; margin-top: 12px;">
               <a href="hanamicron_2026_1h.html" class="btn" style="flex: 1.2; padding: 8px 6px; font-size: 12px; background-color: #2563eb;">2026 반기 실적 분석 →</a>
+            <div class="card-footer-date">🕒 2026-08-28 14:18</div>
               <a href="hanamicron.html" class="btn" style="flex: 1; padding: 8px 6px; font-size: 12px; background-color: #64748b;">기업 밸류에이션 →</a>
             </div>
           </div>
@@ -857,7 +871,6 @@
               <div class="card-header-tags">
                 <span class="tag blue">반도체 CMP & 세정 장비</span>
                 <span class="tag green" style="background-color: #ecfdf5; color: #059669;">2026 반기 실적 반영</span>
-                <span class="badge-date">🕒 2026-08-28 15:25</span>
               </div>
               <h3>케이씨텍 (KC Tech)</h3>
               <p>케이씨텍 기업 개요, 재무 지표 및 상세 펀더멘털 분석 보고서 열람</p>
@@ -868,6 +881,7 @@
             </div>
             <div style="display: flex; gap: 8px; margin-top: 12px;">
               <a href="kctec_2026_1h.html" class="btn" style="flex: 1.2; padding: 8px 6px; font-size: 12px; background-color: #2563eb;">2026 반기 실적 분석 →</a>
+            <div class="card-footer-date">🕒 2026-08-28 15:25</div>
               <a href="kctec.html" class="btn" style="flex: 1; padding: 8px 6px; font-size: 12px; background-color: #64748b;">기업 펀더멘털 →</a>
             </div>
           </div>
@@ -877,12 +891,12 @@
             <div class="card-top">
               <div class="card-header-tags">
                 <span class="tag">반도체 / 전자 소재</span>
-                <span class="badge-date">🕒 2026-08-18 13:18</span>
               </div>
               <h3>솔브레인 (SoulBrain)</h3>
               <p>솔브레인 반기 실적 및 주요 경영 지표 보고서 열람</p>
             </div>
             <a href="solbrain.html" class="btn">보고서 열람하기 →</a>
+            <div class="card-footer-date">🕒 2026-08-18 13:18</div>
           </div>
 
           <!-- 8. 브이엠 -->
@@ -890,12 +904,12 @@
             <div class="card-top">
               <div class="card-header-tags">
                 <span class="tag">반도체 식각 장비</span>
-                <span class="badge-date">🕒 2026-08-19 11:30</span>
               </div>
               <h3>브이엠 (VM)</h3>
               <p>브이엠 기업 개요 및 상세 재무·사업 분석 보고서 열람</p>
             </div>
             <a href="vm.html" class="btn">보고서 열람하기 →</a>
+            <div class="card-footer-date">🕒 2026-08-19 11:30</div>
           </div>
 
         </div>
@@ -917,12 +931,12 @@
             <div class="card-top">
               <div class="card-header-tags">
                 <span class="tag indigo" style="background-color: #e0e7ff; color: #4338ca;">💡 AI 주식 분석 가이드 (최신)</span>
-                <span class="badge-date">🕒 2026-08-22 20:52</span>
               </div>
               <h3>국내 & 해외 주식 6대 MCP 실전 가이드</h3>
               <p>국내 4대 MCP(수급·시황·DART 공시·적정주가) 및 해외 2대 MCP(Yahoo Finance·SEC EDGAR 공시) 완벽 실전 가이드, 복합 질문 프롬프트 및 비교표</p>
             </div>
             <a href="stock_mcp_guide.html" class="btn indigo">가이드 열람하기 →</a>
+            <div class="card-footer-date">🕒 2026-08-22 20:52</div>
           </div>
 
           <!-- 2. 멀티 에이전트 프롬프트 -->
@@ -930,12 +944,12 @@
             <div class="card-top">
               <div class="card-header-tags">
                 <span class="tag blue">⚡ 멀티 에이전트 프롬프트</span>
-                <span class="badge-date">🕒 2026-08-25 13:43</span>
               </div>
               <h3>멀티 에이전트 주식 투자 리서치 팀 프롬프트</h3>
               <p>글로벌 헤지펀드 투자 심의 위원회(매크로·공급망·펀더멘털·자금흐름·테일리스크·CIO) 6대 에이전트 실전 프롬프트 및 원클릭 복사</p>
             </div>
             <a href="multi_agent_stock_prompts.html" class="btn">프롬프트 모음 보기 →</a>
+            <div class="card-footer-date">🕒 2026-08-25 13:43</div>
           </div>
 
           <!-- 3. Skill & 작업 룰 지시내용 -->
@@ -943,12 +957,12 @@
             <div class="card-top">
               <div class="card-header-tags">
                 <span class="tag tool">📋 AI 에이전트 가이드</span>
-                <span class="badge-date">🕒 2026-08-21 16:14</span>
               </div>
               <h3>Skill & 작업 룰 지시내용</h3>
               <p>네이버 증권 재무 컨센서스 자동 수집 룰 및 5단계 기업 분석/밸류에이션 스킬 표준 지시문서</p>
             </div>
             <a href="skill_rules.html" class="btn tool">지시내용 열람하기 →</a>
+            <div class="card-footer-date">🕒 2026-08-21 16:14</div>
           </div>
 
           <!-- 4. 한·미 주식 & 공시 MCP 가이드 -->
@@ -956,12 +970,12 @@
             <div class="card-top">
               <div class="card-header-tags">
                 <span class="tag tool">🔍 실시간 공시 연동</span>
-                <span class="badge-date">🕒 2026-08-22 15:47</span>
               </div>
               <h3>한·미 주식 & 공시(DART/EDGAR) MCP 가이드</h3>
               <p>실시간 주가 조회 및 기업 공시 MCP 도구 연동·실전 활용법 총정리</p>
             </div>
             <a href="korea_stock_dart_mcp_guide.html" class="btn tool">가이드 보기 →</a>
+            <div class="card-footer-date">🕒 2026-08-22 15:47</div>
           </div>
 
         </div>
@@ -983,12 +997,12 @@
             <div class="card-top">
               <div class="card-header-tags">
                 <span class="tag indigo" style="background-color: #e0e7ff; color: #4338ca;">🌐 글로벌 매크로 / 증시 전망 (최신)</span>
-                <span class="badge-date">🕒 2026-08-27 15:22</span>
               </div>
               <h3>미국 주가 전망 매크로 종합 분석 (부정 vs 긍정)</h3>
               <p>거시경제 하방 압력(고금리 장기화·국채 공급 과잉·소비 둔화·AI 과열)과 상승 동력(연착륙·생산성 혁명·EPS 성장·6조$ MMF 유입)의 심층 비교 및 시나리오별 포트폴리오 전략</p>
             </div>
             <a href="us_stock_macro_outlook.html" class="btn indigo">보고서 열람하기 →</a>
+            <div class="card-footer-date">🕒 2026-08-27 15:22</div>
           </div>
           
           <!-- 1. 미국채 10년물 vs 나스닥 50년 분석 -->
@@ -996,12 +1010,12 @@
             <div class="card-top">
               <div class="card-header-tags">
                 <span class="tag blue">📈 매크로 / 금리·증시 차트</span>
-                <span class="badge-date">🕒 2026-08-21 23:17</span>
               </div>
               <h3>미국채 10년물 vs 나스닥 50년 분석</h3>
               <p>1976~2026년 반세기 미국 10년물 국채 금리와 나스닥 지수의 이중축 인터랙티브 시계열 차트, 밝기 모드 전환 및 5대 국면별 상관관계 심층 분석</p>
             </div>
             <a href="nasdaq_treasury_50y_chart.html" class="btn">차트 열람하기 →</a>
+            <div class="card-footer-date">🕒 2026-08-21 23:17</div>
           </div>
 
           <!-- 2. 미 국채금리 상승 3대 요인 인포그래픽 -->
@@ -1009,12 +1023,12 @@
             <div class="card-top">
               <div class="card-header-tags">
                 <span class="tag blue">🏛️ 매크로 / 국채금리 인포그래픽</span>
-                <span class="badge-date">🕒 2026-08-22 10:34</span>
               </div>
               <h3>미 국채금리 상승 3대 핵심 요인</h3>
               <p>재정 신뢰 저하 및 공급 과잉, AI 회사채 등 대체 투자처 자금 흡수, 인플레·통화정책 불확실성 3대 드라이버 심층 인포그래픽</p>
             </div>
             <a href="Top_3_Drivers_of_Rising_US_Treasury_Yields.png" target="_blank" class="btn">인포그래픽 열람하기 →</a>
+            <div class="card-footer-date">🕒 2026-08-22 10:34</div>
           </div>
 
           <!-- 3. 달러/엔 (USD/JPY) 차트 -->
@@ -1022,12 +1036,12 @@
             <div class="card-top">
               <div class="card-header-tags">
                 <span class="tag amber">💱 외환 / 환율 차트</span>
-                <span class="badge-date">🕒 2026-08-19 13:36</span>
               </div>
               <h3>달러/엔 (USD/JPY) 차트</h3>
               <p>달러/엔화 실시간 환율 추이 및 주요 기술적 지표/분석 차트 열람</p>
             </div>
             <a href="usd_jpy_chart.html" class="btn fx">차트 열람하기 →</a>
+            <div class="card-footer-date">🕒 2026-08-19 13:36</div>
           </div>
 
         </div>
@@ -1049,12 +1063,12 @@
             <div class="card-top">
               <div class="card-header-tags">
                 <span class="tag blue">🔬 반도체 부품 밸류체인 (최신)</span>
-                <span class="badge-date">🕒 2026-08-28 20:20</span>
               </div>
               <h3>글로벌 반도체 부품 밸류체인 분석</h3>
               <p>6대 핵심 부품군(Si/SiC 포커스링, 쿼츠, 진공펌프/밸브, MFC, RF 발생기/매처, EUV 광학계/레이저, 테스트 소켓/프로브카드, 세정·코팅) 및 글로벌 독점 기업 심층 분석</p>
             </div>
             <a href="semiconductor_parts_valuechain.html" class="btn">보고서 열람하기 →</a>
+            <div class="card-footer-date">🕒 2026-08-28 20:20</div>
           </div>
 
           <!-- 2. 글로벌 반도체 장비 밸류체인 분석 -->
@@ -1062,12 +1076,12 @@
             <div class="card-top">
               <div class="card-header-tags">
                 <span class="tag blue">🔬 반도체 장비 밸류체인</span>
-                <span class="badge-date">🕒 2026-08-28 20:18</span>
               </div>
               <h3>글로벌 반도체 장비 밸류체인 분석</h3>
               <p>6대 공정별 핵심 장비(EUV 스캐너, 플라즈마/ALE 식각기, ALD/CVD 증착기, CMP 연마기, 계측검사 MI, HBM TC/하이브리드 본더) 및 WFE 5대 메이저 심층 분석</p>
             </div>
             <a href="semiconductor_equipment_valuechain.html" class="btn">보고서 열람하기 →</a>
+            <div class="card-footer-date">🕒 2026-08-28 20:18</div>
           </div>
 
           <!-- 3. 글로벌 반도체 소재 밸류체인 분석 -->
@@ -1075,12 +1089,12 @@
             <div class="card-top">
               <div class="card-header-tags">
                 <span class="tag blue">🔬 반도체 소재 밸류체인</span>
-                <span class="badge-date">🕒 2026-08-28 20:15</span>
               </div>
               <h3>글로벌 반도체 소재 밸류체인 분석</h3>
               <p>6대 공정별 핵심 소재(실리콘 웨이퍼, EUV/PR, 에칭가스, 초고순도 불산, High-k 전구체, CMP 슬러리/패드, ABF, MR-MUF) 및 한·미·일·대만 글로벌 공급망 심층 분석</p>
             </div>
             <a href="semiconductor_materials_valuechain.html" class="btn">보고서 열람하기 →</a>
+            <div class="card-footer-date">🕒 2026-08-28 20:15</div>
           </div>
 
           <!-- 4. 반도체 기판 종류 및 밸류체인 분석 -->
@@ -1088,12 +1102,12 @@
             <div class="card-top">
               <div class="card-header-tags">
                 <span class="tag blue">🔬 반도체 패키지 기판</span>
-                <span class="badge-date">🕒 2026-08-28 19:37</span>
               </div>
               <h3>반도체 기판 종류 및 밸류체인 분석</h3>
               <p>FC-BGA, FC-CSP, SiP, BOC 및 차세대 유리 기판(Glass Substrate) 비교, 업/미드/다운스트림 글로벌 밸류체인과 칩렛 대면적화 메가트렌드 심층 리포트</p>
             </div>
             <a href="semiconductor_substrate_valuechain.html" class="btn">보고서 열람하기 →</a>
+            <div class="card-footer-date">🕒 2026-08-28 19:37</div>
           </div>
 
         </div>
