@@ -1,364 +1,827 @@
-<!DOCTYPE html>
-<html lang="ko">
+﻿<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Antigravity 규칙 및 스킬 종합 가이드</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <title>글로벌 반도체 기판의 종류와 밸류체인 심층 분석</title>
+  <!-- Google Fonts & Pretendard -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <style>
+    /* ==========================================================================
+       [화면 모드 설정 규칙 (Theme Design System)]
+       ========================================================================== */
+    :root {
+      /* 다크 모드 (기본 테마) */
+      --bg-body: #0b0f19;
+      --bg-header: rgba(15, 23, 42, 0.85);
+      --bg-card: #131d31;
+      --bg-card-alt: #1a2744;
+      --bg-tag: rgba(56, 189, 248, 0.12);
+      --bg-diagram: #0a1120;
+      
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      
+      --accent-primary: #38bdf8;
+      --accent-secondary: #818cf8;
+      --accent-highlight: #34d399;
+      --accent-warning: #fbbf24;
+      
+      --border-color: #233554;
+      --border-light: rgba(255, 255, 255, 0.08);
+      
+      --table-header-bg: #1e293b;
+      --table-stripe: #111a2e;
+      --table-hover: #1e2e4f;
+      
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+      
+      --card-radius: 14px;
+      --transition-speed: 0.25s ease;
+    }
+
+    [data-theme="light"] {
+      /* 라이트 모드 테마 */
+      --bg-body: #f8fafc;
+      --bg-header: rgba(255, 255, 255, 0.9);
+      --bg-card: #ffffff;
+      --bg-card-alt: #f1f5f9;
+      --bg-tag: rgba(2, 132, 199, 0.1);
+      --bg-diagram: #f1f5f9;
+      
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-dim: #64748b;
+      
+      --accent-primary: #0284c7;
+      --accent-secondary: #6366f1;
+      --accent-highlight: #059669;
+      --accent-warning: #d97706;
+      
+      --border-color: #e2e8f0;
+      --border-light: rgba(0, 0, 0, 0.06);
+      
+      --table-header-bg: #e2e8f0;
+      --table-stripe: #f8fafc;
+      --table-hover: #f1f5f9;
+      
+      --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Base Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
+    }
+
     body {
-      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.7;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 80px;
     }
-    code, pre {
-      font-family: 'JetBrains Mono', monospace;
+
+    /* Fixed Navigation Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background-color: var(--bg-header);
+      border-bottom: 1px solid var(--border-color);
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow-sm);
     }
-    .glass-card {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .header-logo span.badge {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: var(--bg-tag);
+      color: var(--accent-primary);
+      border: 1px solid var(--accent-primary);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Theme Toggle Button */
+    .theme-toggle-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background-color: var(--bg-card-alt);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+      transform: translateY(-1px);
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1100px;
+      margin: 32px auto;
+      padding: 0 20px;
+    }
+
+    /* Hero Section */
+    .hero-banner {
+      background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-card-alt) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: var(--card-radius);
+      padding: 36px 32px;
+      margin-bottom: 36px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-banner::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(56, 189, 248, 0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      background: linear-gradient(90deg, var(--text-main), var(--accent-primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 900px;
+      line-height: 1.75;
+    }
+
+    /* Section Cards */
+    .section-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--card-radius);
+      padding: 32px;
+      margin-bottom: 36px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .section-header h2 {
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .section-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--accent-primary);
+      color: #0b0f19;
+      font-weight: 800;
+      font-size: 1rem;
+    }
+
+    /* Sub-sections & Subtitles */
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 24px 0 14px 0;
+      color: var(--accent-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Diagrams & Ascii Blocks */
+    .diagram-box {
+      background-color: var(--bg-diagram);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 20px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--accent-primary);
+      overflow-x: auto;
+      margin: 20px 0;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Tables */
+    .table-container {
+      overflow-x: auto;
+      margin: 20px 0;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    th {
+      background-color: var(--table-header-bg);
+      color: var(--text-main);
+      padding: 14px 16px;
+      font-weight: 700;
+      border-bottom: 2px solid var(--border-color);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-muted);
+      vertical-align: middle;
+    }
+
+    tr:nth-child(even) {
+      background-color: var(--table-stripe);
+    }
+
+    tr:hover {
+      background-color: var(--table-hover);
+    }
+
+    td strong {
+      color: var(--text-main);
+    }
+
+    /* Highlight Badges / Tags */
+    .tag {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-right: 6px;
+      margin-bottom: 4px;
+    }
+
+    .tag-blue { background: rgba(56, 189, 248, 0.15); color: var(--accent-primary); border: 1px solid rgba(56, 189, 248, 0.3); }
+    .tag-green { background: rgba(52, 211, 153, 0.15); color: var(--accent-highlight); border: 1px solid rgba(52, 211, 153, 0.3); }
+    .tag-purple { background: rgba(129, 140, 248, 0.15); color: var(--accent-secondary); border: 1px solid rgba(129, 140, 248, 0.3); }
+    .tag-amber { background: rgba(251, 191, 36, 0.15); color: var(--accent-warning); border: 1px solid rgba(251, 191, 36, 0.3); }
+
+    /* Lists */
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin: 12px 0;
+    }
+
+    li {
+      position: relative;
+      padding-left: 24px;
+      margin-bottom: 10px;
+      color: var(--text-muted);
+    }
+
+    li::before {
+      content: "•";
+      position: absolute;
+      left: 8px;
+      color: var(--accent-primary);
+      font-weight: bold;
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    /* Key Point Box */
+    .key-point-card {
+      background: linear-gradient(to right, var(--bg-card-alt), var(--bg-card));
+      border-left: 4px solid var(--accent-primary);
+      padding: 18px 22px;
+      border-radius: 0 10px 10px 0;
+      margin: 16px 0;
+      border-top: 1px solid var(--border-light);
+      border-right: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .key-point-card h4 {
+      color: var(--text-main);
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-title { font-size: 1.6rem; }
+      .section-card { padding: 20px; }
+      .hero-banner { padding: 24px; }
+      header { padding: 12px 16px; }
     }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased min-h-screen">
+<body>
 
-  <!-- 상단 네비게이션 / 헤더 -->
-  <header class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white py-12 px-6 shadow-xl border-b border-indigo-900/50">
-    <div class="max-w-6xl mx-auto">
-      <div class="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <div class="flex items-center gap-2 mb-2">
-            <span class="px-3 py-1 bg-indigo-500/30 border border-indigo-400/30 text-indigo-300 text-xs font-semibold rounded-full tracking-wider uppercase">System Guide</span>
-            <span class="text-slate-400 text-sm">2026.08.26 기준</span>
-          </div>
-          <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white flex items-center gap-3">
-            <span>⚡ Antigravity 전역 규칙 &amp; 스킬 종합 가이드</span>
-          </h1>
-          <p class="mt-3 text-slate-300 text-base max-w-2xl leading-relaxed">
-            Antigravity 에이전트의 전역 트리거 규칙(/ 및 /1), 사용자 정의 기업 분석 스킬, 그리고 시스템 빌트인 스킬 전반의 상세 명세서입니다.
-          </p>
-        </div>
-      </div>
-
-      <!-- 빠른 바로가기 탭 -->
-      <div class="flex flex-wrap gap-3 mt-8 pt-6 border-t border-slate-800">
-        <a href="#section-rules" class="px-4 py-2 bg-slate-800/80 hover:bg-indigo-600/80 text-sm font-medium rounded-lg transition-all flex items-center gap-2 border border-slate-700">
-          <span>⚙️</span> 1. 전역 트리거 규칙 (/ vs /1)
-        </a>
-        <a href="#section-user-skills" class="px-4 py-2 bg-slate-800/80 hover:bg-indigo-600/80 text-sm font-medium rounded-lg transition-all flex items-center gap-2 border border-slate-700">
-          <span>📊</span> 2. 사용자 정의 스킬 (기업 분석)
-        </a>
-        <a href="#section-builtin-skills" class="px-4 py-2 bg-slate-800/80 hover:bg-indigo-600/80 text-sm font-medium rounded-lg transition-all flex items-center gap-2 border border-slate-700">
-          <span>🛠️</span> 3. 빌트인 시스템 스킬 (5종)
-        </a>
-      </div>
+  <!-- Top Navigation Header with Theme Toggle -->
+  <header>
+    <div class="header-logo">
+      <span>⚡ SEMICONDUCTOR INSIGHT</span>
+      <span class="badge">전문가 심층 리포트</span>
+    </div>
+    <div class="header-controls">
+      <button id="themeToggleBtn" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="화면 모드 전환">
+        <span id="themeIcon">🌙</span>
+        <span id="themeLabel">다크 모드</span>
+      </button>
     </div>
   </header>
 
-  <main class="max-w-6xl mx-auto px-6 py-10 space-y-12">
+  <!-- Main Content Container -->
+  <main class="container">
+    
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+      <h1 class="hero-title">글로벌 반도체 기판의 종류와 밸류체인 심층 분석</h1>
+      <p class="hero-desc">
+        반도체 패키지 기판(Package Substrate)은 <strong>미세 공정화된 반도체 칩(Die)과 인쇄회로기판(메인보드/PCB) 간의 물리적·전기적 간극을 연결</strong>하고, 신호 전달 및 칩을 보호하는 고부가가치 핵심 부품입니다.<br><br>
+        최근 <strong>AI 가속기(GPU/NPU), 서버 CPU, 칩렛(Chiplet) 구조 및 이종집적(Heterogeneous Integration)</strong> 기술의 발전으로 반도체 기판은 단순 지지대를 넘어 전체 시스템 성능을 좌우하는 핵심 병목이자 핵심 기술로 부상했습니다.
+      </p>
+    </section>
 
-    <!-- ========================================================================= -->
-    <!-- 1. 전역 트리거 규칙 섹션 -->
-    <!-- ========================================================================= -->
-    <section id="section-rules" class="scroll-mt-8 space-y-6">
-      <div class="border-b border-slate-200 pb-3 flex items-center justify-between">
-        <div>
-          <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <span class="text-indigo-600">01.</span> 전역 트리거 규칙 (Global Trigger Rules)
-          </h2>
-          <p class="text-sm text-slate-500 mt-1">파일 위치: <code>C:\Users\HOME\AGENTS.md</code></p>
-        </div>
-        <span class="px-3 py-1 bg-indigo-50 text-indigo-700 border border-indigo-200 text-xs font-semibold rounded-full">최우선 순위 적용</span>
+    <!-- Section 1 -->
+    <section class="section-card">
+      <div class="section-header">
+        <span class="section-number">1</span>
+        <h2>반도체 기판의 종류 및 핵심 특성</h2>
+      </div>
+      <p style="color: var(--text-muted); margin-bottom: 14px;">
+        반도체 기판은 접합 방식(Wire Bonding vs Flip Chip), 절연 소재(BT vs ABF vs Glass), 용도(메모리 vs 로직/AI)에 따라 분류됩니다.
+      </p>
+
+      <div class="diagram-box">
+[반도체 기판 분류]
+ ├── FC-BGA (고성능 로직, AI 가속기, 서버 CPU, 전장 자율주행) -> ABF 기반, 대면적·다층
+ ├── FC-CSP (모바일 AP, 통신 모뎀, 웨어러블)               -> BT/FCCL 기반, 초박형
+ ├── SiP (통신 모듈, RF, 스마트워치 이종 결합)             -> 다기능 융합 모듈
+ ├── BOC / 메모리용 BGA (DRAM, NAND 플래시 패키징)         -> BT 레진 기반, 대량 생산성
+ └── 차세대 기판: Glass Core Substrate (유리 기판), 2.5D/3D Interposer
       </div>
 
-      <div class="grid md:grid-cols-2 gap-6">
-        <!-- / 트리거 카드 -->
-        <div class="glass-card border border-indigo-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
-          <div class="absolute top-0 right-0 w-2 h-full bg-indigo-500"></div>
-          <div class="flex items-center justify-between mb-4">
-            <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-bold rounded-md font-mono">단독 기호 '/'</span>
-            <span class="text-xs text-indigo-600 font-semibold">질문 이해 + 실행 계획</span>
-          </div>
-          <h3 class="text-xl font-bold text-slate-900 mb-2">/ 트리거 행동 규칙</h3>
-          <p class="text-sm text-slate-600 mb-4">
-            사용자 질문에 대해 어떤 작업을 수행할지 <strong>단계별 실행 계획(Plan)을 제시</strong>하고 확인받는 모드입니다.
-          </p>
-          
-          <div class="bg-slate-50 rounded-xl p-4 border border-slate-200/80 space-y-2.5 text-sm">
-            <div class="flex items-start gap-2.5">
-              <span class="flex-shrink-0 w-5 h-5 bg-indigo-600 text-white rounded-full flex items-center justify-center text-xs font-bold">1</span>
-              <div><strong class="text-slate-900">질문 및 의도 요약:</strong> 요구사항을 어떤 맥락과 의도로 이해했는지 명확히 요약</div>
-            </div>
-            <div class="flex items-start gap-2.5">
-              <span class="flex-shrink-0 w-5 h-5 bg-indigo-600 text-white rounded-full flex items-center justify-center text-xs font-bold">2</span>
-              <div><strong class="text-slate-900">단계별 실행 계획 제시:</strong> Step 1, Step 2... 형태의 상세한 작업 계획 제공</div>
-            </div>
-            <div class="flex items-start gap-2.5">
-              <span class="flex-shrink-0 w-5 h-5 bg-rose-500 text-white rounded-full flex items-center justify-center text-xs font-bold">3</span>
-              <div><strong class="text-rose-700">사전 임의 실행 절대 금지:</strong> 도구 호출, 코드 작성, 파일 생성 등을 사전에 일체 수행하지 않음</div>
-            </div>
-            <div class="flex items-start gap-2.5">
-              <span class="flex-shrink-0 w-5 h-5 bg-indigo-600 text-white rounded-full flex items-center justify-center text-xs font-bold">4</span>
-              <div><strong class="text-slate-900">사용자 확인 요청:</strong> 이해한 내용과 계획이 맞는지 최종 확인 질문으로 마무리</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- /1 트리거 카드 -->
-        <div class="glass-card border border-emerald-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
-          <div class="absolute top-0 right-0 w-2 h-full bg-emerald-500"></div>
-          <div class="flex items-center justify-between mb-4">
-            <span class="px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-md font-mono">단독 기호 '/1'</span>
-            <span class="text-xs text-emerald-600 font-semibold">순수 질문 이해 확인 (계획 X)</span>
-          </div>
-          <h3 class="text-xl font-bold text-slate-900 mb-2">/1 트리거 행동 규칙</h3>
-          <p class="text-sm text-slate-600 mb-4">
-            실행 계획조차 제시하지 않고, <strong>순수하게 질문을 올바르게 이해했는지만 확인</strong>하는 극단적 안전 모드입니다.
-          </p>
-          
-          <div class="bg-slate-50 rounded-xl p-4 border border-slate-200/80 space-y-2.5 text-sm">
-            <div class="flex items-start gap-2.5">
-              <span class="flex-shrink-0 w-5 h-5 bg-emerald-600 text-white rounded-full flex items-center justify-center text-xs font-bold">1</span>
-              <div><strong class="text-slate-900">질문 및 의도 요약:</strong> 요구사항에 대한 이해 내용을 간결하게 요약하여 설명</div>
-            </div>
-            <div class="flex items-start gap-2.5">
-              <span class="flex-shrink-0 w-5 h-5 bg-rose-500 text-white rounded-full flex items-center justify-center text-xs font-bold">2</span>
-              <div><strong class="text-rose-700">실행 계획 및 추가 행동 금지:</strong> <u>실행 계획(Plan)을 포함하지 않으며</u>, 모든 부가 작업 일체 차단</div>
-            </div>
-            <div class="flex items-start gap-2.5">
-              <span class="flex-shrink-0 w-5 h-5 bg-emerald-600 text-white rounded-full flex items-center justify-center text-xs font-bold">3</span>
-              <div><strong class="text-slate-900">사용자 확인 요청:</strong> 이해한 내용이 맞는지 사용자에게 질문하며 마무리</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 비교 요약 테이블 -->
-      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-        <div class="px-6 py-4 bg-slate-50/80 border-b border-slate-200 font-semibold text-slate-900">
-          💡 모드별 핵심 차이점 비교
-        </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm text-left">
-            <thead class="bg-slate-100/70 text-slate-600 uppercase text-xs">
-              <tr>
-                <th class="px-6 py-3">트리거 기호</th>
-                <th class="px-6 py-3">모드 명칭</th>
-                <th class="px-6 py-3">질문 의도 요약</th>
-                <th class="px-6 py-3">실행 계획(Plan) 포함 여부</th>
-                <th class="px-6 py-3">도구/코드 실행</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-100">
-              <tr class="hover:bg-slate-50">
-                <td class="px-6 py-4 font-mono font-bold text-indigo-600">/</td>
-                <td class="px-6 py-4 font-medium text-slate-900">질문 이해 및 실행 계획 확인 모드</td>
-                <td class="px-6 py-4 text-emerald-600 font-semibold">포함 (O)</td>
-                <td class="px-6 py-4 text-indigo-600 font-bold">포함 (O - Step별 단계 제시)</td>
-                <td class="px-6 py-4 text-rose-600 font-semibold">사전 실행 금지 (X)</td>
-              </tr>
-              <tr class="hover:bg-slate-50">
-                <td class="px-6 py-4 font-mono font-bold text-emerald-600">/1</td>
-                <td class="px-6 py-4 font-medium text-slate-900">순수 질문 이해 확인 모드</td>
-                <td class="px-6 py-4 text-emerald-600 font-semibold">포함 (O)</td>
-                <td class="px-6 py-4 text-slate-400 font-semibold">미포함 (X - 계획 일체 제외)</td>
-                <td class="px-6 py-4 text-rose-600 font-semibold">사전 실행 금지 (X)</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>기판 종류</th>
+              <th>주 절연 소재</th>
+              <th>주요 적용 분야</th>
+              <th>핵심 기술 요구조건 및 특징</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <span class="tag tag-blue">FC-BGA</span><br>
+                <strong>(Flip Chip Ball Grid Array)</strong>
+              </td>
+              <td>
+                <strong>ABF</strong><br>
+                <span style="font-size:0.85rem; color:var(--text-dim);">(아지노모토 필름)</span>
+              </td>
+              <td>
+                AI 가속기(NVIDIA, AMD), 서버 CPU(Intel, AMD), 고성능 PC, 전장용 칩
+              </td>
+              <td>
+                • 초대면적(70×70mm ~ 100×100mm 이상)<br>
+                • 14~20층 이상의 초고다층화<br>
+                • 미세 회로(L/S 10/10㎛ 이하)<br>
+                • <strong style="color:var(--accent-warning);">가장 진입장벽이 높고 단가가 높은 고부가 기판</strong>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="tag tag-purple">FC-CSP</span><br>
+                <strong>(Flip Chip Chip Scale Package)</strong>
+              </td>
+              <td>
+                <strong>BT 수지</strong> / 박막재료
+              </td>
+              <td>
+                스마트폰 모바일 AP(스냅드래곤, 디멘시티), 모뎀칩
+              </td>
+              <td>
+                • 칩과 기판의 크기가 거의 동일 (1:1.2 이내)<br>
+                • 스마트폰 내부 공간 최적화를 위한 경박단소(박형화)
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="tag tag-purple">SiP</span><br>
+                <strong>(System in Package)</strong>
+              </td>
+              <td>
+                <strong>BT 수지</strong> / 다층 배선
+              </td>
+              <td>
+                RF 프론트엔드 모듈, Wi-Fi/BT 칩, 웨어러블 SiP
+              </td>
+              <td>
+                • 여러 이종 칩(수동소자, 센서, 로직)을 하나의 기판에 고밀도로 수직/수평 실장
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="tag tag-green">BOC / BGA</span><br>
+                <strong>(Board on Chip)</strong>
+              </td>
+              <td>
+                <strong>BT 수지</strong> / 동박
+              </td>
+              <td>
+                DRAM(DDR5, LPDDR5X), NAND 플래시, SSD 컨트롤러
+              </td>
+              <td>
+                • 와이어본딩 또는 범핑을 통한 메모리 적층 패키징<br>
+                • 대량 생산 체제 및 원가 경쟁력 핵심
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="tag tag-amber">차세대: 유리 기판</span><br>
+                <strong>(Glass Substrate)</strong>
+              </td>
+              <td>
+                <strong>Glass Core</strong><br>
+                <span style="font-size:0.85rem; color:var(--text-dim);">(특수 무기 유리)</span>
+              </td>
+              <td>
+                2026~2030년 차세대 AI 슈퍼컴퓨팅, 초고집적 칩렛
+              </td>
+              <td>
+                • 기존 플라스틱/유기 소재의 휨(Warpage) 및 열팽창 한계 극복<br>
+                • 초미세 TGV(Through Glass Via) 및 초평탄성 제공
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </section>
 
-    <!-- ========================================================================= -->
-    <!-- 2. 사용자 정의 스킬 섹션 -->
-    <!-- ========================================================================= -->
-    <section id="section-user-skills" class="scroll-mt-8 space-y-6">
-      <div class="border-b border-slate-200 pb-3 flex items-center justify-between">
-        <div>
-          <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <span class="text-indigo-600">02.</span> 사용자 정의 스킬 (User Skills)
-          </h2>
-          <p class="text-sm text-slate-500 mt-1">디렉터리: <code>C:\Users\HOME\.agents\skills\stock-company-analysis</code></p>
-        </div>
-        <span class="px-3 py-1 bg-blue-50 text-blue-700 border border-blue-200 text-xs font-semibold rounded-full">프로젝트 커스텀</span>
+    <!-- Section 2 -->
+    <section class="section-card">
+      <div class="section-header">
+        <span class="section-number">2</span>
+        <h2>글로벌 반도체 기판 밸류체인(Value Chain)</h2>
+      </div>
+      <p style="color: var(--text-muted); margin-bottom: 14px;">
+        반도체 기판 산업은 <strong>[업스트림(원소재·장비)] → [미드스트림(기판 제조사)] → [다운스트림(OSAT·파운드리·빅테크/팹리스)]</strong>로 촘촘히 엮여 있습니다.
+      </p>
+
+      <div class="diagram-box">
+[Upstream: 소재 & 장비]
+ ├─ 절연소재 (Ajinomoto, MGC) / 동박 (Mitsui) / 감광재 (Taiyo Ink)
+ └─ 노광기 (Canon/ORC) / 레이저드릴 (Mitsubishi) / 검사기 (Camtek, Gigavis)
+           │
+           ▼
+[Midstream: 기판 제조사 (Substrate Makers)]
+ ├─ 일본: Ibiden, Shinko Electric, Kyocera (FC-BGA 선두)
+ ├─ 대만: Unimicron, Nan Ya PCB, Kinsus (TSMC 연계 생태계)
+ ├─ 한국: 삼성전기, LG이노텍, 대덕전자, 심텍 (메모리/FC-BGA/SiP)
+ ├─ 미국/유럽: AT&S (오스트리아), Absolics(SKC계열-유리기판)
+ └─ 중국: SCC, Fastprint
+           │
+           ▼
+[Downstream: 후공정 패키징 & 최종 수요처]
+ ├─ 파운드리/IDM: TSMC (CoWoS), Intel (EMIB), 삼성전자, SK하이닉스
+ ├─ OSAT: ASE, Amkor, JCET, 하나마이크론
+ └─ 팹리스/빅테크: NVIDIA, AMD, Apple, Qualcomm, Google, Amazon, Microsoft
       </div>
 
-      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
-        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
-          <div>
-            <h3 class="text-xl font-bold text-slate-900">📈 stock-company-analysis</h3>
-            <p class="text-sm text-slate-600 mt-1">상장 주식(국내/해외) 펀더멘털 분석, 재무제표 진단, 밸류에이션 및 투자 리스크 분석 자동화</p>
-          </div>
-          <div class="text-xs bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg font-mono">
-            자동 트리거: "삼성전자 분석해줘", "AAPL 밸류에이션", "NVDA 적정주가" 등
-          </div>
-        </div>
-
-        <!-- 5단계 분석 프로세스 -->
-        <div>
-          <h4 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
-            <span>🎯</span> 5-Step 표준 분석 프로세스
-          </h4>
-          <div class="grid sm:grid-cols-5 gap-3">
-            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs space-y-1">
-              <span class="font-bold text-indigo-600 block">1단계: 기업 개요/BM</span>
-              <p class="text-slate-600">사업부문별 매출/영익 비중, P·Q·C 수익구조, 시장점유율</p>
-            </div>
-            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs space-y-1">
-              <span class="font-bold text-indigo-600 block">2단계: 재무제표 분석</span>
-              <p class="text-slate-600">매출 성장성, OPM/ROE 수익성, 부채비율, 잉여현금흐름(FCF)</p>
-            </div>
-            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs space-y-1">
-              <span class="font-bold text-indigo-600 block">3단계: 해자(Moat) 평가</span>
-              <p class="text-slate-600">무형자산, 락인(전환비용), 네트워크 효과, Peer Group 비교</p>
-            </div>
-            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs space-y-1">
-              <span class="font-bold text-indigo-600 block">4단계: 밸류에이션</span>
-              <p class="text-slate-600">PER, PBR, EV/EBITDA, PEG 및 거시/지배구조 리스크</p>
-            </div>
-            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs space-y-1">
-              <span class="font-bold text-indigo-600 block">5단계: 표준 보고서</span>
-              <p class="text-slate-600">Bull vs Bear 균형 분석, 적정가치 산출, 투자 전략 제시</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 서브 리소스 및 스크립트 -->
-        <div class="grid md:grid-cols-3 gap-4 pt-2">
-          <div class="p-4 bg-indigo-50/50 rounded-xl border border-indigo-100">
-            <span class="text-xs font-semibold text-indigo-700 uppercase">참조 가이드</span>
-            <h5 class="font-bold text-slate-900 text-sm mt-1">valuation_guide.md</h5>
-            <p class="text-xs text-slate-600 mt-1">PER, PBR, PEG(&lt;1.0), EV/EBITDA, ROE 듀퐁 분해 공식 및 실무 평가 기준선</p>
-          </div>
-          <div class="p-4 bg-emerald-50/50 rounded-xl border border-emerald-100">
-            <span class="text-xs font-semibold text-emerald-700 uppercase">보고서 템플릿</span>
-            <h5 class="font-bold text-slate-900 text-sm mt-1">report_template.md</h5>
-            <p class="text-xs text-slate-600 mt-1">Executive Summary, 재무 비교표, Bull/Bear 시나리오를 포함하는 완성형 마크다운 서식</p>
-          </div>
-          <div class="p-4 bg-amber-50/50 rounded-xl border border-amber-100">
-            <span class="text-xs font-semibold text-amber-700 uppercase">헬퍼 스크립트</span>
-            <h5 class="font-bold text-slate-900 text-sm mt-1">fetch_financials.py</h5>
-            <p class="text-xs text-slate-600 mt-1">티커 입력 시 yfinance로부터 주요 펀더멘털 및 밸류에이션 데이터를 JSON으로 즉시 추출</p>
-          </div>
-        </div>
+      <!-- (1) Upstream -->
+      <h3>(1) 업스트림: 핵심 원소재 및 제조 장비</h3>
+      
+      <div class="key-point-card">
+        <h4>① 핵심 원소재 (Materials)</h4>
+        <ul>
+          <li><strong>ABF (Ajinomoto Build-up Film):</strong> 고성능 FC-BGA의 층간 절연을 위한 필수 필름. 일본 <strong>아지노모토(Ajinomoto)</strong>가 전 세계 시장의 <strong>95% 이상을 사실상 독점</strong>.</li>
+          <li><strong>BT 수지 / CCL (동박적층판):</strong> 메모리 및 FC-CSP 기판의 뼈대. 일본 <strong>MGC(미쓰비시가스화학)</strong>, <strong>파나소닉(Panasonic)</strong>, 한국 <strong>두산전자</strong>, 대만 <strong>EMC</strong>, <strong>ITEQ</strong>.</li>
+          <li><strong>동박 및 초극박 (Copper Foil):</strong> 미세 회로 배선을 위한 초박형 구리 막. 일본 <strong>미츠이금속(Mitsui Mining & Smelting)</strong>, <strong>후루카와 전기</strong>, 한국 <strong>솔루스첨단소재</strong>.</li>
+          <li><strong>SR (Solder Resist / 솔더레지스트):</strong> 회로 보호 및 산화 방지 감광액. 일본 <strong>타이요잉크(Taiyo Ink)</strong>가 글로벌 70% 이상 점유.</li>
+          <li><strong>솔더볼 / 마이크로 범프 (Solder Ball / Micro Bump):</strong> 칩과 기판, 기판과 메인보드를 연결하는 미세 금속 볼. 한국 <strong>덕산하이메탈</strong>, 일본 <strong>센쥬금속(Senju)</strong>, <strong>MKE</strong>.</li>
+          <li><strong>유리 기판 원자재 (Glass Core):</strong> 미국 <strong>코닝(Corning)</strong>, 독일 <strong>쇼트(Schott)</strong>, 일본 <strong>AGC(아사히글라스)</strong>.</li>
+        </ul>
       </div>
+
+      <div class="key-point-card">
+        <h4>② 핵심 장비 (Equipment)</h4>
+        <ul>
+          <li><strong>노광기 (Lithography / Stepper):</strong> 미세 회로 패턴 형성. 일본 <strong>ORC(오크제작소)</strong>, <strong>우시오(Ushio)</strong>, <strong>캐논(Canon)</strong>, <strong>니콘(Nikon)</strong>.</li>
+          <li><strong>레이저 드릴 (Laser Via Driller):</strong> 층간 신호 연결을 위한 미세 비아홀 가공. 일본 <strong>미쓰비시전기(Mitsubishi Electric)</strong>, <strong>비아메카닉스(Via Mechanics)</strong>, 미국 <strong>ESI(MKS)</strong>, 한국 <strong>이오테크닉스</strong>.</li>
+          <li><strong>도금 및 습식 식각 장비:</strong> 독일 <strong>아토텍(Atotech - MKS 인수)</strong>, 일본 <strong>스크린(SCREEN)</strong>, 한국 <strong>제우스</strong>.</li>
+          <li><strong>AOI / AOR 검사장비 & 불량 수리:</strong> 초미세 단선/단락 검사 및 레이저 수리. 이스라엘/싱가포르 <strong>캠텍(Camtek)</strong>, <strong>오르보텍(Orbotech - KLA)</strong>, 한국 <strong>기가비스(Gigavis)</strong>, <strong>인텍플러스</strong>.</li>
+        </ul>
+      </div>
+
+      <!-- (2) Midstream -->
+      <h3>(2) 미드스트림: 글로벌 기판 제조사 (Substrate Makers)</h3>
+      <p style="color: var(--text-muted); margin-bottom: 12px;">
+        전 세계 반도체 기판 시장은 <strong>일본, 대만, 한국 3국이 과점</strong>하고 있으며, 유럽(AT&S)과 중국(SCC)이 추격하는 구도입니다.
+      </p>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>국가</th>
+              <th>주요 기업</th>
+              <th>주력 제품군 및 경쟁력</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>일본</strong></td>
+              <td>
+                <strong>이비덴 (Ibiden)</strong><br>
+                <strong>신코전기 (Shinko Electric)</strong><br>
+                교세라 (Kyocera)
+              </td>
+              <td>
+                • <strong style="color:var(--accent-primary);">글로벌 최고 난도 서버/AI FC-BGA 시장 독식</strong><br>
+                • Intel, NVIDIA의 1차 핵심 기판 공급사<br>
+                • 최고 수준의 미세 가공 및 다층화 기술력 보유
+              </td>
+            </tr>
+            <tr>
+              <td><strong>대만</strong></td>
+              <td>
+                <strong>유니마이크론 (Unimicron)</strong><br>
+                <strong>난야 (Nan Ya PCB)</strong><br>
+                킨서스 (Kinsus)
+              </td>
+              <td>
+                • <strong style="color:var(--accent-secondary);">세계 최대 생산능력(CAPA) 보유</strong><br>
+                • TSMC의 첨단 패키징(CoWoS) 및 대만 팹리스 연계 생태계 초밀착<br>
+                • PC, 서버, 네트워크, 전장용 FC-BGA 전방위 커버
+              </td>
+            </tr>
+            <tr>
+              <td><strong>한국</strong></td>
+              <td>
+                <strong>삼성전기 (Samsung Electro-Mechanics)</strong><br>
+                <strong>LG이노텍 (LG Innotek)</strong><br>
+                <strong>대덕전자 (Daeduck Electronics)</strong><br>
+                <strong>심텍 (Simmtech)</strong><br>
+                <strong>해성디에스 (Haesung DS)</strong>
+              </td>
+              <td>
+                • <strong>삼성전기:</strong> 서버/네트워크/전장용 고성능 FC-BGA 대규모 투자 및 공급 확대<br>
+                • <strong>LG이노텍:</strong> RF-SiP/통신 모듈 글로벌 1위, 신규 FC-BGA 라인 본격 가동<br>
+                • <strong>대덕전자:</strong> 전장/AI/가전용 FC-BGA 국산화 선도<br>
+                • <strong>심텍:</strong> 메모리용 BGA, 모바일 FC-CSP 세계 1위권 점유율
+              </td>
+            </tr>
+            <tr>
+              <td><strong>유럽/미국</strong></td>
+              <td>
+                <strong>AT&S (오스트리아)</strong><br>
+                <strong>앱솔릭스 (Absolics - SKC)</strong>
+              </td>
+              <td>
+                • <strong>AT&S:</strong> Intel 및 AMD의 핵심 FC-BGA 공급 파트너 (말레이시아/중국 공장)<br>
+                • <strong>앱솔릭스:</strong> 미국 조지아주에 세계 최초 반도체용 유리 기판 양산 팹 구축
+              </td>
+            </tr>
+            <tr>
+              <td><strong>중국</strong></td>
+              <td>
+                선난서킷 (SCC)<br>
+                패스트프린트 (Fastprint)
+              </td>
+              <td>
+                • 정부 지원 기반 메모리/통신용 기판 중심에서 FC-BGA 진입 시도 중
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- (3) Downstream -->
+      <h3>(3) 다운스트림: 후공정(OSAT), 파운드리 및 최종 수요처</h3>
+      <ul>
+        <li>
+          <strong>1. 파운드리 / 턴키 패키징:</strong>
+          <ul>
+            <li><strong>TSMC:</strong> 2.5D 첨단 패키징인 <strong>CoWoS(Chip-on-Wafer-on-Substrate)</strong>에서 실리콘 인터포저 아래에 거대한 대면적 FC-BGA 기판을 실장 (유니마이크론, 이비덴 등으로부터 공급).</li>
+            <li><strong>인텔(Intel):</strong> EMIB 기술 및 자체 패키징 라인에 이비덴, 신코, AT&S 기판 통합.</li>
+            <li><strong>삼성전자:</strong> I-Cube, 2.5D 패키징 및 메모리 융합 생태계 운영.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>2. 글로벌 OSAT (외주 패키징 전문):</strong>
+          <ul>
+            <li><strong>ASE (대만), Amkor (미국), JCET (중국):</strong> 팹리스들로부터 다이와 기판을 공급받아 범핑/실장/테스트 턴키 수행.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>3. 최종 팹리스 및 빅테크 (수요처):</strong>
+          <ul>
+            <li><strong>AI/HPC:</strong> NVIDIA (H100, B200, 차세대 Rubin), AMD (MI300 시리즈), Google (TPU), Amazon (Trainium), MS (Maia).</li>
+            <li><strong>모바일/소비자용:</strong> Apple (M시리즈/A시리즈), Qualcomm, MediaTek.</li>
+          </ul>
+        </li>
+      </ul>
     </section>
 
-    <!-- ========================================================================= -->
-    <!-- 3. 빌트인 시스템 스킬 섹션 -->
-    <!-- ========================================================================= -->
-    <section id="section-builtin-skills" class="scroll-mt-8 space-y-6">
-      <div class="border-b border-slate-200 pb-3 flex items-center justify-between">
-        <div>
-          <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <span class="text-indigo-600">03.</span> 빌트인 시스템 스킬 (Built-in Skills - 5종)
-          </h2>
-          <p class="text-sm text-slate-500 mt-1">디렉터리: <code>C:\Users\HOME\.gemini\antigravity-cli\builtin\skills</code></p>
-        </div>
-        <span class="px-3 py-1 bg-purple-50 text-purple-700 border border-purple-200 text-xs font-semibold rounded-full">Core Engine</span>
+    <!-- Section 3 -->
+    <section class="section-card">
+      <div class="section-header">
+        <span class="section-number">3</span>
+        <h2>반도체 기판 산업의 3대 메가트렌드 및 차세대 기술</h2>
       </div>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="diagram-box">
+[차세대 기판 진화 방향]
+ 1. 칩렛(Chiplet) 확산 ───► 기판 대면적화(100x100mm+) & 초고다층화(20층+)
+ 2. 물리적 한계 도달 ────► 플라스틱(유기) 기판의 휨(Warpage) 및 신호 손실 문제 심화
+ 3. 솔루션 (게임체인저) ──► 유리 기판 (Glass Substrate) 상용화 가속
+      </div>
 
-        <!-- 1. agy-customizations -->
-        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:border-indigo-300 transition-colors flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-2">
-              <span class="px-2.5 py-0.5 bg-slate-100 text-slate-700 text-xs font-bold rounded">Customization</span>
-              <span class="text-xs text-slate-400">전역 설정</span>
-            </div>
-            <h3 class="text-lg font-bold text-slate-900">agy-customizations</h3>
-            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
-              Antigravity 커스터마이징 시스템(Rules, Skills, Plugins, Hooks, MCP Servers)의 설계 원칙, 로딩 우선순위 및 계층 구조 안내.
-            </p>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-indigo-600 font-medium">
-            주요 컴포넌트: Rules · Skills · Plugins · Hooks · MCP
-          </div>
-        </div>
+      <h3>1) 칩렛(Chiplet) 구조와 초대면적·초고다층 FC-BGA</h3>
+      <ul>
+        <li>단일 칩(Monolithic) 크기가 레티클 한계(약 858㎟)에 도달하면서, 여러 개의 다이(연산 코어, 메모리, I/O 등)를 쪼개어 기판 위에서 하나로 연결하는 <strong>칩렛(Chiplet)</strong>이 대세가 되었습니다.</li>
+        <li>이에 따라 기판 면적이 기존 50×50mm 수준에서 <strong>80×80mm, 100×100mm 이상으로 대면적화</strong>되고 층수도 <strong>20층 이상</strong>으로 늘어났습니다.</li>
+        <li><strong>영향:</strong> 기판 면적이 넓어질수록 제작 수율이 급격히 떨어지므로, <strong>공급 부족 현상 및 기판 제조사의 판가(ASP) 상승</strong>이 발생합니다.</li>
+      </ul>
 
-        <!-- 2. antigravity-guide -->
-        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:border-indigo-300 transition-colors flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-2">
-              <span class="px-2.5 py-0.5 bg-slate-100 text-slate-700 text-xs font-bold rounded">Platform Guide</span>
-              <span class="text-xs text-slate-400">통합 레퍼런스</span>
-            </div>
-            <h3 class="text-lg font-bold text-slate-900">antigravity-guide</h3>
-            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
-              Antigravity CLI(`agy`), Antigravity IDE, 데스크톱 앱 2.0, Python SDK 가이드 및 공식 온라인 사이트맵 제공.
-            </p>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-indigo-600 font-medium">
-            주요 컴포넌트: CLI · IDE · Desktop 2.0 · Python SDK
-          </div>
-        </div>
+      <h3>2) 게임체인저: 유리 기판 (Glass Substrate)의 부상</h3>
+      <ul>
+        <li><strong>등장 배경:</strong> 유기물(플라스틱) 기반 ABF 기판은 고온 공정에서 휘어지는 <strong>휨(Warpage) 현상</strong>, 미세 회로 구현의 한계, 고주파 신호 손실이라는 물리적 한계에 부딪혔습니다.</li>
+        <li>
+          <strong>유리 기판의 특장점:</strong>
+          <ol style="padding-left: 20px; margin-top: 6px; color: var(--text-muted);">
+            <li><strong>초평탄성 및 치수 안정성:</strong> 열에 강해 휨 현상이 거의 없어 더 넓은 면적에 더 미세한 회로(L/S 2㎛ 이하) 구현 가능.</li>
+            <li><strong>중간 기판(인터포저) 생략 가능:</strong> 인터포저 없이 칩을 기판에 직접 실장하여 패키지 두께를 줄이고 전력 효율 30% 이상 개선.</li>
+            <li><strong>TGV (Through Glass Via)</strong> 기술을 통한 초고속 신호 전달.</li>
+          </ol>
+        </li>
+        <li>
+          <strong>주요 플레이어 로드맵:</strong>
+          <ul>
+            <li><strong>인텔:</strong> 2026~2030년 고성능 양산 칩에 유리 기판 도입 공식화.</li>
+            <li><strong>SKC / 앱솔릭스(Absolics):</strong> 미국 조지아 공장 가동, AMD 등 글로벌 빅테크와 시제품 평가 및 조기 상용화 추진.</li>
+            <li><strong>삼성전기:</strong> 삼성전자·삼성디스플레이와 연합하여 2026년 시제품 생산 및 조기 상용화 목표.</li>
+            <li><strong>장비/소재 협력사:</strong> 필옵틱스(TGV 레이저 장비), 제이앤티씨, 와이씨켐, LPKF, 코닝 등.</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
 
-        <!-- 3. generative_ui -->
-        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:border-indigo-300 transition-colors flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-2">
-              <span class="px-2.5 py-0.5 bg-slate-100 text-slate-700 text-xs font-bold rounded">Interactive UI</span>
-              <span class="text-xs text-slate-400">시각화 엔진</span>
-            </div>
-            <h3 class="text-lg font-bold text-slate-900">generative_ui</h3>
-            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
-              대화창 내 인라인 위젯(`&lt;agent-embed&gt;`) 및 단독 인터랙티브 HTML 차트/대시보드를 생성하여 테마와 자동 동기화 렌더링.
-            </p>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-indigo-600 font-medium">
-            주요 컴포넌트: 인라인 임베드 · Tailwind CSS · 다크/라이트 테마
-          </div>
-        </div>
+    <!-- Section 4 -->
+    <section class="section-card">
+      <div class="section-header">
+        <span class="section-number">4</span>
+        <h2>종합 요약 및 시사점</h2>
+      </div>
 
-        <!-- 4. migrate-workflows -->
-        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:border-indigo-300 transition-colors flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-2">
-              <span class="px-2.5 py-0.5 bg-slate-100 text-slate-700 text-xs font-bold rounded">Migration</span>
-              <span class="text-xs text-slate-400">자동 변환</span>
-            </div>
-            <h3 class="text-lg font-bold text-slate-900">migrate-workflows</h3>
-            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
-              구버전 워크플로우(`.agents/workflows/*.md`)를 최신 표준 `SKILL.md` 체계로 자동 변환하고 기존 파일을 `.md.bak`으로 안전 보존.
-            </p>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-indigo-600 font-medium">
-            주요 컴포넌트: YAML Frontmatter 변환 · 백업 아카이빙
-          </div>
-        </div>
+      <div class="key-point-card" style="border-left-color: var(--accent-highlight);">
+        <h4>1. 지정학적 및 기술적 진입장벽</h4>
+        <p style="color: var(--text-muted);">
+          업스트림의 핵심 소재(ABF, BT)와 정밀 가공 장비는 <strong>일본과 미국/유럽이 기술적 해자를 구축</strong>하고 있습니다.<br>
+          고부가 FC-BGA는 일본(이비덴, 신코), 대만(유니마이크론), 한국(삼성전기, 대덕전자)의 소수 상위권 기업만이 대응 가능합니다.
+        </p>
+      </div>
 
-        <!-- 5. permissioned-github -->
-        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:border-indigo-300 transition-colors flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-2">
-              <span class="px-2.5 py-0.5 bg-slate-100 text-slate-700 text-xs font-bold rounded">Security &amp; Git</span>
-              <span class="text-xs text-slate-400">보안 프로토콜</span>
-            </div>
-            <h3 class="text-lg font-bold text-slate-900">permissioned-github</h3>
-            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
-              `gh` CLI 및 `git` 명령을 안전하게 수행하며, PR/이슈/브랜치/워크플로우 실행 시 세분화된 최소 권한을 사용자에게 요청.
-            </p>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-indigo-600 font-medium">
-            주요 컴포넌트: 최소 권한 승인 포맷 · gh CLI · GitHub Actions
-          </div>
-        </div>
+      <div class="key-point-card" style="border-left-color: var(--accent-primary);">
+        <h4>2. AI 인프라 투자의 핵심 수혜주</h4>
+        <p style="color: var(--text-muted);">
+          반도체 미세화(전공정)의 물리적 한계를 극복하는 열쇠가 <strong>후공정 패키징과 첨단 기판</strong>으로 이동했습니다.<br>
+          고성능 AI 가속기 1개당 투입되는 기판의 면적과 층수가 기하급수적으로 늘어나며 기판 기업들의 부가가치가 극대화되고 있습니다.
+        </p>
+      </div>
 
+      <div class="key-point-card" style="border-left-color: var(--accent-warning);">
+        <h4>3. 향후 관전 포인트</h4>
+        <p style="color: var(--text-muted);">
+          • 기존 ABF 기반 고다층 FC-BGA의 수율 경쟁력 유지 여부<br>
+          • 2026년 이후 본격화될 <strong>'유리 기판(Glass Substrate)' 생태계 주도권 선점 경쟁</strong>
+        </p>
       </div>
     </section>
 
   </main>
 
-  <footer class="bg-slate-900 text-slate-400 text-center py-8 border-t border-slate-800 text-xs">
-    <div class="max-w-6xl mx-auto px-6 space-y-2">
-      <p class="font-medium text-slate-300">Antigravity AI Assistant Framework</p>
-      <p>본 문서는 사용자 PC의 로컬 규칙 파일([AGENTS.md]) 및 스킬 정의 파일을 기반으로 자동 생성되었습니다.</p>
-    </div>
+  <footer>
+    <p>© 2026 SEMICONDUCTOR INSIGHT REPORT. All Rights Reserved.</p>
+    <p style="margin-top: 4px;">저장 위치: 바탕화면\반도체용어\반도체_기판_종류_및_밸류체인_분석.html</p>
   </footer>
 
+  <!-- JavaScript for Theme Rule Management -->
+  <script>
+    /**
+     * [화면 모드 규칙 및 컨트롤러]
+     * 1. localStorage를 통해 사용자의 직전 테마 설정을 복원
+     * 2. 저장된 값이 없을 경우 브라우저/OS의 prefers-color-scheme 감지
+     * 3. 토글 버튼 클릭 시 즉시 data-theme 속성 변경 및 설정값 저장
+     */
+    function initTheme() {
+      const savedTheme = localStorage.getItem('semicon_theme');
+      if (savedTheme) {
+        setTheme(savedTheme);
+      } else {
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setTheme(prefersDark ? 'dark' : 'light');
+      }
+    }
+
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('semicon_theme', theme);
+      
+      const themeIcon = document.getElementById('themeIcon');
+      const themeLabel = document.getElementById('themeLabel');
+      
+      if (theme === 'dark') {
+        themeIcon.textContent = '🌙';
+        themeLabel.textContent = '다크 모드';
+      } else {
+        themeIcon.textContent = '☀️';
+        themeLabel.textContent = '라이트 모드';
+      }
+    }
+
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      setTheme(newTheme);
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', initTheme);
+  </script>
 </body>
 </html>
