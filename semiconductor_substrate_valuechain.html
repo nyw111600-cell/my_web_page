@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Antigravity 규칙 및 스킬 종합 가이드</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    }
+    code, pre {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen">
+
+  <!-- 상단 네비게이션 / 헤더 -->
+  <header class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white py-12 px-6 shadow-xl border-b border-indigo-900/50">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="px-3 py-1 bg-indigo-500/30 border border-indigo-400/30 text-indigo-300 text-xs font-semibold rounded-full tracking-wider uppercase">System Guide</span>
+            <span class="text-slate-400 text-sm">2026.08.26 기준</span>
+          </div>
+          <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white flex items-center gap-3">
+            <span>⚡ Antigravity 전역 규칙 &amp; 스킬 종합 가이드</span>
+          </h1>
+          <p class="mt-3 text-slate-300 text-base max-w-2xl leading-relaxed">
+            Antigravity 에이전트의 전역 트리거 규칙(/ 및 /1), 사용자 정의 기업 분석 스킬, 그리고 시스템 빌트인 스킬 전반의 상세 명세서입니다.
+          </p>
+        </div>
+      </div>
+
+      <!-- 빠른 바로가기 탭 -->
+      <div class="flex flex-wrap gap-3 mt-8 pt-6 border-t border-slate-800">
+        <a href="#section-rules" class="px-4 py-2 bg-slate-800/80 hover:bg-indigo-600/80 text-sm font-medium rounded-lg transition-all flex items-center gap-2 border border-slate-700">
+          <span>⚙️</span> 1. 전역 트리거 규칙 (/ vs /1)
+        </a>
+        <a href="#section-user-skills" class="px-4 py-2 bg-slate-800/80 hover:bg-indigo-600/80 text-sm font-medium rounded-lg transition-all flex items-center gap-2 border border-slate-700">
+          <span>📊</span> 2. 사용자 정의 스킬 (기업 분석)
+        </a>
+        <a href="#section-builtin-skills" class="px-4 py-2 bg-slate-800/80 hover:bg-indigo-600/80 text-sm font-medium rounded-lg transition-all flex items-center gap-2 border border-slate-700">
+          <span>🛠️</span> 3. 빌트인 시스템 스킬 (5종)
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 py-10 space-y-12">
+
+    <!-- ========================================================================= -->
+    <!-- 1. 전역 트리거 규칙 섹션 -->
+    <!-- ========================================================================= -->
+    <section id="section-rules" class="scroll-mt-8 space-y-6">
+      <div class="border-b border-slate-200 pb-3 flex items-center justify-between">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
+            <span class="text-indigo-600">01.</span> 전역 트리거 규칙 (Global Trigger Rules)
+          </h2>
+          <p class="text-sm text-slate-500 mt-1">파일 위치: <code>C:\Users\HOME\AGENTS.md</code></p>
+        </div>
+        <span class="px-3 py-1 bg-indigo-50 text-indigo-700 border border-indigo-200 text-xs font-semibold rounded-full">최우선 순위 적용</span>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- / 트리거 카드 -->
+        <div class="glass-card border border-indigo-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-2 h-full bg-indigo-500"></div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-bold rounded-md font-mono">단독 기호 '/'</span>
+            <span class="text-xs text-indigo-600 font-semibold">질문 이해 + 실행 계획</span>
+          </div>
+          <h3 class="text-xl font-bold text-slate-900 mb-2">/ 트리거 행동 규칙</h3>
+          <p class="text-sm text-slate-600 mb-4">
+            사용자 질문에 대해 어떤 작업을 수행할지 <strong>단계별 실행 계획(Plan)을 제시</strong>하고 확인받는 모드입니다.
+          </p>
+          
+          <div class="bg-slate-50 rounded-xl p-4 border border-slate-200/80 space-y-2.5 text-sm">
+            <div class="flex items-start gap-2.5">
+              <span class="flex-shrink-0 w-5 h-5 bg-indigo-600 text-white rounded-full flex items-center justify-center text-xs font-bold">1</span>
+              <div><strong class="text-slate-900">질문 및 의도 요약:</strong> 요구사항을 어떤 맥락과 의도로 이해했는지 명확히 요약</div>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <span class="flex-shrink-0 w-5 h-5 bg-indigo-600 text-white rounded-full flex items-center justify-center text-xs font-bold">2</span>
+              <div><strong class="text-slate-900">단계별 실행 계획 제시:</strong> Step 1, Step 2... 형태의 상세한 작업 계획 제공</div>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <span class="flex-shrink-0 w-5 h-5 bg-rose-500 text-white rounded-full flex items-center justify-center text-xs font-bold">3</span>
+              <div><strong class="text-rose-700">사전 임의 실행 절대 금지:</strong> 도구 호출, 코드 작성, 파일 생성 등을 사전에 일체 수행하지 않음</div>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <span class="flex-shrink-0 w-5 h-5 bg-indigo-600 text-white rounded-full flex items-center justify-center text-xs font-bold">4</span>
+              <div><strong class="text-slate-900">사용자 확인 요청:</strong> 이해한 내용과 계획이 맞는지 최종 확인 질문으로 마무리</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- /1 트리거 카드 -->
+        <div class="glass-card border border-emerald-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-2 h-full bg-emerald-500"></div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-md font-mono">단독 기호 '/1'</span>
+            <span class="text-xs text-emerald-600 font-semibold">순수 질문 이해 확인 (계획 X)</span>
+          </div>
+          <h3 class="text-xl font-bold text-slate-900 mb-2">/1 트리거 행동 규칙</h3>
+          <p class="text-sm text-slate-600 mb-4">
+            실행 계획조차 제시하지 않고, <strong>순수하게 질문을 올바르게 이해했는지만 확인</strong>하는 극단적 안전 모드입니다.
+          </p>
+          
+          <div class="bg-slate-50 rounded-xl p-4 border border-slate-200/80 space-y-2.5 text-sm">
+            <div class="flex items-start gap-2.5">
+              <span class="flex-shrink-0 w-5 h-5 bg-emerald-600 text-white rounded-full flex items-center justify-center text-xs font-bold">1</span>
+              <div><strong class="text-slate-900">질문 및 의도 요약:</strong> 요구사항에 대한 이해 내용을 간결하게 요약하여 설명</div>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <span class="flex-shrink-0 w-5 h-5 bg-rose-500 text-white rounded-full flex items-center justify-center text-xs font-bold">2</span>
+              <div><strong class="text-rose-700">실행 계획 및 추가 행동 금지:</strong> <u>실행 계획(Plan)을 포함하지 않으며</u>, 모든 부가 작업 일체 차단</div>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <span class="flex-shrink-0 w-5 h-5 bg-emerald-600 text-white rounded-full flex items-center justify-center text-xs font-bold">3</span>
+              <div><strong class="text-slate-900">사용자 확인 요청:</strong> 이해한 내용이 맞는지 사용자에게 질문하며 마무리</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 비교 요약 테이블 -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="px-6 py-4 bg-slate-50/80 border-b border-slate-200 font-semibold text-slate-900">
+          💡 모드별 핵심 차이점 비교
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm text-left">
+            <thead class="bg-slate-100/70 text-slate-600 uppercase text-xs">
+              <tr>
+                <th class="px-6 py-3">트리거 기호</th>
+                <th class="px-6 py-3">모드 명칭</th>
+                <th class="px-6 py-3">질문 의도 요약</th>
+                <th class="px-6 py-3">실행 계획(Plan) 포함 여부</th>
+                <th class="px-6 py-3">도구/코드 실행</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              <tr class="hover:bg-slate-50">
+                <td class="px-6 py-4 font-mono font-bold text-indigo-600">/</td>
+                <td class="px-6 py-4 font-medium text-slate-900">질문 이해 및 실행 계획 확인 모드</td>
+                <td class="px-6 py-4 text-emerald-600 font-semibold">포함 (O)</td>
+                <td class="px-6 py-4 text-indigo-600 font-bold">포함 (O - Step별 단계 제시)</td>
+                <td class="px-6 py-4 text-rose-600 font-semibold">사전 실행 금지 (X)</td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="px-6 py-4 font-mono font-bold text-emerald-600">/1</td>
+                <td class="px-6 py-4 font-medium text-slate-900">순수 질문 이해 확인 모드</td>
+                <td class="px-6 py-4 text-emerald-600 font-semibold">포함 (O)</td>
+                <td class="px-6 py-4 text-slate-400 font-semibold">미포함 (X - 계획 일체 제외)</td>
+                <td class="px-6 py-4 text-rose-600 font-semibold">사전 실행 금지 (X)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 2. 사용자 정의 스킬 섹션 -->
+    <!-- ========================================================================= -->
+    <section id="section-user-skills" class="scroll-mt-8 space-y-6">
+      <div class="border-b border-slate-200 pb-3 flex items-center justify-between">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
+            <span class="text-indigo-600">02.</span> 사용자 정의 스킬 (User Skills)
+          </h2>
+          <p class="text-sm text-slate-500 mt-1">디렉터리: <code>C:\Users\HOME\.agents\skills\stock-company-analysis</code></p>
+        </div>
+        <span class="px-3 py-1 bg-blue-50 text-blue-700 border border-blue-200 text-xs font-semibold rounded-full">프로젝트 커스텀</span>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
+          <div>
+            <h3 class="text-xl font-bold text-slate-900">📈 stock-company-analysis</h3>
+            <p class="text-sm text-slate-600 mt-1">상장 주식(국내/해외) 펀더멘털 분석, 재무제표 진단, 밸류에이션 및 투자 리스크 분석 자동화</p>
+          </div>
+          <div class="text-xs bg-slate-100 text-slate-700 px-3 py-1.5 rounded-lg font-mono">
+            자동 트리거: "삼성전자 분석해줘", "AAPL 밸류에이션", "NVDA 적정주가" 등
+          </div>
+        </div>
+
+        <!-- 5단계 분석 프로세스 -->
+        <div>
+          <h4 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
+            <span>🎯</span> 5-Step 표준 분석 프로세스
+          </h4>
+          <div class="grid sm:grid-cols-5 gap-3">
+            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs space-y-1">
+              <span class="font-bold text-indigo-600 block">1단계: 기업 개요/BM</span>
+              <p class="text-slate-600">사업부문별 매출/영익 비중, P·Q·C 수익구조, 시장점유율</p>
+            </div>
+            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs space-y-1">
+              <span class="font-bold text-indigo-600 block">2단계: 재무제표 분석</span>
+              <p class="text-slate-600">매출 성장성, OPM/ROE 수익성, 부채비율, 잉여현금흐름(FCF)</p>
+            </div>
+            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs space-y-1">
+              <span class="font-bold text-indigo-600 block">3단계: 해자(Moat) 평가</span>
+              <p class="text-slate-600">무형자산, 락인(전환비용), 네트워크 효과, Peer Group 비교</p>
+            </div>
+            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs space-y-1">
+              <span class="font-bold text-indigo-600 block">4단계: 밸류에이션</span>
+              <p class="text-slate-600">PER, PBR, EV/EBITDA, PEG 및 거시/지배구조 리스크</p>
+            </div>
+            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs space-y-1">
+              <span class="font-bold text-indigo-600 block">5단계: 표준 보고서</span>
+              <p class="text-slate-600">Bull vs Bear 균형 분석, 적정가치 산출, 투자 전략 제시</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 서브 리소스 및 스크립트 -->
+        <div class="grid md:grid-cols-3 gap-4 pt-2">
+          <div class="p-4 bg-indigo-50/50 rounded-xl border border-indigo-100">
+            <span class="text-xs font-semibold text-indigo-700 uppercase">참조 가이드</span>
+            <h5 class="font-bold text-slate-900 text-sm mt-1">valuation_guide.md</h5>
+            <p class="text-xs text-slate-600 mt-1">PER, PBR, PEG(&lt;1.0), EV/EBITDA, ROE 듀퐁 분해 공식 및 실무 평가 기준선</p>
+          </div>
+          <div class="p-4 bg-emerald-50/50 rounded-xl border border-emerald-100">
+            <span class="text-xs font-semibold text-emerald-700 uppercase">보고서 템플릿</span>
+            <h5 class="font-bold text-slate-900 text-sm mt-1">report_template.md</h5>
+            <p class="text-xs text-slate-600 mt-1">Executive Summary, 재무 비교표, Bull/Bear 시나리오를 포함하는 완성형 마크다운 서식</p>
+          </div>
+          <div class="p-4 bg-amber-50/50 rounded-xl border border-amber-100">
+            <span class="text-xs font-semibold text-amber-700 uppercase">헬퍼 스크립트</span>
+            <h5 class="font-bold text-slate-900 text-sm mt-1">fetch_financials.py</h5>
+            <p class="text-xs text-slate-600 mt-1">티커 입력 시 yfinance로부터 주요 펀더멘털 및 밸류에이션 데이터를 JSON으로 즉시 추출</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 3. 빌트인 시스템 스킬 섹션 -->
+    <!-- ========================================================================= -->
+    <section id="section-builtin-skills" class="scroll-mt-8 space-y-6">
+      <div class="border-b border-slate-200 pb-3 flex items-center justify-between">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
+            <span class="text-indigo-600">03.</span> 빌트인 시스템 스킬 (Built-in Skills - 5종)
+          </h2>
+          <p class="text-sm text-slate-500 mt-1">디렉터리: <code>C:\Users\HOME\.gemini\antigravity-cli\builtin\skills</code></p>
+        </div>
+        <span class="px-3 py-1 bg-purple-50 text-purple-700 border border-purple-200 text-xs font-semibold rounded-full">Core Engine</span>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- 1. agy-customizations -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:border-indigo-300 transition-colors flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2.5 py-0.5 bg-slate-100 text-slate-700 text-xs font-bold rounded">Customization</span>
+              <span class="text-xs text-slate-400">전역 설정</span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900">agy-customizations</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              Antigravity 커스터마이징 시스템(Rules, Skills, Plugins, Hooks, MCP Servers)의 설계 원칙, 로딩 우선순위 및 계층 구조 안내.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-indigo-600 font-medium">
+            주요 컴포넌트: Rules · Skills · Plugins · Hooks · MCP
+          </div>
+        </div>
+
+        <!-- 2. antigravity-guide -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:border-indigo-300 transition-colors flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2.5 py-0.5 bg-slate-100 text-slate-700 text-xs font-bold rounded">Platform Guide</span>
+              <span class="text-xs text-slate-400">통합 레퍼런스</span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900">antigravity-guide</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              Antigravity CLI(`agy`), Antigravity IDE, 데스크톱 앱 2.0, Python SDK 가이드 및 공식 온라인 사이트맵 제공.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-indigo-600 font-medium">
+            주요 컴포넌트: CLI · IDE · Desktop 2.0 · Python SDK
+          </div>
+        </div>
+
+        <!-- 3. generative_ui -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:border-indigo-300 transition-colors flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2.5 py-0.5 bg-slate-100 text-slate-700 text-xs font-bold rounded">Interactive UI</span>
+              <span class="text-xs text-slate-400">시각화 엔진</span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900">generative_ui</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              대화창 내 인라인 위젯(`&lt;agent-embed&gt;`) 및 단독 인터랙티브 HTML 차트/대시보드를 생성하여 테마와 자동 동기화 렌더링.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-indigo-600 font-medium">
+            주요 컴포넌트: 인라인 임베드 · Tailwind CSS · 다크/라이트 테마
+          </div>
+        </div>
+
+        <!-- 4. migrate-workflows -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:border-indigo-300 transition-colors flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2.5 py-0.5 bg-slate-100 text-slate-700 text-xs font-bold rounded">Migration</span>
+              <span class="text-xs text-slate-400">자동 변환</span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900">migrate-workflows</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              구버전 워크플로우(`.agents/workflows/*.md`)를 최신 표준 `SKILL.md` 체계로 자동 변환하고 기존 파일을 `.md.bak`으로 안전 보존.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-indigo-600 font-medium">
+            주요 컴포넌트: YAML Frontmatter 변환 · 백업 아카이빙
+          </div>
+        </div>
+
+        <!-- 5. permissioned-github -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:border-indigo-300 transition-colors flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2.5 py-0.5 bg-slate-100 text-slate-700 text-xs font-bold rounded">Security &amp; Git</span>
+              <span class="text-xs text-slate-400">보안 프로토콜</span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900">permissioned-github</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              `gh` CLI 및 `git` 명령을 안전하게 수행하며, PR/이슈/브랜치/워크플로우 실행 시 세분화된 최소 권한을 사용자에게 요청.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-indigo-600 font-medium">
+            주요 컴포넌트: 최소 권한 승인 포맷 · gh CLI · GitHub Actions
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-slate-900 text-slate-400 text-center py-8 border-t border-slate-800 text-xs">
+    <div class="max-w-6xl mx-auto px-6 space-y-2">
+      <p class="font-medium text-slate-300">Antigravity AI Assistant Framework</p>
+      <p>본 문서는 사용자 PC의 로컬 규칙 파일([AGENTS.md]) 및 스킬 정의 파일을 기반으로 자동 생성되었습니다.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
