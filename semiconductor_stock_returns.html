@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>반도체 핵심 28개 종목 기간별 수익률 대시보드 (KRX 정규장 시세 전용)</title>
+  <title>반도체 핵심 28개 종목 기간별 수익률 대시보드 (삼성전자·SK하이닉스 상단 고정)</title>
   <!-- Google Fonts & FontAwesome -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,6 +26,10 @@
       --text-muted: #94a3b8;
       --text-dim: #64748b;
       --table-header-bg: #0d1322;
+      
+      /* Pinned Row Styling (Dark) */
+      --pinned-bg: rgba(6, 182, 212, 0.08);
+      --pinned-border: rgba(6, 182, 212, 0.25);
       
       /* Korean Stock Colors: Red (+) / Blue (-) */
       --stock-red: #ef4444;
@@ -58,6 +62,10 @@
       --text-muted: #475569;
       --text-dim: #94a3b8;
       --table-header-bg: #f1f5f9;
+      
+      /* Pinned Row Styling (Light) */
+      --pinned-bg: #f0fdf4;
+      --pinned-border: #bbf7d0;
       
       /* Korean Stock Colors in Light Theme */
       --stock-red: #dc2626;
@@ -468,6 +476,25 @@
       background-color: var(--bg-card-hover);
     }
 
+    /* Pinned Row Highlight */
+    tr.pinned-row {
+      background-color: var(--pinned-bg) !important;
+      border-left: 3px solid var(--accent-cyan);
+    }
+
+    .pinned-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: rgba(6, 182, 212, 0.2);
+      color: var(--accent-cyan);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      margin-left: 4px;
+    }
+
     tbody td {
       padding: 14px 16px;
       font-size: 0.88rem;
@@ -690,6 +717,9 @@
         <span class="badge-pill badge-krx">
           <i class="fa-solid fa-building-columns"></i> KRX 정규 거래소 시세 전용 (NXT 대체거래소 제외)
         </span>
+        <span class="badge-pill" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.35);">
+          <i class="fa-solid fa-thumbtack"></i> 삼성전자·SK하이닉스 상단 고정
+        </span>
       </div>
     </div>
     <div class="header-controls">
@@ -834,8 +864,8 @@
   <!-- Footer -->
   <footer>
     <div>
-      <span>총 28개 종목 모니터링 중</span> | 
-      <span>데이터 출처: 실시간 한국거래소(KRX 정규장) 공식 시세 연동 (NXT 제외)</span> |
+      <span>총 28개 종목 모니터링 중 (삼성전자·SK하이닉스 상단 고정)</span> | 
+      <span>데이터 출처: 한국거래소(KRX 정규장) 실시간 시세 연동</span> |
       <span id="last-updated-text">마지막 갱신: 방금 전</span>
     </div>
     <div>
@@ -899,11 +929,12 @@
 </div>
 
 <script>
-// Initial Embedded Dataset for All 28 Semiconductor Stocks (KRX Regular Market Close Prices)
+// Initial Embedded Dataset for All 28 Semiconductor Stocks (KRX Final Close Prices)
 const STOCKS_DATA = [
   {
     "name": "삼성전자",
     "code": "005930",
+    "ex": "KS",
     "currentPrice": 250500,
     "prevPrice": 261000,
     "dayChangeRate": -4.02,
@@ -1053,10 +1084,11 @@ const STOCKS_DATA = [
   {
     "name": "SK하이닉스",
     "code": "000660",
-    "currentPrice": 1619000,
+    "ex": "KS",
+    "currentPrice": 1613000,
     "prevPrice": 1693000,
-    "dayChangeRate": -4.37,
-    "dayChange": -74000,
+    "dayChangeRate": -4.73,
+    "dayChange": -80000,
     "d0": "20260902",
     "d5": "20260826",
     "d10": "20260819",
@@ -1066,10 +1098,10 @@ const STOCKS_DATA = [
     "p10": 1500000,
     "p20": 1577000,
     "p30": 1836000,
-    "r5": -4.09,
-    "r10": 7.93,
-    "r20": 2.66,
-    "r30": -11.82,
+    "r5": -4.44,
+    "r10": 7.53,
+    "r20": 2.28,
+    "r30": -12.15,
     "chartData": [
       {
         "date": "20260721",
@@ -1193,7 +1225,7 @@ const STOCKS_DATA = [
       },
       {
         "date": "20260902",
-        "close": 1619000
+        "close": 1613000
       }
     ],
     "sector": "종합반도체",
@@ -1202,10 +1234,11 @@ const STOCKS_DATA = [
   {
     "name": "대덕전자",
     "code": "353200",
-    "currentPrice": 109700,
+    "ex": "KS",
+    "currentPrice": 108900,
     "prevPrice": 111500,
-    "dayChangeRate": -1.61,
-    "dayChange": -1800,
+    "dayChangeRate": -2.33,
+    "dayChange": -2600,
     "d0": "20260902",
     "d5": "20260826",
     "d10": "20260819",
@@ -1215,10 +1248,10 @@ const STOCKS_DATA = [
     "p10": 114200,
     "p20": 97800,
     "p30": 120500,
-    "r5": 2.52,
-    "r10": -3.94,
-    "r20": 12.17,
-    "r30": -8.96,
+    "r5": 1.78,
+    "r10": -4.64,
+    "r20": 11.35,
+    "r30": -9.63,
     "chartData": [
       {
         "date": "20260721",
@@ -1342,7 +1375,7 @@ const STOCKS_DATA = [
       },
       {
         "date": "20260902",
-        "close": 109700
+        "close": 108900
       }
     ],
     "sector": "패키지 기판",
@@ -1351,10 +1384,11 @@ const STOCKS_DATA = [
   {
     "name": "이수페타시스",
     "code": "007660",
-    "currentPrice": 112600,
+    "ex": "KS",
+    "currentPrice": 112000,
     "prevPrice": 111100,
-    "dayChangeRate": 1.35,
-    "dayChange": 1500,
+    "dayChangeRate": 0.81,
+    "dayChange": 900,
     "d0": "20260902",
     "d5": "20260826",
     "d10": "20260819",
@@ -1364,10 +1398,10 @@ const STOCKS_DATA = [
     "p10": 104400,
     "p20": 79600,
     "p30": 88600,
-    "r5": 1.62,
-    "r10": 7.85,
-    "r20": 41.46,
-    "r30": 27.09,
+    "r5": 1.08,
+    "r10": 7.28,
+    "r20": 40.7,
+    "r30": 26.41,
     "chartData": [
       {
         "date": "20260721",
@@ -1491,7 +1525,7 @@ const STOCKS_DATA = [
       },
       {
         "date": "20260902",
-        "close": 112600
+        "close": 112000
       }
     ],
     "sector": "패키지 기판",
@@ -1500,10 +1534,11 @@ const STOCKS_DATA = [
   {
     "name": "심텍",
     "code": "222800",
-    "currentPrice": 124100,
+    "ex": "KQ",
+    "currentPrice": 123400,
     "prevPrice": 125600,
-    "dayChangeRate": -1.19,
-    "dayChange": -1500,
+    "dayChangeRate": -1.75,
+    "dayChange": -2200,
     "d0": "20260902",
     "d5": "20260826",
     "d10": "20260819",
@@ -1513,10 +1548,10 @@ const STOCKS_DATA = [
     "p10": 110700,
     "p20": 97100,
     "p30": 100900,
-    "r5": 10.12,
-    "r10": 12.1,
-    "r20": 27.81,
-    "r30": 22.99,
+    "r5": 9.49,
+    "r10": 11.47,
+    "r20": 27.09,
+    "r30": 22.3,
     "chartData": [
       {
         "date": "20260721",
@@ -1640,7 +1675,7 @@ const STOCKS_DATA = [
       },
       {
         "date": "20260902",
-        "close": 124100
+        "close": 123400
       }
     ],
     "sector": "패키지 기판",
@@ -1649,10 +1684,11 @@ const STOCKS_DATA = [
   {
     "name": "티엘비",
     "code": "356860",
-    "currentPrice": 39950,
+    "ex": "KQ",
+    "currentPrice": 39600,
     "prevPrice": 41200,
-    "dayChangeRate": -3.03,
-    "dayChange": -1250,
+    "dayChangeRate": -3.88,
+    "dayChange": -1600,
     "d0": "20260902",
     "d5": "20260826",
     "d10": "20260819",
@@ -1662,10 +1698,10 @@ const STOCKS_DATA = [
     "p10": 33850,
     "p20": 26250,
     "p30": 33500,
-    "r5": 2.04,
-    "r10": 18.02,
-    "r20": 52.19,
-    "r30": 19.25,
+    "r5": 1.15,
+    "r10": 16.99,
+    "r20": 50.86,
+    "r30": 18.21,
     "chartData": [
       {
         "date": "20260721",
@@ -1789,7 +1825,7 @@ const STOCKS_DATA = [
       },
       {
         "date": "20260902",
-        "close": 39950
+        "close": 39600
       }
     ],
     "sector": "패키지 기판",
@@ -1798,10 +1834,11 @@ const STOCKS_DATA = [
   {
     "name": "피에스케이",
     "code": "319660",
-    "currentPrice": 125400,
+    "ex": "KQ",
+    "currentPrice": 124000,
     "prevPrice": 125700,
-    "dayChangeRate": -0.24,
-    "dayChange": -300,
+    "dayChangeRate": -1.35,
+    "dayChange": -1700,
     "d0": "20260902",
     "d5": "20260826",
     "d10": "20260819",
@@ -1811,10 +1848,10 @@ const STOCKS_DATA = [
     "p10": 129100,
     "p20": 126000,
     "p30": 170000,
-    "r5": -3.17,
-    "r10": -2.87,
-    "r20": -0.48,
-    "r30": -26.24,
+    "r5": -4.25,
+    "r10": -3.95,
+    "r20": -1.59,
+    "r30": -27.06,
     "chartData": [
       {
         "date": "20260721",
@@ -1938,7 +1975,7 @@ const STOCKS_DATA = [
       },
       {
         "date": "20260902",
-        "close": 125400
+        "close": 124000
       }
     ],
     "sector": "전공정 장비",
@@ -1947,10 +1984,11 @@ const STOCKS_DATA = [
   {
     "name": "테스",
     "code": "095610",
-    "currentPrice": 136600,
+    "ex": "KQ",
+    "currentPrice": 136000,
     "prevPrice": 135500,
-    "dayChangeRate": 0.81,
-    "dayChange": 1100,
+    "dayChangeRate": 0.37,
+    "dayChange": 500,
     "d0": "20260902",
     "d5": "20260826",
     "d10": "20260819",
@@ -1960,10 +1998,10 @@ const STOCKS_DATA = [
     "p10": 144000,
     "p20": 132400,
     "p30": 165700,
-    "r5": -1.09,
-    "r10": -5.14,
-    "r20": 3.17,
-    "r30": -17.56,
+    "r5": -1.52,
+    "r10": -5.56,
+    "r20": 2.72,
+    "r30": -17.92,
     "chartData": [
       {
         "date": "20260721",
@@ -2087,7 +2125,7 @@ const STOCKS_DATA = [
       },
       {
         "date": "20260902",
-        "close": 136600
+        "close": 136000
       }
     ],
     "sector": "전공정 장비",
@@ -2096,10 +2134,11 @@ const STOCKS_DATA = [
   {
     "name": "기가비스",
     "code": "420770",
-    "currentPrice": 101700,
+    "ex": "KQ",
+    "currentPrice": 102300,
     "prevPrice": 104800,
-    "dayChangeRate": -2.96,
-    "dayChange": -3100,
+    "dayChangeRate": -2.39,
+    "dayChange": -2500,
     "d0": "20260902",
     "d5": "20260826",
     "d10": "20260819",
@@ -2109,10 +2148,10 @@ const STOCKS_DATA = [
     "p10": 128700,
     "p20": 114800,
     "p30": 142600,
-    "r5": -2.68,
-    "r10": -20.98,
-    "r20": -11.41,
-    "r30": -28.68,
+    "r5": -2.11,
+    "r10": -20.51,
+    "r20": -10.89,
+    "r30": -28.26,
     "chartData": [
       {
         "date": "20260721",
@@ -2236,7 +2275,7 @@ const STOCKS_DATA = [
       },
       {
         "date": "20260902",
-        "close": 101700
+        "close": 102300
       }
     ],
     "sector": "검사 장비",
@@ -2245,10 +2284,11 @@ const STOCKS_DATA = [
   {
     "name": "넥스틴",
     "code": "348210",
-    "currentPrice": 30950,
+    "ex": "KQ",
+    "currentPrice": 30800,
     "prevPrice": 31400,
-    "dayChangeRate": -1.43,
-    "dayChange": -450,
+    "dayChangeRate": -1.91,
+    "dayChange": -600,
     "d0": "20260902",
     "d5": "20260826",
     "d10": "20260819",
@@ -2258,10 +2298,10 @@ const STOCKS_DATA = [
     "p10": 34900,
     "p20": 32300,
     "p30": 35150,
-    "r5": -6.21,
-    "r10": -11.32,
-    "r20": -4.18,
-    "r30": -11.95,
+    "r5": -6.67,
+    "r10": -11.75,
+    "r20": -4.64,
+    "r30": -12.38,
     "chartData": [
       {
         "date": "20260721",
@@ -2385,7 +2425,7 @@ const STOCKS_DATA = [
       },
       {
         "date": "20260902",
-        "close": 30950
+        "close": 30800
       }
     ],
     "sector": "검사 장비",
@@ -2394,10 +2434,11 @@ const STOCKS_DATA = [
   {
     "name": "원익IPS",
     "code": "240810",
-    "currentPrice": 110600,
+    "ex": "KQ",
+    "currentPrice": 109700,
     "prevPrice": 110000,
-    "dayChangeRate": 0.55,
-    "dayChange": 600,
+    "dayChangeRate": -0.27,
+    "dayChange": -300,
     "d0": "20260902",
     "d5": "20260826",
     "d10": "20260819",
@@ -2407,10 +2448,10 @@ const STOCKS_DATA = [
     "p10": 109300,
     "p20": 96500,
     "p30": 116100,
-    "r5": 1.19,
-    "r10": 1.19,
-    "r20": 14.61,
-    "r30": -4.74,
+    "r5": 0.37,
+    "r10": 0.37,
+    "r20": 13.68,
+    "r30": -5.51,
     "chartData": [
       {
         "date": "20260721",
@@ -2534,7 +2575,7 @@ const STOCKS_DATA = [
       },
       {
         "date": "20260902",
-        "close": 110600
+        "close": 109700
       }
     ],
     "sector": "전공정 장비",
@@ -2543,10 +2584,11 @@ const STOCKS_DATA = [
   {
     "name": "유진테크",
     "code": "084370",
-    "currentPrice": 134400,
+    "ex": "KQ",
+    "currentPrice": 133500,
     "prevPrice": 132100,
-    "dayChangeRate": 1.74,
-    "dayChange": 2300,
+    "dayChangeRate": 1.06,
+    "dayChange": 1400,
     "d0": "20260902",
     "d5": "20260826",
     "d10": "20260819",
@@ -2556,10 +2598,10 @@ const STOCKS_DATA = [
     "p10": 130100,
     "p20": 118400,
     "p30": 125800,
-    "r5": 0.22,
-    "r10": 3.31,
-    "r20": 13.51,
-    "r30": 6.84,
+    "r5": -0.45,
+    "r10": 2.61,
+    "r20": 12.75,
+    "r30": 6.12,
     "chartData": [
       {
         "date": "20260721",
@@ -2683,7 +2725,7 @@ const STOCKS_DATA = [
       },
       {
         "date": "20260902",
-        "close": 134400
+        "close": 133500
       }
     ],
     "sector": "전공정 장비",
@@ -2692,10 +2734,11 @@ const STOCKS_DATA = [
   {
     "name": "주성엔지니어링",
     "code": "036930",
-    "currentPrice": 175900,
+    "ex": "KQ",
+    "currentPrice": 173700,
     "prevPrice": 173000,
-    "dayChangeRate": 1.68,
-    "dayChange": 2900,
+    "dayChangeRate": 0.4,
+    "dayChange": 700,
     "d0": "20260902",
     "d5": "20260826",
     "d10": "20260819",
@@ -2705,10 +2748,10 @@ const STOCKS_DATA = [
     "p10": 171600,
     "p20": 136000,
     "p30": 169200,
-    "r5": 1.44,
-    "r10": 2.51,
-    "r20": 29.34,
-    "r30": 3.96,
+    "r5": 0.17,
+    "r10": 1.22,
+    "r20": 27.72,
+    "r30": 2.66,
     "chartData": [
       {
         "date": "20260721",
@@ -2832,7 +2875,7 @@ const STOCKS_DATA = [
       },
       {
         "date": "20260902",
-        "close": 175900
+        "close": 173700
       }
     ],
     "sector": "전공정 장비",
@@ -2841,10 +2884,11 @@ const STOCKS_DATA = [
   {
     "name": "한미반도체",
     "code": "042700",
-    "currentPrice": 214000,
+    "ex": "KS",
+    "currentPrice": 213500,
     "prevPrice": 215000,
-    "dayChangeRate": -0.47,
-    "dayChange": -1000,
+    "dayChangeRate": -0.7,
+    "dayChange": -1500,
     "d0": "20260902",
     "d5": "20260826",
     "d10": "20260819",
@@ -2854,10 +2898,10 @@ const STOCKS_DATA = [
     "p10": 221000,
     "p20": 203000,
     "p30": 224000,
-    "r5": -2.51,
-    "r10": -3.17,
-    "r20": 5.42,
-    "r30": -4.46,
+    "r5": -2.73,
+    "r10": -3.39,
+    "r20": 5.17,
+    "r30": -4.69,
     "chartData": [
       {
         "date": "20260721",
@@ -2981,7 +3025,7 @@ const STOCKS_DATA = [
       },
       {
         "date": "20260902",
-        "close": 214000
+        "close": 213500
       }
     ],
     "sector": "후공정 패키징",
@@ -2990,10 +3034,11 @@ const STOCKS_DATA = [
   {
     "name": "한솔케미칼",
     "code": "014680",
-    "currentPrice": 194200,
+    "ex": "KS",
+    "currentPrice": 193800,
     "prevPrice": 205500,
-    "dayChangeRate": -5.5,
-    "dayChange": -11300,
+    "dayChangeRate": -5.69,
+    "dayChange": -11700,
     "d0": "20260902",
     "d5": "20260826",
     "d10": "20260819",
@@ -3003,10 +3048,10 @@ const STOCKS_DATA = [
     "p10": 202500,
     "p20": 214500,
     "p30": 229000,
-    "r5": -4.1,
-    "r10": -4.1,
-    "r20": -9.46,
-    "r30": -15.2,
+    "r5": -4.3,
+    "r10": -4.3,
+    "r20": -9.65,
+    "r30": -15.37,
     "chartData": [
       {
         "date": "20260721",
@@ -3130,7 +3175,7 @@ const STOCKS_DATA = [
       },
       {
         "date": "20260902",
-        "close": 194200
+        "close": 193800
       }
     ],
     "sector": "소재/케미칼",
@@ -3139,10 +3184,11 @@ const STOCKS_DATA = [
   {
     "name": "솔브레인",
     "code": "357780",
-    "currentPrice": 328500,
+    "ex": "KQ",
+    "currentPrice": 329500,
     "prevPrice": 340000,
-    "dayChangeRate": -3.38,
-    "dayChange": -11500,
+    "dayChangeRate": -3.09,
+    "dayChange": -10500,
     "d0": "20260902",
     "d5": "20260826",
     "d10": "20260819",
@@ -3152,10 +3198,10 @@ const STOCKS_DATA = [
     "p10": 330500,
     "p20": 270500,
     "p30": 280000,
-    "r5": -0.45,
-    "r10": -0.61,
-    "r20": 21.44,
-    "r30": 17.32,
+    "r5": -0.15,
+    "r10": -0.3,
+    "r20": 21.81,
+    "r30": 17.68,
     "chartData": [
       {
         "date": "20260721",
@@ -3279,7 +3325,7 @@ const STOCKS_DATA = [
       },
       {
         "date": "20260902",
-        "close": 328500
+        "close": 329500
       }
     ],
     "sector": "소재/케미칼",
@@ -3288,10 +3334,11 @@ const STOCKS_DATA = [
   {
     "name": "동진쎄미켐",
     "code": "005290",
-    "currentPrice": 40650,
+    "ex": "KQ",
+    "currentPrice": 40400,
     "prevPrice": 41900,
-    "dayChangeRate": -2.98,
-    "dayChange": -1250,
+    "dayChangeRate": -3.58,
+    "dayChange": -1500,
     "d0": "20260902",
     "d5": "20260826",
     "d10": "20260819",
@@ -3301,10 +3348,10 @@ const STOCKS_DATA = [
     "p10": 42200,
     "p20": 40550,
     "p30": 42150,
-    "r5": -4.01,
-    "r10": -3.67,
-    "r20": 0.25,
-    "r30": -3.56,
+    "r5": -4.6,
+    "r10": -4.27,
+    "r20": -0.37,
+    "r30": -4.15,
     "chartData": [
       {
         "date": "20260721",
@@ -3428,7 +3475,7 @@ const STOCKS_DATA = [
       },
       {
         "date": "20260902",
-        "close": 40650
+        "close": 40400
       }
     ],
     "sector": "소재/케미칼",
@@ -3437,10 +3484,11 @@ const STOCKS_DATA = [
   {
     "name": "티씨케이",
     "code": "064760",
-    "currentPrice": 249000,
+    "ex": "KQ",
+    "currentPrice": 247000,
     "prevPrice": 241000,
-    "dayChangeRate": 3.32,
-    "dayChange": 8000,
+    "dayChangeRate": 2.49,
+    "dayChange": 6000,
     "d0": "20260902",
     "d5": "20260826",
     "d10": "20260819",
@@ -3450,10 +3498,10 @@ const STOCKS_DATA = [
     "p10": 231500,
     "p20": 177000,
     "p30": 209500,
-    "r5": 4.4,
-    "r10": 7.56,
-    "r20": 40.68,
-    "r30": 18.85,
+    "r5": 3.56,
+    "r10": 6.7,
+    "r20": 39.55,
+    "r30": 17.9,
     "chartData": [
       {
         "date": "20260721",
@@ -3577,7 +3625,7 @@ const STOCKS_DATA = [
       },
       {
         "date": "20260902",
-        "close": 249000
+        "close": 247000
       }
     ],
     "sector": "부품/소모품",
@@ -3586,10 +3634,11 @@ const STOCKS_DATA = [
   {
     "name": "에스앤에스텍",
     "code": "101490",
-    "currentPrice": 40550,
+    "ex": "KQ",
+    "currentPrice": 40300,
     "prevPrice": 42000,
-    "dayChangeRate": -3.45,
-    "dayChange": -1450,
+    "dayChangeRate": -4.05,
+    "dayChange": -1700,
     "d0": "20260902",
     "d5": "20260826",
     "d10": "20260819",
@@ -3599,10 +3648,10 @@ const STOCKS_DATA = [
     "p10": 42050,
     "p20": 41900,
     "p30": 40350,
-    "r5": -3.57,
-    "r10": -3.57,
-    "r20": -3.22,
-    "r30": 0.5,
+    "r5": -4.16,
+    "r10": -4.16,
+    "r20": -3.82,
+    "r30": -0.12,
     "chartData": [
       {
         "date": "20260721",
@@ -3726,7 +3775,7 @@ const STOCKS_DATA = [
       },
       {
         "date": "20260902",
-        "close": 40550
+        "close": 40300
       }
     ],
     "sector": "소재/원판",
@@ -3735,10 +3784,11 @@ const STOCKS_DATA = [
   {
     "name": "원익QnC",
     "code": "074600",
-    "currentPrice": 25600,
+    "ex": "KQ",
+    "currentPrice": 25400,
     "prevPrice": 25750,
-    "dayChangeRate": -0.58,
-    "dayChange": -150,
+    "dayChangeRate": -1.36,
+    "dayChange": -350,
     "d0": "20260902",
     "d5": "20260826",
     "d10": "20260819",
@@ -3748,10 +3798,10 @@ const STOCKS_DATA = [
     "p10": 27350,
     "p20": 26700,
     "p30": 27500,
-    "r5": -4.12,
-    "r10": -6.4,
-    "r20": -4.12,
-    "r30": -6.91,
+    "r5": -4.87,
+    "r10": -7.13,
+    "r20": -4.87,
+    "r30": -7.64,
     "chartData": [
       {
         "date": "20260721",
@@ -3875,7 +3925,7 @@ const STOCKS_DATA = [
       },
       {
         "date": "20260902",
-        "close": 25600
+        "close": 25400
       }
     ],
     "sector": "부품/소모품",
@@ -3884,10 +3934,11 @@ const STOCKS_DATA = [
   {
     "name": "파크시스템스",
     "code": "140860",
-    "currentPrice": 251000,
+    "ex": "KQ",
+    "currentPrice": 250500,
     "prevPrice": 250000,
-    "dayChangeRate": 0.4,
-    "dayChange": 1000,
+    "dayChangeRate": 0.2,
+    "dayChange": 500,
     "d0": "20260902",
     "d5": "20260826",
     "d10": "20260819",
@@ -3897,10 +3948,10 @@ const STOCKS_DATA = [
     "p10": 272000,
     "p20": 252000,
     "p30": 246500,
-    "r5": -6.86,
-    "r10": -7.72,
-    "r20": -0.4,
-    "r30": 1.83,
+    "r5": -7.05,
+    "r10": -7.9,
+    "r20": -0.6,
+    "r30": 1.62,
     "chartData": [
       {
         "date": "20260721",
@@ -4024,7 +4075,7 @@ const STOCKS_DATA = [
       },
       {
         "date": "20260902",
-        "close": 251000
+        "close": 250500
       }
     ],
     "sector": "계측 장비",
@@ -4033,10 +4084,11 @@ const STOCKS_DATA = [
   {
     "name": "씨엠티엑스",
     "code": "388210",
-    "currentPrice": 70200,
+    "ex": "KQ",
+    "currentPrice": 69600,
     "prevPrice": 71800,
-    "dayChangeRate": -2.23,
-    "dayChange": -1600,
+    "dayChangeRate": -3.06,
+    "dayChange": -2200,
     "d0": "20260902",
     "d5": "20260826",
     "d10": "20260819",
@@ -4046,10 +4098,10 @@ const STOCKS_DATA = [
     "p10": 73800,
     "p20": 75300,
     "p30": 88800,
-    "r5": -4.1,
-    "r10": -4.88,
-    "r20": -6.77,
-    "r30": -20.95,
+    "r5": -4.92,
+    "r10": -5.69,
+    "r20": -7.57,
+    "r30": -21.62,
     "chartData": [
       {
         "date": "20260721",
@@ -4173,7 +4225,7 @@ const STOCKS_DATA = [
       },
       {
         "date": "20260902",
-        "close": 70200
+        "close": 69600
       }
     ],
     "sector": "부품/소재",
@@ -4182,10 +4234,11 @@ const STOCKS_DATA = [
   {
     "name": "월덱스",
     "code": "101160",
-    "currentPrice": 29800,
+    "ex": "KQ",
+    "currentPrice": 29700,
     "prevPrice": 29300,
-    "dayChangeRate": 1.71,
-    "dayChange": 500,
+    "dayChangeRate": 1.37,
+    "dayChange": 400,
     "d0": "20260902",
     "d5": "20260826",
     "d10": "20260819",
@@ -4195,10 +4248,10 @@ const STOCKS_DATA = [
     "p10": 28400,
     "p20": 28900,
     "p30": 29450,
-    "r5": 2.94,
-    "r10": 4.93,
-    "r20": 3.11,
-    "r30": 1.19,
+    "r5": 2.59,
+    "r10": 4.58,
+    "r20": 2.77,
+    "r30": 0.85,
     "chartData": [
       {
         "date": "20260721",
@@ -4322,7 +4375,7 @@ const STOCKS_DATA = [
       },
       {
         "date": "20260902",
-        "close": 29800
+        "close": 29700
       }
     ],
     "sector": "부품/소모품",
@@ -4331,6 +4384,7 @@ const STOCKS_DATA = [
   {
     "name": "리노공업",
     "code": "058470",
+    "ex": "KQ",
     "currentPrice": 64400,
     "prevPrice": 65500,
     "dayChangeRate": -1.68,
@@ -4480,10 +4534,11 @@ const STOCKS_DATA = [
   {
     "name": "ISC",
     "code": "095340",
-    "currentPrice": 170300,
+    "ex": "KQ",
+    "currentPrice": 170500,
     "prevPrice": 157100,
-    "dayChangeRate": 8.4,
-    "dayChange": 13200,
+    "dayChangeRate": 8.53,
+    "dayChange": 13400,
     "d0": "20260902",
     "d5": "20260826",
     "d10": "20260819",
@@ -4493,10 +4548,10 @@ const STOCKS_DATA = [
     "p10": 177300,
     "p20": 131500,
     "p30": 139200,
-    "r5": 3.34,
-    "r10": -3.95,
-    "r20": 29.51,
-    "r30": 22.34,
+    "r5": 3.46,
+    "r10": -3.84,
+    "r20": 29.66,
+    "r30": 22.49,
     "chartData": [
       {
         "date": "20260721",
@@ -4620,7 +4675,7 @@ const STOCKS_DATA = [
       },
       {
         "date": "20260902",
-        "close": 170300
+        "close": 170500
       }
     ],
     "sector": "테스트 부품",
@@ -4629,10 +4684,11 @@ const STOCKS_DATA = [
   {
     "name": "에프에스티",
     "code": "036810",
-    "currentPrice": 27700,
+    "ex": "KQ",
+    "currentPrice": 27400,
     "prevPrice": 28100,
-    "dayChangeRate": -1.42,
-    "dayChange": -400,
+    "dayChangeRate": -2.49,
+    "dayChange": -700,
     "d0": "20260902",
     "d5": "20260826",
     "d10": "20260819",
@@ -4642,10 +4698,10 @@ const STOCKS_DATA = [
     "p10": 23450,
     "p20": 19900,
     "p30": 20350,
-    "r5": 7.99,
-    "r10": 18.12,
-    "r20": 39.2,
-    "r30": 36.12,
+    "r5": 6.82,
+    "r10": 16.84,
+    "r20": 37.69,
+    "r30": 34.64,
     "chartData": [
       {
         "date": "20260721",
@@ -4769,7 +4825,7 @@ const STOCKS_DATA = [
       },
       {
         "date": "20260902",
-        "close": 27700
+        "close": 27400
       }
     ],
     "sector": "소재/장비",
@@ -4778,10 +4834,11 @@ const STOCKS_DATA = [
   {
     "name": "한양이엔지",
     "code": "045100",
-    "currentPrice": 29550,
+    "ex": "KQ",
+    "currentPrice": 29800,
     "prevPrice": 30150,
-    "dayChangeRate": -1.99,
-    "dayChange": -600,
+    "dayChangeRate": -1.16,
+    "dayChange": -350,
     "d0": "20260902",
     "d5": "20260826",
     "d10": "20260819",
@@ -4791,10 +4848,10 @@ const STOCKS_DATA = [
     "p10": 30350,
     "p20": 29500,
     "p30": 30200,
-    "r5": -2.31,
-    "r10": -2.64,
-    "r20": 0.17,
-    "r30": -2.15,
+    "r5": -1.49,
+    "r10": -1.81,
+    "r20": 1.02,
+    "r30": -1.32,
     "chartData": [
       {
         "date": "20260721",
@@ -4918,7 +4975,7 @@ const STOCKS_DATA = [
       },
       {
         "date": "20260902",
-        "close": 29550
+        "close": 29800
       }
     ],
     "sector": "인프라/배관",
@@ -4927,10 +4984,11 @@ const STOCKS_DATA = [
   {
     "name": "브이엠",
     "code": "089970",
-    "currentPrice": 55300,
+    "ex": "KQ",
+    "currentPrice": 55800,
     "prevPrice": 54100,
-    "dayChangeRate": 2.22,
-    "dayChange": 1200,
+    "dayChangeRate": 3.14,
+    "dayChange": 1700,
     "d0": "20260902",
     "d5": "20260826",
     "d10": "20260819",
@@ -4940,10 +4998,10 @@ const STOCKS_DATA = [
     "p10": 63100,
     "p20": 66900,
     "p30": 89300,
-    "r5": -6.11,
-    "r10": -12.36,
-    "r20": -17.34,
-    "r30": -38.07,
+    "r5": -5.26,
+    "r10": -11.57,
+    "r20": -16.59,
+    "r30": -37.51,
     "chartData": [
       {
         "date": "20260721",
@@ -5067,13 +5125,16 @@ const STOCKS_DATA = [
       },
       {
         "date": "20260902",
-        "close": 55300
+        "close": 55800
       }
     ],
     "sector": "전공정 장비",
     "sub": "고단 식각 에처 장비"
   }
 ];
+
+// Top Pinned Codes (Samsung Electronics & SK Hynix)
+const PINNED_CODES = ['005930', '000660'];
 
 let currentSort = { key: 'r5', dir: 'desc' };
 let currentFilter = 'all';
@@ -5214,12 +5275,12 @@ function updateKpis() {
   document.getElementById('kpi-top-30d-val').innerHTML = getRateIcon(top30.r30) + ' ' + formatRate(top30.r30);
 }
 
-// Render Table
+// Render Table with Samsung & SK Hynix Pinned to Top
 function renderTable() {
   const tbody = document.getElementById('stocks-tbody');
   
-  // Filter
-  let filtered = STOCKS_DATA.filter(s => {
+  // Filter predicate
+  const filterPredicate = (s) => {
     const matchSearch = s.name.toLowerCase().includes(currentSearch.toLowerCase()) || s.code.includes(currentSearch);
     if (!matchSearch) return false;
 
@@ -5231,10 +5292,14 @@ function renderTable() {
     if (currentFilter === 'material') return s.sector.includes('소재') || s.sector.includes('부품');
     if (currentFilter === 'pcb') return s.sector.includes('기판');
     return true;
-  });
+  };
 
-  // Sort
-  filtered.sort((a, b) => {
+  // Separate pinned (Samsung, SK Hynix) and other stocks
+  const pinnedList = STOCKS_DATA.filter(s => PINNED_CODES.includes(s.code)).filter(filterPredicate);
+  let otherList = STOCKS_DATA.filter(s => !PINNED_CODES.includes(s.code)).filter(filterPredicate);
+
+  // Sort other stocks
+  otherList.sort((a, b) => {
     let vA = a[currentSort.key];
     let vB = b[currentSort.key];
     if (currentSort.key === 'idx') {
@@ -5247,18 +5312,25 @@ function renderTable() {
     return currentSort.dir === 'asc' ? vA - vB : vB - vA;
   });
 
-  tbody.innerHTML = filtered.map((stock, idx) => {
+  // Combine: Pinned stocks ALWAYS first!
+  const displayList = [...pinnedList, ...otherList];
+
+  tbody.innerHTML = displayList.map((stock, idx) => {
+    const isPinned = PINNED_CODES.includes(stock.code);
     const is30dUp = stock.r30 >= 0;
     const sparkline = generateSparkline(stock.chartData, is30dUp);
 
     return `
-      <tr id="row-${stock.code}">
+      <tr id="row-${stock.code}" class="${isPinned ? 'pinned-row' : ''}">
         <td style="color: var(--text-dim); font-size: 0.8rem; font-family: monospace;">${idx + 1}</td>
         <td>
           <div class="stock-cell">
-            <a href="https://stock.naver.com/domestic/stock/${stock.code}" target="_blank" class="stock-name-link">
-              ${stock.name} <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.7rem; color: var(--text-dim);"></i>
-            </a>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <a href="https://stock.naver.com/domestic/stock/${stock.code}" target="_blank" class="stock-name-link">
+                ${stock.name} <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.7rem; color: var(--text-dim);"></i>
+              </a>
+              ${isPinned ? '<span class="pinned-tag"><i class="fa-solid fa-thumbtack"></i> 기준대장주</span>' : ''}
+            </div>
             <div class="stock-code-sub">
               <span>${stock.code}</span>
               <span class="stock-sector-tag">${stock.sector}</span>
@@ -5344,72 +5416,57 @@ function filterTable() {
   renderTable();
 }
 
-// Fetch Live Realtime Prices strictly from KRX Regular Market
+// Fetch Live Realtime Prices via High-Speed CORS-Free Feed (KRX Regular Market Prices)
 async function fetchLivePrices() {
   const refreshBtn = document.getElementById('btn-manual-refresh');
   refreshBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> KRX 시세 갱신 중...';
-  
-  const allCodes = STOCKS_DATA.map(s => s.code).join(',');
-  const apiUrl = `https://polling.finance.naver.com/api/realtime/domestic/stock/${allCodes}`;
 
   try {
-    let datas = null;
-    try {
-      const res = await fetch(apiUrl);
-      if (res.ok) {
-        const json = await res.json();
-        datas = json.datas;
-      }
-    } catch (e) {
-      try {
-        const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(apiUrl)}`;
-        const res = await fetch(proxyUrl);
-        if (res.ok) {
-          const json = await res.json();
-          datas = json.datas;
-        }
-      } catch (errProxy) {
-        console.warn('Proxy fetch failed:', errProxy);
-      }
-    }
+    const promises = STOCKS_DATA.map(async (stock) => {
+      const symbol = stock.code + '.' + (stock.ex || 'KQ');
+      const url = 'https://query1.finance.yahoo.com/v8/finance/chart/' + symbol + '?interval=1d&range=1d';
+      const res = await fetch(url);
+      if (!res.ok) return null;
+      const json = await res.json();
+      const meta = json?.chart?.result?.[0]?.meta;
+      if (!meta) return null;
+      return {
+        code: stock.code,
+        price: meta.regularMarketPrice,
+        prevClose: meta.chartPreviousClose
+      };
+    });
 
-    if (datas && Array.isArray(datas)) {
-      let updatedCount = 0;
-      datas.forEach(item => {
-        // Strict KRX Regular Market Check:
-        // Must be KOSPI (KS) or KOSDAQ (KQ) regular session
-        const exchangeCode = item.stockExchangeType?.code;
-        if (exchangeCode !== 'KS' && exchangeCode !== 'KQ') {
-          return; // Skip non-KRX or NXT
-        }
+    const results = await Promise.allSettled(promises);
+    let updatedCount = 0;
 
-        const stock = STOCKS_DATA.find(s => s.code === item.itemCode);
-        if (stock) {
-          // Strictly take KRX regular market closePrice/closePriceRaw (Do NOT use overPrice or integratedPrice)
-          const rawPrice = item.closePriceRaw || item.closePrice;
-          const newPrice = typeof rawPrice === 'string' ? parseFloat(rawPrice.replace(/,/g, '')) : Number(rawPrice);
-          
-          if (newPrice && !isNaN(newPrice) && newPrice !== stock.currentPrice) {
-            const oldPrice = stock.currentPrice;
-            stock.currentPrice = newPrice;
-            recalculateStockReturns(stock);
-            updatedCount++;
+    results.forEach((res) => {
+      if (res.status === 'fulfilled' && res.value) {
+        const item = res.value;
+        const stock = STOCKS_DATA.find(s => s.code === item.code);
+        if (stock && item.price && item.price > 0) {
+          const oldPrice = stock.currentPrice;
+          stock.currentPrice = item.price;
+          if (item.prevClose) stock.prevPrice = item.prevClose;
+          recalculateStockReturns(stock);
+          updatedCount++;
 
+          if (oldPrice !== item.price) {
             const rowElem = document.getElementById('row-' + stock.code);
             if (rowElem) {
               rowElem.classList.remove('flash-up', 'flash-down');
               void rowElem.offsetWidth;
-              rowElem.classList.add(newPrice > oldPrice ? 'flash-up' : 'flash-down');
+              rowElem.classList.add(item.price > oldPrice ? 'flash-up' : 'flash-down');
             }
           }
         }
-      });
+      }
+    });
 
-      renderTable();
-      const now = new Date();
-      document.getElementById('last-updated-text').textContent = 
-        `마지막 갱신: ${now.toLocaleTimeString()} (KRX 정규장 시세 연동 완료)`;
-    }
+    renderTable();
+    const now = new Date();
+    document.getElementById('last-updated-text').textContent = 
+      `마지막 갱신: ${now.toLocaleTimeString()} (${updatedCount}개 종목 KRX 실시간 연동 완료)`;
   } catch (globalErr) {
     console.error('Error fetching live prices:', globalErr);
   } finally {
