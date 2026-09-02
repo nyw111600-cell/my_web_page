@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>비에이치아이(083650) 기업분석 및 글로벌 경쟁력 심층 리포트</title>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <!-- FontAwesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0f172a;
+      --primary-light: #38bdf8;
+      --accent-blue: #2563eb;
+      --accent-cyan: #06b6d4;
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --accent-amber: #f59e0b;
+      --accent-purple: #8b5cf6;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-subtle: #f1f5f9;
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -2px rgba(0,0,0,0.05);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.05);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.65;
+      padding: 30px 20px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container { max-width: 1240px; margin: 0 auto; }
+
+    /* Top Action Bar */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .back-btn:hover {
+      background: #f0f9ff;
+      border-color: var(--primary-light);
+      color: var(--primary);
+      transform: translateX(-2px);
+    }
+    .report-date {
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface);
+      padding: 7px 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+    }
+
+    /* Hero Header */
+    .hero-card {
+      background: linear-gradient(135deg, #0c4a6e 0%, #0f172a 55%, #1e1b4b 100%);
+      color: #ffffff;
+      border-radius: var(--radius-lg);
+      padding: 36px 40px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.18) 0%, rgba(56, 189, 248, 0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .tag-container {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .tag {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.3px;
+    }
+    .tag-primary { background: rgba(56, 189, 248, 0.22); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); }
+    .tag-green { background: rgba(16, 185, 129, 0.22); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+    .tag-amber { background: rgba(245, 158, 11, 0.22); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .tag-purple { background: rgba(168, 85, 247, 0.22); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); }
+    .tag-red { background: rgba(239, 68, 68, 0.22); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+
+    .hero-title {
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1.35;
+      margin-bottom: 14px;
+      letter-spacing: -0.5px;
+    }
+    
+    /* Interactive Stock Name Link */
+    .stock-link {
+      color: #ffffff;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      border-bottom: 2px dashed rgba(56, 189, 248, 0.6);
+      padding-bottom: 2px;
+    }
+    .stock-link:hover {
+      color: #38bdf8;
+      border-bottom-color: #38bdf8;
+      transform: translateY(-2px);
+    }
+    .naver-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      background: #03c75a;
+      color: #ffffff !important;
+      padding: 4px 10px;
+      border-radius: 8px;
+      vertical-align: middle;
+      text-decoration: none;
+      margin-left: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      transition: all 0.2s ease;
+    }
+    .naver-badge:hover {
+      background: #02b150;
+      transform: scale(1.05);
+    }
+
+    .hero-subtitle {
+      font-size: 16px;
+      color: #94a3b8;
+      max-width: 850px;
+      line-height: 1.6;
+      margin-bottom: 26px;
+    }
+
+    /* Key Metrics Grid in Hero */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding-top: 24px;
+    }
+    .metric-card {
+      background: rgba(255, 255, 255, 0.06);
+      padding: 16px;
+      border-radius: var(--radius-md);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: transform 0.2s ease;
+    }
+    .metric-card:hover {
+      transform: translateY(-3px);
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .metric-label {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-bottom: 6px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .metric-value {
+      font-size: 22px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+    .metric-sub {
+      font-size: 11px;
+      color: #38bdf8;
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    /* Section Cards */
+    .section-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      margin-bottom: 26px;
+      box-shadow: var(--shadow-sm);
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--surface-subtle);
+    }
+    .section-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-title i {
+      color: var(--primary);
+    }
+
+    /* Highlight Summary Grid */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    .point-card {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      transition: all 0.2s ease;
+    }
+    .point-card:hover {
+      background: #ffffff;
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    .point-card.green-border { border-left-color: var(--accent-green); }
+    .point-card.purple-border { border-left-color: var(--accent-purple); }
+    .point-card.amber-border { border-left-color: var(--accent-amber); }
+    .point-card.red-border { border-left-color: var(--accent-red); }
+    
+    .point-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .point-desc {
+      font-size: 14px;
+      color: #475569;
+      line-height: 1.6;
+    }
+
+    /* 3-Column Business Architecture */
+    .biz-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+      gap: 22px;
+    }
+    .biz-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      position: relative;
+      box-shadow: var(--shadow-sm);
+    }
+    .biz-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: #e0f2fe;
+      color: #0284c7;
+      margin-bottom: 12px;
+    }
+    .biz-badge.nuclear { background: #fef3c7; color: #d97706; }
+    .biz-badge.smr { background: #f3e8ff; color: #7e22ce; }
+
+    .biz-card h3 {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: var(--text-main);
+    }
+    .biz-card ul {
+      list-style: none;
+      padding: 0;
+    }
+    .biz-card li {
+      font-size: 13.5px;
+      color: #334155;
+      margin-bottom: 8px;
+      padding-left: 18px;
+      position: relative;
+    }
+    .biz-card li::before {
+      content: "•";
+      color: var(--primary);
+      font-weight: bold;
+      position: absolute;
+      left: 4px;
+      font-size: 16px;
+    }
+
+    /* Moat Cards Grid */
+    .moat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+    .moat-box {
+      background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      text-align: center;
+    }
+    .moat-icon {
+      width: 54px;
+      height: 54px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      background: #e0f2fe;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+    .moat-icon.yellow { background: #fef3c7; color: #d97706; }
+    .moat-icon.green { background: #d1fae5; color: #059669; }
+    .moat-icon.purple { background: #ede9fe; color: #7c3aed; }
+    
+    .moat-box h4 {
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+    .moat-box p {
+      font-size: 13px;
+      color: #64748b;
+      line-height: 1.55;
+    }
+
+    /* Charts Container */
+    .charts-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 900px) {
+      .charts-row { grid-template-columns: 1fr; }
+    }
+    .chart-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+    .chart-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Financial Table */
+    .table-responsive {
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+      text-align: right;
+    }
+    th, td {
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--surface-subtle);
+      color: var(--text-muted);
+      font-weight: 700;
+      text-align: right;
+    }
+    th:first-child, td:first-child {
+      text-align: left;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    tr:hover td {
+      background: #f8fafc;
+    }
+    .highlight-row {
+      background: #f0fdf4 !important;
+      font-weight: 700;
+    }
+    .highlight-row-blue {
+      background: #f0f9ff !important;
+      font-weight: 700;
+    }
+    .text-green { color: var(--accent-green); font-weight: 700; }
+    .text-blue { color: var(--primary); font-weight: 700; }
+    .text-purple { color: var(--accent-purple); font-weight: 700; }
+    .text-red { color: var(--accent-red); font-weight: 700; }
+
+    /* Educational Explanatory Card */
+    .edu-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      margin-top: 18px;
+      box-shadow: var(--shadow-sm);
+    }
+    .edu-header {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .edu-desc {
+      font-size: 13.8px;
+      color: #334155;
+      line-height: 1.65;
+    }
+    .edu-desc p { margin-bottom: 10px; }
+    .edu-desc p:last-child { margin-bottom: 0; }
+
+    /* Bull vs Bear Split */
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+    @media (max-width: 768px) {
+      .scenario-grid { grid-template-columns: 1fr; }
+    }
+    .scenario-card {
+      border-radius: var(--radius-md);
+      padding: 24px;
+      border: 1px solid var(--border);
+    }
+    .scenario-card.bull {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+    }
+    .scenario-card.bear {
+      background: #fef2f2;
+      border-color: #fecaca;
+    }
+    .scenario-header {
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .scenario-header.bull-text { color: #166534; }
+    .scenario-header.bear-text { color: #991b1b; }
+    .scenario-list {
+      list-style: none;
+      padding: 0;
+    }
+    .scenario-list li {
+      font-size: 13.5px;
+      margin-bottom: 12px;
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.55;
+    }
+    .scenario-card.bull li::before {
+      content: "✓";
+      color: #16a34a;
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+    }
+    .scenario-card.bear li::before {
+      content: "✕";
+      color: #dc2626;
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+    }
+
+    /* Strategy & Conclusion Banner */
+    .strategy-banner {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #ffffff;
+      border-radius: var(--radius-md);
+      padding: 26px 30px;
+      margin-top: 10px;
+    }
+    .strategy-banner h4 {
+      font-size: 18px;
+      font-weight: 800;
+      color: #38bdf8;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .strategy-banner p {
+      font-size: 14.5px;
+      color: #cbd5e1;
+      line-height: 1.7;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Top Action Bar -->
+    <div class="top-bar">
+      <a href="index.html" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i> 아카이브 대시보드로 돌아가기
+      </a>
+      <div class="report-date">
+        <i class="fa-regular fa-clock"></i> 분석 기준: 2026년 9월 2일 최신 공시 반영 리포트 (KOSDAQ: <a href="https://stock.naver.com/domestic/stock/083650/price" target="_blank" rel="noopener noreferrer" style="color: var(--primary); font-weight: bold; text-decoration: underline;" title="네이버증권 083650 시세 열기">083650</a>)
+      </div>
+    </div>
+
+    <!-- Hero Header Card -->
+    <div class="hero-card">
+      <div class="tag-container">
+        <span class="tag tag-primary">HRSG 글로벌 점유율 1위</span>
+        <span class="tag tag-amber">K-원전 BOP 핵심 파트너</span>
+        <span class="tag tag-green">누적 수주잔고 2.67조 원+</span>
+        <span class="tag tag-red">2026.09.02 신규공시(1,452억) 반영</span>
+        <span class="tag tag-purple">AI 전력 슈퍼사이클 수혜</span>
+      </div>
+      <h1 class="hero-title">
+        <a href="https://stock.naver.com/domestic/stock/083650/price" target="_blank" rel="noopener noreferrer" class="stock-link" title="클릭 시 네이버증권 비에이치아이(083650) 시세 페이지로 새 창 이동">
+          비에이치아이 (BHI, 083650)
+          <span class="naver-badge"><i class="fa-solid fa-arrow-trend-up"></i> 네이버증권 시세 →</span>
+        </a>
+        기업분석 및 글로벌 경쟁력 리포트
+      </h1>
+      <p class="hero-subtitle">
+        글로벌 가스복합화력(LNG) 르네상스와 원전 르네상스가 동시에 열리는 전력 슈퍼사이클의 최대 수혜주.<br/>
+        반기말 수주잔고 2조 4,569억 원에 최근 2,172억 신규 계약이 더해져 누적 수주잔고 2.67조 원을 확보하였으며, 초과청구(선수금) 우위의 이상적인 운전자본 구조를 바탕으로 실적 퀀텀점프를 실현하고 있습니다.
+      </p>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-label"><i class="fa-solid fa-coins"></i> 시가총액</div>
+          <div class="metric-value">약 2조 238억</div>
+          <div class="metric-sub">코스닥 상위 40위권</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label"><i class="fa-solid fa-chart-line"></i> 2026E 예상 매출</div>
+          <div class="metric-value">약 1조 1,000억</div>
+          <div class="metric-sub">상반기 이미 5,771억 달성</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label"><i class="fa-solid fa-sack-dollar"></i> 2026E 예상 영업이익</div>
+          <div class="metric-value">약 1,200억+</div>
+          <div class="metric-sub">OPM 12~15% 수준 안착</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label"><i class="fa-solid fa-boxes-stacked"></i> 누적 총 수주잔고</div>
+          <div class="metric-value">2조 6,741억 원</div>
+          <div class="metric-sub">반기 이후 2,172억 신규 추가</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label"><i class="fa-solid fa-wallet"></i> 현금성자산 (반기말)</div>
+          <div class="metric-value">1,254억 원</div>
+          <div class="metric-sub">전기말 대비 +109.1% 폭증</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 1: Executive Summary -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-title">
+          <i class="fa-solid fa-bolt-lightning"></i> 1. Executive Summary & 핵심 투자 포인트
+        </div>
+      </div>
+      <div class="summary-grid">
+        <div class="point-card">
+          <div class="point-title">
+            <i class="fa-solid fa-fire-burner" style="color: var(--primary);"></i>
+            ① AI 데이터센터 發 가스복합화력(LNG) 르네상스
+          </div>
+          <div class="point-desc">
+            빅테크의 AI 인프라 확장에 따라 24시간 안정적인 기저 전력을 공급할 수 있는 LNG 발전 수요가 폭증하고 있습니다. 비에이치아이는 가스터빈 배기가스 열을 회수하는 <strong>HRSG(배열회수보일러) 부문 글로벌 시장점유율 1위</strong>로 중동·아시아·북미 수주를 독식하고 있습니다.
+          </div>
+        </div>
+
+        <div class="point-card green-border">
+          <div class="point-title">
+            <i class="fa-solid fa-atom" style="color: var(--accent-green);"></i>
+            ② K-원전 수출 & 웨스팅하우스(AP1000) 동맹 수혜
+          </div>
+          <div class="point-desc">
+            신한울 3·4호기 주기자재 수주 완료에 이어 체코 두코바니 신규 원전 및 유럽 수출의 핵심 BOP(보조기기) 공급사로 참여합니다. 과거 미국 보글(Vogtle) 원전 납품 레퍼런스를 기반으로 웨스팅하우스 및 글로벌 SMR 공급망 파트너십을 확장 중입니다.
+          </div>
+        </div>
+
+        <div class="point-card purple-border">
+          <div class="point-title">
+            <i class="fa-solid fa-arrow-trend-up" style="color: var(--accent-purple);"></i>
+            ③ 2.67조 원 수주잔고와 영업 레버리지 폭발
+          </div>
+          <div class="point-desc">
+            2026년 9월 2일 1,452억 신규 수주를 포함해 총 수주잔고가 2.67조 원을 돌파했습니다. 공장 풀가동과 초과청구 선수금 유입에 힘입어 <strong>영업이익률이 2023년 5%에서 2026년 12~15% 수준</strong>으로 급성장했습니다.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2: Business Model & Core Products -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-title">
+          <i class="fa-solid fa-layer-group"></i> 2. 사업 포트폴리오 및 핵심 기술력
+        </div>
+      </div>
+      <div class="biz-grid">
+        <div class="biz-card">
+          <span class="biz-badge">복합화력 핵심기기 (매출 60~70%)</span>
+          <h3>HRSG (배열회수보일러)</h3>
+          <ul>
+            <li><strong>원천기술 확보:</strong> 글로벌 보일러 원천기술사인 포스터휠러(Foster Wheeler) 기술 인수 완료</li>
+            <li><strong>대용량/모듈화 설계:</strong> 대용량 가스터빈(H급/J급) 연계 고온·고압 초초임계압 HRSG 독보적 제작</li>
+            <li><strong>글로벌 파트너십:</strong> GE, 미쓰비시, 도시바, 두산에너빌리티 및 글로벌 탑티어 EPC 공급망 보유</li>
+          </ul>
+        </div>
+
+        <div class="biz-card">
+          <span class="biz-badge nuclear">원자력 발전기자재 (매출 20~25%)</span>
+          <h3>원자력 BOP (보조기기)</h3>
+          <ul>
+            <li><strong>주요 납품 제품:</strong> 복수기(Condenser), 급수가열기, 탈기기, 격납건물 철판(CLP/Liner Plate)</li>
+            <li><strong>표준 원전 공급망:</strong> 한국형 APR1400 원전 전주기 납품 및 UAE 바라카 원전 성공 납품</li>
+            <li><strong>대형 프로젝트:</strong> 신한울 3·4호기 2,000억 원대 수주 및 체코 두코바니 원전 진출 직수혜</li>
+          </ul>
+        </div>
+
+        <div class="biz-card">
+          <span class="biz-badge smr">차세대 에너지 & 플랜트 (미래성장)</span>
+          <h3>SMR & 친환경 신사업</h3>
+          <ul>
+            <li><strong>SMR 기자재:</strong> 미국 뉴스케일파워(NuScale), 웨스팅하우스 등과 SMR 열교환기 및 보조기기 협력</li>
+            <li><strong>수소/CCUS:</strong> 수소 추출기(Reformer) 및 탄소 포집 설비 등 친환경 플랜트 포트폴리오 확장</li>
+            <li><strong>원전 해체/Cask:</strong> 사용후핵연료 건식저장용기(Cask) 및 원전 폐로 기자재 기술 선행 확보</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3: Global Competitiveness & Economic Moat -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-title">
+          <i class="fa-solid fa-shield-halved"></i> 3. 기업의 핵심 강점 및 글로벌 경쟁력 (Economic Moat)
+        </div>
+      </div>
+      <div class="moat-grid">
+        <div class="moat-box">
+          <div class="moat-icon"><i class="fa-solid fa-trophy"></i></div>
+          <h4>글로벌 점유율 1위</h4>
+          <p>세계 HRSG 시장에서 2년 연속 글로벌 수주 1위를 달성하며 중동·북미·아시아 전역에서 기술력과 납기 준수 역량을 입증했습니다.</p>
+        </div>
+
+        <div class="moat-box">
+          <div class="moat-icon yellow"><i class="fa-solid fa-certificate"></i></div>
+          <h4>원전 전주기 품질 인증</h4>
+          <p>ASME, KEPIC 등 전 세계 원자력 최고 등급 인증을 완비하고 주기기 업체와 대등한 수준의 엄격한 품질 관리 체계를 보유했습니다.</p>
+        </div>
+
+        <div class="moat-box">
+          <div class="moat-icon green"><i class="fa-solid fa-chart-pie"></i></div>
+          <h4>독보적 원가 경쟁력</h4>
+          <p>설계 자동화 및 모듈화 제작 공법을 통해 공기 단축과 원가율 개선을 동시 달성하여 높은 입찰 승률과 마진율을 유지합니다.</p>
+        </div>
+
+        <div class="moat-box">
+          <div class="moat-icon purple"><i class="fa-solid fa-network-wired"></i></div>
+          <h4>글로벌 EPC 동맹망</h4>
+          <p>현대건설, 삼성물산, 대우건설 등 국내 대표 EPC는 물론 해외 글로벌 에너지 디벨로퍼들과 오랜 신뢰 관계를 구축했습니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4: Financial Performance & Visual Charts -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-title">
+          <i class="fa-solid fa-chart-simple"></i> 4. 실적 추이 및 수익성 분석
+        </div>
+      </div>
+      
+      <div class="charts-row">
+        <div class="chart-card">
+          <div class="chart-title"><i class="fa-solid fa-chart-column" style="color: var(--primary);"></i> 연도별 매출액 및 영업이익 추이 (단위: 억 원)</div>
+          <div style="height: 280px;">
+            <canvas id="revenueChart"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-title"><i class="fa-solid fa-chart-line" style="color: var(--accent-green);"></i> 영업이익률(OPM) 및 수주잔고 추이 (단위: %, 조 원)</div>
+          <div style="height: 280px;">
+            <canvas id="marginChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>구분 (연결 기준)</th>
+              <th>2023년</th>
+              <th>2024년</th>
+              <th>2025년</th>
+              <th>2026년 (전망치)</th>
+              <th>비고 및 특이사항</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>매출액 (억원)</td>
+              <td>3,523</td>
+              <td>3,992</td>
+              <td>7,645</td>
+              <td class="text-blue">9,523 ~ 11,500</td>
+              <td>3년 만에 매출 약 3배 성장 (상반기 5,771억)</td>
+            </tr>
+            <tr>
+              <td>매출 성장률 (YoY)</td>
+              <td>+13.3%</td>
+              <td>+13.3%</td>
+              <td>+91.5%</td>
+              <td class="text-blue">+30% ~ +50%</td>
+              <td>수주 물량 본격 출하 사이클</td>
+            </tr>
+            <tr>
+              <td>영업이익 (억원)</td>
+              <td>176</td>
+              <td>266</td>
+              <td>774</td>
+              <td class="text-green">1,095 ~ 1,385</td>
+              <td>사상 첫 1천억 원 돌파 확실시 (상반기 808억)</td>
+            </tr>
+            <tr class="highlight-row">
+              <td>영업이익률 (OPM)</td>
+              <td>5.0%</td>
+              <td>6.7%</td>
+              <td>10.1%</td>
+              <td class="text-green">11.5% ~ 14.5%</td>
+              <td>영업 레버리지 효과 극대화 (2Q26 15.4%)</td>
+            </tr>
+            <tr>
+              <td>당기순이익 (억원)</td>
+              <td>75</td>
+              <td>243</td>
+              <td>607</td>
+              <td class="text-blue">845 ~ 1,000</td>
+              <td>실질 주당순이익(EPS) 급증</td>
+            </tr>
+            <tr>
+              <td>누적 총 수주잔고</td>
+              <td>약 0.9조</td>
+              <td>약 1.5조</td>
+              <td>약 1.9조</td>
+              <td class="text-green">2.67조 원 돌파</td>
+              <td>2026.09 신규 계약 반영 후 사상 최대</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Section 5: [반기보고서 정밀 진단] 표준 수주잔고 흐름 & 운전자본 심층 분석 -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-title">
+          <i class="fa-solid fa-file-invoice-dollar" style="color: var(--accent-blue);"></i> 5. [반기보고서 정밀 진단] 표준 수주잔고 변동표 및 운전자본(매출채권·재고자산) 심층 분석
+        </div>
+      </div>
+
+      <!-- Subsection 1: Standard Order Backlog Flow Table -->
+      <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 14px; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+        <i class="fa-solid fa-list-check" style="color: var(--primary);"></i> ① 수주잔고 정규 변동 흐름표 (전년말 수주잔액 → 당반기 수주/납품 → 현재 총 잔고)
+      </h3>
+      <div class="table-responsive" style="margin-bottom: 24px;">
+        <table>
+          <thead>
+            <tr>
+              <th>구분 (사업/지역)</th>
+              <th>전년말 수주잔액<br/>(2025.12말)</th>
+              <th>당반기 수주액 (+)<br/>(2026.1H 신규)</th>
+              <th>당반기 납품액 (-)<br/>(2026.1H 매출)</th>
+              <th>당반기말 수주잔고 (=)<br/>(2026.06.30 DART)</th>
+              <th>반기 이후 신규수주 (+)<br/>(2026.07~09 공시)</th>
+              <th>현재 기준 총 수주잔고<br/>(2026.09.02 기준)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>국내 프로젝트 (41건)</strong></td>
+              <td>약 6,800 억</td>
+              <td>8,184 억</td>
+              <td>7,407 억</td>
+              <td><strong>7,577 억</strong></td>
+              <td class="text-blue">+720.0 억 (남동발전)</td>
+              <td class="text-blue"><strong>8,297 억 원</strong></td>
+            </tr>
+            <tr>
+              <td><strong>해외 프로젝트 (28건)</strong></td>
+              <td>약 1조 2,400 억</td>
+              <td>1조 0,742 억</td>
+              <td>6,150 억</td>
+              <td><strong>1조 6,992 억</strong></td>
+              <td class="text-red">+1,452.5 억 (쿠웨이트)</td>
+              <td class="text-red"><strong>1조 8,444 억 원</strong></td>
+            </tr>
+            <tr class="highlight-row">
+              <td><strong>합계 (총 69건 + 신규)</strong></td>
+              <td><strong>약 1조 9,200 억</strong></td>
+              <td><strong>1조 8,926 억</strong></td>
+              <td><strong>1조 3,557 억</strong></td>
+              <td class="text-green"><strong>2조 4,569 억 원</strong></td>
+              <td class="text-purple"><strong>+2,172.5 억 원</strong></td>
+              <td class="text-green" style="font-size: 15px;"><strong>2조 6,741 억 원</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Subsection 2: Working Capital Table -->
+      <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 14px; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+        <i class="fa-solid fa-scale-balanced" style="color: var(--accent-green);"></i> ② 반기 재무상태표 기준 3대 운전자본 및 유동성 정밀 비교
+      </h3>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>구분 (연결 재무상태표 항목)</th>
+              <th>제 28기말 (2025.12)</th>
+              <th>제 29기 반기말 (2026.06)</th>
+              <th>증감액</th>
+              <th>증감률</th>
+              <th>운전자본 건전성 평가 및 해석</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>매출채권 및 기타 유동채권</strong></td>
+              <td>1,101.8 억</td>
+              <td class="text-blue">1,620.3 억</td>
+              <td>+518.5 억</td>
+              <td>+47.1%</td>
+              <td>상반기 매출(5,771억) 급증에 따른 정상 채권. 한전/대형EPC 중심 우량 신용처</td>
+            </tr>
+            <tr>
+              <td><strong>단기미청구공사 (계약자산)</strong></td>
+              <td>2,167.9 억</td>
+              <td>3,673.3 억</td>
+              <td>+1,505.4 억</td>
+              <td>+69.4%</td>
+              <td>진행 중인 대형 HRSG/원전 프로젝트 공정률 확대에 따른 자연스러운 증가</td>
+            </tr>
+            <tr class="highlight-row">
+              <td><strong>단기초과청구공사 (계약부채/선수금)</strong></td>
+              <td>2,654.6 억</td>
+              <td class="text-green">3,840.5 억</td>
+              <td>+1,185.9 억</td>
+              <td>+44.7%</td>
+              <td><strong>★초과청구(3,840억) > 미청구(3,673억)! 발주처 선수금 기반 공사 진행</strong></td>
+            </tr>
+            <tr>
+              <td><strong>유동 재고자산</strong></td>
+              <td>89.8 억</td>
+              <td class="text-purple">147.8 억</td>
+              <td>+58.0 억</td>
+              <td>+64.6%</td>
+              <td>연매출 1조 대비 재고 비중 불과 1.3%! 모듈화 직납으로 재고 락인 리스크 극소화</td>
+            </tr>
+            <tr class="highlight-row-blue">
+              <td><strong>현금 및 현금성자산</strong></td>
+              <td>599.5 억</td>
+              <td class="text-blue">1,253.8 억</td>
+              <td>+654.3 억</td>
+              <td class="text-green"><strong>+109.1%</strong></td>
+              <td>초과청구 선수금 유입 및 영업 흑자 확대로 유동성 2배 이상 급증 (1,254억)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Subsection 3: Educational Deep Dive Why It Matters -->
+      <div class="edu-card">
+        <div class="edu-header">
+          <i class="fa-solid fa-graduation-cap" style="color: var(--primary); font-size: 20px;"></i>
+          ③ [심층 투자 가이드] 플랜트·수주 산업에서 매출채권과 재고자산 현황이 결정적으로 중요한 이유
+        </div>
+        <div class="edu-desc">
+          <p>
+            <strong>1. '진행기준 회계'의 맹점과 매출채권·미청구공사의 위험성:</strong><br/>
+            플랜트/건설 기업은 제품이 완성되어 인도될 때 매출을 잡는 일반 제조업과 달리, <strong>'공사 진행률(공정률)'에 따라 장부상 매출과 영업이익을 선인식(진행기준 회계)</strong>합니다. 만약 공정률을 올려 장부상 흑자가 났더라도 발주처로부터 공사대금을 제때 청구하지 못하거나(<strong>미청구공사 급증</strong>), 청구 후 대금을 떼이면(<strong>매출채권 부실/대손</strong>) 장부상으로는 흑자인데 통장에 현금이 말라붙는 <strong>'흑자도산'</strong> 위험에 직면하게 됩니다.
+          </p>
+          <p>
+            <strong>2. 비에이치아이의 차별화된 해자 — '초과청구공사(선수금) 우위':</strong><br/>
+            비에이치아이는 <strong>단기초과청구공사(3,840.5억 원)가 미청구공사(3,673.3억 원)를 약 167억 원 상회하는 순계약부채 상태</strong>를 유지하고 있습니다. 이는 회사가 자기자본이나 고금리 대출을 끌어다 공사를 하는 것이 아니라, <strong>발주처로부터 미리 지급받은 선수금과 기성금을 바탕으로 프로젝트를 집행하는 가장 안전하고 이상적인 현금흐름 구조</strong>를 갖추고 있음을 완벽히 증명합니다.
+          </p>
+          <p>
+            <strong>3. 재고자산 통제가 원가율과 마진율(OPM) 방어의 핵심인 이유:</strong><br/>
+            플랜트 기자재는 철강 후판, 합금 배관 등 원자재 가격 변동에 매우 취약합니다. 재고를 과도하게 쌓아두면 원자재 시세 하락 시 막대한 <strong>재고평가손실(Write-down)</strong>이 발생해 영업이익을 갉아먹습니다. 비에이치아이는 <strong>반기 매출 5,771억 원 규모에도 재고자산이 147.8억 원(총자산 대비 1.3%)에 불과한 '초슬림 JIT(적시생산) 직납 체계'</strong>를 운영함으로써, 원자재 가격 변동 리스크를 원천 차단하고 <strong>영업이익률 12~15%대의 고수익성</strong>을 지켜내고 있습니다.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 6: Peer Comparison -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-title">
+          <i class="fa-solid fa-code-compare"></i> 6. 동종 업계 (Peer Group) 비교 분석
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>기업명</th>
+              <th>주력 사업 영역</th>
+              <th>비에이치아이 대비 강점</th>
+              <th>비에이치아이의 차별화 우위</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>두산에너빌리티</strong></td>
+              <td>원전 주기기(원자로/증기발생기), 대형 가스터빈</td>
+              <td>체코 원전 주계약자, 압도적 자본력</td>
+              <td><strong>가벼운 시가총액 & 높은 EPS 성장 탄력성, HRSG 세계 1위</strong></td>
+            </tr>
+            <tr>
+              <td><strong>한전기술</strong></td>
+              <td>원자력 발전소 종합 설계(A/E, NSSS)</td>
+              <td>공기업 산하의 독점적 설계 지위</td>
+              <td><strong>가스복합화력(LNG) 시장 동반 수혜로 사업 다변화 우수</strong></td>
+            </tr>
+            <tr>
+              <td><strong>일진파워 / 우진</strong></td>
+              <td>원전 계측기, 정비 및 시공 유지보수</td>
+              <td>경상정비 기반의 안정적 캐시카우</td>
+              <td><strong>대형 플랜트 기자재 턴키 제작 역량 및 2.67조 수주잔고</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Section 7: Bull vs Bear Scenarios -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-title">
+          <i class="fa-solid fa-scale-balanced"></i> 7. Bull vs Bear 시나리오 분석
+        </div>
+      </div>
+      <div class="scenario-grid">
+        <div class="scenario-card bull">
+          <div class="scenario-header bull-text">
+            <i class="fa-solid fa-rocket"></i> 상승 촉매 (Bull Case)
+          </div>
+          <ul class="scenario-list">
+            <li><strong>AI 전력망 급증에 따른 HRSG 추가 수주:</strong> 쿠웨이트 1,452억 수주에 이어 미국/중동 대형 LNG 신규 발주 확대로 수주잔고 3조 원 조기 돌파.</li>
+            <li><strong>체코 두코바니 본계약 확정:</strong> 2025~2026년 체코 원전 최종 본계약 체결 및 폴란드/루마니아 등 유럽 원전 후속 수혜.</li>
+            <li><strong>SMR 상용화 및 대미 협력 가속:</strong> 웨스팅하우스(AP1000) 공급망 공식 등록 및 빅테크향 SMR 기자재 선제적 수주.</li>
+          </ul>
+        </div>
+
+        <div class="scenario-card bear">
+          <div class="scenario-header bear-text">
+            <i class="fa-solid fa-triangle-exclamation"></i> 하방 리스크 (Bear Case)
+          </div>
+          <ul class="scenario-list">
+            <li><strong>해외 원전 관련 정치·사법적 불확실성:</strong> 경쟁국(EDF 등)의 이의 제기 및 법적 분쟁으로 인한 최종 계약 일정 지연.</li>
+            <li><strong>원자재(특수강/후판) 가격 변동:</strong> 국제 원자재 가격 급등 시 원가율 상승 압력 (다만 물가연동 에스컬레이션 조항으로 방어).</li>
+            <li><strong>단기 파생평가 손익 변동:</strong> 대규모 외화 수주 계약에 따른 환헤지 파생상품 평가손실로 인한 분기별 순이익 왜곡 가능성.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 8: Final Conclusion & Strategy -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-title">
+          <i class="fa-solid fa-lightbulb"></i> 8. 최종 결론 및 투자 전략
+        </div>
+      </div>
+      <div class="strategy-banner">
+        <h4><i class="fa-solid fa-circle-check"></i> 종합 투자 의견: 비중 확대 (Overweight)</h4>
+        <p>
+          비에이치아이는 <strong>LNG 복합화력(세계 1위 HRSG)</strong>과 <strong>K-원전(독보적 BOP)</strong>이라는 두 개의 강력한 성장 엔진을 장착한 글로벌 전력 인프라 핵심 수혜주입니다.<br/>
+          <strong>2026년 9월 2일 1,452억 원 신규 수주를 포함해 누적 수주잔고 2.67조 원을 돌파</strong>하였으며, 반기보고서상 초과청구 선수금 기반의 이상적인 운전자본 구조와 1,254억 원의 풍부한 현금성자산으로 2026~2028년 사상 최대 실적 행진이 확정적입니다.
+        </p>
+        <div style="margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.15); font-size: 13.5px; color: #94a3b8;">
+          <strong style="color: #ffffff;">💡 실전 매매 가이드:</strong> 초과청구공사 우위의 탄탄한 재무구조가 입증되었으므로, 단기 테마 변동성이나 환헤지 파생손익 이슈로 인한 주가 조정 시점을 중장기 분할 매수 기회로 적극 활용하는 전략을 권장합니다.
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>© 2026 BHI Company Analysis Report. 본 자료는 금융감독원 DART 공시 및 신뢰할 만한 증권사 컨센서스를 바탕으로 작성되었으며, 투자 판단의 최종 책임은 투자자 본인에게 있습니다.</p>
+    </footer>
+
+  </div>
+
+  <!-- Chart Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // 1. Revenue & Operating Profit Chart
+      const ctxRev = document.getElementById('revenueChart').getContext('2d');
+      new Chart(ctxRev, {
+        type: 'bar',
+        data: {
+          labels: ['2023년', '2024년', '2025년', '2026년(E)'],
+          datasets: [
+            {
+              label: '매출액 (억원)',
+              data: [3523, 3992, 7645, 10200],
+              backgroundColor: 'rgba(2, 132, 199, 0.75)',
+              borderColor: 'rgba(2, 132, 199, 1)',
+              borderWidth: 1.5,
+              borderRadius: 6,
+              yAxisID: 'y'
+            },
+            {
+              label: '영업이익 (억원)',
+              data: [176, 266, 774, 1240],
+              backgroundColor: 'rgba(16, 185, 129, 0.85)',
+              borderColor: 'rgba(16, 185, 129, 1)',
+              borderWidth: 1.5,
+              borderRadius: 6,
+              yAxisID: 'y'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'top', labels: { font: { size: 12, family: 'sans-serif' } } },
+            tooltip: { padding: 10 }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: { color: 'rgba(226, 232, 240, 0.6)' },
+              ticks: { font: { size: 11 } }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { font: { size: 12, weight: 'bold' } }
+            }
+          }
+        }
+      });
+
+      // 2. Margin & Backlog Chart
+      const ctxMargin = document.getElementById('marginChart').getContext('2d');
+      new Chart(ctxMargin, {
+        type: 'line',
+        data: {
+          labels: ['2023년', '2024년', '2025년', '2026년(E)'],
+          datasets: [
+            {
+              label: '영업이익률 OPM (%)',
+              data: [5.0, 6.7, 10.1, 12.2],
+              borderColor: '#10b981',
+              backgroundColor: 'rgba(16, 185, 129, 0.1)',
+              borderWidth: 3,
+              pointBackgroundColor: '#10b981',
+              pointRadius: 6,
+              tension: 0.3,
+              yAxisID: 'y1'
+            },
+            {
+              label: '수주잔고 (조 원)',
+              data: [0.9, 1.5, 1.9, 2.67],
+              borderColor: '#8b5cf6',
+              backgroundColor: 'rgba(139, 92, 246, 0.1)',
+              borderWidth: 3,
+              pointBackgroundColor: '#8b5cf6',
+              pointRadius: 6,
+              borderDash: [5, 5],
+              tension: 0.3,
+              yAxisID: 'y2'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'top', labels: { font: { size: 12 } } },
+            tooltip: { padding: 10 }
+          },
+          scales: {
+            y1: {
+              type: 'linear',
+              position: 'left',
+              title: { display: true, text: 'OPM (%)', font: { size: 11 } },
+              grid: { color: 'rgba(226, 232, 240, 0.6)' }
+            },
+            y2: {
+              type: 'linear',
+              position: 'right',
+              title: { display: true, text: '수주잔고 (조 원)', font: { size: 11 } },
+              grid: { drawOnChartArea: false }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { font: { size: 12, weight: 'bold' } }
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
