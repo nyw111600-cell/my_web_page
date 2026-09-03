@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>티씨케이 (TCK, 064760) 기업 심층 분석 보고서 | 반도체 리서치</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --primary-light: #e0f2fe;
+      --accent: #0ea5e9;
+      --accent-glow: rgba(14, 165, 233, 0.15);
+      --bg-main: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-sub: #f1f5f9;
+      --border: #e2e8f0;
+      --border-focus: #38bdf8;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-sub: #334155;
+      --success: #10b981;
+      --success-bg: #ecfdf5;
+      --warning: #f59e0b;
+      --warning-bg: #fffbeb;
+      --danger: #ef4444;
+      --danger-bg: #fef2f2;
+      --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.03);
+      --card-hover: 0 12px 30px -4px rgba(14, 165, 233, 0.12), 0 4px 10px -2px rgba(0, 0, 0, 0.04);
+      --radius: 16px;
+    }
+
+    [data-theme="dark"] {
+      --bg-main: #0b0f19;
+      --bg-card: #131b2e;
+      --bg-sub: #1e293b;
+      --border: #24324d;
+      --border-focus: #38bdf8;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-sub: #cbd5e1;
+      --primary-light: rgba(14, 165, 233, 0.15);
+      --card-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.4);
+      --card-hover: 0 12px 32px -4px rgba(14, 165, 233, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+    }
+
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.65;
+      letter-spacing: -0.015em;
+      padding: 32px 20px 80px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* 상단 탑바 */
+    .top-action-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding: 12px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+    }
+
+    .badge-report {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 9999px;
+      background: var(--primary-light);
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .action-btns {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-main);
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background: var(--bg-sub);
+      border-color: var(--border-focus);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    /* 헤더 섹션 */
+    .header-card {
+      background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-sub) 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 26px 30px;
+      margin-bottom: 20px;
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header-card::before {
+      content: "";
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 240px;
+      height: 240px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .company-title-area {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .company-meta-tags {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .ticker-tag {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--accent);
+      background: var(--primary-light);
+      padding: 4px 10px;
+      border-radius: 8px;
+    }
+
+    .sector-tag {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-sub);
+      background: var(--bg-sub);
+      padding: 4px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    h1.company-name {
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.25;
+      margin-bottom: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+    }
+
+    h1.company-name a.company-link {
+      color: var(--text-main);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    h1.company-name a.company-link:hover {
+      color: var(--primary);
+      transform: translateX(2px);
+    }
+
+    .stock-link-badge {
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      background: var(--bg-sub);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--primary);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .stock-link-badge:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 2px 8px rgba(14, 165, 233, 0.3);
+    }
+
+    .company-sub-title {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* KPI 대시보드 그리드 */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .kpi-card:hover {
+      box-shadow: var(--card-hover);
+      border-color: var(--border-focus);
+      transform: translateY(-2px);
+    }
+
+    .kpi-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .kpi-value {
+      font-family: 'JetBrains Mono', 'Pretendard', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .kpi-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .tag-up {
+      color: var(--success);
+      font-weight: 700;
+    }
+
+    /* 메인 콘텐츠 카드 */
+    .content-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 28px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .section-title {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 12px;
+    }
+
+    .section-icon {
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+    }
+
+    /* 공정 및 포지셔닝 그래픽 다이어그램 */
+    .process-diagram-box {
+      background: var(--bg-sub);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 20px 0;
+    }
+
+    .diagram-flow {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .flow-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+    }
+
+    .flow-header {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 8px;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* 4대 강점 그리드 */
+    .strengths-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .strengths-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .strength-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      border-left: 5px solid var(--primary);
+    }
+
+    .strength-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .strength-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .strength-desc {
+      font-size: 0.93rem;
+      color: var(--text-sub);
+      line-height: 1.7;
+    }
+
+    .strength-desc ul {
+      padding-left: 20px;
+      margin-top: 8px;
+    }
+
+    .strength-desc li {
+      margin-bottom: 6px;
+    }
+
+    /* 4대 약점 및 위협 그리드 스타일 */
+    .weakness-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      border-left: 5px solid var(--danger);
+    }
+
+    .weakness-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: var(--danger);
+      margin-bottom: 6px;
+    }
+
+    .weakness-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    /* 데이터 테이블 */
+    .table-responsive {
+      overflow-x: auto;
+      margin-top: 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      text-align: right;
+    }
+
+    table.data-table th, 
+    table.data-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    table.data-table th {
+      background: var(--bg-sub);
+      color: var(--text-sub);
+      font-weight: 700;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    table.data-table th:first-child,
+    table.data-table td:first-child {
+      text-align: left;
+      font-weight: 700;
+    }
+
+    table.data-table tr:hover td {
+      background-color: var(--accent-glow);
+    }
+
+    table.data-table .highlight-col {
+      background: var(--primary-light);
+      font-weight: 700;
+    }
+
+    .badge-opm {
+      background: var(--success-bg);
+      color: var(--success);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    /* Bull vs Bear 비교 그리드 */
+    .bull-bear-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .bull-bear-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .risk-box {
+      border-radius: 12px;
+      padding: 22px;
+      border: 1px solid var(--border);
+    }
+
+    .bear-box {
+      background: rgba(239, 68, 68, 0.04);
+      border-top: 4px solid var(--danger);
+    }
+
+    .bull-box {
+      background: rgba(16, 185, 129, 0.04);
+      border-top: 4px solid var(--success);
+    }
+
+    .risk-header {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .bear-header { color: var(--danger); }
+    .bull-header { color: var(--success); }
+
+    .risk-list {
+      list-style: none;
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+
+    .risk-list li {
+      margin-bottom: 12px;
+      padding-left: 20px;
+      position: relative;
+      color: var(--text-sub);
+    }
+
+    .bear-list li::before {
+      content: "⚠️";
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 0.85rem;
+    }
+
+    .bull-list li::before {
+      content: "🛡️";
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 0.85rem;
+    }
+
+    /* 결론 및 체크포인트 콜아웃 */
+    .callout-conclusion {
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.08) 0%, rgba(2, 132, 199, 0.04) 100%);
+      border: 1px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 26px;
+      margin-top: 24px;
+    }
+
+    .conclusion-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* 푸터 */
+    footer {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* 인쇄 전용 스타일 */
+    @media print {
+      body {
+        padding: 0;
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      .top-action-bar, footer button {
+        display: none !important;
+      }
+      .content-card, .header-card, .kpi-card {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        break-inside: avoid;
+      }
+      .kpi-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- 상단 컨트롤 바 -->
+  <div class="top-action-bar">
+    <div class="badge-report">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Semiconductor Equity Research Report
+    </div>
+    <div class="action-btns">
+      <button class="btn" onclick="toggleTheme()" id="themeToggleBtn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        테마 변경
+      </button>
+      <button class="btn btn-primary" onclick="window.print()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        PDF / 인쇄
+      </button>
+    </div>
+  </div>
+
+  <!-- 보고서 헤더 -->
+  <header class="header-card">
+    <div class="company-title-area">
+      <div class="company-meta-tags">
+        <a href="https://stock.naver.com/domestic/stock/064760" target="_blank" rel="noopener noreferrer" style="text-decoration: none;" title="네이버증권 종목 상세 바로가기">
+          <span class="ticker-tag">KOSDAQ : 064760</span>
+        </a>
+        <span class="sector-tag">타겟 섹터 : 반도체 전공정 식각 소재·소모품</span>
+      </div>
+      <h1 class="company-name">
+        <a href="https://stock.naver.com/domestic/stock/064760" target="_blank" rel="noopener noreferrer" class="company-link" title="네이버증권 티씨케이(064760) 상세 페이지 바로가기">
+          티씨케이 (Tokai Carbon Korea)
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: var(--accent);"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+        <a href="https://stock.naver.com/domestic/stock/064760" target="_blank" rel="noopener noreferrer" class="stock-link-badge" title="네이버증권 티씨케이 종목 상세 열기">
+          <span>네이버증권</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </h1>
+      <p class="company-sub-title">CVD-SiC 포커스 링의 독보적 지배자 & 3D NAND 초고단화의 구조적 수혜주</p>
+    </div>
+  </header>
+
+  <!-- 핵심 KPI 지표 그리드 -->
+  <section class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">기준 주가 / 시가총액</div>
+      <div class="kpi-value">240,500원</div>
+      <div class="kpi-desc">시가총액 약 <strong>2조 8,078억 원</strong></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">영업이익률 체력 (OPM)</div>
+      <div class="kpi-value" style="color: var(--primary);">29.3% ~ 39.8%</div>
+      <div class="kpi-desc"><span class="tag-up">▲ 최상위</span> 국내 소부장 최고 수준 마진</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">글로벌 비포마켓 점유율</div>
+      <div class="kpi-value">~ 80%</div>
+      <div class="kpi-desc">램리서치·AMAT 식각 챔버 표준 부품</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">재무 안전성 (순현금)</div>
+      <div class="kpi-value">2,883억 원</div>
+      <div class="kpi-desc">부채비율 <strong>9.16%</strong> (무차입 경영)</div>
+    </div>
+  </section>
+
+  <!-- 1. Executive Summary -->
+  <section class="content-card">
+    <h2 class="section-title">
+      <span class="section-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      </span>
+      1. Executive Summary (핵심 요약)
+    </h2>
+    <p style="font-size: 1.02rem; color: var(--text-sub); margin-bottom: 16px;">
+      티씨케이(TCK)는 반도체 제조용 고순도 흑연(Graphite) 및 탄화규소(Solid CVD-SiC) 소모성 부품 분야의 글로벌 선도 기업입니다. 세계 최초로 화학기상증착(CVD) 방식의 SiC Focus Ring 상용화에 성공하였으며, 3D NAND 고단화 및 미세화에 따른 고출력 플라즈마 식각 환경에서 대체 불가능한 <strong>'테크 모노폴리(Monopoly)'</strong> 지위를 구가하고 있습니다.
+    </p>
+    <div style="background: var(--bg-sub); border-left: 4px solid var(--primary); padding: 16px 20px; border-radius: 8px;">
+      <strong>💡 핵심 투자 포인트 3선:</strong>
+      <ol style="margin-top: 8px; padding-left: 20px; color: var(--text-sub); line-height: 1.8;">
+        <li><strong>3D NAND 300단(V9/V10) 초고단화 수혜:</strong> HARC(고종횡비) 식각 공정 심화로 SiC 링의 소모량이 기하급수적으로 증가.</li>
+        <li><strong>압도적인 비포마켓(Before-market) 락인:</strong> 글로벌 1위 식각 장비사 Lam Research와의 20년 파트너십 및 NPI 우수 협력사 지위.</li>
+        <li><strong>설비투자 일단락에 따른 현금 수확기:</strong> 2024년부터 CAPEX 급감으로 잉여현금흐름(FCF)이 668억 원 이상으로 급증하며 재무 레버리지 가동.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 2. 공정 내 기술적 중요성 -->
+  <section class="content-card">
+    <h2 class="section-title">
+      <span class="section-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+      </span>
+      2. 반도체 식각 공정과 왜 'CVD-SiC'인가?
+    </h2>
+    <div class="process-diagram-box">
+      <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 10px;">플라즈마 식각 챔버와 포커스 링의 역할</h3>
+      <p style="font-size: 0.93rem; color: var(--text-sub);">
+        포커스 링(Focus Ring)은 웨이퍼 테두리를 감싸 플라즈마가 웨이퍼 가장자리까지 균일하게 입사되도록 전기적 필드를 형성하는 핵심 소모품입니다. 링이 마모되면 웨이퍼 외곽부 수율이 급락하므로, 내마모성이 부품 수명과 생산성을 직결합니다.
+      </p>
+      <div class="diagram-flow">
+        <div class="flow-item">
+          <div class="flow-header">기존: 실리콘(Si) / 석영(Quartz)</div>
+          <p style="font-size: 0.88rem; color: var(--text-muted);">
+            • 플라즈마 내마모성 낮음<br>
+            • 저단 낸드 및 범용 로직에 국한<br>
+            • 잦은 챔버 교체로 가동률 손실 발생
+          </p>
+        </div>
+        <div class="flow-item" style="border: 2px solid var(--accent); background: var(--primary-light);">
+          <div class="flow-header" style="color: var(--primary-dark);">선단 공정: Solid CVD-SiC (티씨케이)</div>
+          <p style="font-size: 0.88rem; color: var(--text-main); font-weight: 500;">
+            • 내마모성 및 내플라즈마성 <strong>1.5~2배 이상 우수</strong><br>
+            • 200~300단 초고단 HARC 식각 필수 채택<br>
+            • 챔버 개방 주기 대폭 연장 → 팹 생산성 극대화
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 티씨케이 4대 핵심 강점 심층 분석 -->
+  <section class="content-card">
+    <h2 class="section-title">
+      <span class="section-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </span>
+      3. 티씨케이의 4대 핵심 강점 (Core Strengths Deep Dive)
+    </h2>
+
+    <div class="strengths-grid">
+      <!-- 강점 1 -->
+      <div class="strength-card">
+        <div class="strength-num">STRENGTH 01</div>
+        <h3 class="strength-title">압도적인 기술적 해자 (CVD-SiC 일관 공정)</h3>
+        <div class="strength-desc">
+          CVD 방식의 SiC 링은 가스 반응을 통해 고순도 SiC 결정을 균일하게 증착시켜야 하므로 공정 결함 제어가 극도로 어렵습니다.
+          <ul>
+            <li><strong>20년 공정 노하우:</strong> 독자 개발한 반응로(Reactor) 설계 및 고유 증착 레시피 보유.</li>
+            <li><strong>원소재 수직계열화:</strong> 최대주주인 일본 토카이 카본으로부터 고순도 등방성 흑연을 안정적으로 조달하여 [모재 가공 → 증착 → 초정밀 가공] 전 공정 내재화.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 강점 2 -->
+      <div class="strength-card">
+        <div class="strength-num">STRENGTH 02</div>
+        <h3 class="strength-title">글로벌 탑티어 장비사(비포마켓) 공급망 독점</h3>
+        <div class="strength-desc">
+          최종 칩메이커 직납이 아닌, <strong>램리서치(Lam Research), AMAT, TEL</strong> 등 장비 제조사에 직접 인증 납품하는 비포마켓 80%를 장악하고 있습니다.
+          <ul>
+            <li><strong>높은 고객 전환 비용:</strong> 장비 보증(Warranty) 및 수율 리스크 때문에 식각 장비사와 칩메이커는 검증된 비포마켓 정품 링을 최우선 채택.</li>
+            <li><strong>Lam Research NPI 우수 파트너:</strong> 차세대 장비 연구개발 단계부터 공동 참여하여 장비 표준 부품으로 사전 등록.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 강점 3 -->
+      <div class="strength-card">
+        <div class="strength-num">STRENGTH 03</div>
+        <h3 class="strength-title">3D NAND 고단화 및 첨단 로직 확대 수혜</h3>
+        <div class="strength-desc">
+          300단 이상 초고단 낸드(V9/V10) 양산이 본격화되면서 식각 스텝 수와 플라즈마 파워가 동시에 수직 상승하고 있습니다.
+          <ul>
+            <li><strong>소모품 Q(출하량)의 폭증:</strong> 가혹한 플라즈마 환경으로 인해 링 교체 주기가 단축되어 팹 가동률 상승 시 실적 레버리지 폭발.</li>
+            <li><strong>응용처 다변화:</strong> 메모리 낸드 중심에서 첨단 파운드리 GAA 및 선단 DRAM 공정으로 SiC 링 채택 범위 지속 확장.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 강점 4 -->
+      <div class="strength-card">
+        <div class="strength-num">STRENGTH 04</div>
+        <h3 class="strength-title">제조업 최상위 수익성과 '무차입' 재무 체력</h3>
+        <div class="strength-desc">
+          다운사이클에서도 29%대 영업이익률을 수성하는 경이적인 가격 결정력(Pricing Power)을 입증했습니다.
+          <ul>
+            <li><strong>투자 회수기(Harvesting) 진입:</strong> 2022~2023년 대규모 공장 증설 완료 후 2024년 CAPEX가 76억 원으로 정상화되며 잉여현금흐름(FCF) 668억 원 창출.</li>
+            <li><strong>순현금 2,883억 원 보유:</strong> 부채비율 9.16%, 유동비율 910%로 글로벌 매크로 위기에도 흔들림 없는 완벽한 방어력 구축.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. 재무제표 팩트체크 -->
+  <section class="content-card">
+    <h2 class="section-title">
+      <span class="section-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      </span>
+      4. DART 감사보고서 기반 실적 및 재무 팩트체크
+    </h2>
+    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">* 금융감독원 전자공시시스템(DART) 개별 재무제표 기준 검증 수치 (단위: 억 원, 원, %)</p>
+    
+    <div class="table-responsive">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>구분 / 계정과목</th>
+            <th>2022년 (피크)</th>
+            <th>2023년 (저점)</th>
+            <th>2024년 (반등)</th>
+            <th class="highlight-col">2025년 상반기</th>
+            <th style="text-align: center;">추세 및 평가</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>매출액</td>
+            <td>3,196</td>
+            <td>2,267</td>
+            <td>2,757</td>
+            <td class="highlight-col">1,510</td>
+            <td style="text-align: center;"><span class="tag-up">YoY +18.6% 성장</span></td>
+          </tr>
+          <tr>
+            <td>영업이익</td>
+            <td>1,270</td>
+            <td>667</td>
+            <td>807</td>
+            <td class="highlight-col">430</td>
+            <td style="text-align: center;"><span class="tag-up">YoY +14.0% 증가</span></td>
+          </tr>
+          <tr>
+            <td>영업이익률 (OPM)</td>
+            <td><span class="badge-opm">39.75%</span></td>
+            <td><span class="badge-opm">29.43%</span></td>
+            <td><span class="badge-opm">29.29%</span></td>
+            <td class="highlight-col"><span class="badge-opm">28.45%</span></td>
+            <td style="text-align: center;">전 구간 28~40% 고마진 유지</td>
+          </tr>
+          <tr>
+            <td>당기순이익</td>
+            <td>941</td>
+            <td>612</td>
+            <td>720</td>
+            <td class="highlight-col">355</td>
+            <td style="text-align: center;">순이익률 23~29% 안정적</td>
+          </tr>
+          <tr>
+            <td>기본 주당순이익 (EPS)</td>
+            <td>8,056원</td>
+            <td>5,246원</td>
+            <td>6,167원</td>
+            <td class="highlight-col">3,076원</td>
+            <td style="text-align: center;">연간 6,500원~7,000원 상회 전망</td>
+          </tr>
+          <tr>
+            <td>영업활동현금흐름 (OCF)</td>
+            <td>873</td>
+            <td>210</td>
+            <td>744</td>
+            <td class="highlight-col">-</td>
+            <td style="text-align: center;">현금창출력 정상 궤도 안착</td>
+          </tr>
+          <tr>
+            <td>유형자산 취득(CAPEX)</td>
+            <td>355</td>
+            <td>474</td>
+            <td><strong>76</strong></td>
+            <td class="highlight-col">-</td>
+            <td style="text-align: center;">대규모 증설 완료 (투자 종료)</td>
+          </tr>
+          <tr>
+            <td>잉여현금흐름 (FCF)</td>
+            <td>518</td>
+            <td>-264</td>
+            <td><strong style="color: var(--success);">+668</strong></td>
+            <td class="highlight-col">-</td>
+            <td style="text-align: center;"><span class="tag-up">대규모 흑자 전환</span></td>
+          </tr>
+          <tr>
+            <td>부채비율 / 유동비율</td>
+            <td>15.3% / 551%</td>
+            <td>8.1% / 951%</td>
+            <td><strong>9.2% / 910%</strong></td>
+            <td class="highlight-col">-</td>
+            <td style="text-align: center;">국내 최고 수준 건전성</td>
+          </tr>
+          <tr>
+            <td>현금 및 금융자산 (순현금)</td>
+            <td>2,522</td>
+            <td>2,271</td>
+            <td><strong>2,883</strong></td>
+            <td class="highlight-col">-</td>
+            <td style="text-align: center;">시총의 10% 이상 순현금 보유</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 5. Bull vs Bear 리스크 점검 -->
+  <section class="content-card">
+    <h2 class="section-title">
+      <span class="section-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      </span>
+      5. 시장 우려(Bear Case)와 티씨케이의 방어 논리 (Counter-Defense)
+    </h2>
+
+    <div class="bull-bear-grid">
+      <!-- Bear -->
+      <div class="risk-box bear-box">
+        <div class="risk-header bear-header">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          시장 우려 요인 (Bear Case)
+        </div>
+        <ul class="risk-list bear-list">
+          <li><strong>국내 애프터마켓(대체재) 진입 우려:</strong> 하나머티리얼즈, 케이엔제이 등 국내 후발 업체들의 SiC 링 진입 시도 및 가격 인하 경쟁 가능성.</li>
+          <li><strong>특허 분쟁 및 법적 리스크:</strong> 식각 부품 관련 특허 소송 및 특허권 무효화 시도에 따른 기술 독점력 희석 우려.</li>
+          <li><strong>NAND 단품 투자 의존도:</strong> 메모리 제조사의 CAPEX 지연 또는 설비투자 축소 시 실적 변동성 노출.</li>
+        </ul>
+      </div>
+
+      <!-- Bull Defense -->
+      <div class="risk-box bull-box">
+        <div class="risk-header bull-header">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          티씨케이의 강력한 방어력 (Defense)
+        </div>
+        <ul class="risk-list bull-list">
+          <li><strong>초고단 공정 비포마켓 선호:</strong> 300단 초고단 낸드에서는 미세 파티클 발생 시 수조 원대 웨이퍼가 전량 폐기되므로, 엔드유저는 <strong>검증된 정품(티씨케이)을 80% 이상 우선 채택</strong>.</li>
+          <li><strong>장비사(Lam) 공급망 락인:</strong> 램리서치는 티씨케이와의 파트너십을 더욱 공고히 하며 2026년 대비 재고 비축(Restocking) 물량 확대를 공식 요청 중.</li>
+          <li><strong>러닝 소모품(Consumables) 특성:</strong> 신규 장비 증설이 없더라도 가동 중인 팹 라인에서 주기적으로 마모·교체되므로 지속적인 캐시카우 발생.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 결론 및 체크포인트 -->
+    <div class="callout-conclusion">
+      <div class="conclusion-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+        전문 애널리스트 총평 및 핵심 모니터링 체크리스트
+      </div>
+      <p style="font-size: 0.95rem; color: var(--text-sub); line-height: 1.75;">
+        티씨케이는 전 세계 반도체 식각 공정의 핵심 병목(Bottleneck)을 쥐고 있는 독보적인 해자 기업입니다. 2024년 턴어라운드를 시작으로 2025~2026년 글로벌 AI 데이터센터 발 고용량 eSSD 수요와 3D NAND V9/V10 램프업이 맞물리며, 과거 2022년의 역사적 최대 실적(매출 3,200억 / 영업이익 1,270억)을 넘어설 구조적 성장 궤도에 진입해 있습니다.
+      </p>
+      <div style="margin-top: 14px; font-size: 0.9rem; font-weight: 600; color: var(--primary);">
+        [지속 추적 핵심 지표] : ① 삼성전자·SK하이닉스의 300단급 낸드 양산 가동률, ② 램리서치(LRCX)의 식각 챔버 출하량, ③ 분기별 OPM 30% 유지 여부.
+      </div>
+    </div>
+  </section>
+
+  <!-- 푸터 -->
+    <!-- ================================================================= -->
+  <!-- [추가 보고서] 약점 및 구조적 리스크 심층 분석 보고서 전문 (100% 무손실 첨부) -->
+  <!-- ================================================================= -->
+  <div style="margin: 60px 0 30px; display: flex; align-items: center; gap: 16px;">
+    <div style="flex: 1; height: 2px; background: linear-gradient(90deg, transparent, var(--danger), var(--border));"></div>
+    <span style="background: var(--danger-bg); color: var(--danger); font-weight: 800; font-size: 0.95rem; padding: 8px 20px; border-radius: 9999px; border: 1px solid var(--danger); text-transform: uppercase; letter-spacing: 0.05em; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 2px 8px rgba(239, 68, 68, 0.15);">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      심층 분석 리포트 II : 약점(Weakness) 및 구조적 리스크 진단
+    </span>
+    <div style="flex: 1; height: 2px; background: linear-gradient(90deg, var(--border), var(--danger), transparent);"></div>
+  </div>
+
+  <section class="content-card" style="border-top: 4px solid var(--danger);">
+    <h2 class="section-title" style="border-bottom-color: var(--danger); color: var(--text-main);">
+      <span class="section-icon" style="color: var(--danger);">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </span>
+      [기업 분석 리포트] 티씨케이(064760): 철옹성의 균열과 구조적 리스크 점검
+    </h2>
+
+    <div style="background: var(--danger-bg); border-left: 4px solid var(--danger); padding: 18px 22px; border-radius: 10px; margin-bottom: 28px;">
+      <div style="font-weight: 700; color: var(--danger); font-size: 1.05rem; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+        📌 분석 요약
+      </div>
+      <p style="font-size: 0.98rem; color: var(--text-sub); line-height: 1.75; margin: 0;">
+        과거 40%에 육박하는 경이적인 영업이익률(OPM)을 구가하며 식각용 Solid SiC Ring 시장을 '절대 독점'했던 티씨케이는, <strong>특허 방어선 약화 후 경쟁사 진입, 고객사 듀얼 벤더화에 따른 단가 인하(CR) 압력, 3D NAND 및 램리서치 편중도, 차세대 극저온 식각 공정 전환</strong>이라는 5대 구조적 약점에 직면해 있습니다.
+      </p>
+    </div>
+
+    <!-- 1. 약점 1 -->
+    <div style="margin-bottom: 32px;">
+      <h3 style="font-size: 1.22rem; font-weight: 800; color: var(--text-main); margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+        <span style="background: var(--danger); color: #fff; padding: 2px 10px; border-radius: 6px; font-size: 0.85rem; font-family: 'JetBrains Mono';">약점 01</span>
+        독점적 해자(Moat)의 훼손과 경쟁 구도 심화
+      </h3>
+      
+      <div style="background: var(--bg-sub); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px;">
+        <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 10px;">(1) 특허 분쟁 이후 독점 구도의 영구적 해체</h4>
+        <ul style="padding-left: 20px; color: var(--text-sub); line-height: 1.8; font-size: 0.95rem;">
+          <li><strong>과거:</strong> 티씨케이는 CVD-SiC(화학기상증착 실리콘 카바이드) 포커스 링의 원천 특허를 기반으로 글로벌 시장 점유율 85~90% 이상을 독점하며 초과 이윤을 향유했습니다.</li>
+          <li><strong>현재:</strong> 수년간 이어진 특허 소송 과정에서 <strong>물성 및 제조 관련 일부 특허가 무효화</strong>되거나 청구항이 정정되었고, 2025년 와이엠씨·와이컴과의 소송이 합의(로열티 수취)로 종결되었으나, 이는 역설적으로 <strong>후발 주자들의 시장 진입 자체를 원천 봉쇄할 수 없게 되었음</strong>을 의미합니다.</li>
+        </ul>
+      </div>
+
+      <div style="background: var(--bg-sub); border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
+        <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 10px;">(2) 추격자들의 실질적 점유율 잠식</h4>
+        <ul style="padding-left: 20px; color: var(--text-sub); line-height: 1.8; font-size: 0.95rem;">
+          <li><strong>비포마켓(Before-market):</strong> <strong>하나머티리얼즈</strong>가 도쿄일렉트론(TEL) 공급망을 통해 SiC 링 양산 납품을 본격화하며 티씨케이의 유일무이했던 OEM 독점 지위를 위협하고 있습니다.</li>
+          <li><strong>애프터마켓(After-market):</strong> <strong>케이엔제이</strong>, <strong>월덱스</strong>, <strong>디에스테크노</strong> 등이 칩메이커(삼성전자, SK하이닉스 등) 직납 라인을 확장하며 티씨케이의 교체 수요 파이를 잠식하고 있습니다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 2. 약점 2 -->
+    <div style="margin-bottom: 32px;">
+      <h3 style="font-size: 1.22rem; font-weight: 800; color: var(--text-main); margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+        <span style="background: var(--danger); color: #fff; padding: 2px 10px; border-radius: 6px; font-size: 0.85rem; font-family: 'JetBrains Mono';">약점 02</span>
+        가격 결정력 약화와 구조적 OPM(영업이익률) 하향
+      </h3>
+      <p style="font-size: 0.97rem; color: var(--text-sub); line-height: 1.75; margin-bottom: 16px;">
+        과거 '공급자 우위' 시장에서 '수요자(칩메이커/장비사) 우위'로 판도가 바뀌면서, 매출이 회복되더라도 과거의 마진율을 회복하지 못하는 <strong>마진 스퀴즈(Margin Squeeze)</strong>가 수치로 입증되고 있습니다.
+      </p>
+
+      <h4 style="font-size: 1rem; font-weight: 700; color: var(--text-main); margin-bottom: 10px;">■ 티씨케이 연도별 실적 추이 및 OPM 변화 (단위: 억 원, OFS 기준)</h4>
+      <div class="table-responsive" style="margin-bottom: 16px;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>구분</th>
+              <th>2021년</th>
+              <th>2022년 (피크)</th>
+              <th>2023년 (다운턴)</th>
+              <th>2024년</th>
+              <th>2025년</th>
+              <th class="highlight-col">2026년 상반기</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>매출액</td>
+              <td>2,708</td>
+              <td><strong>3,196</strong></td>
+              <td>2,267</td>
+              <td>2,757</td>
+              <td><strong>3,013</strong></td>
+              <td class="highlight-col"><strong>1,903</strong></td>
+            </tr>
+            <tr>
+              <td>영업이익</td>
+              <td>1,034</td>
+              <td><strong>1,270</strong></td>
+              <td>667</td>
+              <td>807</td>
+              <td><strong>839</strong></td>
+              <td class="highlight-col"><strong>554</strong></td>
+            </tr>
+            <tr>
+              <td>영업이익률(OPM)</td>
+              <td><strong>38.2%</strong></td>
+              <td><strong style="color: var(--primary);">39.7%</strong></td>
+              <td><strong>29.4%</strong></td>
+              <td><strong>29.3%</strong></td>
+              <td><strong style="color: var(--danger);">27.8%</strong></td>
+              <td class="highlight-col"><strong>29.1%</strong></td>
+            </tr>
+            <tr>
+              <td>순이익</td>
+              <td>819</td>
+              <td><strong>941</strong></td>
+              <td>612</td>
+              <td>720</td>
+              <td><strong>699</strong></td>
+              <td class="highlight-col"><strong>488</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="background: var(--bg-sub); border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
+        <h4 style="font-size: 1.02rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">💡 수익성의 레벨 다운(Level-down) 분석:</h4>
+        <ul style="padding-left: 20px; color: var(--text-sub); line-height: 1.8; font-size: 0.95rem;">
+          <li>2025년 매출액은 3,013억 원으로 역대 최대였던 2022년(3,196억 원)에 근접했으나, <strong>영업이익은 839억 원에 그쳐 2022년(1,270억 원) 대비 약 34%나 감소</strong>했습니다.</li>
+          <li>OPM이 <strong>39.7% → 27.8%</strong>로 12%p 가까이 하락한 것은 단순 사이클 변동이 아니라, <strong>경쟁사 등장에 따른 단가 인하(CR) 압력 및 원가 상승이 고착화</strong>되었음을 방증합니다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 3. 약점 3 -->
+    <div style="margin-bottom: 32px;">
+      <h3 style="font-size: 1.22rem; font-weight: 800; color: var(--text-main); margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+        <span style="background: var(--danger); color: #fff; padding: 2px 10px; border-radius: 6px; font-size: 0.85rem; font-family: 'JetBrains Mono';">약점 03</span>
+        특정 고객사(램리서치) 및 전방 산업(3D NAND) 과의존
+      </h3>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px;">
+        <div style="background: var(--bg-sub); border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
+          <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 10px;">(1) 램리서치(Lam Research) 의존도 40% 상회</h4>
+          <ul style="padding-left: 20px; color: var(--text-sub); line-height: 1.8; font-size: 0.93rem;">
+            <li>티씨케이의 매출 중 약 <strong>40% 이상이 글로벌 식각 장비 1위 기업인 램리서치향</strong>으로 발생합니다.</li>
+            <li>램리서치가 3D NAND 식각 장비 시장을 지배할 때는 강력한 성장 동력이지만, 램리서치의 장비 판매 둔화나 부품 조달 정책 변화(벤더 다변화 등)가 발생할 경우 티씨케이 실적이 직접적으로 흔들리는 <strong>단일 고객 종속 리스크</strong>를 안고 있습니다.</li>
+          </ul>
+        </div>
+
+        <div style="background: var(--bg-sub); border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
+          <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 10px;">(2) 3D NAND 사이클 민감도</h4>
+          <ul style="padding-left: 20px; color: var(--text-sub); line-height: 1.8; font-size: 0.93rem;">
+            <li>포커스 링 매출의 80% 이상이 NAND 식각 공정에 집중되어 있습니다.</li>
+            <li>NAND는 DRAM이나 AI용 HBM에 비해 상대적으로 <strong>공급 과잉, 가격 변동성, 제조사 CAPEX 컷(감산)</strong>이 빈번한 메모리 세그먼트입니다. 2023년 반도체 다운턴 당시 티씨케이의 영업이익이 반토막(-47.5%) 난 주원인 역시 NAND 감산에 따른 가동률 급락이었습니다.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. 약점 4 -->
+    <div style="margin-bottom: 32px;">
+      <h3 style="font-size: 1.22rem; font-weight: 800; color: var(--text-main); margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+        <span style="background: var(--danger); color: #fff; padding: 2px 10px; border-radius: 6px; font-size: 0.85rem; font-family: 'JetBrains Mono';">약점 04</span>
+        기술 패러다임 변화 (극저온 식각 도입 & 신소재 대두)
+      </h3>
+
+      <div style="background: var(--bg-sub); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px;">
+        <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 10px;">(1) 차세대 '극저온 식각(Cryogenic Etching)' 기술 전환 리스크</h4>
+        <ul style="padding-left: 20px; color: var(--text-sub); line-height: 1.8; font-size: 0.95rem;">
+          <li>3D NAND가 300단, 400단을 넘어서면서 기존 식각 방식으로는 HARC(종횡비) 홀 형성에 한계가 발생해, 램리서치와 TEL 등은 <strong>영하 -60℃~-80℃ 이하에서 깎아내는 극저온 식각 장비</strong>를 상용화하고 있습니다.</li>
+          <li>극저온 환경에서는 플라즈마 밀도와 열충격 조건이 완전히 달라져, 기존 SiC 링의 내구성, 균열 저항성, 열팽창계수 매칭에 대한 추가 기술 검증이 필요합니다. 공정 조건이 바뀌는 변곡점은 후발 주자들에게 시장 진입의 틈새를 열어줄 수 있습니다.</li>
+        </ul>
+      </div>
+
+      <div style="background: var(--bg-sub); border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
+        <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 10px;">(2) 애프터마켓(부품 재생/비정품) 침투율 확대</h4>
+        <ul style="padding-left: 20px; color: var(--text-sub); line-height: 1.8; font-size: 0.95rem;">
+          <li>메모리 3사(삼성전자, SK하이닉스, 마이크론)는 원가 절감을 위해 가장 가혹한 핵심 챔버를 제외한 중위급 공정 및 레거시 라인에서 <strong>정품 대비 20~30% 저렴한 애프터마켓 SiC 링 및 세정/재생 부품 도입 비중을 확대</strong>하고 있습니다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 5. 약점 5 -->
+    <div style="margin-bottom: 32px;">
+      <h3 style="font-size: 1.22rem; font-weight: 800; color: var(--text-main); margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+        <span style="background: var(--danger); color: #fff; padding: 2px 10px; border-radius: 6px; font-size: 0.85rem; font-family: 'JetBrains Mono';">약점 05</span>
+        지배구조 및 자본 배치(Capital Allocation) 비효율
+      </h3>
+
+      <div style="background: var(--bg-sub); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px;">
+        <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 10px;">(1) 일본 토카이카본(Tokai Carbon)의 지배력 (지분율 44.4%)</h4>
+        <ul style="padding-left: 20px; color: var(--text-sub); line-height: 1.8; font-size: 0.95rem;">
+          <li>최대주주가 일본계 기업(토카이 카본)으로, 한국 시장에서의 주주환원(자사주 매입/소각)이나 적극적인 미래 성장 투자보다는 <strong>보수적인 경영 기조</strong>를 유지합니다.</li>
+          <li>흑연 원소재 수급에서 모회사에 대한 수직계열화 장점이 있는 반면, 거래 조건이나 이전가격 등에서 독립적이고 유연한 전략 실행에 제약이 따를 수 있습니다.</li>
+        </ul>
+      </div>
+
+      <div style="background: var(--bg-sub); border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
+        <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 10px;">(2) 과도한 현금 유보와 ROE 하락</h4>
+        <ul style="padding-left: 20px; color: var(--text-sub); line-height: 1.8; font-size: 0.95rem;">
+          <li><strong>재무제표 점검 (2025년 기준):</strong> 부채비율은 <strong>9.3%</strong>에 불과하며, 현금성자산 및 단기금융자산만 <strong>약 2,832억 원</strong>에 달합니다.</li>
+          <li>그러나 이 막대한 유휴 현금을 신사업 M&A나 차세대 소재 기술 투자로 전환하지 못하고 금융상품에 단순 예치해두면서, 과거 25~30%에 달하던 <strong>자기자본이익률(ROE)이 13~15% 수준으로 둔화</strong>되었습니다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 6. 약점 6 -->
+    <div style="margin-bottom: 32px;">
+      <h3 style="font-size: 1.22rem; font-weight: 800; color: var(--text-main); margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+        <span style="background: var(--danger); color: #fff; padding: 2px 10px; border-radius: 6px; font-size: 0.85rem; font-family: 'JetBrains Mono';">약점 06</span>
+        지정학적 리스크 (중국 장비사 진입의 양날의 검)
+      </h3>
+      <div style="background: var(--bg-sub); border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
+        <ul style="padding-left: 20px; color: var(--text-sub); line-height: 1.8; font-size: 0.95rem;">
+          <li>티씨케이는 고객 다변화를 위해 램리서치 외에 <strong>중국 최대 장비사인 나우라(NAURA), AMEC</strong> 등으로 납품을 추진하고 있습니다.</li>
+          <li>단기적으로는 신규 매출처 확보이지만, 미국의 대중국 반도체 장비/핵심 소부장 수출 규제가 강화될 경우 <strong>미국 상무부 제재 리스크나 글로벌 메이저 고객사와의 역학 관계에서 불리한 위치에 놓일 위험</strong>이 상존합니다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 7. 종합 평가 및 투자자 체크포인트 -->
+    <div style="margin-bottom: 20px;">
+      <h3 style="font-size: 1.22rem; font-weight: 800; color: var(--text-main); margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+        <span style="background: var(--danger); color: #fff; padding: 2px 10px; border-radius: 6px; font-size: 0.85rem; font-family: 'JetBrains Mono';">총괄 평가</span>
+        7. 종합 평가 및 투자자 체크포인트
+      </h3>
+
+      <div class="table-responsive" style="margin-bottom: 20px;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width: 25%;">분석 영역</th>
+              <th style="width: 55%;">핵심 리스크 및 약점 요약</th>
+              <th style="width: 20%; text-align: center;">위험도</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>해자(Moat)</strong></td>
+              <td>특허 소송 합의 종결 이후 하나머티/케이엔제이 등 대체 공급망 고착화</td>
+              <td style="text-align: center;"><span style="background: var(--danger); color: #fff; padding: 3px 12px; border-radius: 9999px; font-weight: 700; font-size: 0.82rem;">High</span></td>
+            </tr>
+            <tr>
+              <td><strong>수익성</strong></td>
+              <td>과거 40%대 OPM 재현 불가, 20%대 후반 마진율로의 구조적 고착화</td>
+              <td style="text-align: center;"><span style="background: var(--danger); color: #fff; padding: 3px 12px; border-radius: 9999px; font-weight: 700; font-size: 0.82rem;">High</span></td>
+            </tr>
+            <tr>
+              <td><strong>고객/제품</strong></td>
+              <td>램리서치(40%+) 및 3D NAND(80%+)에 대한 절대적 편중</td>
+              <td style="text-align: center;"><span style="background: var(--warning); color: #fff; padding: 3px 12px; border-radius: 9999px; font-weight: 700; font-size: 0.82rem;">Medium-High</span></td>
+            </tr>
+            <tr>
+              <td><strong>기술 리스크</strong></td>
+              <td>초고단 낸드 전환에 따른 극저온 식각(Cryo Etch) 적합성 및 애프터마켓 확대</td>
+              <td style="text-align: center;"><span style="background: #eab308; color: #fff; padding: 3px 12px; border-radius: 9999px; font-weight: 700; font-size: 0.82rem;">Medium</span></td>
+            </tr>
+            <tr>
+              <td><strong>자본 정책</strong></td>
+              <td>2,800억 이상 유휴 현금의 소극적 활용 및 낮은 주주환원율</td>
+              <td style="text-align: center;"><span style="background: #eab308; color: #fff; padding: 3px 12px; border-radius: 9999px; font-weight: 700; font-size: 0.82rem;">Medium</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(245, 158, 11, 0.04) 100%); border: 1px solid var(--danger); border-radius: var(--radius); padding: 24px;">
+        <h4 style="font-size: 1.1rem; font-weight: 800; color: var(--danger); margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+          ⚖️ 결론
+        </h4>
+        <p style="font-size: 0.96rem; color: var(--text-sub); line-height: 1.8; margin-bottom: 12px;">
+          티씨케이는 여전히 글로벌 CVD-SiC 링 시장에서 1위 지위를 유지하고 있는 우량한 기술 기업이지만, <strong>"과거의 독점 기업 프리미엄(Valuation Multiple)"을 부여받던 시대는 종료</strong>되었습니다.
+        </p>
+        <div style="background: var(--bg-card); border-left: 4px solid var(--danger); padding: 14px 18px; border-radius: 6px; font-size: 0.92rem; font-weight: 600; color: var(--text-main); line-height: 1.7;">
+          [향후 주가 및 실적 평가 시 3대 핵심 모니터링 체크포인트]:<br>
+          ① 분기별 영업이익률(OPM) 30% 방어 여부<br>
+          ② DRAM/파운드리/HBM 등 낸드 외 제품군 매출 비중 확대 추이<br>
+          ③ 하나머티리얼즈 등 경쟁사의 비포마켓 점유율 침투 속도
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- 푸터 -->
+  <footer>
+    <p>© 2026 Semiconductor Equity Research. 본 보고서는 신뢰할 수 있는 공시 자료 및 산업 데이터를 기반으로 작성되었으며, 투자 참고용 자료입니다.</p>
+  </footer>
+
+</div>
+
+<script>
+  function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', nextTheme);
+    localStorage.setItem('theme', nextTheme);
+  }
+
+  // 시스템 테마 및 저장된 테마 반영
+  (function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  })();
+</script>
+
+</body>
+</html>
+
