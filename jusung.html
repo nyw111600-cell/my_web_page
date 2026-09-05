@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>주성엔지니어링 (036930) 기업분석 및 밸류에이션 보고서</title>
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <!-- FontAwesome 6.4.0 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-card-sub: #f1f5f9;
+            --border-color: #e2e8f0;
+            --border-light: #f1f5f9;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --text-sub: #334155;
+            --primary: #2563eb;
+            --primary-light: #eff6ff;
+            --primary-dark: #1d4ed8;
+            --success: #059669;
+            --success-light: #ecfdf5;
+            --warning: #d97706;
+            --warning-light: #fffbeb;
+            --danger: #dc2626;
+            --danger-light: #fef2f2;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.07);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --header-grad: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            --table-hover: #f8fafc;
+            --svg-grid: #e2e8f0;
+            --svg-text: #64748b;
+            --svg-text-main: #0f172a;
+            --chart-card-bg: #ffffff;
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #090d16;
+            --bg-card: #131b2e;
+            --bg-card-sub: #1e293b;
+            --border-color: #27354f;
+            --border-light: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-sub: #cbd5e1;
+            --primary: #3b82f6;
+            --primary-light: #1e3a8a;
+            --primary-dark: #60a5fa;
+            --success: #10b981;
+            --success-light: #064e3b;
+            --warning: #f59e0b;
+            --warning-light: #78350f;
+            --danger: #ef4444;
+            --danger-light: #7f1d1d;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.4);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+            --header-grad: linear-gradient(135deg, #0b1120 0%, #111827 50%, #1e293b 100%);
+            --table-hover: #1e293b;
+            --svg-grid: #27354f;
+            --svg-text: #94a3b8;
+            --svg-text-main: #f8fafc;
+            --chart-card-bg: #151f33;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+        }
+
+        body {
+            font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.65;
+            padding: 36px 20px;
+        }
+
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        /* Floating Theme Toggle Button */
+        .theme-toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 9999px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(8px);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 20px -3px rgba(0, 0, 0, 0.25);
+        }
+
+        @media print {
+            .theme-toggle-btn { display: none !important; }
+            body { background-color: #ffffff; color: #000000; padding: 0; }
+            .section { box-shadow: none !important; border: 1px solid #ccc !important; }
+        }
+
+        /* Header Area */
+        .header-card {
+            background: var(--header-grad);
+            color: #ffffff;
+            padding: 44px 36px;
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .header-card::before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 380px;
+            height: 380px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.25) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .company-title-group {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .company-title-group h1 {
+            font-size: 2.35rem;
+            font-weight: 800;
+            letter-spacing: -0.8px;
+        }
+
+        .badge-ticker {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 5px 14px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #93c5fd;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .badge-market {
+            background: #2563eb;
+            color: #ffffff;
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .badge-rating {
+            background: #059669;
+            color: #ffffff;
+            padding: 5px 14px;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .meta-info-list {
+            display: flex;
+            gap: 20px;
+            font-size: 0.9rem;
+            color: #94a3b8;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .meta-info-list span i {
+            margin-right: 6px;
+            color: #60a5fa;
+        }
+
+        .header-headline {
+            font-size: 1.15rem;
+            color: #e2e8f0;
+            line-height: 1.75;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            padding-top: 20px;
+            max-width: 1060px;
+        }
+
+        /* Metric Highlights Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin-bottom: 32px;
+        }
+
+        .metric-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
+        }
+
+        .metric-card.accent-success::after { background: var(--success); }
+        .metric-card.accent-warning::after { background: var(--warning); }
+        .metric-card.accent-danger::after { background: var(--danger); }
+
+        .metric-card-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .metric-card-head i {
+            font-size: 1.15rem;
+            color: var(--primary);
+        }
+
+        .metric-card-value {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+        }
+
+        .metric-card-foot {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .metric-card-foot .highlight-up {
+            color: var(--danger);
+            font-weight: 700;
+        }
+
+        /* Main Section Styling */
+        .section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 34px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .section-header i {
+            font-size: 1.35rem;
+            color: var(--primary);
+            background: var(--primary-light);
+            padding: 10px;
+            border-radius: 12px;
+        }
+
+        .section-header h2 {
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.4px;
+        }
+
+        .section-header .section-tag {
+            font-size: 0.8rem;
+            background: var(--bg-card-sub);
+            color: var(--text-muted);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        /* Layout Grids */
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .grid-3col {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .grid-2col, .grid-3col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Info Card */
+        .info-card {
+            background: var(--bg-card-sub);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 22px;
+        }
+
+        .info-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-card h3 i {
+            color: var(--primary);
+        }
+
+        .info-card p {
+            font-size: 0.95rem;
+            color: var(--text-sub);
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .info-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-card ul li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            font-size: 0.92rem;
+            color: var(--text-sub);
+            line-height: 1.6;
+        }
+
+        .info-card ul li::before {
+            content: "•";
+            position: absolute;
+            left: 6px;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.2rem;
+            top: -2px;
+        }
+
+        /* Table Styling */
+        .table-responsive {
+            overflow-x: auto;
+            margin-top: 14px;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.92rem;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        table th, table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        table th {
+            background-color: var(--bg-card-sub);
+            color: var(--text-main);
+            font-weight: 700;
+            letter-spacing: -0.2px;
+        }
+
+        table th:first-child, table td:first-child {
+            text-align: left;
+            font-weight: 600;
+        }
+
+        table tr:last-child td {
+            border-bottom: none;
+        }
+
+        table tbody tr:hover {
+            background-color: var(--table-hover);
+        }
+
+        .col-highlight {
+            background-color: var(--primary-light);
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        [data-theme="dark"] .col-highlight {
+            background-color: rgba(59, 130, 246, 0.15);
+            color: #93c5fd;
+        }
+
+        /* Chart Card Containers (SVG Based - 100% Reliable & Non-Blank) */
+        .chart-box {
+            background: var(--chart-card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            margin-top: 14px;
+        }
+
+        .chart-title-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .chart-title {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chart-legend-box {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+        }
+
+        .chart-svg-wrapper {
+            width: 100%;
+            height: 300px;
+            position: relative;
+        }
+
+        .chart-svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .chart-svg text {
+            font-family: "Pretendard", sans-serif;
+            user-select: none;
+        }
+
+        .chart-bar-hover:hover {
+            opacity: 0.85;
+            cursor: pointer;
+        }
+
+        /* Moat Tags */
+        .moat-badge-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .moat-pill {
+            background: var(--primary-light);
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 9999px;
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Callout Banners */
+        .callout {
+            border-radius: 14px;
+            padding: 18px 22px;
+            margin: 20px 0;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .callout-info {
+            background: var(--primary-light);
+            border-left: 5px solid var(--primary);
+            color: var(--text-sub);
+        }
+
+        .callout-warning {
+            background: var(--warning-light);
+            border-left: 5px solid var(--warning);
+            color: var(--text-sub);
+        }
+
+        .callout-icon {
+            font-size: 1.3rem;
+            margin-top: 2px;
+        }
+
+        .callout-info .callout-icon { color: var(--primary); }
+        .callout-warning .callout-icon { color: var(--warning); }
+
+        .callout-content h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text-main);
+        }
+
+        .callout-content p {
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }
+
+        /* Bull vs Bear Scenario Grid */
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 800px) {
+            .scenario-grid { grid-template-columns: 1fr; }
+        }
+
+        .scenario-card {
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--border-color);
+        }
+
+        .scenario-bull {
+            background: var(--success-light);
+            border-top: 4px solid var(--success);
+        }
+
+        .scenario-bear {
+            background: var(--danger-light);
+            border-top: 4px solid var(--danger);
+        }
+
+        .scenario-card h3 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 1.15rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .scenario-bull h3 { color: var(--success); }
+        .scenario-bear h3 { color: var(--danger); }
+
+        .scenario-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .scenario-card ul li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 12px;
+            font-size: 0.93rem;
+            line-height: 1.65;
+            color: var(--text-sub);
+        }
+
+        .scenario-bull ul li::before {
+            content: "▲";
+            position: absolute;
+            left: 4px;
+            color: var(--success);
+            font-size: 0.8rem;
+            top: 2px;
+        }
+
+        .scenario-bear ul li::before {
+            content: "▼";
+            position: absolute;
+            left: 4px;
+            color: var(--danger);
+            font-size: 0.8rem;
+            top: 2px;
+        }
+
+        /* Footer */
+        .report-footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Floating Theme Toggle Button -->
+<button class="theme-toggle-btn" id="themeToggleBtn" aria-label="화면 모드 변경">
+    <span id="themeIcon">🌙</span>
+    <span id="themeText">다크 모드</span>
+</button>
+
+<div class="container">
+
+    <!-- Header Card -->
+    <header class="header-card">
+        <div class="header-top">
+            <div class="company-title-group">
+                <h1>주성엔지니어링</h1>
+                <span class="badge-ticker">036930</span>
+                <span class="badge-market">KOSDAQ</span>
+                <span class="badge-rating"><i class="fa-solid fa-chart-line"></i> 목표가 205,000원</span>
+            </div>
+            <div class="badge-ticker" style="background: rgba(37,99,235,0.25); border-color: #3b82f6;">
+                반도체 ALD 글로벌 프론티어
+            </div>
+        </div>
+
+        <div class="meta-info-list">
+            <span><i class="fa-solid fa-calendar-check"></i> 기준일자: 2026.09.04 (KRX 장마감)</span>
+            <span><i class="fa-solid fa-money-bill-wave"></i> 현재주가: <strong>178,300원</strong> (+6.13%)</span>
+            <span><i class="fa-solid fa-coins"></i> 시가총액: <strong>8조 2,876억 원</strong></span>
+            <span><i class="fa-solid fa-globe"></i> 외국인 지분율: <strong>8.73%</strong></span>
+            <span><i class="fa-solid fa-layer-group"></i> 52주 변동폭: 26,350원 - 283,000원</span>
+        </div>
+
+        <p class="header-headline">
+            <strong>"차세대 3D DRAM 및 미세화 전환의 필수 공정인 원자층증착(ALD) 선도 기업"</strong><br>
+            인적분할 철회 이후 온전한 반도체·디스플레이 통합 기업 가치 재평가 국면. 2026년 상반기 수주 이연에 따른 적자를 딛고, 하반기 SK하이닉스 1c D램 전환 투자 및 해외 고객사 수주 본격 반영으로 실적 턴어라운드(V자 반등) 가속화 전망.
+        </p>
+    </header>
+
+    <!-- Key Metrics Grid -->
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="metric-card-head">
+                <span>현재 주가 / 시총</span>
+                <i class="fa-solid fa-won-sign"></i>
+            </div>
+            <div class="metric-card-value">178,300원</div>
+            <div class="metric-card-foot">
+                시가총액 <span class="highlight-up">8조 2,876억 원</span>
+            </div>
+        </div>
+
+        <div class="metric-card accent-success">
+            <div class="metric-card-head">
+                <span>2026E 예상 매출액</span>
+                <i class="fa-solid fa-chart-simple"></i>
+            </div>
+            <div class="metric-card-value">3,571억 원</div>
+            <div class="metric-card-foot">
+                전년비 <span class="highlight-up">+14.9% YoY</span> 성장
+            </div>
+        </div>
+
+        <div class="metric-card accent-success">
+            <div class="metric-card-head">
+                <span>2026E 예상 영업이익</span>
+                <i class="fa-solid fa-wallet"></i>
+            </div>
+            <div class="metric-card-value">484억 원</div>
+            <div class="metric-card-foot">
+                영업이익률 <span class="highlight-up">13.54%</span> (상저하고)
+            </div>
+        </div>
+
+        <div class="metric-card accent-warning">
+            <div class="metric-card-head">
+                <span>Forward PER / PBR</span>
+                <i class="fa-solid fa-scale-balanced"></i>
+            </div>
+            <div class="metric-card-value">183.0배</div>
+            <div class="metric-card-foot">
+                PBR <strong>12.36배</strong> (미래 성장성 선반영)
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-card-head">
+                <span>컨센서스 목표주가</span>
+                <i class="fa-solid fa-bullseye"></i>
+            </div>
+            <div class="metric-card-value">205,000원</div>
+            <div class="metric-card-foot">
+                상승 여력 <span class="highlight-up">+15.0%</span> 보유
+            </div>
+        </div>
+    </div>
+
+    <!-- 1단계: 기업 개요 및 비즈니스 모델 (BM) -->
+    <section class="section">
+        <div class="section-header">
+            <i class="fa-solid fa-microchip"></i>
+            <h2>1단계: 기업 개요 및 비즈니스 모델 (BM)</h2>
+            <span class="section-tag">Business Model & P·Q·C</span>
+        </div>
+
+        <div class="grid-2col">
+            <div class="info-card">
+                <h3><i class="fa-solid fa-sitemap"></i> 핵심 제품 라인업 및 기술력</h3>
+                <ul>
+                    <li><strong>반도체 원자층증착 (ALD, Atomic Layer Deposition)</strong>: 주력 매출원(약 75% - 80%). DRAM의 단위 셀 면적이 축소됨에 따라 필수적인 High-k 커패시터(Capacitor) 유전막 증착에서 세계적 원천기술을 보유하고 있습니다.</li>
+                    <li><strong>차세대 원자층성장 (ALG, Atomic Layer Growth)</strong>: 플라즈마 손상을 원천 배제하고 원자 단위로 박막을 성장시키는 차세대 기술로 화합물 반도체 및 차세대 3D DRAM 진입을 목표로 개발 중입니다.</li>
+                    <li><strong>디스플레이 증착 장비 (OLED Encapsulation)</strong>: 대면적 OLED 및 마이크로 OLED의 수분·산소 침투를 차단하는 초박막 봉지 공정 장비.</li>
+                    <li><strong>태양광 CIGS / 페로브스카이트 탠덤 셀 장비</strong>: 신재생에너지 고효율 태양전지 박막 증착 포트폴리오 보유.</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3><i class="fa-solid fa-gears"></i> P·Q·C 수익 창출 메커니즘</h3>
+                <ul>
+                    <li><strong>Price (판가)</strong>: 단순 화학기상증착(CVD) 대비 단위 챔버당 단가가 30% - 50% 이상 높은 고부가가치 ALD 장비로 대당 수십억 원에서 100억 원을 상회하는 높은 ASP를 형성합니다.</li>
+                    <li><strong>Quantity (수량)</strong>: SK하이닉스의 선단 공정(1b, 1c nm) 전환 투자와 글로벌 메모리 사의 신규 팹 증설 물량에 직결됩니다. 2026년 하반기 고객사 양산 라인 발주가 집중되고 있습니다.</li>
+                    <li><strong>Cost (원가 구조)</strong>: 장비 조립 외주화 및 핵심 부품 국산화, 모듈화 설계를 통해 고정비 비중을 효율화하고 있으나 R&D 비용(매출액의 약 15% - 20%)이 지속 투입되는 구조입니다.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Corporate Governance / Spinoff Issue -->
+        <div class="callout callout-info">
+            <div class="callout-icon"><i class="fa-solid fa-circle-info"></i></div>
+            <div class="callout-content">
+                <h4>지배구조 및 기업 분할 이슈 점검: 인적분할 계획 철회</h4>
+                <p>
+                    주성엔지니어링은 2024년 5월 반도체 사업부와 디스플레이·태양광 사업부의 분할을 추진했으나, <strong>주식매수청구권 행사 금액이 한도(500억 원)를 초과함에 따라 2024년 10월 분할 계획을 공식 철회</strong>했습니다. 이에 따라 분할로 인한 지배구조 불확실성이 소멸되었으며, 현재는 단일 법인으로서 반도체 ALD 기술 혁신과 현금 창출력에 온전히 집중하고 있습니다.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2단계: 재무제표 및 주요 지표 분석 -->
+    <section class="section">
+        <div class="section-header">
+            <i class="fa-solid fa-table-cells"></i>
+            <h2>2단계: 재무제표 및 주요 지표 분석</h2>
+            <span class="section-tag">Financial Analysis (2023 - 2026E)</span>
+        </div>
+
+        <p style="font-size: 0.95rem; color: var(--text-sub); margin-bottom: 10px;">
+            동사의 실적은 2024년 고객사 가동률 회복으로 서프라이즈를 기록한 후, 2025년 - 2026년 상반기 수주 이연으로 일시적 조정을 겪었습니다. 그러나 2026년 하반기 고객사의 1c D램 전환 및 해외향 납품이 본격화되면서 가파른 실적 반등이 전망됩니다.
+        </p>
+
+        <!-- Annual Table -->
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>주요 재무 항목 (연간)</th>
+                        <th>2023.12 (실적)</th>
+                        <th>2024.12 (실적)</th>
+                        <th>2025.12 (실적)</th>
+                        <th class="col-highlight">2026.12 (E 컨센서스)</th>
+                        <th>YoY 증감률 (26E)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>매출액 (억원)</td>
+                        <td>2,847</td>
+                        <td>4,094</td>
+                        <td>3,107</td>
+                        <td class="col-highlight">3,571</td>
+                        <td style="color: var(--danger); font-weight: 700;">+14.9%</td>
+                    </tr>
+                    <tr>
+                        <td>영업이익 (억원)</td>
+                        <td>289</td>
+                        <td>972</td>
+                        <td>313</td>
+                        <td class="col-highlight">484</td>
+                        <td style="color: var(--danger); font-weight: 700;">+54.6%</td>
+                    </tr>
+                    <tr>
+                        <td>당기순이익 (억원)</td>
+                        <td>340</td>
+                        <td>1,068</td>
+                        <td>357</td>
+                        <td class="col-highlight">453</td>
+                        <td style="color: var(--danger); font-weight: 700;">+26.9%</td>
+                    </tr>
+                    <tr>
+                        <td>영업이익률 (OPM)</td>
+                        <td>10.16%</td>
+                        <td>23.74%</td>
+                        <td>10.06%</td>
+                        <td class="col-highlight">13.54%</td>
+                        <td>+3.48%p</td>
+                    </tr>
+                    <tr>
+                        <td>자기자본이익률 (ROE)</td>
+                        <td>6.80%</td>
+                        <td>19.76%</td>
+                        <td>6.17%</td>
+                        <td class="col-highlight">7.27%</td>
+                        <td>+1.10%p</td>
+                    </tr>
+                    <tr>
+                        <td>부채비율</td>
+                        <td>56.44%</td>
+                        <td>74.17%</td>
+                        <td>50.37%</td>
+                        <td class="col-highlight">-</td>
+                        <td>안정적 (50% 수준)</td>
+                    </tr>
+                    <tr>
+                        <td>당좌비율</td>
+                        <td>216.02%</td>
+                        <td>150.49%</td>
+                        <td>261.82%</td>
+                        <td class="col-highlight">-</td>
+                        <td>유동성 우수</td>
+                    </tr>
+                    <tr>
+                        <td>유보율</td>
+                        <td>1,841%</td>
+                        <td>2,200%</td>
+                        <td>2,295%</td>
+                        <td class="col-highlight">-</td>
+                        <td>자본 여력 양호</td>
+                    </tr>
+                    <tr>
+                        <td>EPS (주당순이익)</td>
+                        <td>705원</td>
+                        <td>2,235원</td>
+                        <td>755원</td>
+                        <td class="col-highlight">974원</td>
+                        <td style="color: var(--danger); font-weight: 700;">+29.0%</td>
+                    </tr>
+                    <tr>
+                        <td>BPS (주당순자산)</td>
+                        <td>10,890원</td>
+                        <td>12,400원</td>
+                        <td>12,922원</td>
+                        <td class="col-highlight">14,429원</td>
+                        <td>+11.7%</td>
+                    </tr>
+                    <tr>
+                        <td>PER (주가수익비율)</td>
+                        <td>48.53배</td>
+                        <td>13.18배</td>
+                        <td>36.68배</td>
+                        <td class="col-highlight">183.01배</td>
+                        <td>미래가치 선반영</td>
+                    </tr>
+                    <tr>
+                        <td>PBR (주가순자산비율)</td>
+                        <td>3.14배</td>
+                        <td>2.38배</td>
+                        <td>2.14배</td>
+                        <td class="col-highlight">12.36배</td>
+                        <td>자산가치 재평가</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Quarterly Trend Table -->
+        <h4 style="font-size: 1.05rem; font-weight: 700; margin-top: 28px; margin-bottom: 12px; color: var(--text-main);">
+            <i class="fa-solid fa-clock-rotate-left"></i> 최근 5개 분기 실적 추이 및 3분기 턴어라운드 전망
+        </h4>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>분기 구분</th>
+                        <th>2025.09 (3Q)</th>
+                        <th>2025.12 (4Q)</th>
+                        <th>2026.03 (1Q)</th>
+                        <th>2026.06 (2Q)</th>
+                        <th class="col-highlight">2026.09 (3Q E)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>매출액 (억원)</td>
+                        <td>588</td>
+                        <td>523</td>
+                        <td>549</td>
+                        <td>599</td>
+                        <td class="col-highlight" style="color: var(--primary); font-weight: 700;">975</td>
+                    </tr>
+                    <tr>
+                        <td>영업이익 (억원)</td>
+                        <td>34</td>
+                        <td style="color: var(--primary);">-126</td>
+                        <td style="color: var(--primary);">-70</td>
+                        <td>14</td>
+                        <td class="col-highlight" style="color: var(--danger); font-weight: 700;">213</td>
+                    </tr>
+                    <tr>
+                        <td>당기순이익 (억원)</td>
+                        <td>76</td>
+                        <td style="color: var(--primary);">-47</td>
+                        <td style="color: var(--primary);">-12</td>
+                        <td>55</td>
+                        <td class="col-highlight" style="color: var(--danger); font-weight: 700;">193</td>
+                    </tr>
+                    <tr>
+                        <td>영업이익률 (OPM)</td>
+                        <td>5.71%</td>
+                        <td style="color: var(--primary);">-24.07%</td>
+                        <td style="color: var(--primary);">-12.81%</td>
+                        <td>2.38%</td>
+                        <td class="col-highlight" style="color: var(--danger); font-weight: 700;">21.85%</td>
+                    </tr>
+                    <tr>
+                        <td>실적 평가</td>
+                        <td>수주 둔화</td>
+                        <td>연말 비용 집행</td>
+                        <td>비수기 적자</td>
+                        <td>흑자 전환 성공</td>
+                        <td class="col-highlight" style="font-weight: 700;">본격 실적 랠리</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 100% Reliable SVG Interactive Visual Charts -->
+        <div class="grid-2col" style="margin-top: 24px;">
+
+            <!-- Chart 1: 연간 실적 및 영업이익률 추이 -->
+            <div class="chart-box">
+                <div class="chart-title-area">
+                    <div class="chart-title">
+                        <i class="fa-solid fa-chart-column" style="color: var(--primary);"></i>
+                        연간 실적 및 영업이익률 추이
+                    </div>
+                    <div class="chart-legend-box">
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background: #2563eb;"></div>
+                            <span>매출액</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background: #059669;"></div>
+                            <span>영업이익</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background: #f59e0b; border-radius: 50%;"></div>
+                            <span>OPM(%)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-svg-wrapper">
+                    <svg class="chart-svg" viewBox="0 0 550 300" preserveAspectRatio="none">
+                        <!-- Gradients -->
+                        <defs>
+                            <linearGradient id="salesGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#3b82f6" />
+                                <stop offset="100%" stop-color="#1d4ed8" />
+                            </linearGradient>
+                            <linearGradient id="opGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#10b981" />
+                                <stop offset="100%" stop-color="#047857" />
+                            </linearGradient>
+                            <filter id="shadowFilter" x="-10%" y="-10%" width="120%" height="120%">
+                                <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.25" />
+                            </filter>
+                        </defs>
+
+                        <!-- Horizontal Grid Lines & Left Axis Labels -->
+                        <!-- 4,000억 -->
+                        <line x1="55" y1="55" x2="505" y2="55" stroke="var(--svg-grid)" stroke-width="1" stroke-dasharray="4 4" />
+                        <text x="45" y="59" fill="var(--svg-text)" font-size="11" text-anchor="end">4,000</text>
+                        <text x="515" y="59" fill="var(--svg-text)" font-size="11" text-anchor="start">25%</text>
+
+                        <!-- 3,000억 -->
+                        <line x1="55" y1="105" x2="505" y2="105" stroke="var(--svg-grid)" stroke-width="1" stroke-dasharray="4 4" />
+                        <text x="45" y="109" fill="var(--svg-text)" font-size="11" text-anchor="end">3,000</text>
+                        <text x="515" y="109" fill="var(--svg-text)" font-size="11" text-anchor="start">18%</text>
+
+                        <!-- 2,000억 -->
+                        <line x1="55" y1="155" x2="505" y2="155" stroke="var(--svg-grid)" stroke-width="1" stroke-dasharray="4 4" />
+                        <text x="45" y="159" fill="var(--svg-text)" font-size="11" text-anchor="end">2,000</text>
+                        <text x="515" y="159" fill="var(--svg-text)" font-size="11" text-anchor="start">12%</text>
+
+                        <!-- 1,000억 -->
+                        <line x1="55" y1="205" x2="505" y2="205" stroke="var(--svg-grid)" stroke-width="1" stroke-dasharray="4 4" />
+                        <text x="45" y="209" fill="var(--svg-text)" font-size="11" text-anchor="end">1,000</text>
+                        <text x="515" y="209" fill="var(--svg-text)" font-size="11" text-anchor="start">6%</text>
+
+                        <!-- Base Line (0) -->
+                        <line x1="55" y1="255" x2="505" y2="255" stroke="var(--svg-grid)" stroke-width="1.5" />
+                        <text x="45" y="259" fill="var(--svg-text)" font-size="11" text-anchor="end">0</text>
+                        <text x="515" y="259" fill="var(--svg-text)" font-size="11" text-anchor="start">0%</text>
+
+                        <!-- BARS & LABELS -->
+                        <!-- 1. 2023년 (Center: 110) -->
+                        <!-- 매출: 2847 -> h = 142.35 -> y = 112.65 -->
+                        <rect class="chart-bar-hover" x="88" y="113" width="22" height="142" rx="4" fill="url(#salesGrad)" />
+                        <text x="99" y="107" fill="var(--svg-text-main)" font-size="10.5" font-weight="700" text-anchor="middle">2,847</text>
+                        <!-- 영업익: 289 -> h = 14.45 -> y = 240.55 -->
+                        <rect class="chart-bar-hover" x="114" y="241" width="22" height="14" rx="3" fill="url(#opGrad)" />
+                        <text x="125" y="236" fill="var(--success)" font-size="10" font-weight="700" text-anchor="middle">289</text>
+                        <text x="112" y="275" fill="var(--svg-text-main)" font-size="12" font-weight="600" text-anchor="middle">2023년</text>
+
+                        <!-- 2. 2024년 (Center: 220) -->
+                        <!-- 매출: 4094 -> h = 204.7 -> y = 50.3 -->
+                        <rect class="chart-bar-hover" x="198" y="50" width="22" height="205" rx="4" fill="url(#salesGrad)" />
+                        <text x="209" y="44" fill="var(--svg-text-main)" font-size="10.5" font-weight="700" text-anchor="middle">4,094</text>
+                        <!-- 영업익: 972 -> h = 48.6 -> y = 206.4 -->
+                        <rect class="chart-bar-hover" x="224" y="206" width="22" height="49" rx="3" fill="url(#opGrad)" />
+                        <text x="235" y="200" fill="var(--success)" font-size="10" font-weight="700" text-anchor="middle">972</text>
+                        <text x="222" y="275" fill="var(--svg-text-main)" font-size="12" font-weight="600" text-anchor="middle">2024년</text>
+
+                        <!-- 3. 2025년 (Center: 330) -->
+                        <!-- 매출: 3107 -> h = 155.35 -> y = 99.65 -->
+                        <rect class="chart-bar-hover" x="308" y="100" width="22" height="155" rx="4" fill="url(#salesGrad)" />
+                        <text x="319" y="94" fill="var(--svg-text-main)" font-size="10.5" font-weight="700" text-anchor="middle">3,107</text>
+                        <!-- 영업익: 313 -> h = 15.65 -> y = 239.35 -->
+                        <rect class="chart-bar-hover" x="334" y="239" width="22" height="16" rx="3" fill="url(#opGrad)" />
+                        <text x="345" y="234" fill="var(--success)" font-size="10" font-weight="700" text-anchor="middle">313</text>
+                        <text x="332" y="275" fill="var(--svg-text-main)" font-size="12" font-weight="600" text-anchor="middle">2025년</text>
+
+                        <!-- 4. 2026년(E) (Center: 440) -->
+                        <!-- 매출: 3571 -> h = 178.55 -> y = 76.45 -->
+                        <rect class="chart-bar-hover" x="418" y="76" width="22" height="179" rx="4" fill="url(#salesGrad)" />
+                        <text x="429" y="70" fill="var(--svg-text-main)" font-size="10.5" font-weight="700" text-anchor="middle">3,571</text>
+                        <!-- 영업익: 484 -> h = 24.2 -> y = 230.8 -->
+                        <rect class="chart-bar-hover" x="444" y="231" width="22" height="24" rx="3" fill="url(#opGrad)" />
+                        <text x="455" y="225" fill="var(--success)" font-size="10" font-weight="700" text-anchor="middle">484</text>
+                        <text x="442" y="275" fill="var(--svg-text-main)" font-size="12" font-weight="700" text-anchor="middle">2026E</text>
+
+                        <!-- OPM Polyline (Points: 2023: 112, 173.7 | 2024: 222, 65 | 2025: 332, 174.5 | 2026E: 442, 146.7) -->
+                        <polyline points="112,174 222,65 332,175 442,147" fill="none" stroke="#f59e0b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+
+                        <!-- OPM Dots & Tooltip labels -->
+                        <circle cx="112" cy="174" r="5" fill="#f59e0b" stroke="#ffffff" stroke-width="2" />
+                        <text x="112" y="165" fill="#f59e0b" font-size="10.5" font-weight="800" text-anchor="middle">10.2%</text>
+
+                        <circle cx="222" cy="65" r="5" fill="#f59e0b" stroke="#ffffff" stroke-width="2" />
+                        <text x="222" y="56" fill="#f59e0b" font-size="10.5" font-weight="800" text-anchor="middle">23.7%</text>
+
+                        <circle cx="332" cy="175" r="5" fill="#f59e0b" stroke="#ffffff" stroke-width="2" />
+                        <text x="332" y="166" fill="#f59e0b" font-size="10.5" font-weight="800" text-anchor="middle">10.1%</text>
+
+                        <circle cx="442" cy="147" r="5" fill="#f59e0b" stroke="#ffffff" stroke-width="2" />
+                        <text x="442" y="138" fill="#f59e0b" font-size="10.5" font-weight="800" text-anchor="middle">13.5%</text>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Chart 2: 분기별 실적 턴어라운드 (V자 반등) -->
+            <div class="chart-box">
+                <div class="chart-title-area">
+                    <div class="chart-title">
+                        <i class="fa-solid fa-chart-area" style="color: var(--success);"></i>
+                        분기별 실적 턴어라운드 (V자 반등)
+                    </div>
+                    <div class="chart-legend-box">
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background: #3b82f6;"></div>
+                            <span>분기 매출</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background: #10b981;"></div>
+                            <span>분기 영업이익</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-svg-wrapper">
+                    <svg class="chart-svg" viewBox="0 0 550 300" preserveAspectRatio="none">
+                        <defs>
+                            <!-- Sales Area Gradient -->
+                            <linearGradient id="areaSales" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.25" />
+                                <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.0" />
+                            </linearGradient>
+                            <!-- OP Area Gradient -->
+                            <linearGradient id="areaOp" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#10b981" stop-opacity="0.3" />
+                                <stop offset="100%" stop-color="#10b981" stop-opacity="0.0" />
+                            </linearGradient>
+                        </defs>
+
+                        <!-- Grid Lines -->
+                        <line x1="55" y1="60" x2="495" y2="60" stroke="var(--svg-grid)" stroke-width="1" stroke-dasharray="4 4" />
+                        <text x="45" y="64" fill="var(--svg-text)" font-size="10" text-anchor="end">1,000억</text>
+
+                        <line x1="55" y1="120" x2="495" y2="120" stroke="var(--svg-grid)" stroke-width="1" stroke-dasharray="4 4" />
+                        <text x="45" y="124" fill="var(--svg-text)" font-size="10" text-anchor="end">600억</text>
+
+                        <!-- ZERO BREAK-EVEN LINE (영업익 0원 기준선) -->
+                        <line x1="55" y1="190" x2="495" y2="190" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="6 3" />
+                        <text x="45" y="194" fill="#f59e0b" font-size="10" font-weight="700" text-anchor="end">손익분기(0)</text>
+
+                        <line x1="55" y1="245" x2="495" y2="245" stroke="var(--svg-grid)" stroke-width="1" stroke-dasharray="4 4" />
+                        <text x="45" y="249" fill="var(--danger)" font-size="10" text-anchor="end">-150억</text>
+
+                        <!-- X Positions:
+                             25.3Q: 90 | 25.4Q: 180 | 26.1Q: 270 | 26.2Q: 360 | 26.3QE: 450
+                        -->
+                        <!-- Sales Area & Line:
+                             Y values (max 1100):
+                             588 -> 122 | 523 -> 132 | 549 -> 128 | 599 -> 120 | 975 -> 63
+                        -->
+                        <polygon points="90,122 180,132 270,128 360,120 450,63 450,255 90,255" fill="url(#areaSales)" />
+                        <polyline points="90,122 180,132 270,128 360,120 450,63" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="round" />
+
+                        <!-- Operating Profit Line:
+                             Formula: Y = 190 - (OP * 0.44)
+                             25.3Q (34)   -> 190 - 15 = 175
+                             25.4Q (-126) -> 190 + 55 = 245
+                             26.1Q (-70)  -> 190 + 31 = 221
+                             26.2Q (14)   -> 190 - 6  = 184
+                             26.3Q (213)  -> 190 - 94 = 96
+                        -->
+                        <polyline points="90,175 180,245 270,221 360,184 450,96" fill="none" stroke="#10b981" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+
+                        <!-- V-Shape Surge Highlight Arrow/Arc -->
+                        <path d="M 360,184 Q 400,160 445,102" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="3 3" />
+
+                        <!-- Sales Points & Labels -->
+                        <circle cx="90" cy="122" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+                        <text x="90" y="112" fill="#2563eb" font-size="10" font-weight="700" text-anchor="middle">588억</text>
+
+                        <circle cx="180" cy="132" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+                        <text x="180" y="122" fill="#2563eb" font-size="10" font-weight="700" text-anchor="middle">523억</text>
+
+                        <circle cx="270" cy="128" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+                        <text x="270" y="118" fill="#2563eb" font-size="10" font-weight="700" text-anchor="middle">549억</text>
+
+                        <circle cx="360" cy="120" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
+                        <text x="360" y="110" fill="#2563eb" font-size="10" font-weight="700" text-anchor="middle">599억</text>
+
+                        <circle cx="450" cy="63" r="6" fill="#2563eb" stroke="#ffffff" stroke-width="2.5" />
+                        <text x="450" y="52" fill="#2563eb" font-size="11" font-weight="800" text-anchor="middle">975억</text>
+
+                        <!-- OP Points & Labels -->
+                        <circle cx="90" cy="175" r="4.5" fill="#10b981" stroke="#ffffff" stroke-width="2" />
+                        <text x="90" y="165" fill="#10b981" font-size="10" font-weight="700" text-anchor="middle">+34억</text>
+
+                        <circle cx="180" cy="245" r="4.5" fill="#dc2626" stroke="#ffffff" stroke-width="2" />
+                        <text x="180" y="260" fill="#dc2626" font-size="10" font-weight="700" text-anchor="middle">-126억</text>
+
+                        <circle cx="270" cy="221" r="4.5" fill="#dc2626" stroke="#ffffff" stroke-width="2" />
+                        <text x="270" y="236" fill="#dc2626" font-size="10" font-weight="700" text-anchor="middle">-70억</text>
+
+                        <circle cx="360" cy="184" r="4.5" fill="#10b981" stroke="#ffffff" stroke-width="2" />
+                        <text x="360" y="174" fill="#10b981" font-size="10" font-weight="700" text-anchor="middle">+14억</text>
+
+                        <!-- Highlighted 26.3Q Surge -->
+                        <circle cx="450" cy="96" r="7" fill="#10b981" stroke="#ffffff" stroke-width="3" />
+                        <rect x="408" y="72" width="84" height="20" rx="4" fill="#10b981" />
+                        <text x="450" y="86" fill="#ffffff" font-size="10.5" font-weight="800" text-anchor="middle">★ +213억 (흑자)</text>
+
+                        <!-- X Axis Labels -->
+                        <text x="90" y="280" fill="var(--svg-text-main)" font-size="11.5" font-weight="600" text-anchor="middle">25.3Q</text>
+                        <text x="180" y="280" fill="var(--svg-text-main)" font-size="11.5" font-weight="600" text-anchor="middle">25.4Q</text>
+                        <text x="270" y="280" fill="var(--svg-text-main)" font-size="11.5" font-weight="600" text-anchor="middle">26.1Q</text>
+                        <text x="360" y="280" fill="var(--svg-text-main)" font-size="11.5" font-weight="600" text-anchor="middle">26.2Q</text>
+                        <text x="450" y="280" fill="#10b981" font-size="12" font-weight="800" text-anchor="middle">26.3Q(E)</text>
+                    </svg>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 3단계: 경쟁 우위 (Economic Moat) 및 산업 환경 -->
+    <section class="section">
+        <div class="section-header">
+            <i class="fa-solid fa-shield-halved"></i>
+            <h2>3단계: 경쟁 우위 (Economic Moat) 및 산업 환경 평가</h2>
+            <span class="section-tag">Moat & Peer Comparison</span>
+        </div>
+
+        <div class="moat-badge-container">
+            <span class="moat-pill"><i class="fa-solid fa-atom"></i> ALD 원천 특허 포트폴리오</span>
+            <span class="moat-pill"><i class="fa-solid fa-lock"></i> SK하이닉스 1티어 락인 효과</span>
+            <span class="moat-pill"><i class="fa-solid fa-bolt"></i> 3D DRAM 진입 수혜</span>
+            <span class="moat-pill"><i class="fa-solid fa-microchip"></i> High-k 증착 글로벌 리더십</span>
+        </div>
+
+        <div class="grid-2col">
+            <div class="info-card">
+                <h3><i class="fa-solid fa-medal"></i> 주성엔지니어링의 경제적 해자</h3>
+                <ul>
+                    <li><strong>원자층증착(ALD) 독보적 노하우</strong>: 화학반응의 자기제한적(Self-Limiting) 특성을 이용해 원자 1개 층 단위로 정밀하게 박막을 형성하는 기술로, D램 커패시터 종횡비가 100:1에 육박하는 환경에서 95% 이상의 단차피복성(Step Coverage)을 구현합니다.</li>
+                    <li><strong>차세대 3D DRAM 및 GAA 로직 수혜</strong>: D램이 3차원으로 적층될 경우 챔버 내 ALD 증착 스텝 수가 기하급수적으로 증가하므로 주성엔지니어링의 장비 채택 대수가 비약적으로 증가합니다.</li>
+                    <li><strong>고객사 파트너십</strong>: SK하이닉스의 주요 D램 라인에 수십 년간 ALD 장비를 독점 공급해 온 신뢰성을 바탕으로 공정 수율 향상에 핵심 기여를 담당하고 있습니다.</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3><i class="fa-solid fa-users-viewfinder"></i> 증착 장비 Peer Group 비교</h3>
+                <ul>
+                    <li><strong>원익IPS (240810)</strong>: 삼성전자 중심의 CVD/ALD 공급망을 확보한 종합 전공정 장비사이나, 주성엔지니어링 대비 D램 커패시터 특화 ALD 점유율에서는 차이가 있습니다.</li>
+                    <li><strong>유진테크 (084370)</strong>: 저압화학기상증착(LPCVD) 및 매엽식 박막 장비 강자로 D램 전공정에서 주성과 직접 경쟁하나 공정 영역이 다소 분리되어 있습니다.</li>
+                    <li><strong>ASM International (글로벌)</strong>: 세계 1위 ALD 기업. 주성엔지니어링은 국내 팹 라인에서 ASMI와 대등하게 경쟁하며 우수한 가격 경쟁력과 신속한 커스터마이징 대응력을 보유하고 있습니다.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4단계: 밸류에이션 및 리스크 점검 -->
+    <section class="section">
+        <div class="section-header">
+            <i class="fa-solid fa-scale-balanced"></i>
+            <h2>4단계: 밸류에이션 및 핵심 리스크 점검</h2>
+            <span class="section-tag">Valuation & Risk Factors</span>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div class="callout-content">
+                <h4>밸류에이션 정밀 진단: 시가총액 8.28조 원과 멀티플의 의미</h4>
+                <p>
+                    현재 주가 178,300원(시총 약 8조 2,876억 원)은 2026년 예상 순이익(453억 원) 대비 <strong>Forward PER 약 183배, PBR 12.4배</strong>에 달합니다. 이는 <strong>차세대 3D DRAM 진입 시 ALD 장비의 폭발적 수요 급증과 해외 파운드리향 신규 공급 모멘텀이 선반영된 고평가 프리미엄 구간</strong>입니다. 따라서 하반기 실적이 시장의 기대치에 부합하는 가파른 반등을 보여주어야만 밸류에이션 정당성이 유지될 수 있습니다.
+                </p>
+            </div>
+        </div>
+
+        <div class="grid-3col" style="margin-top: 20px;">
+            <div class="info-card">
+                <h3><i class="fa-solid fa-building-columns"></i> 고객사 집중도 리스크</h3>
+                <p>
+                    매출의 상당 부분이 SK하이닉스 및 중국 메모리(CXMT) 고객사에 집중되어 있어 고객사의 설비투자(CAPEX) 집행 시기 조율에 따라 분기 실적 변동성이 극심하게 나타납니다.
+                </p>
+            </div>
+
+            <div class="info-card">
+                <h3><i class="fa-solid fa-earth-americas"></i> 대중국 장비 수출 규제</h3>
+                <p>
+                    미국의 첨단 반도체 장비 대중국 수출 통제 수위가 높아질 경우, 중국 현지 팹 향 레거시/선단 ALD 장비 출하에 제한이 발생할 수 있는 지정학적 리스크가 상존합니다.
+                </p>
+            </div>
+
+            <div class="info-card">
+                <h3><i class="fa-solid fa-chart-line-down"></i> 단기 실적 괴리 리스크</h3>
+                <p>
+                    2026년 상반기 누적 영업손실(-56억 원)을 기록했으므로, 하반기 3분기(213억 원) 및 4분기(327억 원) 추정치가 실제 숫자로 증명되지 못할 경우 주가 조정 압력이 커질 수 있습니다.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5단계: 투자 전략 및 Bull vs Bear 시나리오 -->
+    <section class="section">
+        <div class="section-header">
+            <i class="fa-solid fa-chess"></i>
+            <h2>5단계: 종합 투자 전략 및 Bull vs Bear 시나리오</h2>
+            <span class="section-tag">Investment Strategy & Scenarios</span>
+        </div>
+
+        <div class="scenario-grid">
+            <!-- Bull Case -->
+            <div class="scenario-card scenario-bull">
+                <h3>
+                    <span><i class="fa-solid fa-arrow-trend-up"></i> Bull Case (상방 시나리오)</span>
+                    <span style="font-size: 1.1rem; color: var(--success);">목표가 220,000원 - 250,000원</span>
+                </h3>
+                <ul>
+                    <li><strong>3분기 - 4분기 어닝 서프라이즈</strong>: SK하이닉스 M15X 및 용인 클러스터 1c D램 투자 확대에 따른 수주 잔고 인식 본격화.</li>
+                    <li><strong>3D DRAM 표준 ALD 장비 독점 선정</strong>: 글로벌 메모리 메이커의 차세대 3D DRAM 파일럿 라인에 주성의 ALD/ALG 장비 채택 발표.</li>
+                    <li><strong>북미 글로벌 파운드리/IDM 신규 고객사 수주</strong>: 단일 고객사 의존도를 탈피하고 해외 대형 빅테크 팹으로 고객사 다변화 성공 시 시가총액 10조 원 안착.</li>
+                </ul>
+            </div>
+
+            <!-- Bear Case -->
+            <div class="scenario-card scenario-bear">
+                <h3>
+                    <span><i class="fa-solid fa-arrow-trend-down"></i> Bear Case (하방 시나리오)</span>
+                    <span style="font-size: 1.1rem; color: var(--danger);">지지선 140,000원 - 150,000원</span>
+                </h3>
+                <ul>
+                    <li><strong>하반기 장비 입고 지연</strong>: 고객사 클린룸 완공 일정 순연으로 장비 셋업 및 매출 인식이 2027년으로 재차 이연될 경우.</li>
+                    <li><strong>고멀티플(PER 180배) 부담에 따른 차익 실현</strong>: 실적 회복 속도가 주가 상승세를 따라가지 못하며 밸류에이션 축소 국면 진입.</li>
+                    <li><strong>대중국 제재 여파</strong>: 중국 향 매출 비중 축소 및 장비 수출 통제 변수로 인한 실적 추정치 하향.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="info-card" style="margin-top: 24px; background: var(--bg-card); border: 2px solid var(--primary);">
+            <h3 style="color: var(--primary);"><i class="fa-solid fa-lightbulb"></i> 최종 투자 의견 및 포트폴리오 운용 제언</h3>
+            <p style="font-size: 0.98rem; line-height: 1.8; color: var(--text-main);">
+                <strong>"하반기 V자 실적 회복 확인과 함께 분할 매수로 접근하는 전략 유효"</strong><br>
+                주성엔지니어링은 향후 5년 - 10년간 반도체 미세화의 핵심인 **3D DRAM과 ALD 공정 확장의 최대 구조적 수혜주**입니다. 다만 상반기 누적 적자와 현재 시가총액(8.28조 원)에 반영된 높은 멀티플을 고려할 때 단기 추격 매수보다는, **3분기 실적 발표(10월 - 11월) 전후 150,000원 - 165,000원 부근의 가격 조정 구간을 분할 매수 기회로 활용**하는 중장기 투자 전략이 가장 합리적입니다.
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="report-footer">
+        <p>본 보고서는 투자 참고 목적으로 공공 데이터 및 증권사 컨센서스를 기반으로 작성되었습니다.</p>
+        <p>© 2026 주성엔지니어링 기업분석 리포트 | 바탕화면 기업분석 보관용</p>
+    </footer>
+
+</div>
+
+<!-- Theme Management Script -->
+<script>
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
+
+    function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('user-theme', theme);
+        if (theme === 'dark') {
+            themeIcon.textContent = '☀️';
+            themeText.textContent = '라이트 모드';
+        } else {
+            themeIcon.textContent = '🌙';
+            themeText.textContent = '다크 모드';
+        }
+    }
+
+    const savedTheme = localStorage.getItem('user-theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+    applyTheme(initialTheme);
+
+    themeToggleBtn.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    });
+</script>
+
+</body>
+</html>
