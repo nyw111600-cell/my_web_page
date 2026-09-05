@@ -1,0 +1,2488 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>엘앤에프(L&F) 기업분석 최종 종합 보고서</title>
+
+  <!-- Pretendard Font -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+
+  <!-- Chart.js CDN (Part 1 산업 분석 데이터 시각화용) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* ==========================================================================
+       1. Global CSS Variables (Light & Dark Theme - Rule 9 Compliant)
+       ========================================================================== */
+    :root {
+      /* Backgrounds */
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-card-subtle: #f1f5f9;
+      --bg-card-sub: #f1f5f9;
+      --bg-header: rgba(255, 255, 255, 0.88);
+      --table-header: #f8fafc;
+      --table-stripe: #f8fafc;
+
+      /* Borders */
+      --border-color: #e2e8f0;
+      --border-light: #f1f5f9;
+      --border-highlight: #cbd5e1;
+      --border-focus: #cbd5e1;
+
+      /* Text Colors */
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-subtle: #64748b;
+      --text-light: #94a3b8;
+      --text-sub: #334155;
+
+      /* Brand & Accents */
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --primary-light: #e0f2fe;
+      --primary-hover: #0369a1;
+      --primary-gradient: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+
+      --secondary: #0d9488;
+      --secondary-light: #ccfbf1;
+
+      --accent-purple: #7c3aed;
+      --accent-purple-light: #ede9fe;
+      --accent-amber: #d97706;
+      --accent-amber-light: #fef3c7;
+      --accent-rose: #e11d48;
+      --accent-rose-light: #ffe4e6;
+
+      --success: #10b981;
+      --success-light: #ecfdf5;
+      --success-bg: #f0fdf4;
+
+      --warning: #f59e0b;
+      --warning-light: #fffbeb;
+      --warning-bg: #fffbeb;
+
+      --danger: #dc2626;
+      --danger-bg: #fef2f2;
+
+      --accent: #8b5cf6;
+      --accent-light: #f5f3ff;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -1px rgba(0,0,0,0.04);
+      --shadow-lg: 0 10px 25px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.03);
+      --shadow-card: 0 2px 12px rgba(15, 23, 42, 0.05);
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --card-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+
+      /* Border Radii */
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-xl: 22px;
+      --radius: 12px;
+
+      /* Font */
+      --font-main: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    [data-theme="dark"] {
+      /* Dark Backgrounds */
+      --bg-body: #0b1120;
+      --bg-card: #131d31;
+      --bg-card-subtle: #1e293b;
+      --bg-card-sub: #1e293b;
+      --bg-header: rgba(19, 29, 49, 0.88);
+      --table-header: #1e293b;
+      --table-stripe: #172338;
+
+      /* Dark Borders */
+      --border-color: #1e293b;
+      --border-light: #26354a;
+      --border-highlight: #334155;
+      --border-focus: #334155;
+
+      /* Dark Text Colors */
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-subtle: #64748b;
+      --text-light: #64748b;
+      --text-sub: #cbd5e1;
+
+      /* Dark Brand & Accents */
+      --primary: #38bdf8;
+      --primary-dark: #0284c7;
+      --primary-light: rgba(56, 189, 248, 0.12);
+      --primary-hover: #60a5fa;
+      --primary-gradient: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+
+      --secondary: #2dd4bf;
+      --secondary-light: rgba(45, 212, 191, 0.15);
+
+      --accent-purple: #a78bfa;
+      --accent-purple-light: rgba(167, 139, 250, 0.15);
+      --accent-amber: #fbbf24;
+      --accent-amber-light: rgba(251, 191, 36, 0.15);
+      --accent-rose: #fb7185;
+      --accent-rose-light: rgba(251, 113, 133, 0.15);
+
+      --success: #34d399;
+      --success-light: rgba(52, 211, 153, 0.15);
+      --success-bg: rgba(52, 211, 153, 0.1);
+
+      --warning: #fbbf24;
+      --warning-light: rgba(251, 191, 36, 0.15);
+      --warning-bg: rgba(251, 191, 36, 0.1);
+
+      --danger: #f87171;
+      --danger-bg: rgba(239, 68, 68, 0.15);
+
+      --accent: #a78bfa;
+      --accent-light: rgba(167, 139, 250, 0.15);
+
+      /* Dark Shadows */
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.4);
+      --shadow-lg: 0 10px 25px -3px rgba(0,0,0,0.5);
+      --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.3);
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+      --card-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-main);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    a:hover {
+      color: var(--primary-dark);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Floating Theme Toggle Button (Rule 9 Compliant) */
+    .theme-toggle-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 9999px;
+      color: var(--text-main);
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+      transition: all 0.25s ease;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .theme-toggle-btn:hover {
+      background: var(--bg-card-subtle);
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Master Report Cover Header */
+    .master-cover {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-color);
+      padding: 50px 0 32px;
+      box-shadow: var(--shadow-sm);
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+    .master-badge-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .master-title {
+      font-size: 34px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.8px;
+      line-height: 1.25;
+      margin-bottom: 14px;
+    }
+    .master-subtitle {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 24px;
+      max-width: 1050px;
+    }
+    .master-meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 22px;
+      font-size: 13.5px;
+      color: var(--text-subtle);
+      padding-top: 18px;
+      border-top: 1px dashed var(--border-color);
+    }
+    .master-meta-item strong {
+      color: var(--text-main);
+      margin-left: 4px;
+    }
+
+    /* Sticky Navigation Bar */
+    .sticky-nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--bg-header);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 0;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+      margin-bottom: 36px;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+    .nav-tabs {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none;
+    }
+    .nav-tabs::-webkit-scrollbar {
+      display: none;
+    }
+    .nav-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 9999px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+      color: var(--text-muted);
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      transition: all 0.2s ease;
+    }
+    .nav-tab:hover {
+      color: var(--primary);
+      border-color: var(--primary);
+      background: var(--primary-light);
+      transform: translateY(-1px);
+    }
+    .nav-tab.active {
+      color: #ffffff;
+      background: var(--primary-gradient);
+      border-color: transparent;
+      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35);
+    }
+
+    /* Part Wrapper & Part Banner Divider */
+    .part-section-wrapper {
+      scroll-margin-top: 75px;
+      margin-bottom: 70px;
+    }
+    .part-banner-divider {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin: 50px 0 28px;
+    }
+    .part-banner-line {
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(90deg, var(--border-color), transparent);
+    }
+    .part-banner-line.right {
+      background: linear-gradient(270deg, var(--border-color), transparent);
+    }
+    .part-banner-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 22px;
+      border-radius: 9999px;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ==========================================================================
+       2. Common Card, Table & Utility Styles
+       ========================================================================== */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-card);
+      transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+    .section-header {
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 36px 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-main);
+    }
+    .section-title span.icon, .section-title .icon {
+      font-size: 24px;
+    }
+
+    /* Table Styling */
+    .table-container, .table-wrap {
+      overflow-x: auto;
+      margin: 16px 0;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      background: var(--bg-card);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13.5px;
+      min-width: 650px;
+    }
+    th {
+      background: var(--bg-card-subtle);
+      color: var(--text-main);
+      padding: 12px 16px;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border-color);
+      white-space: nowrap;
+    }
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-muted);
+      vertical-align: middle;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    tr:hover td {
+      background: var(--bg-card-subtle);
+    }
+    td strong {
+      color: var(--text-main);
+    }
+    .table-bold {
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1;
+    }
+    .badge-primary { background: var(--primary-light); color: var(--primary); }
+    .badge-secondary { background: var(--secondary-light); color: var(--secondary); }
+    .badge-purple { background: var(--accent-purple-light); color: var(--accent-purple); }
+    .badge-amber { background: var(--accent-amber-light); color: var(--accent-amber); }
+    .badge-rose { background: var(--accent-rose-light); color: var(--accent-rose); }
+    .badge-success { background: var(--success-light); color: var(--success); }
+    .badge-warning { background: var(--warning-light); color: var(--warning); }
+    .badge-danger { background: var(--danger-bg); color: var(--danger); }
+    .badge-muted { background: var(--bg-card-subtle); color: var(--text-muted); }
+    .badge-accent { background: var(--accent-light); color: var(--accent); }
+    .badge-date { background: var(--bg-card-subtle); color: var(--text-subtle); border: 1px solid var(--border-color); }
+
+    /* Callouts */
+    .callout {
+      border-left: 4px solid var(--primary);
+      background: var(--primary-light);
+      padding: 16px 20px;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      margin: 18px 0;
+      font-size: 14px;
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+    .callout.callout-success {
+      border-left-color: var(--success);
+      background: var(--success-light);
+    }
+    .callout.callout-amber {
+      border-left-color: var(--accent-amber);
+      background: var(--accent-amber-light);
+    }
+    .callout.danger {
+      border-left-color: var(--danger);
+      background: var(--danger-bg);
+    }
+    .callout.warning {
+      border-left-color: var(--warning);
+      background: var(--warning-light);
+    }
+    .callout-title {
+      font-weight: 700;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Trend Indicators */
+    .trend-up {
+      color: var(--secondary);
+      font-weight: 700;
+      font-size: 13px;
+    }
+    .trend-down {
+      color: var(--accent-rose);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    /* ==========================================================================
+       3. Part 1 Specific Styles (글로벌 2차전지 산업 분석)
+       ========================================================================== */
+    .hero {
+      background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-body) 100%);
+      border-bottom: 1px solid var(--border-color);
+      padding: 40px 0 32px;
+      margin-bottom: 32px;
+      border-radius: var(--radius-lg);
+    }
+    .hero-badge-container {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .hero-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.6px;
+      margin-bottom: 12px;
+    }
+    .hero-subtitle {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 950px;
+      line-height: 1.6;
+    }
+
+    /* KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary);
+    }
+    .kpi-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--primary);
+    }
+    .kpi-card.kpi-secondary::before { background: var(--secondary); }
+    .kpi-card.kpi-amber::before { background: var(--accent-amber); }
+    .kpi-card.kpi-purple::before { background: var(--accent-purple); }
+    .kpi-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-subtle);
+      margin-bottom: 6px;
+    }
+    .kpi-val {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .kpi-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* Chart Grid & Cards (완전 복원) */
+    .chart-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
+      gap: 20px;
+      margin: 24px 0;
+    }
+    .chart-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-card);
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .chart-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--border-highlight);
+    }
+    .chart-card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chart-canvas-wrap {
+      position: relative;
+      height: 280px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .chart-canvas-wrap canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    /* Fallback SVG Charts Container */
+    .chart-fallback-svg {
+      width: 100%;
+      height: 100%;
+      display: none;
+    }
+
+    /* Value Chain 4대 소재 Grid & Cards (완전 복원) */
+    .vc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .vc-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      box-shadow: var(--shadow-sm);
+    }
+    .vc-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--text-main);
+    }
+    .vc-list {
+      list-style: none;
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .vc-list li {
+      position: relative;
+      padding-left: 14px;
+      line-height: 1.5;
+    }
+    .vc-list li::before {
+      content: "•";
+      color: var(--primary);
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+
+    /* ==========================================================================
+       4. Part 2 Specific Styles (엘앤에프 핵심 경쟁력 및 기업 강점)
+       ========================================================================== */
+    .header-tag-wrap {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .header-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.5px;
+      margin-bottom: 10px;
+    }
+    .header-sub {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+    .header-meta {
+      display: flex;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--text-light);
+      border-top: 1px solid var(--border-color);
+      padding-top: 12px;
+      flex-wrap: wrap;
+    }
+    .header-meta span strong {
+      color: var(--text-muted);
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin: 24px 0 32px;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--border-highlight);
+    }
+    .stat-card .label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .stat-card .value {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+    .stat-card .desc {
+      font-size: 12px;
+      color: var(--text-light);
+      line-height: 1.4;
+    }
+    .card-header-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+    }
+    .content-p {
+      font-size: 14.5px;
+      color: var(--text-main);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    .feature-list {
+      list-style: none;
+      margin: 16px 0;
+    }
+    .feature-list li {
+      position: relative;
+      padding-left: 24px;
+      font-size: 14px;
+      color: var(--text-main);
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    .feature-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+      font-weight: 700;
+    }
+    .flow-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .flow-step {
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 16px;
+    }
+    .flow-step .step-tag {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .flow-step .step-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+    .flow-step .step-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ==========================================================================
+       5. Part 3 Specific Styles (엘앤에프 약점 및 리스크)
+       ========================================================================== */
+    .header-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      margin-bottom: 28px;
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .header-panel::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #dc2626, #f59e0b, #2563eb);
+    }
+    .badge-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .title {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.6px;
+      color: var(--text-main);
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-size: 13px;
+      color: var(--text-subtle);
+      border-top: 1px solid var(--border-color);
+      padding-top: 16px;
+    }
+    .meta-bar span strong {
+      color: var(--text-main);
+    }
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .metric-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--card-hover);
+    }
+    .metric-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .metric-val {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 4px;
+    }
+    .metric-val.risk { color: var(--danger); }
+    .metric-val.warn { color: var(--warning); }
+    .metric-sub {
+      font-size: 12px;
+      color: var(--text-subtle);
+    }
+    .weakness-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--card-shadow);
+      transition: border-color 0.2s;
+    }
+    .weakness-card:hover {
+      border-color: var(--border-focus);
+    }
+    .weakness-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .weakness-num {
+      background: var(--danger-bg);
+      color: var(--danger);
+      font-size: 14px;
+      font-weight: 800;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .weakness-title-wrap {
+      flex: 1;
+    }
+    .weakness-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+    .weakness-summary {
+      font-size: 13.5px;
+      color: var(--text-muted);
+    }
+    .weakness-body {
+      font-size: 14px;
+      color: var(--text-sub);
+      line-height: 1.65;
+    }
+    .weakness-body ul {
+      margin-left: 20px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    .weakness-body li {
+      margin-bottom: 6px;
+    }
+    .weakness-body strong {
+      color: var(--text-main);
+    }
+    .highlight-cell {
+      background: rgba(220, 38, 38, 0.05);
+      color: var(--danger);
+      font-weight: 700;
+    }
+    .conclusion-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin: 28px 0;
+      box-shadow: var(--card-shadow);
+    }
+    .checkpoint-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .checkpoint-item {
+      background: var(--bg-card-sub);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px;
+    }
+    .checkpoint-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .checkpoint-desc {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.5;
+    }
+
+    /* Common Footers */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 32px 0;
+      margin-top: 48px;
+      color: var(--text-light);
+      font-size: 13px;
+      text-align: center;
+      line-height: 1.6;
+    }
+    .master-global-footer {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border-color);
+      padding: 44px 0;
+      margin-top: 70px;
+      text-align: center;
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.02);
+    }
+    .master-global-footer p {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .master-global-footer .legal {
+      font-size: 12px;
+      color: var(--text-subtle);
+      max-width: 850px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .chart-grid {
+        grid-template-columns: 1fr;
+      }
+      .master-title {
+        font-size: 26px;
+      }
+    }
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 16px;
+      }
+      .master-cover {
+        padding: 36px 0 24px;
+      }
+      .hero-title, .header-title, .title {
+        font-size: 22px;
+      }
+      .nav-tab {
+        padding: 8px 14px;
+        font-size: 13px;
+      }
+      .card {
+        padding: 20px;
+      }
+    }
+
+    /* Print Mode Optimization (Rule 9 Compliant) */
+    @media print {
+      .theme-toggle-btn, .sticky-nav-bar {
+        display: none !important;
+      }
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      .card, .weakness-card, .metric-card, .kpi-card, .stat-card, .header-panel {
+        border: 1px solid #ccc !important;
+        box-shadow: none !important;
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Mode Toggle Button (Rule 9 Compliant) -->
+  <button id="themeToggleBtn" class="theme-toggle-btn" title="화면 모드 전환" aria-label="화면 모드 전환">
+    <span id="themeIcon">☀️</span>
+    <span id="themeLabel">라이트 모드</span>
+  </button>
+
+  <!-- Master Report Cover Header -->
+    <!-- Master Report Cover Header -->
+  <header class="master-cover">
+    <div class="container">
+      <div class="master-badge-container">
+        <span class="badge badge-date">🕒 2026-09-05 최종 통합본</span>
+      </div>
+      <h1 class="master-title">엘앤에프(L&F) 기업분석 최종 종합 보고서</h1>
+      <p class="master-subtitle">
+        글로벌 2차전지 전방 산업 거시 동향 및 중장기 전망(전기차 캐즘 극복·ESS 폭발·P·Q·C 밸류체인)부터, 
+        엘앤에프의 세계 최초 하이니켈 NCMA 및 국산 LFP 양산 초격차 경쟁력, 
+        그리고 5대 구조적 취약점(고객사 편중·부채비율·원가 수직계열화) 및 피어 그룹 대비 리스크 점검까지 
+        선후 맥락을 유기적으로 결합하여 완성한 3부작 완결판 심층 보고서입니다.
+      </p>
+    </div>
+  </header>
+
+  <!-- Sticky Global Navigation Bar -->
+  <nav class="sticky-nav-bar" id="stickyNavBar">
+    <div class="container">
+      <div class="nav-tabs">
+        <a href="#part1-industry" class="nav-tab active" id="tab-part1">
+          <span>⚡ 제1부. 글로벌 2차전지 산업동향 및 전망</span>
+        </a>
+        <a href="#part2-strengths" class="nav-tab" id="tab-part2">
+          <span>🏢 제2부. 엘앤에프 핵심 경쟁력 및 기업 강점</span>
+        </a>
+        <a href="#part3-risks" class="nav-tab" id="tab-part3">
+          <span>🚨 제3부. 엘앤에프 약점 및 구조적 리스크</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- =========================================================================
+       제1부. 글로벌 2차전지 산업 동향 및 중장기 전망 심층 분석 (원본 100% 보존)
+       ========================================================================= -->
+  <section id="part1-industry" class="part-section-wrapper">
+    <div class="container">
+      <div class="part-banner-divider">
+        <div class="part-banner-line"></div>
+        <div class="part-banner-badge">
+          <span>⚡ PART 1 · 거시 산업 환경 및 밸류체인 전망</span>
+        </div>
+        <div class="part-banner-line right"></div>
+      </div>
+    </div>
+
+<!-- Floating Mode Toggle Button -->
+  
+
+  <!-- Hero Header -->
+  <header class="hero">
+    <div class="container">
+      <div class="hero-badge-container">
+        <span class="badge badge-primary">⚡ 글로벌 2차전지 산업 보고서</span>
+        <span class="badge badge-secondary">글로벌 전문가 인텔리전스</span>
+        <span class="badge badge-amber">전략 및 밸류에이션 분석</span>
+        <span class="badge badge-date">🕒 2026-09-05 발행</span>
+      </div>
+      <h1 class="hero-title">글로벌 2차전지 산업 동향 및 중장기 전망 심층 분석</h1>
+      <p class="hero-subtitle">
+        전기차 캐즘(Chasm) 극복을 위한 OEM의 하이브리드·보급형 EV 전략, AI 데이터센터가 촉발한 ESS 대폭발, 
+        46시리즈 및 황화물계 전고체 로드맵, 미·중·EU 지정학적 공급망 재편을 총망라한 종합 진단 보고서입니다.
+      </p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- KPI Highlights -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">2026 글로벌 배터리 총수요 <span class="trend-up">▲ 24.1% YoY</span></div>
+        <div class="kpi-val">1,570 GWh</div>
+        <div class="kpi-desc">EV 수요 1,090 GWh + ESS 수요 390 GWh 견인</div>
+      </div>
+      <div class="kpi-card kpi-secondary">
+        <div class="kpi-label">ESS 시장 연평균 성장률(CAGR) <span class="trend-up">▲ 35.0%</span></div>
+        <div class="kpi-val">390 GWh</div>
+        <div class="kpi-desc">빅테크 AI 데이터센터 전력망 및 그리드 연계 폭증</div>
+      </div>
+      <div class="kpi-card kpi-purple">
+        <div class="kpi-label">탄산리튬 가격 바닥권 <span class="trend-up">안정화 진입</span></div>
+        <div class="kpi-val">7.8만 RMB/t</div>
+        <div class="kpi-desc">원재료 래깅 역마진 해소 및 판가 스프레드 정상화</div>
+      </div>
+      <div class="kpi-card kpi-amber">
+        <div class="kpi-label">46-시리즈 & 각형 비중 <span class="trend-up">구조적 확대</span></div>
+        <div class="kpi-val">68% 점유</div>
+        <div class="kpi-desc">테슬라·BMW 채택 가속 및 CTP 모듈리스 혁신</div>
+      </div>
+    </div>
+
+    <!-- Section 1: Demand Dynamics -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="icon">📈</span> 1. 전방 시장 수요 분석: EV 캐즘과 ESS의 슈퍼사이클</h2>
+      </div>
+
+      <div class="chart-grid">
+        <div class="chart-card">
+          <div class="chart-card-title">
+            <span>글로벌 배터리 수요 추이 및 전망 (2024년 - 2030년)</span>
+            <span class="badge badge-primary">단위: GWh</span>
+          </div>
+          
+          <!-- Native High-Fidelity SVG Stacked Bar Chart -->
+          <div class="chart-canvas-wrap" style="height:250px;">
+            <svg viewBox="0 0 520 250" style="width:100%; height:100%; overflow:visible;">
+              <line x1="55" y1="200" x2="500" y2="200" stroke="var(--border-color)" stroke-width="1"/>
+              <line x1="55" y1="150" x2="500" y2="150" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="4,4"/>
+              <line x1="55" y1="100" x2="500" y2="100" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="4,4"/>
+              <line x1="55" y1="50" x2="500" y2="50" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="4,4"/>
+              
+              <text x="48" y="204" fill="var(--text-subtle)" font-size="11" text-anchor="end">0</text>
+              <text x="48" y="154" fill="var(--text-subtle)" font-size="11" text-anchor="end">1,000</text>
+              <text x="48" y="104" fill="var(--text-subtle)" font-size="11" text-anchor="end">2,000</text>
+              <text x="48" y="54" fill="var(--text-subtle)" font-size="11" text-anchor="end">3,000</text>
+
+              <g transform="translate(140, 15)">
+                <rect x="0" y="0" width="12" height="12" rx="2" fill="#0284c7"/>
+                <text x="16" y="10" fill="var(--text-main)" font-size="11" font-weight="600">EV용 수요</text>
+                <rect x="100" y="0" width="12" height="12" rx="2" fill="#0d9488"/>
+                <text x="116" y="10" fill="var(--text-main)" font-size="11" font-weight="600">ESS용 수요</text>
+                <rect x="200" y="0" width="12" height="12" rx="2" fill="#8b5cf6"/>
+                <text x="216" y="10" fill="var(--text-main)" font-size="11" font-weight="600">기타(IT/로봇)</text>
+              </g>
+
+              <!-- 2024 -->
+              <g transform="translate(75, 0)">
+                <rect x="0" y="161" width="46" height="39" rx="2" fill="#0284c7"/>
+                <rect x="0" y="152" width="46" height="9" fill="#0d9488"/>
+                <rect x="0" y="148" width="46" height="4" rx="2" fill="#8b5cf6"/>
+                <text x="23" y="140" fill="var(--text-main)" font-size="11" font-weight="bold" text-anchor="middle">1,030</text>
+                <text x="23" y="218" fill="var(--text-muted)" font-size="12" font-weight="600" text-anchor="middle">2024년</text>
+              </g>
+
+              <!-- 2025 -->
+              <g transform="translate(160, 0)">
+                <rect x="0" y="154" width="46" height="46" rx="2" fill="#0284c7"/>
+                <rect x="0" y="140" width="46" height="14" fill="#0d9488"/>
+                <rect x="0" y="136" width="46" height="4" rx="2" fill="#8b5cf6"/>
+                <text x="23" y="128" fill="var(--text-main)" font-size="11" font-weight="bold" text-anchor="middle">1,265</text>
+                <text x="23" y="218" fill="var(--text-muted)" font-size="12" font-weight="600" text-anchor="middle">2025년</text>
+              </g>
+
+              <!-- 2026 -->
+              <g transform="translate(245, 0)">
+                <rect x="0" y="145" width="46" height="55" rx="2" fill="#0284c7"/>
+                <rect x="0" y="125" width="46" height="20" fill="#0d9488"/>
+                <rect x="0" y="120" width="46" height="5" rx="2" fill="#8b5cf6"/>
+                <text x="23" y="112" fill="#0284c7" font-size="12" font-weight="800" text-anchor="middle">1,570</text>
+                <text x="23" y="218" fill="var(--text-main)" font-size="12" font-weight="bold" text-anchor="middle">2026년(E)</text>
+              </g>
+
+              <!-- 2028 -->
+              <g transform="translate(330, 0)">
+                <rect x="0" y="119" width="46" height="81" rx="2" fill="#0284c7"/>
+                <rect x="0" y="85" width="46" height="34" fill="#0d9488"/>
+                <rect x="0" y="78" width="46" height="7" rx="2" fill="#8b5cf6"/>
+                <text x="23" y="70" fill="var(--text-main)" font-size="11" font-weight="bold" text-anchor="middle">2,430</text>
+                <text x="23" y="218" fill="var(--text-muted)" font-size="12" font-weight="600" text-anchor="middle">2028년</text>
+              </g>
+
+              <!-- 2030 -->
+              <g transform="translate(415, 0)">
+                <rect x="0" y="77" width="46" height="123" rx="2" fill="#0284c7"/>
+                <rect x="0" y="21" width="46" height="56" fill="#0d9488"/>
+                <rect x="0" y="11" width="46" height="10" rx="2" fill="#8b5cf6"/>
+                <text x="23" y="4" fill="var(--text-main)" font-size="11" font-weight="bold" text-anchor="middle">3,760</text>
+                <text x="23" y="218" fill="var(--text-muted)" font-size="12" font-weight="600" text-anchor="middle">2030년</text>
+              </g>
+            </svg>
+          </div>
+
+          <!-- Data Breakdown Table -->
+          <div class="table-container" style="margin-top:14px; margin-bottom:0;">
+            <table style="font-size:12px; text-align:center;">
+              <thead>
+                <tr>
+                  <th style="text-align:left;">구분 (단위: GWh)</th>
+                  <th>2024년</th>
+                  <th>2025년</th>
+                  <th style="color:var(--primary); font-weight:800;">2026년(E)</th>
+                  <th>2028년(E)</th>
+                  <th>2030년(E)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="text-align:left;"><span style="color:#0284c7;">■</span> 전기차(EV) 수요</td>
+                  <td>780</td>
+                  <td>920</td>
+                  <td><strong>1,090</strong></td>
+                  <td>1,620</td>
+                  <td>2,450</td>
+                </tr>
+                <tr>
+                  <td style="text-align:left;"><span style="color:#0d9488;">■</span> 전력망(ESS) 수요</td>
+                  <td>185</td>
+                  <td>270</td>
+                  <td><strong>390</strong></td>
+                  <td>680</td>
+                  <td>1,120</td>
+                </tr>
+                <tr>
+                  <td style="text-align:left;"><span style="color:#8b5cf6;">■</span> 기타(소형IT·로봇)</td>
+                  <td>65</td>
+                  <td>75</td>
+                  <td><strong>90</strong></td>
+                  <td>130</td>
+                  <td>190</td>
+                </tr>
+                <tr style="background:var(--bg-card-subtle); font-weight:700;">
+                  <td style="text-align:left;">총 배터리 수요</td>
+                  <td>1,030</td>
+                  <td>1,265</td>
+                  <td style="color:var(--primary);">1,570 (+24.1%)</td>
+                  <td>2,430</td>
+                  <td>3,760</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-card-title">
+            <span>배터리 케미스트리별 점유율 변화 추이</span>
+            <span class="badge badge-secondary">LFP vs High-Ni</span>
+          </div>
+
+          <!-- Native High-Fidelity SVG Trend Line Chart -->
+          <div class="chart-canvas-wrap" style="height:250px;">
+            <svg viewBox="0 0 520 250" style="width:100%; height:100%; overflow:visible;">
+              <line x1="55" y1="200" x2="490" y2="200" stroke="var(--border-color)" stroke-width="1"/>
+              <line x1="55" y1="150" x2="490" y2="150" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="4,4"/>
+              <line x1="55" y1="100" x2="490" y2="100" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="4,4"/>
+              <line x1="55" y1="50" x2="490" y2="50" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="4,4"/>
+
+              <text x="48" y="204" fill="var(--text-subtle)" font-size="11" text-anchor="end">0%</text>
+              <text x="48" y="154" fill="var(--text-subtle)" font-size="11" text-anchor="end">25%</text>
+              <text x="48" y="104" fill="var(--text-subtle)" font-size="11" text-anchor="end">50%</text>
+              <text x="48" y="54" fill="var(--text-subtle)" font-size="11" text-anchor="end">75%</text>
+
+              <g transform="translate(120, 15)">
+                <line x1="0" y1="6" x2="20" y2="6" stroke="#0284c7" stroke-width="3"/>
+                <circle cx="10" cy="6" r="3" fill="#0284c7"/>
+                <text x="25" y="10" fill="var(--text-main)" font-size="11" font-weight="600">하이니켈(NCM/NCA)</text>
+                <line x1="170" y1="6" x2="190" y2="6" stroke="#0d9488" stroke-width="3"/>
+                <circle cx="180" cy="6" r="3" fill="#0d9488"/>
+                <text x="195" y="10" fill="var(--text-main)" font-size="11" font-weight="600">LFP / LMFP</text>
+              </g>
+
+              <!-- High-Ni Line -->
+              <path d="M 80,84 L 155,92 L 230,104 L 305,110 L 380,114 L 460,120" fill="none" stroke="#0284c7" stroke-width="3"/>
+              <!-- LFP Line -->
+              <path d="M 80,128 L 155,118 L 230,106 L 305,100 L 380,98 L 460,96" fill="none" stroke="#0d9488" stroke-width="3"/>
+              <!-- Solid-State Line -->
+              <path d="M 80,188 L 155,190 L 230,190 L 305,190 L 380,188 L 460,184" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4,4"/>
+
+              <!-- Markers -->
+              <circle cx="80" cy="84" r="4" fill="#0284c7"/>
+              <circle cx="80" cy="128" r="4" fill="#0d9488"/>
+              <text x="80" y="218" fill="var(--text-muted)" font-size="12" text-anchor="middle">2022년</text>
+
+              <circle cx="155" cy="92" r="4" fill="#0284c7"/>
+              <circle cx="155" cy="118" r="4" fill="#0d9488"/>
+              <text x="155" y="218" fill="var(--text-muted)" font-size="12" text-anchor="middle">2023년</text>
+
+              <circle cx="230" cy="104" r="4" fill="#0284c7"/>
+              <circle cx="230" cy="106" r="4" fill="#0d9488"/>
+              <text x="230" y="218" fill="var(--text-muted)" font-size="12" text-anchor="middle">2024년</text>
+
+              <circle cx="305" cy="110" r="4" fill="#0284c7"/>
+              <circle cx="305" cy="100" r="4" fill="#0d9488"/>
+              <text x="305" y="218" fill="var(--text-muted)" font-size="12" text-anchor="middle">2025년</text>
+
+              <circle cx="380" cy="114" r="5" fill="#0284c7"/>
+              <circle cx="380" cy="98" r="5" fill="#0d9488"/>
+              <text x="380" y="84" fill="#0d9488" font-size="11" font-weight="bold" text-anchor="middle">51% (과반)</text>
+              <text x="380" y="132" fill="#0284c7" font-size="11" font-weight="bold" text-anchor="middle">43%</text>
+              <text x="380" y="218" fill="var(--text-main)" font-size="12" font-weight="bold" text-anchor="middle">2026년</text>
+
+              <circle cx="460" cy="120" r="4" fill="#0284c7"/>
+              <circle cx="460" cy="96" r="4" fill="#0d9488"/>
+              <text x="460" y="218" fill="var(--text-muted)" font-size="12" text-anchor="middle">2028년(E)</text>
+            </svg>
+          </div>
+
+          <!-- Share Comparison Table -->
+          <div class="table-container" style="margin-top:14px; margin-bottom:0;">
+            <table style="font-size:12px; text-align:center;">
+              <thead>
+                <tr>
+                  <th style="text-align:left;">화학 조성 (Chemistry)</th>
+                  <th>2022년</th>
+                  <th>2024년</th>
+                  <th style="color:var(--secondary); font-weight:800;">2026년(현재)</th>
+                  <th>2028년(전망)</th>
+                  <th>핵심 트렌드 분석</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="text-align:left;"><span style="color:#0284c7;">■</span> 하이니켈 (NCM/NCA)</td>
+                  <td>58%</td>
+                  <td>48%</td>
+                  <td><strong>43%</strong></td>
+                  <td>40%</td>
+                  <td style="text-align:left; font-size:11px;">프리미엄·46시리즈 고에너지밀도 중심 재편</td>
+                </tr>
+                <tr>
+                  <td style="text-align:left;"><span style="color:#0d9488;">■</span> LFP / LMFP</td>
+                  <td>36%</td>
+                  <td>47%</td>
+                  <td><strong style="color:var(--secondary);">51%</strong></td>
+                  <td>52%</td>
+                  <td style="text-align:left; font-size:11px;">중저가 EV 및 ESS 시장의 표준으로 자리매김</td>
+                </tr>
+                <tr>
+                  <td style="text-align:left;"><span style="color:#f59e0b;">■</span> 전고체 및 차세대</td>
+                  <td>6%</td>
+                  <td>5%</td>
+                  <td><strong>6%</strong></td>
+                  <td>8%</td>
+                  <td style="text-align:left; font-size:11px;">2027년 파일럿 ➔ 2028년 이후 상용화 가시화</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">핵심 동향 심층 진단</h3>
+        <div class="callout">
+          <div class="callout-title">💡 전기차 캐즘(Chasm)의 실체와 OEM의 대응</div>
+          2024년 - 2026년 전기차 시장은 '고성능·얼리어답터'에서 '실속형·대중화'로의 전환 지연으로 성장통을 겪었습니다.
+          이에 글로벌 완성차(현대차그룹, 포드, GM, 폭스바겐)는 <strong>EREV(주행거리연장형 전기차) 및 HEV(하이브리드) 라인업 확충</strong>으로 캐시카우를 지키는 한편, 
+          2026년 하반기부터 <strong>$25,000 이하 보급형 EV 대량 출시</strong>로 2차 티핑포인트를 준비하고 있습니다.
+        </div>
+
+        <div class="callout callout-amber">
+          <div class="callout-title">⚡ AI 데이터센터가 촉발한 ESS 폭발적 성장</div>
+          마이크로소프트, 구글, 아마존, 메타 등 빅테크의 차세대 AI 클러스터 전력 소모량이 급증하면서 전력망 병목 현상이 발생했습니다.
+          전력 피크 셰이빙 및 백업 전원을 위한 <strong>BESS(Battery Energy Storage System) 발주가 전년 대비 40% 이상 폭증</strong>하며, 
+          K-배터리와 중국 배터리 기업들의 유휴 라인을 흡수하는 핵심 구원투수 역할을 하고 있습니다.
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Value Chain & Metal Prices -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="icon">⛓️</span> 2. 공급망 및 4대 핵심 소재(P·Q·C) 밸류체인</h2>
+      </div>
+
+      <div class="chart-grid">
+        <div class="chart-card">
+          <div class="chart-card-title">
+            <span>탄산리튬(Lithium Carbonate) 가격 사이클 (2022년 - 2026년)</span>
+            <span class="badge badge-amber">RMB / 톤</span>
+          </div>
+
+          <!-- Native High-Fidelity SVG Price Curve Chart -->
+          <div class="chart-canvas-wrap" style="height:250px;">
+            <svg viewBox="0 0 520 250" style="width:100%; height:100%; overflow:visible;">
+              <line x1="55" y1="200" x2="490" y2="200" stroke="var(--border-color)" stroke-width="1"/>
+              <line x1="55" y1="150" x2="490" y2="150" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="4,4"/>
+              <line x1="55" y1="100" x2="490" y2="100" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="4,4"/>
+              <line x1="55" y1="40" x2="490" y2="40" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="4,4"/>
+
+              <text x="48" y="204" fill="var(--text-subtle)" font-size="11" text-anchor="end">0만</text>
+              <text x="48" y="154" fill="var(--text-subtle)" font-size="11" text-anchor="end">15만</text>
+              <text x="48" y="104" fill="var(--text-subtle)" font-size="11" text-anchor="end">35만</text>
+              <text x="48" y="44" fill="var(--text-subtle)" font-size="11" text-anchor="end">60만</text>
+
+              <path d="M 70,45 L 130,110 L 190,165 L 250,168 L 310,175 L 370,176 L 430,174 L 480,173 L 480,200 L 70,200 Z" fill="rgba(245, 158, 11, 0.1)"/>
+              <path d="M 70,45 L 130,110 L 190,165 L 250,168 L 310,175 L 370,176 L 430,174 L 480,173" fill="none" stroke="#f59e0b" stroke-width="3"/>
+
+              <!-- Data Points -->
+              <circle cx="70" cy="45" r="5" fill="#f59e0b"/>
+              <text x="70" y="32" fill="#f59e0b" font-size="11" font-weight="bold" text-anchor="middle">56.5만</text>
+              <text x="70" y="218" fill="var(--text-muted)" font-size="11" text-anchor="middle">'22.Q4</text>
+
+              <circle cx="130" cy="110" r="4" fill="#f59e0b"/>
+              <text x="130" y="100" fill="var(--text-subtle)" font-size="10" text-anchor="middle">30.0만</text>
+              <text x="130" y="218" fill="var(--text-muted)" font-size="11" text-anchor="middle">'23.Q2</text>
+
+              <circle cx="190" cy="165" r="4" fill="#f59e0b"/>
+              <text x="190" y="155" fill="var(--text-subtle)" font-size="10" text-anchor="middle">10.5만</text>
+              <text x="190" y="218" fill="var(--text-muted)" font-size="11" text-anchor="middle">'23.Q4</text>
+
+              <circle cx="250" cy="168" r="4" fill="#f59e0b"/>
+              <text x="250" y="218" fill="var(--text-muted)" font-size="11" text-anchor="middle">'24.Q2</text>
+
+              <circle cx="310" cy="175" r="4" fill="#f59e0b"/>
+              <text x="310" y="165" fill="var(--text-subtle)" font-size="10" text-anchor="middle">7.5만</text>
+              <text x="310" y="218" fill="var(--text-muted)" font-size="11" text-anchor="middle">'24.Q4</text>
+
+              <circle cx="370" cy="176" r="4" fill="#f59e0b"/>
+              <text x="370" y="218" fill="var(--text-muted)" font-size="11" text-anchor="middle">'25.Q2</text>
+
+              <circle cx="430" cy="174" r="4" fill="#f59e0b"/>
+              <text x="430" y="218" fill="var(--text-muted)" font-size="11" text-anchor="middle">'25.Q4</text>
+
+              <circle cx="480" cy="173" r="6" fill="#10b981"/>
+              <text x="480" y="160" fill="#10b981" font-size="12" font-weight="bold" text-anchor="middle">7.8만 (바닥확인)</text>
+              <text x="480" y="218" fill="var(--text-main)" font-size="12" font-weight="bold" text-anchor="middle">'26.Q3(현시점)</text>
+            </svg>
+          </div>
+
+          <!-- Price Stages Table -->
+          <div class="table-container" style="margin-top:14px; margin-bottom:0;">
+            <table style="font-size:12px; text-align:center;">
+              <thead>
+                <tr>
+                  <th style="text-align:left;">국면 구분</th>
+                  <th>기간</th>
+                  <th>스팟 가격 추이</th>
+                  <th>양극재 제조사 영향</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="text-align:left;">🔥 1단계: 초호황 버블기</td>
+                  <td>2022년 하반기</td>
+                  <td>톤당 56.5만 RMB</td>
+                  <td style="text-align:left; font-size:11px;">판가 급등으로 일시적 영업이익률 피크(OPM 8~10%)</td>
+                </tr>
+                <tr>
+                  <td style="text-align:left;">📉 2단계: 메탈가 폭락 & 역마진</td>
+                  <td>2023년 - 2024년</td>
+                  <td>톤당 56.5만 ➔ 7.5만 RMB</td>
+                  <td style="text-align:left; font-size:11px; color:var(--danger);">고가 매입 원자재 래깅 충격, 대규모 재고자산평가손실</td>
+                </tr>
+                <tr style="background:var(--bg-card-subtle);">
+                  <td style="text-align:left; font-weight:700;">🟢 3단계: 바닥 확인 & 정상화</td>
+                  <td><strong>2025년 - 2026년 현재</strong></td>
+                  <td style="color:#10b981; font-weight:800;">톤당 7.2만 ~ 7.8만 RMB</td>
+                  <td style="text-align:left; font-size:11px; font-weight:600;">재고평가손실 환입, 메탈-판가 스프레드 마진 정상화</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-card-title">
+            <span>배터리 셀 원가 구성 비율 (Cost Breakdown)</span>
+            <span class="badge badge-purple">2026년 기준</span>
+          </div>
+
+          <!-- Native High-Fidelity SVG Donut + Gauge Bars -->
+          <div class="chart-canvas-wrap" style="height:auto; min-height:220px; padding:8px 0;">
+            <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-around; width:100%; gap:20px;">
+              <!-- Donut SVG -->
+              <div style="position:relative; width:170px; height:170px; flex-shrink:0;">
+                <svg viewBox="0 0 160 160" style="width:100%; height:100%; transform:rotate(-90deg);">
+                  <circle cx="80" cy="80" r="60" fill="none" stroke="var(--border-color)" stroke-width="26"/>
+                  <!-- 양극재 42% (158.3) -->
+                  <circle cx="80" cy="80" r="60" fill="none" stroke="#0284c7" stroke-width="26" stroke-dasharray="158.3 377" stroke-dashoffset="0"/>
+                  <!-- 가공/팩 20% (75.4) -->
+                  <circle cx="80" cy="80" r="60" fill="none" stroke="#64748b" stroke-width="26" stroke-dasharray="75.4 377" stroke-dashoffset="-158.3"/>
+                  <!-- 음극재 12% (45.2) -->
+                  <circle cx="80" cy="80" r="60" fill="none" stroke="#0d9488" stroke-width="26" stroke-dasharray="45.2 377" stroke-dashoffset="-233.7"/>
+                  <!-- 분리막 11% (41.5) -->
+                  <circle cx="80" cy="80" r="60" fill="none" stroke="#8b5cf6" stroke-width="26" stroke-dasharray="41.5 377" stroke-dashoffset="-278.9"/>
+                  <!-- 전해액 8% (30.2) -->
+                  <circle cx="80" cy="80" r="60" fill="none" stroke="#f59e0b" stroke-width="26" stroke-dasharray="30.2 377" stroke-dashoffset="-320.4"/>
+                  <!-- 기타 7% (26.4) -->
+                  <circle cx="80" cy="80" r="60" fill="none" stroke="#cbd5e1" stroke-width="26" stroke-dasharray="26.4 377" stroke-dashoffset="-350.6"/>
+                </svg>
+                <div style="position:absolute; top:0; left:0; width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
+                  <span style="font-size:11px; color:var(--text-subtle);">양극재 비중</span>
+                  <span style="font-size:22px; font-weight:800; color:#0284c7;">42%</span>
+                </div>
+              </div>
+
+              <!-- Visual Breakdown Gauge Bars -->
+              <div style="flex:1; min-width:240px; display:flex; flex-direction:column; gap:8px;">
+                <div>
+                  <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:2px;">
+                    <span style="font-weight:700; color:#0284c7;">■ 양극재 (Cathode) - 핵심 소재</span>
+                    <strong>42%</strong>
+                  </div>
+                  <div style="width:100%; height:7px; background:var(--bg-card-subtle); border-radius:4px; overflow:hidden;">
+                    <div style="width:42%; height:100%; background:#0284c7;"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:2px;">
+                    <span style="font-weight:600; color:#64748b;">■ 가공 및 모듈/팩 제조</span>
+                    <strong>20%</strong>
+                  </div>
+                  <div style="width:100%; height:7px; background:var(--bg-card-subtle); border-radius:4px; overflow:hidden;">
+                    <div style="width:20%; height:100%; background:#64748b;"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:2px;">
+                    <span style="font-weight:600; color:#0d9488;">■ 음극재 (Anode)</span>
+                    <strong>12%</strong>
+                  </div>
+                  <div style="width:100%; height:7px; background:var(--bg-card-subtle); border-radius:4px; overflow:hidden;">
+                    <div style="width:12%; height:100%; background:#0d9488;"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:2px;">
+                    <span style="font-weight:600; color:#8b5cf6;">■ 분리막 (Separator)</span>
+                    <strong>11%</strong>
+                  </div>
+                  <div style="width:100%; height:7px; background:var(--bg-card-subtle); border-radius:4px; overflow:hidden;">
+                    <div style="width:11%; height:100%; background:#8b5cf6;"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:2px;">
+                    <span style="font-weight:600; color:#f59e0b;">■ 전해액 (Electrolyte)</span>
+                    <strong>8%</strong>
+                  </div>
+                  <div style="width:100%; height:7px; background:var(--bg-card-subtle); border-radius:4px; overflow:hidden;">
+                    <div style="width:8%; height:100%; background:#f59e0b;"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:2px;">
+                    <span style="font-weight:600; color:#94a3b8;">■ 기타 부자재</span>
+                    <strong>7%</strong>
+                  </div>
+                  <div style="width:100%; height:7px; background:var(--bg-card-subtle); border-radius:4px; overflow:hidden;">
+                    <div style="width:7%; height:100%; background:#cbd5e1;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Key Takeaway Info Box -->
+          <div style="background:var(--bg-card-subtle); border:1px solid var(--border-color); border-radius:8px; padding:10px 14px; margin-top:14px; font-size:12.5px; color:var(--text-sub); line-height:1.5;">
+            💡 <strong>원가 분석 시사점:</strong> 양극재(42%)는 배터리 원가의 절반에 육박하므로, 양극재 기업의 <strong>전구체/리튬 수직계열화</strong>와 <strong>공정 수율 혁신</strong>이 전체 배터리 셀 및 완성차의 가격 경쟁력을 좌우합니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="vc-grid">
+        <div class="vc-card">
+          <div class="vc-title">🧪 양극재 (Cathode)</div>
+          <ul class="vc-list">
+            <li><strong>하이니켈 NCMA/NCA 90%+</strong>: 단결정(Single-crystal) 기술로 고에너지밀도 및 가스 발생 억제.</li>
+            <li><strong>LFP / LMFP</strong>: 망간 첨가로 전압 4.1V 상향, $70/kWh 이하 압도적 가성비 확보.</li>
+            <li><strong>국내 4사</strong>: 에코프로비엠, 포스코퓨처엠, LG화학, 엘앤에프의 포트폴리오 다각화 가속.</li>
+          </ul>
+        </div>
+        <div class="vc-card">
+          <div class="vc-title">🔋 음극재 (Anode)</div>
+          <ul class="vc-list">
+            <li><strong>실리콘 음극재 도핑</strong>: 급속 충전(10분 80%) 구현을 위해 Si 비중 5%에서 10~15%로 확대.</li>
+            <li><strong>CNT 도전재 필수화</strong>: 실리콘의 300% 부피 팽창을 억제하기 위한 핵심 소재 부각.</li>
+            <li><strong>탈중국 흑연망</strong>: 미 FEOC 대응을 위한 호주·아프리카산 천연흑연 및 인조흑연 내재화.</li>
+          </ul>
+        </div>
+        <div class="vc-card">
+          <div class="vc-title">🛡️ 분리막 (Separator)</div>
+          <ul class="vc-list">
+            <li><strong>세라믹 코팅 습식 분리막</strong>: 9㎛ 이하 초박막화 및 고내열 안전성 강화.</li>
+            <li><strong>미국 IRA 부품 규제 수혜</strong>: 중국산 분리막의 북미 진입 완전 차단으로 국내 기업 반사이익.</li>
+            <li><strong>주요 기업</strong>: SK아이이테크놀로지(SKIET), 더블유씨피(WCP).</li>
+          </ul>
+        </div>
+        <div class="vc-card">
+          <div class="vc-title">💧 전해액 (Electrolyte)</div>
+          <ul class="vc-list">
+            <li><strong>고전압 첨가제</strong>: 4.4V 이상 고전압 환경에서 양·음극 피막 안정성 유지.</li>
+            <li><strong>LiFSI 전해질염</strong>: 저온 출력 특성 및 고수명 사이클을 위한 채택 비중 증대.</li>
+            <li><strong>주요 기업</strong>: 엔켐(북미 현지화 압도적 1위), 솔브레인, 동화일렉트로라이트.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Next-Gen Technology Roadmap -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="icon">🔬</span> 3. 기술 혁신 및 차세대 배터리 로드맵</h2>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">차세대 배터리 기술 비교 및 상용화 타임라인</h3>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>구분</th>
+                <th>황화물계 전고체 배터리 (ASSB)</th>
+                <th>나트륨이온 배터리 (SIB)</th>
+                <th>46-시리즈 대형 원통형 (4680/4695)</th>
+                <th>건식 전극 공정 (Dry Coating)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="table-bold">핵심 메커니즘</td>
+                <td>액체 전해질 ➔ 고체 전해질 (Li₆PS₅Cl 등)</td>
+                <td>리튬 ➔ 나트륨(Na) 이온 기반</td>
+                <td>지름 46mm 대구경 + 탭리스(Tabless) 구조</td>
+                <td>슬러리 건조로 제거 후 무용매 롤프레싱</td>
+              </tr>
+              <tr>
+                <td class="table-bold">에너지 밀도</td>
+                <td><span class="trend-up">400 - 500 Wh/kg (최상)</span></td>
+                <td>140 - 160 Wh/kg (LFP 유사)</td>
+                <td>280 - 300 Wh/kg (기존 대비 +20%)</td>
+                <td>동일 화학 대비 부피 밀도 +15%</td>
+              </tr>
+              <tr>
+                <td class="table-bold">안전성 및 장점</td>
+                <td>화재·폭발 위험 0%, 초급속 충전 가능</td>
+                <td>영하 20도 저온 방전 우수, 원가 30% 절감</td>
+                <td>원통형 PPM 고속 생산, 열 방출 극대화</td>
+                <td>공정 비용 18% 절감, 공장 풋프린트 50% 축소</td>
+              </tr>
+              <tr>
+                <td class="table-bold">상용화 시점</td>
+                <td><strong>2027년 - 2028년 (하이엔드 EV 탑재)</strong></td>
+                <td><strong>2024년 - 2025년 (마이크로 EV/저가 ESS)</strong></td>
+                <td><strong>2024년 말 - 2025년 (본격 대량 양산)</strong></td>
+                <td><strong>2026년 - 2027년 (양산 수율 확보)</strong></td>
+              </tr>
+              <tr>
+                <td class="table-bold">선도 기업</td>
+                <td>삼성SDI, 도요타, 솔리드파워</td>
+                <td>CATL, 중커하이나, 파라시스</td>
+                <td>LG에너지솔루션, 테슬라, 삼성SDI, 파나소닉</td>
+                <td>테슬라, LG에너지솔루션</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Global Competitive Landscape -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="icon">🏆</span> 4. 글로벌 배터리 탑티어 경쟁 구도</h2>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">주요 배터리 제조사 비교 매트릭스 (2026년 현황)</h3>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>기업명 (국적)</th>
+                <th>주력 폼팩터</th>
+                <th>핵심 화학(Chemistry)</th>
+                <th>주요 고객사</th>
+                <th>차별화 경쟁력 및 핵심 전략</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="table-bold">CATL (중국)</td>
+                <td>각형, 파우치</td>
+                <td>LFP, M3P, CTP 3.0(치린), SIB</td>
+                <td>테슬라, 폭스바겐, BMW, 현대차</td>
+                <td>압도적 규모의 경제, LRS(기술 라이선스)로 미국 IRA 우회 침투</td>
+              </tr>
+              <tr>
+                <td class="table-bold">BYD (중국)</td>
+                <td>각형 (블레이드)</td>
+                <td>LFP (블레이드 셀)</td>
+                <td>자체 완성차, 테슬라, 토요타</td>
+                <td>배터리-완성차 완벽한 수직계열화, 극한의 제조 원가 경쟁력</td>
+              </tr>
+              <tr>
+                <td class="table-bold">LG에너지솔루션 (한국)</td>
+                <td>파우치, 원통형</td>
+                <td>하이니켈 NCMA, LFP(ESS), 4680</td>
+                <td>GM, 현대차, 스텔란티스, 테슬라</td>
+                <td>북미 최대 생산 캐파, 포괄적 OEM JV 네트워크, 46시리즈 선제 양산</td>
+              </tr>
+              <tr>
+                <td class="table-bold">삼성SDI (한국)</td>
+                <td>각형, 원통형</td>
+                <td>하이니켈 NCA(P5/P6), 전고체(ASB)</td>
+                <td>BMW, 스텔란티스, 리비안, 아우디</td>
+                <td>질적 성장과 업계 최고 OPM 유지, 황화물계 전고체 파일럿 독보적 리더십</td>
+              </tr>
+              <tr>
+                <td class="table-bold">SK온 (한국)</td>
+                <td>파우치, 각형</td>
+                <td>하이니켈 NCM9+, LFP 개발</td>
+                <td>포드, 현대차, 폭스바겐</td>
+                <td>북미 JV 공장 램프업 수율 안정화 및 영업흑자(BEP) 달성 가속</td>
+              </tr>
+              <tr>
+                <td class="table-bold">파나소닉 (일본)</td>
+                <td>원통형</td>
+                <td>하이니켈 NCA (2170, 4680)</td>
+                <td>테슬라, 스바루, 마쓰다</td>
+                <td>테슬라와의 장기 파트너십, 캔자스 공장 증설을 통한 고용량 셀 공급</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Geopolitics & Policy -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="icon">🌐</span> 5. 지정학적 무역 장벽 및 정책 동향</h2>
+      </div>
+
+      <div class="chart-grid">
+        <div class="card" style="margin-bottom:0;">
+          <h3 class="card-title" style="color:var(--primary);">🇺🇸 미국: IRA 및 FEOC 규제 강화</h3>
+          <p style="font-size:13.5px; color:var(--text-muted); margin-bottom:12px;">
+            - <strong>Section 30D 세액공제</strong>: 차량당 최대 $7,500 지원. 핵심 광물(40% ➔ 80%) 및 부품(50% ➔ 100%) 현지 조달 요건 강화.<br>
+            - <strong>FEOC(해외우려기관)</strong>: 중국 정부 소유·지배 지분 25% 이상 기업 부품 및 광물 배제 의무화.<br>
+            - <strong>Section 45X AMPC</strong>: 셀 $35/kWh, 모듈 $10/kWh 세액공제로 국내 배터리 3사 북미 수익성 방어.
+          </p>
+        </div>
+
+        <div class="card" style="margin-bottom:0;">
+          <h3 class="card-title" style="color:var(--secondary);">🇪🇺 유럽: CRMA 및 배터리 여권 도입</h3>
+          <p style="font-size:13.5px; color:var(--text-muted); margin-bottom:12px;">
+            - <strong>핵심원자재법(CRMA)</strong>: 역내 원자재 채굴 10%, 가공 40%, 재활용 25% 목표 설정.<br>
+            - <strong>디지털 배터리 여권(Battery Passport)</strong>: 2027년부터 전 주기 탄소 발자국 추적 의무화.<br>
+            - <strong>재활용 의무 비율</strong>: 코발트 16%, 리튬 6%, 니켈 6% 이상 재활용 원료 사용 의무 부과.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6: Scenarios & Strategic Takeaways -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="icon">🎯</span> 6. 미래 시나리오(2026-2030) 및 전문가 제언</h2>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">시나리오별 파급 효과 분석</h3>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>시나리오</th>
+                <th>발생 확률</th>
+                <th>주요 전제 조건</th>
+                <th>산업 영향 및 기업 실적 전망</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="table-bold" style="color:var(--primary);">Base Case (연착륙)</td>
+                <td><strong>60%</strong></td>
+                <td>보급형 EV 2026-2027 대중화, AI 전력망 ESS 연 35% 고성장 지속</td>
+                <td>배터리 공장 가동률 80%대 회복, OPM 6% - 8% 정상화 안착</td>
+              </tr>
+              <tr>
+                <td class="table-bold" style="color:#10b981;">Bull Case (슈퍼사이클)</td>
+                <td><strong>25%</strong></td>
+                <td>$20,000 이하 내연기관 가격 패리티 조기 달성, BESS 공급 쇼티지</td>
+                <td>가동률 90% 육박, 판가 반등 및 OPM 10% 이상 사상 최대 실적</td>
+              </tr>
+              <tr>
+                <td class="table-bold" style="color:#ef4444;">Bear Case (캐즘 장기화)</td>
+                <td><strong>15%</strong></td>
+                <td>북미·유럽 보조금 축소, 중국 저가 덤핑 공세 장기화</td>
+                <td>가동률 60%대 정체, 한계 배터리 제조사 및 소재사 구조조정 가속</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top: 24px; padding: 20px; background: var(--bg-card-subtle); border-radius: var(--radius-md);">
+          <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 10px; color: var(--text-main);">📌 2차전지 글로벌 전문가의 3대 핵심 결론</h4>
+          <ol style="padding-left: 20px; font-size: 13.5px; color: var(--text-muted); line-height: 1.7;">
+            <li><strong>"EV 단일 엔진에서 벗어나 ESS를 필수 양대 축으로 전환하라"</strong>: AI 데이터센터 전력난은 배터리 산업에 10년 만에 찾아온 가장 강력한 기회입니다.</li>
+            <li><strong>"보급형 LFP/LMFP와 차세대 46시리즈·전고체의 투 트랙(Two-Track)을 완비하라"</strong>: 중저가 볼륨 시장의 점유율 방어 없이는 규모의 경제를 유지할 수 없습니다.</li>
+            <li><strong>"공정 혁신(건식 전극·스마트 수율)을 통한 원가 절감만이 최후의 승자 조건"</strong>: 메탈 가격이 안정화된 현 국면에서 승패는 원자재가 아닌 '공정 제조 원가'에서 결정됩니다.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Script for Theme Toggle & Chart.js -->
+
+  </section>
+
+
+  <!-- =========================================================================
+       제2부. 엘앤에프(L&F) 핵심 경쟁력 및 기업 강점 분석 (원본 100% 보존)
+       ========================================================================= -->
+  <section id="part2-strengths" class="part-section-wrapper">
+    <div class="container">
+      <div class="part-banner-divider">
+        <div class="part-banner-line"></div>
+        <div class="part-banner-badge">
+          <span>🏢 PART 2 · 엘앤에프 핵심 경쟁력 및 기업 강점 분석</span>
+        </div>
+        <div class="part-banner-line right"></div>
+      </div>
+    </div>
+
+<!-- 테마 전환 플로팅 버튼 -->
+  
+
+  <div class="container">
+    <!-- 헤더 -->
+    <header>
+      <div class="header-tag-wrap">
+        <span class="badge badge-primary">코스피 066970</span>
+        <span class="badge badge-success">2차전지 핵심 소재</span>
+        <span class="badge badge-accent">글로벌 산업분석 리포트</span>
+      </div>
+      <h1 class="header-title">엘앤에프(L&F) 핵심 경쟁력 및 기업 강점 분석</h1>
+      <p class="header-sub">
+        세계 최초 하이니켈 NCMA 양산 레퍼런스, 국내 배터리 소재사 최초 LFP 양산 선점, 그리고 LS그룹 합작(LLBS)을 통한 IRA 적격 수직계열화 전략 심층 진단
+      </p>
+      <div class="header-meta">
+        <span>분석 섹터: <strong>글로벌 2차전지 양극재 (Cathode Active Materials)</strong></span>
+        <span>기준 일자: <strong>2026년 9월</strong></span>
+        <span>분석 담당: <strong>글로벌 2차전지 산업분석팀</strong></span>
+      </div>
+    </header>
+
+    <!-- 하이라이트 요약 그리드 -->
+    <div class="summary-grid">
+      <div class="stat-card">
+        <div class="label">🚀 기술 리더십</div>
+        <div class="value">Ni 95% NCMA</div>
+        <div class="desc">세계 최초 울트라 하이니켈 상용화 및 단결정 분말 제어 독보적 기술력</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">🎯 제품 포트폴리오</div>
+        <div class="value">LFP 양산 선점</div>
+        <div class="desc">국내 최초 무전구체 LFP/LMFP 라인 구축으로 Non-China 수요 독점 수혜</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">🔗 밸류체인 완성</div>
+        <div class="value">LS 합작 (LLBS)</div>
+        <div class="desc">황산니켈-전구체-양극재 100% 국산화, 미국 IRA FEOC 규제 완벽 충족</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">💼 고객사 다변화</div>
+        <div class="value">13.1조 수주</div>
+        <div class="desc">SK온 대규모 수주(현대차그룹향) 및 삼성SDI LFP 협력 통한 포트폴리오 확장</div>
+      </div>
+    </div>
+
+    <!-- 섹션 1: 기술적 우위 -->
+    <h2 class="section-title">1. 기술적 초격차: 세계 최초·최고 수준의 하이니켈 NCMA 기술</h2>
+    <div class="card">
+      <div class="card-header-flex">
+        <h3 class="card-title">🔬 4원계 NCMA(니켈 90% - 95%) 및 단결정 분말 제어</h3>
+        <span class="badge badge-primary">울트라 하이니켈</span>
+      </div>
+      <p class="content-p">
+        엘앤에프는 2020년 세계 최초로 알루미늄(Al)을 도핑한 <strong>4원계 NCMA(니켈·코발트·망간·알루미늄) 양극재</strong>를 양산하여 상용화에 성공한 독보적인 기술 선도 기업입니다.
+      </p>
+      <ul class="feature-list">
+        <li><strong>에너지 밀도와 열안전성의 공존</strong>: 니켈 함량이 90% 이상으로 올라갈수록 발생하는 결정 구조 붕괴 및 열폭주 위험을 알루미늄 나노 도핑 및 입자 표면 코팅 기술로 성공적으로 억제했습니다.</li>
+        <li><strong>차세대 원통형 폼팩터(46시리즈/4680) 최적화</strong>: 극판 압연 공정에서 입자 깨짐(크랙)이 없는 <strong>단결정(Single Crystal)</strong> 합성 기술과 미세 입도 제어 역량을 바탕으로 고출력 원통형 배터리에서 압도적인 수율을 확보했습니다.</li>
+        <li><strong>글로벌 완성차 검증 트랙레코드</strong>: 글로벌 탑티어 전기차 제조사의 주력 모델에 장기간 탑재되며 실제 필드 데이터(주행거리, 사이클 수명, 안전성)에서 최고의 신뢰성을 인정받았습니다.</li>
+      </ul>
+      <div class="callout">
+        <div class="callout-title">💡 기술 경쟁력 포인트</div>
+        양극재는 배터리 원가의 약 40% 이상을 차지하는 핵심 소재입니다. 엘앤에프는 1세대 양극재 기업으로서 축적된 수천 번의 소성(Calcination) 레시피와 도핑 노하우를 바탕으로 경쟁사 대비 1 - 2세대 앞선 울트라 하이니켈 양산 경험을 확보하고 있습니다.
+      </div>
+    </div>
+
+    <!-- 섹션 2: 제품 포트폴리오 다각화 -->
+    <h2 class="section-title">2. K-양극재 최초 'LFP / LMFP' 양산 체제 선점 (Two-Track)</h2>
+    <div class="card">
+      <div class="card-header-flex">
+        <h3 class="card-title">⚡ 프리미엄(NCMA)과 보급형·ESS(LFP)의 완벽한 밸런스</h3>
+        <span class="badge badge-success">Non-China 수혜</span>
+      </div>
+      <p class="content-p">
+        전기차 캐즘(Chasm)과 보급형 EV 대중화, 전력망용 ESS(에너지저장장치) 폭발적 성장에 발맞추어, 엘앤에프는 국내 4대 양극재 기업 중 <strong>가장 발 빠르게 LFP 전용 양산 체제</strong>를 선점했습니다.
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>구분</th>
+              <th>하이니켈 NCMA (Premium)</th>
+              <th>LFP / LMFP (Entry & ESS)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>주요 타깃 시장</strong></td>
+              <td>고성능 프리미엄 EV, 장거리 주행 차량</td>
+              <td>보급형 대중 EV, 상업용/전력망용 대용량 ESS</td>
+            </tr>
+            <tr>
+              <td><strong>핵심 기술 강점</strong></td>
+              <td>Ni 90% - 95%, 고에너지 밀도, 46시리즈 원통형</td>
+              <td><strong>무전구체 직접 합성법</strong>, 망간 도핑 LMFP</td>
+            </tr>
+            <tr>
+              <td><strong>글로벌 규제 대응</strong></td>
+              <td>북미 현지화 및 고부가 가치 창출</td>
+              <td><strong>미국 IRA FEOC 완벽 충족 (탈중국 대체재)</strong></td>
+            </tr>
+            <tr>
+              <td><strong>협력 파트너</strong></td>
+              <td>SK온(현대차향), LG엔솔(원통형)</td>
+              <td>삼성SDI, SK온 등 북미 ESS 프로젝트 파트너</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ul class="feature-list">
+        <li><strong>무전구체 직접 합성법 혁신</strong>: 중간체인 전구체 단계를 건너뛰고 원료를 직접 합성하는 혁신 공법을 도입하여 제조 원가를 획기적으로 낮춤으로써 중국산 LFP 대비 가격 열위를 최소화했습니다.</li>
+        <li><strong>탈중국(Non-China) LFP 공급망 선점</strong>: 미국 인플레이션 감축법(IRA)의 FEOC(해외우려기관) 규제로 인해 북미 진출 배터리 셀 제조사 및 완성차 업체들은 중국산 LFP를 대체할 공급사를 필사적으로 찾고 있으며, 엘앤에프가 최우선 선택지로 부상했습니다.</li>
+      </ul>
+    </div>
+
+    <!-- 섹션 3: 밸류체인 수직계열화 -->
+    <h2 class="section-title">3. 원가 경쟁력과 규제 대응: LS 합작법인(LLBS) 전구체 수직계열화</h2>
+    <div class="card">
+      <div class="card-header-flex">
+        <h3 class="card-title">🏭 새만금 12만 톤 전구체 기지 구축 (100% 국산 밸류체인)</h3>
+        <span class="badge badge-accent">IRA FEOC 대응</span>
+      </div>
+      <p class="content-p">
+        국내 양극재 업계의 가장 치명적인 취약점은 전구체의 90% 이상을 중국에 의존하고 있다는 점이었습니다. 엘앤에프는 LS그룹과의 전략적 합작법인인 <strong>'엘에스-엘앤에프배터리솔루션(LLBS)'</strong>을 통해 이를 완벽하게 해결했습니다.
+      </p>
+
+      <div class="flow-container">
+        <div class="flow-step">
+          <div class="step-tag">Step 1. 원자재</div>
+          <div class="step-title">LS MnM</div>
+          <div class="step-desc">고순도 황산니켈 안정적 정련 및 내부 조달</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-tag">Step 2. 전구체 생산</div>
+          <div class="step-title">LLBS (합작법인)</div>
+          <div class="step-desc">새만금 산단 1조 원 투자, 연 12만 톤 규모</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-tag">Step 3. 양극재 합성</div>
+          <div class="step-title">엘앤에프</div>
+          <div class="step-desc">NCMA 및 LFP 양극활물질 최종 소성 양산</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-tag">Step 4. 셀 & 완성차</div>
+          <div class="step-title">글로벌 셀/OEM</div>
+          <div class="step-desc">IRA 세액공제(AMPC/소비자보조금) 100% 수혜</div>
+        </div>
+      </div>
+
+      <div class="callout callout-success">
+        <div class="callout-title">✅ 수직계열화의 경제적 실익</div>
+        외부 구매 비중이 높았던 전구체를 내재화함으로써 마진율 스프레드를 대폭 개선하였으며, 원자재 가격 변동 리스크를 헤지하고 미국 IRA와 유럽 CRMA의 까다로운 원산지 규준을 충족하는 최적의 사업 구조를 완성했습니다.
+      </div>
+    </div>
+
+    <!-- 섹션 4: 고객사 및 폼팩터 다변화 -->
+    <h2 class="section-title">4. 고객사 및 3대 배터리 폼팩터 다변화 역량</h2>
+    <div class="card">
+      <div class="card-header-flex">
+        <h3 class="card-title">🌐 원통형 중심에서 파우치·각형 전 방위 확장</h3>
+        <span class="badge badge-primary">포트폴리오 리밸런싱</span>
+      </div>
+      <p class="content-p">
+        과거 단일 고객사 의존도가 높았던 구조에서 벗어나, 국내외 톱티어 배터리 제조사 및 글로벌 완성차로 공급망을 다변화하며 매출 안정성을 확보했습니다.
+      </p>
+      <ul class="feature-list">
+        <li><strong>SK온 13.1조 원 대규모 장기 공급계약 체결</strong>: 2024년 3월부터 2030년까지 약 7년간 30만 톤 규모의 하이니켈 양극재를 SK온에 공급하며, 최종 수요처인 <strong>현대자동차·기아</strong>의 글로벌 전기차 라인업으로 확고히 진입했습니다.</li>
+        <li><strong>배터리 3대 폼팩터 완전 대응</strong>:
+          <ul style="margin-top: 8px; margin-left: 20px; list-style-type: disc; color: var(--text-muted);">
+            <li><strong style="color: var(--text-main);">원통형(Cylindrical)</strong>: 2170 및 차세대 4680 셀을 위한 초고밀도 단결정 양극재</li>
+            <li><strong style="color: var(--text-main);">파우치형(Pouch)</strong>: SK온향 고출력 및 장수명 맞춤형 하이니켈 양극재</li>
+            <li><strong style="color: var(--text-main);">각형(Prismatic)</strong>: 삼성SDI 등과 연계된 안정성 특화 소재 및 LFP 라인업</li>
+          </ul>
+        </li>
+        <li><strong>ESS 전력망 시장 침투</strong>: 신재생에너지 확대와 AI 데이터센터 전력 수요 급증으로 폭증하는 북미 ESS 프로젝트에 필수적인 LFP 양극재를 신속 공급하여 신규 캐시카우를 창출하고 있습니다.</li>
+      </ul>
+    </div>
+
+    <!-- 섹션 5: R&D 파이프라인 & 전문가 총평 -->
+    <h2 class="section-title">5. 미래 기술 R&D 파이프라인 및 전문가 총평</h2>
+    <div class="card">
+      <div class="card-header-flex">
+        <h3 class="card-title">🔮 차세대 기술 선행 투자 & SWOT 총평</h3>
+        <span class="badge badge-accent">Industry Outlook</span>
+      </div>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px;">
+        <div style="background: var(--bg-card-subtle); padding: 18px; border-radius: 10px; border: 1px solid var(--border-color);">
+          <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px; color: var(--primary);">⚡ 고전압 미드니켈 (Mid-Ni)</h4>
+          <p style="font-size: 13px; color: var(--text-muted);">코발트 프리 및 고전압 설계로 가격은 낮추고 화재 위험은 낮추면서도 긴 주행거리를 실현하는 실속형 양극재 개발</p>
+        </div>
+        <div style="background: var(--bg-card-subtle); padding: 18px; border-radius: 10px; border: 1px solid var(--border-color);">
+          <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px; color: var(--success);">🧪 나트륨이온 배터리 (SIB)</h4>
+          <p style="font-size: 13px; color: var(--text-muted);">리튬 가격 변동성을 완전히 배제하고 극저온 성능이 우수한 초저가 나트륨이온 전지용 양극소재 선행 연구</p>
+        </div>
+        <div style="background: var(--bg-card-subtle); padding: 18px; border-radius: 10px; border: 1px solid var(--border-color);">
+          <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px; color: var(--accent);">🔋 전고체 배터리 소재</h4>
+          <p style="font-size: 13px; color: var(--text-muted);">고체 전해질과의 계면 저항을 최소화하는 특수 코팅 양극재 및 황화물계/산화물계 전해질 선행 특허 확보</p>
+        </div>
+      </div>
+
+      <div class="callout" style="background: var(--bg-card-subtle); border-left-color: var(--accent);">
+        <div class="callout-title" style="color: var(--accent); font-size: 16px;">
+          📊 산업분석 전문가 총평 (Analyst View)
+        </div>
+        <p style="font-size: 14.5px; line-height: 1.75; margin-top: 8px;">
+          엘앤에프는 지난 수년간의 전기차 캐즘(Chasm)과 단일 고객사 의존이라는 과도기를 거치며 체질 개선을 성공적으로 완수했습니다. 
+          현재의 엘앤에프는 <strong>① 세계 최고 수준의 하이니켈 NCMA 기술력</strong>, <strong>② K-배터리 진영에서 가장 앞선 LFP 양산 포트폴리오</strong>, 
+          그리고 <strong>③ LS그룹과의 새만금 전구체 합작을 통한 완벽한 IRA 적격 수직계열화</strong>라는 3박자를 모두 갖춘 유일무이한 양극재 기업입니다. 
+          향후 글로벌 2차전지 시장의 본격적인 반등과 북미 Non-China LFP/ESS 수요 폭증기에서 가장 탄력적인 실적 턴어라운드를 보여줄 것으로 전망됩니다.
+        </p>
+      </div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer>
+      <div>
+        © 2026 Global Battery Industry Research Team. All rights reserved.
+      </div>
+      <div>
+        본 자료는 산업 및 기업 분석을 위해 신뢰할 만한 데이터를 바탕으로 작성된 리포트입니다.
+      </div>
+    </footer>
+  </div>
+
+  <!-- 테마 전환 자바스크립트 (규칙 9 완전 준수) -->
+
+  </section>
+
+
+  <!-- =========================================================================
+       제3부. 엘앤에프(L&F) 기업 약점 및 구조적 리스크 심층 분석 보고서 (원본 100% 보존)
+       ========================================================================= -->
+  <section id="part3-risks" class="part-section-wrapper">
+    <div class="container">
+      <div class="part-banner-divider">
+        <div class="part-banner-line"></div>
+        <div class="part-banner-badge">
+          <span>🚨 PART 3 · 엘앤에프 약점 및 구조적 리스크 심층 분석</span>
+        </div>
+        <div class="part-banner-line right"></div>
+      </div>
+    </div>
+
+<!-- 테마 모드 토글 버튼 (작업 룰 9 준수) -->
+  
+
+  <div class="container">
+
+    <!-- 보고서 헤더 -->
+    <header class="header-panel">
+      <div class="badge-wrap">
+        <span class="badge badge-danger">리스크 심층 진단</span>
+        <span class="badge badge-primary">2차전지 소재 산업</span>
+        <span class="badge badge-warning">밸류에이션 디스카운트 분석</span>
+        <span class="badge badge-muted">KOSPI: 066970</span>
+      </div>
+      <h1 class="title">엘앤에프(L&F) 기업 약점 및 구조적 리스크 심층 분석 보고서</h1>
+      <p class="subtitle">글로벌 2차전지 양극재 시장 내 엘앤에프의 5대 구조적 취약점, 원가 구조 한계 및 피어 그룹 대비 할인 요인 점검</p>
+      
+      <div class="meta-bar">
+        <span>👨‍💻 <strong>작성자:</strong> 글로벌 2차전지 산업분석팀</span>
+        <span>📅 <strong>발행일:</strong> 2026-09-05</span>
+        <span>🏢 <strong>대상 기업:</strong> (주)엘앤에프 (066970)</span>
+        <span>📊 <strong>분석 목적:</strong> 리스크 요인 및 중장기 펀더멘털 점검</span>
+      </div>
+    </header>
+
+    <!-- 핵심 리스크 지표 카드 그리드 -->
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-title">고객사 편중도 (LGES·테슬라)</div>
+        <div class="metric-val risk">70% +</div>
+        <div class="metric-sub">완성차 단일 라인업 종속 심화</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-title">연결 기준 부채비율</div>
+        <div class="metric-val risk">~372.7%</div>
+        <div class="metric-sub">피어 그룹 대비 최고 수준 레버리지</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-title">순차입금 규모</div>
+        <div class="metric-val warn">약 1.5조 원</div>
+        <div class="metric-sub">금융비용(이자부담) 누적 요인</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-title">전구체 자체 내재화율</div>
+        <div class="metric-val warn">상업화 대기</div>
+        <div class="metric-sub">새만금 LLBS 2026년 4분기 가동 예정</div>
+      </div>
+    </div>
+
+    <!-- 5대 구조적 약점 심층 분석 -->
+    <h2 class="section-title"><span class="icon">🚨</span> 5대 핵심 구조적 취약점 진단</h2>
+
+    <!-- 약점 1 -->
+    <div class="weakness-card">
+      <div class="weakness-header">
+        <div class="weakness-num">1</div>
+        <div class="weakness-title-wrap">
+          <h3 class="weakness-title">극단적인 고객사(LGES·테슬라) 편중과 가격 협상력(Bargaining Power) 열위</h3>
+          <p class="weakness-summary">단일 완성차 밸류체인 의존에 따른 판가 인하 및 공급사 이원화 직격탄</p>
+        </div>
+      </div>
+      <div class="weakness-body">
+        <ul>
+          <li><strong>매출 70% 이상의 절대적 의존:</strong> 전체 매출의 대다수가 LG에너지솔루션을 경유하여 테슬라(Tesla Model Y/3 등)로 공급되며, 직접 수주 물량(약 3조 8,000억 원) 역시 테슬라 향에 집중되어 있습니다.</li>
+          <li><strong>테슬라의 가격 인하(Price Cut) 압박:</strong> 테슬라는 원가 절감을 위해 소재 공급사 간의 극심한 단가 경쟁을 유도하고 있으며, 이는 엘앤에프의 마진율(OPM)을 지속적으로 압박하는 상시 요인입니다.</li>
+          <li><strong>고객사 다변화의 실질적 지연:</strong> SK온 장기 공급 계약 및 해외 셀 메이커 확보를 추진 중이나, 유럽 로컬 배터리사(노스볼트 등)의 재무 위기와 신규 고객사 양산 램프업 지연으로 단기간 내 종속성을 탈피하기 어렵습니다.</li>
+        </ul>
+        <div class="callout danger">
+          <strong>리스크 요약:</strong> 테슬라의 전기차 판매량 둔화, 재고 감축, 또는 배터리 공급사 다변화(에코프로비엠, 중국계 소재사 진입) 시 출하량 타격이 가장 먼저 발생하는 취약한 구조입니다.
+        </div>
+      </div>
+    </div>
+
+    <!-- 약점 2 -->
+    <div class="weakness-card">
+      <div class="weakness-header">
+        <div class="weakness-num">2</div>
+        <div class="weakness-title-wrap">
+          <h3 class="weakness-title">원소재 수직계열화(전구체·리튬·재활용) 지연에 따른 원가 경쟁력 한계</h3>
+          <p class="weakness-summary">광물-전구체-양극재 일관 생산 체제 미흡으로 메탈가 변동기 마진 방어 실패</p>
+        </div>
+      </div>
+      <div class="weakness-body">
+        <ul>
+          <li><strong>경쟁사 대비 낮은 전구체 내재화율:</strong> 에코프로 그룹(에코프로머티리얼즈 전구체, 이노베이션 리튬 가공, 씨엔지 리사이클) 및 포스코 그룹(포스코홀딩스 광산/염호 리튬, 포스코퓨처엠 전구체/양극재/음극재 일관 체제)에 비해 원소재의 외부 의존도가 절대적으로 높습니다.</li>
+          <li><strong>원가율 및 래깅(Lagging) 충격 노출:</strong> 고가에 매입한 원자재와 급락한 제품 판가 간의 미스매치로 인해 2023년 - 2024년 대규모 재고자산평가손실 및 영업적자를 기록하며 수익성 방어에 취약성을 노출했습니다.</li>
+          <li><strong>LS 합작 전구체(LLBS) 효과의 후행성:</strong> 전북 새만금 연산 4만 톤 규모의 전구체 공장이 완공 단계이나, <strong>2026년 4분기 이후</strong>에나 상업 양산이 시작되므로 실질적인 원가 개선이 숫자로 확인되기까지 시간이 필요합니다.</li>
+        </ul>
+        <div class="callout warning">
+          <strong>리스크 요약:</strong> 양극재 원가의 65~70%를 차지하는 전구체와 수산화리튬을 자급하지 못해 판가 스프레드 마진 확보에서 구조적 열위에 놓여 있습니다.
+        </div>
+      </div>
+    </div>
+
+    <!-- 약점 3 -->
+    <div class="weakness-card">
+      <div class="weakness-header">
+        <div class="weakness-num">3</div>
+        <div class="weakness-title-wrap">
+          <h3 class="weakness-title">누적된 차입금 부담과 과도한 재무 레버리지 (Financial Leverage)</h3>
+          <p class="weakness-summary">높은 부채비율(370%대)과 금융비용 누적, 잠재적 자본 확충에 따른 오버행 리스크</p>
+        </div>
+      </div>
+      <div class="weakness-body">
+        <ul>
+          <li><strong>취약한 재무 건전성:</strong> 대규모 공장 증설(CAPEX)과 전기차 캐즘 여파로 인한 손실이 겹쳐, 2026년 기준 <strong>부채비율이 372.7%</strong>에 달하며 <strong>순차입금은 약 1조 5,000억 원</strong>에 육박합니다.</li>
+          <li><strong>이자비용 증가에 따른 순이익 훼손:</strong> 매 분기 수백억 원에 달하는 순금융원가가 발생하여 영업이익 흑자 전환에도 불구하고 당기순이익 회복 탄력성을 크게 제약하고 있습니다.</li>
+          <li><strong>메자닌 증권 및 잠재적 오버행(Overhang):</strong> 신주인수권부사채(BW), 전환사채(CB), 교환사채(EB) 등 자금 조달을 위해 발행된 복합 금융상품들이 주가 반등 시 희석 물량으로 출회될 수 있습니다.</li>
+        </ul>
+        <div class="callout danger">
+          <strong>리스크 요약:</strong> 차입금 차환 부담과 추가 CAPEX 소요 속에서 주주가치 희석(유상증자 등) 우려가 상존하여 밸류에이션 리레이팅의 강력한 저항선으로 작용합니다.
+        </div>
+      </div>
+    </div>
+
+    <!-- 약점 4 -->
+    <div class="weakness-card">
+      <div class="weakness-header">
+        <div class="weakness-num">4</div>
+        <div class="weakness-title-wrap">
+          <h3 class="weakness-title">하이니켈 편중 포트폴리오와 보급형(LFP/Mid-Ni) 전환기 중국과의 격차</h3>
+          <p class="weakness-summary">프리미엄 전기차 캐즘에 따른 타격과 LFP 시장 내 중국 선점 기업과의 치열한 경쟁</p>
+        </div>
+      </div>
+      <div class="weakness-body">
+        <ul>
+          <li><strong>하이니켈(NCMA) 원툴의 양날의 검:</strong> 니켈 함량 90% 이상의 울트라 하이니켈 기술력은 독보적이나, 프리미엄 EV 수요 둔화와 보급형 EV 대세화 흐름에서 수요 충격을 정면으로 맞았습니다.</li>
+          <li><strong>중국 LFP 카르텔과의 원가 경쟁:</strong> 2026년 국내 최초 LFP 양산과 북미 ESS 공급을 서두르고 있으나, 이미 전 세계 LFP 시장의 90% 이상을 선점한 CATL, BYD, 후난위넝, 덕방나노 등의 규모의 경제를 단기간에 넘어서기 어렵습니다.</li>
+          <li><strong>타 배터리 소재 포트폴리오의 부재:</strong> 포스코퓨처엠(음극재 병행)과 같은 소재 다각화 역량이 없어, 양극재 단일 소재의 산업 사이클에 기업 전체 운명이 100% 종속됩니다.</li>
+        </ul>
+        <div class="callout warning">
+          <strong>리스크 요약:</strong> LFP 및 미드니켈 양극재가 북미 탈중국 규제(FEOC)의 수혜를 보더라도, 초기 양산 수율 안정화와 OPM 확보 여부는 여전히 불확실성이 큽니다.
+        </div>
+      </div>
+    </div>
+
+    <!-- 약점 5 -->
+    <div class="weakness-card">
+      <div class="weakness-header">
+        <div class="weakness-num">5</div>
+        <div class="weakness-title-wrap">
+          <h3 class="weakness-title">글로벌 생산 거점(북미·유럽) 현지화 지연 및 통상·정치 리스크</h3>
+          <p class="weakness-summary">국가핵심기술 승인 지연 여파로 인한 북미 셋업 지연과 IRA 정책 변동성 노출</p>
+        </div>
+      </div>
+      <div class="weakness-body">
+        <ul>
+          <li><strong>북미 현지 공장 설립 지연:</strong> 과거 북미 공장 설립 추진 당시 국가핵심기술 보호 이슈로 인해 승인이 지연되면서, 캐나다 퀘벡(에코프로비엠, 포스코퓨처엠) 등에 선제적으로 안착한 경쟁사 대비 현지 대응력이 늦어졌습니다.</li>
+          <li><strong>미국 IRA(인플레이션 감축법) 불확실성:</strong> 트럼프 2기 행정부 출범 및 통상 정책 기조 변화에 따라 전기차 구매 세액공제 축소, 배터리 부품/핵심광물 요건 변경 시 투자 회수 기간이 연장될 수 있습니다.</li>
+          <li><strong>유럽 전기차 시장 둔화:</strong> 유럽 내 완성차 업체들의 전동화 속도 조절과 로컬 배터리 셀 업체의 경쟁력 약화로 유럽향 수출 모멘텀이 제한적입니다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 4대 양극재 피어 그룹 비교 -->
+    <h2 class="section-title"><span class="icon">📊</span> 국내 4대 양극재 기업 경쟁력 비교 매트릭스</h2>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>비교 항목</th>
+            <th>엘앤에프 (066970)</th>
+            <th>에코프로비엠 (247540)</th>
+            <th>포스코퓨처엠 (003670)</th>
+            <th>코스모신소재 (005070)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>핵심 경쟁력</strong></td>
+            <td>하이니켈 NCMA 양극재 기술력, 테슬라 직납</td>
+            <td>압도적 캐파, 삼성SDI·SK온 캡티브</td>
+            <td>포스코그룹 원료 수직계열화, 양·음극재 턴키</td>
+            <td>LGES 소형/EV 진입, 엄격한 비용 통제</td>
+          </tr>
+          <tr>
+            <td><strong>고객사 다변화</strong></td>
+            <td class="highlight-cell">열위 (LGES·테슬라 70%+)</td>
+            <td>우수 (삼성SDI, SK온 분산)</td>
+            <td>우수 (LGES, 삼성SDI, 얼티엄셀즈)</td>
+            <td>보통 (LGES, 삼성SDI 등)</td>
+          </tr>
+          <tr>
+            <td><strong>원료 수직계열화</strong></td>
+            <td class="highlight-cell">보통~열위 (LLBS 가동 대기)</td>
+            <td>최상 (에코프로 머티/이노/씨엔지 완비)</td>
+            <td>최상 (포스코홀딩스 염호/광산 리튬)</td>
+            <td>열위 (원소재 전량 외부 조달)</td>
+          </tr>
+          <tr>
+            <td><strong>재무 안정성</strong></td>
+            <td class="highlight-cell">취약 (부채비율 ~372%, 순차입 1.5조)</td>
+            <td>보통 (부채비율 120% - 150%)</td>
+            <td>양호 (포스코그룹 신용도 및 조달력)</td>
+            <td>우수 (부채비율 80% 미만)</td>
+          </tr>
+          <tr>
+            <td><strong>제품 포트폴리오</strong></td>
+            <td>하이니켈 중심 (LFP/ESS 진입 중)</td>
+            <td>하이니켈, 미드니켈, LFP 확장</td>
+            <td>하이니켈, 천연/인조흑연 음극재</td>
+            <td>NCM 하이니켈, 기능성 필름</td>
+          </tr>
+          <tr>
+            <td><strong>해외 현지화</strong></td>
+            <td class="highlight-cell">지연 (북미 단독/JV 셋업 과제)</td>
+            <td>우수 (헝가리, 캐나다 퀘벡 착공)</td>
+            <td>우수 (캐나다 GM 합작 얼티엄캠)</td>
+            <td>보통 (국내 위주 설비 증설)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 결론 및 향후 체크포인트 -->
+    <div class="conclusion-box">
+      <h3 style="font-size: 18px; font-weight: 800; color: var(--text-main); margin-bottom: 8px;">
+        💡 애널리스트 총평 및 디스카운트 해소 확인 지표
+      </h3>
+      <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">
+        엘앤에프의 현재 주가 밸류에이션 디스카운트는 단순한 기술 부족이 아닌, <strong>'취약한 수직계열화에 따른 원가율 열위'</strong>와 <strong>'고객사 편중'</strong>, <strong>'과중한 부채 레버리지'</strong>가 결합된 구조적 문제입니다. 향후 진정한 턴어라운드를 위해서는 아래 4대 지표의 실현 여부를 확인해야 합니다.
+      </p>
+
+      <div class="checkpoint-grid">
+        <div class="checkpoint-item">
+          <div class="checkpoint-title">① 새만금 LLBS 전구체 가동률</div>
+          <div class="checkpoint-desc">2026년 4분기 이후 실제 전구체 내재화율이 30% 이상 달성되어 원가율 개선이 재무제표상 매출총이익률(GPM)로 증명되는지 여부</div>
+        </div>
+        <div class="checkpoint-item">
+          <div class="checkpoint-title">② 북미 ESS향 LFP의 실질 마진</div>
+          <div class="checkpoint-desc">신규 양산되는 LFP 양극재가 중국산 저가 공세 속에서 탈중국 프리미엄을 바탕으로 5% 이상의 안정적 영업이익률을 달성하는지 여부</div>
+        </div>
+        <div class="checkpoint-item">
+          <div class="checkpoint-title">③ 테슬라 4680 출하 램프업 속도</div>
+          <div class="checkpoint-desc">사이버트럭 등 신차 라인업 및 46시리즈 배터리 양산 수율이 본격화되어 고부가가치 니켈 95% 단결정 양극재의 출하량 급증으로 이어지는지 여부</div>
+        </div>
+        <div class="checkpoint-item">
+          <div class="checkpoint-title">④ FCF 흑자 및 재무 디레버리징</div>
+          <div class="checkpoint-desc">설비투자 정점 통과 후 잉여현금흐름(FCF) 흑자를 통해 1.5조 원 규모의 순차입금을 줄여나가며 부채비율을 200% 이하로 낮추는 속도</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer>
+      <p>© 2026 Global Battery Industry Research Team. All rights reserved.</p>
+      <p style="margin-top: 4px; font-size: 11.5px;">본 보고서는 산업 및 기업 분석 목적으로 작성되었으며, 특정 주식의 매수·매도를 추천하는 투자 권유가 아닙니다. 투자의 최종 책임은 투자자 본인에게 있습니다.</p>
+    </footer>
+
+  </div>
+
+  <!-- 화면 모드 전환 자바스크립트 (작업 룰 9 준수) -->
+
+  </section>
+
+  <!-- Master Global Footer -->
+  <footer class="master-global-footer">
+    <div class="container">
+      <p><strong>엘앤에프(L&F) 기업 종합 심층 분석 보고서 (최종 통합본)</strong></p>
+      <p>© 2026 Global Battery Industry Research Team. All rights reserved.</p>
+      <p class="legal">
+        본 보고서는 글로벌 2차전지 산업 및 (주)엘앤에프의 객관적 펀더멘털 분석을 위하여 신뢰할 수 있는 공식 데이터와 산업 인텔리전스를 종합하여 작성되었습니다.
+        본 자료는 기업 가치와 산업 동향에 대한 정보 제공을 목적으로 하며, 특정 유가증권의 매수·매도를 추천하거나 투자 수익을 보장하지 않습니다.
+        투자의 최종 판단과 책임은 투자자 본인에게 있습니다.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Theme Toggle & Navigation Script (100% Standalone) -->
+  <script>
+    /* --------------------------------------------------------------------------
+       Theme Mode Manager (Rule 9 Compliant)
+       -------------------------------------------------------------------------- */
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeLabel = document.getElementById('themeLabel');
+
+    function getInitialTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) return savedTheme;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        if (themeIcon) themeIcon.textContent = '🌙';
+        if (themeLabel) themeLabel.textContent = '다크 모드';
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+        if (themeIcon) themeIcon.textContent = '☀️';
+        if (themeLabel) themeLabel.textContent = '라이트 모드';
+      }
+      localStorage.setItem('theme', theme);
+    }
+
+    let currentTheme = getInitialTheme();
+    applyTheme(currentTheme);
+
+    themeToggleBtn.addEventListener('click', () => {
+      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+      applyTheme(currentTheme);
+    });
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+      if (!localStorage.getItem('theme')) {
+        applyTheme(e.matches ? 'dark' : 'light');
+      }
+    });
+
+    /* --------------------------------------------------------------------------
+       ScrollSpy Navigation Active State
+       -------------------------------------------------------------------------- */
+    const navTabs = document.querySelectorAll('.nav-tab');
+    const sections = document.querySelectorAll('.part-section-wrapper');
+
+    window.addEventListener('scroll', () => {
+      let currentSectionId = '';
+      const scrollPos = window.scrollY + 120;
+
+      sections.forEach(sec => {
+        const top = sec.offsetTop;
+        const height = sec.offsetHeight;
+        if (scrollPos >= top && scrollPos < top + height) {
+          currentSectionId = sec.getAttribute('id');
+        }
+      });
+
+      if (currentSectionId) {
+        navTabs.forEach(tab => {
+          if (tab.getAttribute('href') === '#' + currentSectionId) {
+            tab.classList.add('active');
+          } else {
+            tab.classList.remove('active');
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
