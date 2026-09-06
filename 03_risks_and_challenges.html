@@ -1,0 +1,935 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>원익IPS (240810) 리스크 & 구조적 과제 심층 분석 | 반도체 장비 분석 시리즈</title>
+  <!-- Pretendard WebFont -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome 6 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            slate: {
+              850: '#151f32',
+              900: '#0f172a',
+              800: '#1e293b',
+              700: '#334155',
+              600: '#475569',
+              400: '#94a3b8',
+              300: '#cbd5e1',
+              100: '#f1f5f9',
+              50: '#f8fafc',
+            },
+            risk: {
+              red: '#f43f5e',
+              rose: '#fb7185',
+              amber: '#f59e0b',
+              yellow: '#fbbf24',
+              blue: '#38bdf8',
+            }
+          },
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #0f172a;
+      color: #f8fafc;
+      font-family: 'Pretendard', sans-serif;
+      overflow-x: hidden;
+    }
+    .card-surface {
+      background-color: #1e293b;
+      border: 1px solid #334155;
+    }
+    .card-surface-subtle {
+      background-color: #151f32;
+      border: 1px solid #283548;
+    }
+    .gradient-risk-text {
+      background: linear-gradient(135deg, #fb7185 0%, #f43f5e 50%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .badge-danger {
+      background-color: rgba(244, 63, 94, 0.15);
+      border: 1px solid rgba(244, 63, 94, 0.4);
+      color: #fb7185;
+    }
+    .badge-warning {
+      background-color: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      color: #fbbf24;
+    }
+    .badge-info {
+      background-color: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      color: #38bdf8;
+    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+
+  <!-- ================= TOP GLOBAL NAVIGATION BAR ================= -->
+  <header class="sticky top-0 z-50 bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-700/80 px-4 lg:px-8 py-3 transition-all duration-200">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
+      <!-- Title & Stock Info -->
+      <div class="flex items-center space-x-3 w-full md:w-auto justify-between md:justify-start">
+        <div class="flex items-center space-x-2">
+          <span class="flex h-3 w-3 relative">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-3 w-3 bg-rose-500"></span>
+          </span>
+          <a href="00_final_synthesis_report.html" class="text-lg font-extrabold tracking-tight text-white hover:text-rose-400 transition">
+            원익IPS <span class="text-xs font-semibold px-2 py-0.5 rounded bg-slate-700 text-slate-300 ml-1">240810.KQ</span>
+          </a>
+        </div>
+        <span class="text-xs text-rose-400 bg-rose-950/60 border border-rose-800/60 px-2 py-1 rounded font-medium">
+          <i class="fa-solid fa-triangle-exclamation mr-1"></i> 에이전트 3: 리스크 & 구조적 과제
+        </span>
+      </div>
+
+      <!-- Navigation Tabs (5 Reports) -->
+      <nav class="flex items-center space-x-1 sm:space-x-2 overflow-x-auto w-full md:w-auto pb-1 md:pb-0 text-xs sm:text-sm font-medium">
+        <a href="00_final_synthesis_report.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition whitespace-nowrap">
+          <i class="fa-solid fa-chart-pie mr-1 text-slate-500"></i> 종합 보고서
+        </a>
+        <a href="01_business_model.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition whitespace-nowrap">
+          <i class="fa-solid fa-microchip mr-1 text-slate-500"></i> BM 분석
+        </a>
+        <a href="02_moat_and_strengths.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition whitespace-nowrap">
+          <i class="fa-solid fa-shield-halved mr-1 text-slate-500"></i> 경제적 해자
+        </a>
+        <a href="03_risks_and_challenges.html" class="px-3 py-1.5 rounded-lg bg-rose-600/20 text-rose-400 border border-rose-500/50 shadow-sm font-bold whitespace-nowrap">
+          <i class="fa-solid fa-triangle-exclamation mr-1 text-rose-400"></i> 리스크 & 과제
+        </a>
+        <a href="04_financial_deepdive.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition whitespace-nowrap">
+          <i class="fa-solid fa-coins mr-1 text-slate-500"></i> 재무 심층분석
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= MAIN CONTAINER ================= -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 lg:px-8 py-8 space-y-8">
+
+    <!-- HERO / EXECUTIVE SUMMARY -->
+    <section class="space-y-4">
+      <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-semibold">
+        <i class="fa-solid fa-radiation"></i>
+        <span>CRITICAL RISK FACTORS & STRUCTURAL LIMITS</span>
+      </div>
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight">
+            원익IPS, <span class="gradient-risk-text">실적 롤러코스터와 구조적 4대 한계</span>
+          </h1>
+          <p class="text-slate-400 mt-2 text-sm sm:text-base max-w-3xl leading-relaxed">
+            반도체 박막 증착(ALD/CVD) 국산화 선두주자 원익IPS는 삼성전자 설비투자(CAPEX) 의존도 65% 이상, 연간 1,600억 원의 고정비 부담(BEP 7,500억), 글로벌 Big 4 대비 20배 이상의 R&D 자금력 열세라는 뚜렷한 구조적 리스크를 안고 있습니다.
+          </p>
+        </div>
+        <div class="flex items-center space-x-2 shrink-0">
+          <div class="px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-right">
+            <div class="text-[11px] text-slate-400">손익분기점 (BEP) 매출</div>
+            <div class="text-lg font-bold text-rose-400">약 7,500억 원</div>
+          </div>
+          <div class="px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-right">
+            <div class="text-[11px] text-slate-400">삼성전자 매출 비중</div>
+            <div class="text-lg font-bold text-amber-400">65 ~ 70%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Core Threat Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+        <!-- Threat 1 -->
+        <div class="card-surface p-4 rounded-xl border-l-4 border-l-rose-500 hover:border-slate-500 transition shadow-lg">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-rose-400 uppercase tracking-wider">Risk 01</span>
+            <span class="w-8 h-8 rounded-lg bg-rose-500/10 flex items-center justify-center text-rose-400 text-sm">
+              <i class="fa-solid fa-link"></i>
+            </span>
+          </div>
+          <h3 class="font-bold text-white text-base mb-1">삼성전자 CAPEX 종속성</h3>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            삼성전자 설비투자에 실적이 직결되는 구조로, 평택 P4/P5 및 미국 테일러 파운드리 팹 장비 반입 연기 시 실적 급감.
+          </p>
+          <div class="mt-3 pt-2 border-t border-slate-700/60 flex items-center justify-between text-[11px]">
+            <span class="text-slate-500">영향도: <b class="text-rose-400">치명적 (High)</b></span>
+            <span class="text-rose-400 font-semibold">매출 변동폭 ±45%</span>
+          </div>
+        </div>
+
+        <!-- Threat 2 -->
+        <div class="card-surface p-4 rounded-xl border-l-4 border-l-amber-500 hover:border-slate-500 transition shadow-lg">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Risk 02</span>
+            <span class="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400 text-sm">
+              <i class="fa-solid fa-scale-unbalanced"></i>
+            </span>
+          </div>
+          <h3 class="font-bold text-white text-base mb-1">글로벌 Big 4 자금력 격차</h3>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            AMAT(연 4조), Lam(연 2.3조) 대비 연 1,200억 수준의 R&D. TSMC·인텔 등 해외 탑티어 진입 장벽 극복 한계.
+          </p>
+          <div class="mt-3 pt-2 border-t border-slate-700/60 flex items-center justify-between text-[11px]">
+            <span class="text-slate-500">R&D 격차: <b class="text-amber-400">20~30배 열세</b></span>
+            <span class="text-amber-400 font-semibold">글로벌 점유율 1.5%</span>
+          </div>
+        </div>
+
+        <!-- Threat 3 -->
+        <div class="card-surface p-4 rounded-xl border-l-4 border-l-red-500 hover:border-slate-500 transition shadow-lg">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-red-400 uppercase tracking-wider">Risk 03</span>
+            <span class="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center text-red-400 text-sm">
+              <i class="fa-solid fa-money-bill-transfer"></i>
+            </span>
+          </div>
+          <h3 class="font-bold text-white text-base mb-1">연 1,600억 고정비의 덫</h3>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            석·박사 인건비와 감가상각비 등 고정비 경직성으로 매출 7,500억 밑돌 시 2023년(-181억)처럼 급격한 영업적자 전락.
+          </p>
+          <div class="mt-3 pt-2 border-t border-slate-700/60 flex items-center justify-between text-[11px]">
+            <span class="text-slate-500">2023 적자: <b class="text-red-400">-181억 원</b></span>
+            <span class="text-red-400 font-semibold">영업레버리지 역풍</span>
+          </div>
+        </div>
+
+        <!-- Threat 4 -->
+        <div class="card-surface p-4 rounded-xl border-l-4 border-l-yellow-500 hover:border-slate-500 transition shadow-lg">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-yellow-400 uppercase tracking-wider">Risk 04</span>
+            <span class="w-8 h-8 rounded-lg bg-yellow-500/10 flex items-center justify-center text-yellow-400 text-sm">
+              <i class="fa-solid fa-tv"></i>
+            </span>
+          </div>
+          <h3 class="font-bold text-white text-base mb-1">디스플레이 침체 & 中 추격</h3>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            OLED 팹 증설 공백으로 디스플레이 매출 비중 한자리 축소. 나우라(Naura) 등 중국 정부 보조금 기반 장비사 저가 공세.
+          </p>
+          <div class="mt-3 pt-2 border-t border-slate-700/60 flex items-center justify-between text-[11px]">
+            <span class="text-slate-500">중화권 장비: <b class="text-yellow-400">로컬 대체 가속</b></span>
+            <span class="text-yellow-400 font-semibold">성장 드라이버 둔화</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: CUSTOMER CONCENTRATION & CAPEX VOLATILITY -->
+    <section class="card-surface rounded-2xl p-6 lg:p-8 space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-700 gap-2">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400 text-lg">
+            <i class="fa-solid fa-building-flag"></i>
+          </div>
+          <div>
+            <h2 class="text-xl font-bold text-white">01. 고객사 편중도 및 전방 CAPEX 사이클 리스크</h2>
+            <p class="text-slate-400 text-xs">삼성전자 종속 구조와 평택·테일러 팹 투자 변동에 따른 실적 충격파</p>
+          </div>
+        </div>
+        <span class="badge-danger text-xs px-3 py-1 rounded-full font-medium self-start sm:self-auto">
+          집중도 리스크 지수: 88/100 (극도)
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+        <!-- Chart Container (5 cols) -->
+        <div class="lg:col-span-5 card-surface-subtle p-5 rounded-xl border border-slate-700/70 flex flex-col items-center">
+          <div class="w-full flex justify-between items-center mb-3">
+            <span class="text-xs font-semibold text-slate-300">원익IPS 고객사별 매출 비중 (추정치)</span>
+            <span class="text-[10px] text-slate-500">최근 3개년 평균 기준</span>
+          </div>
+          <div class="relative w-full max-w-[280px] h-[260px] flex items-center justify-center">
+            <canvas id="customerShareChart"></canvas>
+            <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+              <span class="text-xs text-slate-400">단일 고객사</span>
+              <span class="text-2xl font-black text-rose-400">67%</span>
+              <span class="text-[10px] text-slate-500">삼성전자</span>
+            </div>
+          </div>
+          <div class="w-full grid grid-cols-3 gap-2 mt-4 text-center text-xs">
+            <div class="p-2 rounded bg-slate-800/80 border border-slate-700/50">
+              <div class="text-[10px] text-rose-400 font-semibold">삼성전자</div>
+              <div class="font-bold text-white mt-0.5">67.0%</div>
+            </div>
+            <div class="p-2 rounded bg-slate-800/80 border border-slate-700/50">
+              <div class="text-[10px] text-sky-400 font-semibold">SK하이닉스</div>
+              <div class="font-bold text-white mt-0.5">23.0%</div>
+            </div>
+            <div class="p-2 rounded bg-slate-800/80 border border-slate-700/50">
+              <div class="text-[10px] text-slate-400 font-semibold">디스플레이/기타</div>
+              <div class="font-bold text-white mt-0.5">10.0%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Analytical Content (7 cols) -->
+        <div class="lg:col-span-7 space-y-4">
+          <div class="bg-rose-950/30 border border-rose-800/40 p-4 rounded-xl">
+            <h4 class="text-sm font-bold text-rose-300 flex items-center">
+              <i class="fa-solid fa-triangle-exclamation mr-2 text-rose-400"></i>
+              "삼성전자가 기침하면 원익IPS는 독감에 걸린다"
+            </h4>
+            <p class="text-slate-300 text-xs mt-1.5 leading-relaxed">
+              원익IPS의 매출 90% 이상이 삼성전자와 SK하이닉스 2대 메모리 제조사에 집중되어 있습니다. 특히 <b>삼성전자 매출 비중이 65~70%</b>에 달해, 삼성전자의 반도체 투자 스케줄 변화가 원익IPS의 분기 및 연간 실적을 일방적으로 결정짓는 비대칭적 종속 구조입니다.
+            </p>
+          </div>
+
+          <div class="space-y-2.5">
+            <!-- Sub-point 1 -->
+            <div class="flex items-start space-x-3 p-3 rounded-lg bg-slate-800/60 border border-slate-700/60">
+              <div class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0 text-xs mt-0.5 font-bold">1</div>
+              <div>
+                <h5 class="text-xs font-bold text-white">평택 P4 / P5 증설 지연 및 용도 변경 리스크</h5>
+                <p class="text-slate-400 text-xs mt-0.5 leading-relaxed">
+                  삼성전자는 평택 4공장(P4)의 라인 구축 우선순위를 메모리/파운드리 간 수차례 조정하며 장비 발주를 지연시켰습니다. P5 인프라 공사 속도 조절까지 겹치며, 2023~2024년 대규모 클린룸 신설에 따른 전공정 장비 일괄 입고(Bulk PO) 기회가 실종되었습니다.
+                </p>
+              </div>
+            </div>
+
+            <!-- Sub-point 2 -->
+            <div class="flex items-start space-x-3 p-3 rounded-lg bg-slate-800/60 border border-slate-700/60">
+              <div class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0 text-xs mt-0.5 font-bold">2</div>
+              <div>
+                <h5 class="text-xs font-bold text-white">미국 테일러 파운드리 팹 가동 연기 (2026년 이후)</h5>
+                <p class="text-slate-400 text-xs mt-0.5 leading-relaxed">
+                  삼성전자의 미국 텍사스주 테일러 팹은 4nm 이하 첨단 파운드리 수주 부진으로 인해 양산 시점이 당초 2024년 말에서 2026년으로 2년가량 밀렸습니다. 이에 따라 테일러 팹 향 국산 파운드리 ALD/CVD 장비 공급 모멘텀이 장기 공백 상태에 빠졌습니다.
+                </p>
+              </div>
+            </div>
+
+            <!-- Sub-point 3 -->
+            <div class="flex items-start space-x-3 p-3 rounded-lg bg-slate-800/60 border border-slate-700/60">
+              <div class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0 text-xs mt-0.5 font-bold">3</div>
+              <div>
+                <h5 class="text-xs font-bold text-white">인프라 신설(WFE) 대신 '선단공정 전환(Tech Migration)' 위주 투자</h5>
+                <p class="text-slate-400 text-xs mt-0.5 leading-relaxed">
+                  고객사들이 웨이퍼 투입량(WFE) 자체를 늘리기보다 1b/1c D램, V9/V10 낸드 등 기존 라인의 공정 전환 위주로 투자 패턴을 바꾸면서, 신규 장비 대량 납품보다는 개조·업그레이드 위주로 수요가 축소되어 매출 폭발력이 제한되고 있습니다.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: FIXED COST BURDEN & BEP VOLATILITY -->
+    <section class="card-surface rounded-2xl p-6 lg:p-8 space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-700 gap-2">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400 text-lg">
+            <i class="fa-solid fa-chart-line-down"></i>
+          </div>
+          <div>
+            <h2 class="text-xl font-bold text-white">02. 고정비 부담과 손익분기점(BEP) 취약성</h2>
+            <p class="text-slate-400 text-xs">연 1,600억 원 R&D·인건비 고정비로 인한 고(高)영업레버리지 역효과 (2023년 적자 전락 분석)</p>
+          </div>
+        </div>
+        <span class="badge-danger text-xs px-3 py-1 rounded-full font-medium self-start sm:self-auto">
+          BEP 매출 기준: 7,500억 원
+        </span>
+      </div>
+
+      <!-- Chart: Revenue vs Fixed Costs vs Operating Profit -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-7 card-surface-subtle p-5 rounded-xl border border-slate-700/70">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-xs font-bold text-slate-200">2021~2024 실적 및 고정비(R&D+인건비) 추이</span>
+            <span class="text-[11px] text-slate-400">(단위: 억 원)</span>
+          </div>
+          <div class="w-full h-[280px]">
+            <canvas id="bepCostChart"></canvas>
+          </div>
+          <p class="text-[11px] text-slate-500 mt-2 text-center">
+            * 2023년 반도체 다운턴 시 매출이 6,904억으로 급감하며 손익분기점(BEP) 7,500억을 밑돌아 -181억 원 적자 발생
+          </p>
+        </div>
+
+        <!-- Breakdown Explanation -->
+        <div class="lg:col-span-5 flex flex-col justify-between space-y-3">
+          <div class="space-y-3">
+            <div class="p-3.5 rounded-xl bg-slate-800/80 border border-slate-700">
+              <div class="flex items-center justify-between text-xs mb-1">
+                <span class="font-bold text-white">구조적 고정비 구성 (연간 약 1,600~1,700억)</span>
+                <span class="text-red-400 font-semibold">경직적 비용</span>
+              </div>
+              <ul class="text-xs text-slate-300 space-y-1.5 mt-2">
+                <li class="flex items-center justify-between">
+                  <span class="text-slate-400"><i class="fa-solid fa-flask-vial mr-1.5 text-slate-500"></i>연구개발비(R&D)</span>
+                  <span class="font-semibold text-slate-200">1,100 ~ 1,250억 원</span>
+                </li>
+                <li class="flex items-center justify-between">
+                  <span class="text-slate-400"><i class="fa-solid fa-users mr-1.5 text-slate-500"></i>경상 급여 및 복리후생</span>
+                  <span class="font-semibold text-slate-200">450 ~ 550억 원</span>
+                </li>
+                <li class="flex items-center justify-between">
+                  <span class="text-slate-400"><i class="fa-solid fa-industry mr-1.5 text-slate-500"></i>유무형자산 감가상각비</span>
+                  <span class="font-semibold text-slate-200">150 ~ 200억 원</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-slate-800/80 border border-slate-700 text-xs space-y-2">
+              <div class="font-bold text-white flex items-center">
+                <i class="fa-solid fa-skull-crossbones mr-2 text-rose-400"></i>
+                인력 감축 불가와 '영업레버리지의 양날의 검'
+              </div>
+              <p class="text-slate-400 leading-relaxed text-[11px]">
+                첨단 ALD/CVD 공정 기술은 수백 명의 석·박사급 공정/HW 엔지니어에 대한 노하우가 핵심이므로, 반도체 다운턴이라도 연구 인력을 감원할 수 없습니다. 따라서 다운턴 시에는 이 고정비가 고스란히 손실로 이어지는 치명적 레버리지 역효과가 발생합니다.
+              </p>
+            </div>
+          </div>
+
+          <!-- Summary Metric Box -->
+          <div class="p-3 bg-red-950/30 border border-red-800/40 rounded-xl text-center">
+            <span class="text-[11px] text-red-300">2023년 vs 2021년 영업이익률 변동폭</span>
+            <div class="text-xl font-black text-red-400 mt-0.5">+10.1% → -2.6% (12.7%p 폭락)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Historical Performance Table -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs text-left text-slate-300 border border-slate-700/80 rounded-xl overflow-hidden">
+          <thead class="bg-slate-800 text-slate-400 font-semibold border-b border-slate-700">
+            <tr>
+              <th class="py-2.5 px-4">구분 (단위: 억 원)</th>
+              <th class="py-2.5 px-4 text-right">2021년 (호황기)</th>
+              <th class="py-2.5 px-4 text-right">2022년 (둔화기)</th>
+              <th class="py-2.5 px-4 text-right">2023년 (다운턴 적자)</th>
+              <th class="py-2.5 px-4 text-right">2024년 (회복 초기)</th>
+              <th class="py-2.5 px-4 text-center">평가 및 영향</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-700/60 bg-slate-850">
+            <tr>
+              <td class="py-2.5 px-4 font-bold text-white">매출액</td>
+              <td class="py-2.5 px-4 text-right font-medium text-slate-200">12,323</td>
+              <td class="py-2.5 px-4 text-right font-medium text-slate-200">10,110</td>
+              <td class="py-2.5 px-4 text-right font-bold text-rose-400">6,904 (-31.7%)</td>
+              <td class="py-2.5 px-4 text-right font-medium text-slate-200">7,350 (잠정)</td>
+              <td class="py-2.5 px-4 text-center text-slate-400">BEP 7,500억 붕괴 시 실적 급락</td>
+            </tr>
+            <tr>
+              <td class="py-2.5 px-4 font-bold text-white">R&D 비용 (비율)</td>
+              <td class="py-2.5 px-4 text-right">1,245 (10.1%)</td>
+              <td class="py-2.5 px-4 text-right">1,210 (12.0%)</td>
+              <td class="py-2.5 px-4 text-right text-amber-400 font-semibold">1,135 (16.4%)</td>
+              <td class="py-2.5 px-4 text-right">1,180 (16.1%)</td>
+              <td class="py-2.5 px-4 text-center text-amber-400">매출 감소에도 R&D 유지로 부담 가중</td>
+            </tr>
+            <tr>
+              <td class="py-2.5 px-4 font-bold text-white">영업이익 (OPM)</td>
+              <td class="py-2.5 px-4 text-right text-sky-400 font-bold">1,241 (10.1%)</td>
+              <td class="py-2.5 px-4 text-right text-sky-400 font-semibold">976 (9.7%)</td>
+              <td class="py-2.5 px-4 text-right text-rose-500 font-black">-181 (-2.6%)</td>
+              <td class="py-2.5 px-4 text-right text-slate-200">165 (2.2%)</td>
+              <td class="py-2.5 px-4 text-center text-rose-400 font-bold">적자 전환 후 회복세 극히 완만</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 3: GLOBAL BIG 4 VS WONIK IPS GAP -->
+    <section class="card-surface rounded-2xl p-6 lg:p-8 space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-700 gap-2">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-lg">
+            <i class="fa-solid fa-chess-knight"></i>
+          </div>
+          <div>
+            <h2 class="text-xl font-bold text-white">03. 글로벌 장비 Big 4 대비 기술 및 자본력 격차</h2>
+            <p class="text-slate-400 text-xs">AMAT, Lam Research, TEL, ASML과의 격차 및 글로벌 파운드리(TSMC) 진입 한계</p>
+          </div>
+        </div>
+        <span class="badge-warning text-xs px-3 py-1 rounded-full font-medium self-start sm:self-auto">
+          R&D 절대 규모 1/20 수준
+        </span>
+      </div>
+
+      <!-- Comparative Matrix Table -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs text-left text-slate-300 border border-slate-700/80 rounded-xl overflow-hidden">
+          <thead class="bg-slate-800 text-slate-400 font-semibold border-b border-slate-700">
+            <tr>
+              <th class="py-3 px-4">기업명</th>
+              <th class="py-3 px-4">국적 및 주력 영역</th>
+              <th class="py-3 px-4 text-right">연간 매출 (2023)</th>
+              <th class="py-3 px-4 text-right">연간 R&D 지출액</th>
+              <th class="py-3 px-4">글로벌 파운드리(TSMC) 진입도</th>
+              <th class="py-3 px-4">종합 평가 및 위협 요인</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-700/60 bg-slate-850">
+            <!-- AMAT -->
+            <tr class="hover:bg-slate-800/40 transition">
+              <td class="py-3 px-4 font-bold text-white flex items-center">
+                <span class="w-2 h-2 rounded-full bg-blue-500 mr-2"></span> Applied Materials (AMAT)
+              </td>
+              <td class="py-3 px-4 text-slate-400">미국 / 종합 전공정 (증착, 식각, CMP 등)</td>
+              <td class="py-3 px-4 text-right font-medium">약 35조 원 ($26.5B)</td>
+              <td class="py-3 px-4 text-right font-bold text-amber-400">약 4.0조 원 ($3.0B)</td>
+              <td class="py-3 px-4"><span class="badge-info px-2 py-0.5 rounded text-[11px]">압도적 1위 벤더</span></td>
+              <td class="py-3 px-4 text-slate-400">증착 전 공정 라인업 독점, 번들링 판매로 원익IPS 압박</td>
+            </tr>
+            <!-- Lam Research -->
+            <tr class="hover:bg-slate-800/40 transition">
+              <td class="py-3 px-4 font-bold text-white flex items-center">
+                <span class="w-2 h-2 rounded-full bg-cyan-500 mr-2"></span> Lam Research (LRCX)
+              </td>
+              <td class="py-3 px-4 text-slate-400">미국 / 고종횡비(HARC) 식각 및 선단 ALD</td>
+              <td class="py-3 px-4 text-right font-medium">약 19.5조 원 ($14.8B)</td>
+              <td class="py-3 px-4 text-right font-bold text-amber-400">약 2.3조 원 ($1.7B)</td>
+              <td class="py-3 px-4"><span class="badge-info px-2 py-0.5 rounded text-[11px]">핵심 공급사</span></td>
+              <td class="py-3 px-4 text-slate-400">3D 낸드 200단 이상 고단화 식각/증착 독점적 지배력</td>
+            </tr>
+            <!-- TEL -->
+            <tr class="hover:bg-slate-800/40 transition">
+              <td class="py-3 px-4 font-bold text-white flex items-center">
+                <span class="w-2 h-2 rounded-full bg-indigo-500 mr-2"></span> Tokyo Electron (TEL)
+              </td>
+              <td class="py-3 px-4 text-slate-400">일본 / 트랙, 세정, ALD, 식각</td>
+              <td class="py-3 px-4 text-right font-medium">약 17.0조 원 (¥1.8T)</td>
+              <td class="py-3 px-4 text-right font-bold text-amber-400">약 1.8조 원 (¥200B)</td>
+              <td class="py-3 px-4"><span class="badge-info px-2 py-0.5 rounded text-[11px]">최우선 협력사</span></td>
+              <td class="py-3 px-4 text-slate-400">EUV 트랙 100% 독점 및 극저온 식각으로 기술 장벽 형성</td>
+            </tr>
+            <!-- Wonik IPS -->
+            <tr class="bg-rose-950/20 border-l-2 border-l-rose-500 font-semibold">
+              <td class="py-3 px-4 font-bold text-rose-300 flex items-center">
+                <i class="fa-solid fa-circle-dot text-rose-500 mr-2"></i> 원익IPS (240810)
+              </td>
+              <td class="py-3 px-4 text-slate-300">한국 / 유전체 ALD, 메탈 CVD, 열처리</td>
+              <td class="py-3 px-4 text-right text-rose-400">약 0.69조 원 (6,904억)</td>
+              <td class="py-3 px-4 text-right font-bold text-rose-400">약 0.11조 원 (1,135억)</td>
+              <td class="py-3 px-4"><span class="badge-danger px-2 py-0.5 rounded text-[11px]">진입 전무 (0%)</span></td>
+              <td class="py-3 px-4 text-rose-300">Big 4 대비 R&D 예산 1/20~1/35 불과, 해외 파운드리 개척 불투명</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 3 Core Bottlenecks for Global Expansion -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+        <div class="card-surface-subtle p-4 rounded-xl border border-slate-700/80">
+          <div class="w-8 h-8 rounded-lg bg-slate-800 text-amber-400 flex items-center justify-center mb-2 text-sm">
+            <i class="fa-solid fa-lock"></i>
+          </div>
+          <h4 class="text-sm font-bold text-white mb-1">TSMC 글로벌 공급망 락인(Lock-in)</h4>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            TSMC는 AMAT, Lam, TEL과 30년 이상 공동 R&D 팹을 운영하며 강력한 신뢰 생태계를 구축했습니다. 3nm/2nm 공정에서 원익IPS 장비는 레퍼런스 부재로 신규 평가 기회조차 획득하기 어렵습니다.
+          </p>
+        </div>
+
+        <div class="card-surface-subtle p-4 rounded-xl border border-slate-700/80">
+          <div class="w-8 h-8 rounded-lg bg-slate-800 text-amber-400 flex items-center justify-center mb-2 text-sm">
+            <i class="fa-solid fa-box-archive"></i>
+          </div>
+          <h4 class="text-sm font-bold text-white mb-1">종합 턴키(Turnkey) 번들링 열세</h4>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            글로벌 선도사들은 노광-식각-증착-세정을 묶어 통합 프로세스 챔버를 판매합니다. 반면 원익IPS는 특정 ALD/CVD 스텝에 국한되어 단일 장비 단독 진입 시 공정 최적화 및 유지보수 단가가 불리합니다.
+          </p>
+        </div>
+
+        <div class="card-surface-subtle p-4 rounded-xl border border-slate-700/80">
+          <div class="w-8 h-8 rounded-lg bg-slate-800 text-amber-400 flex items-center justify-center mb-2 text-sm">
+            <i class="fa-solid fa-earth-americas"></i>
+          </div>
+          <h4 class="text-sm font-bold text-white mb-1">글로벌 24/7 FAE 인프라 부족</h4>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            해외 팹 납품 시 24시간 현장 지원(FAE)과 부품 조달망이 필수적이나, 원익IPS는 해외 법인 및 엔지니어 풀이 국내에 비해 현저히 부족하여 대형 글로벌 고객사 수주 대응 역량에 물리적 한계가 존재합니다.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: DISPLAY DOWNTURN & CHINESE COMPETITION -->
+    <section class="card-surface rounded-2xl p-6 lg:p-8 space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-700 gap-2">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-center text-yellow-400 text-lg">
+            <i class="fa-solid fa-shield-virus"></i>
+          </div>
+          <div>
+            <h2 class="text-xl font-bold text-white">04. 디스플레이 투자 절벽과 중국계 장비사의 급격한 추격</h2>
+            <p class="text-slate-400 text-xs">OLED CAPEX 부재와 중국 정부 주도 반도체 장비 자립화(나우라·파이오텍 등)의 역풍</p>
+          </div>
+        </div>
+        <span class="badge-warning text-xs px-3 py-1 rounded-full font-medium self-start sm:self-auto">
+          외형 성장 모멘텀 제약
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Display Investment Cliff -->
+        <div class="card-surface-subtle p-5 rounded-xl border border-slate-700/80 space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-white flex items-center">
+              <i class="fa-solid fa-display text-rose-400 mr-2"></i> 디스플레이(OLED) 신규 투자 절벽
+            </h3>
+            <span class="badge-danger text-[11px] px-2 py-0.5 rounded">비중 30% → 10% 이하</span>
+          </div>
+          <p class="text-slate-300 text-xs leading-relaxed">
+            과거 원익IPS의 강력한 캐시카우 역할을 했던 디스플레이(Dry Etcher, 열처리 장비 등) 부문은 삼성디스플레이의 8.6세대 IT용 OLED 투자를 제외하고는 대규모 신규 라인 증설이 전면 중단된 상태입니다.
+          </p>
+          <div class="bg-slate-800 p-3 rounded-lg border border-slate-700 space-y-1 text-xs">
+            <div class="flex justify-between text-slate-300">
+              <span class="text-slate-400">과거 전성기(2017~2019) 비중:</span>
+              <span class="font-bold text-white">35 ~ 40%</span>
+            </div>
+            <div class="flex justify-between text-slate-300">
+              <span class="text-slate-400">현재(2023~2024) 비중:</span>
+              <span class="font-bold text-rose-400">8 ~ 12% (급감)</span>
+            </div>
+            <p class="text-[11px] text-slate-400 pt-1 border-t border-slate-700 mt-1">
+              디스플레이 부문의 완충 효과가 사라짐에 따라 회사 전체 실적이 반도체 단일 사이클에 100% 노출되는 취약성 가중.
+            </p>
+          </div>
+        </div>
+
+        <!-- China Local Equipment Rise -->
+        <div class="card-surface-subtle p-5 rounded-xl border border-slate-700/80 space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-white flex items-center">
+              <i class="fa-solid fa-dragon text-yellow-400 mr-2"></i> 중국 로컬 장비사(Naura, Piotech)의 맹추격
+            </h3>
+            <span class="badge-warning text-[11px] px-2 py-0.5 rounded">국산 대체 가속</span>
+          </div>
+          <p class="text-slate-300 text-xs leading-relaxed">
+            미국의 대중국 반도체 장비 수출 규제 반사효과로 중국 정부는 막대한 '대기금' 보조금을 투입하여 자국 장비사들을 급격히 육성하고 있습니다.
+          </p>
+          <div class="space-y-1.5 text-xs">
+            <div class="p-2.5 rounded bg-slate-800 border border-slate-700">
+              <div class="font-bold text-amber-300">나우라 테크놀로지 (Naura / 北方华创)</div>
+              <div class="text-slate-400 text-[11px] mt-0.5">
+                시가총액 30조 원 돌파. 레거시 및 중단 공정 CVD, 식각 장비에서 YMTC, CXMT, SMIC 팹 점유율 급상승으로 한국산 장비 밀어내기 본격화.
+              </div>
+            </div>
+            <div class="p-2.5 rounded bg-slate-800 border border-slate-700">
+              <div class="font-bold text-amber-300">파이오텍 (Piotech / 拓荆科技)</div>
+              <div class="text-slate-400 text-[11px] mt-0.5">
+                PECVD, ALD 전문 제조사로 원익IPS의 주력 제품군과 완벽히 중복. 중국 메모리 고객사 내 점유율을 50% 이상으로 확장 중.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: RISK MATRIX & SCENARIO ANALYSIS -->
+    <section class="card-surface rounded-2xl p-6 lg:p-8 space-y-6">
+      <div class="flex items-center space-x-3 pb-4 border-b border-slate-700">
+        <div class="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400 text-lg">
+          <i class="fa-solid fa-table-cells-large"></i>
+        </div>
+        <div>
+          <h2 class="text-xl font-bold text-white">05. 종합 리스크 매트릭스 및 시나리오 분석</h2>
+          <p class="text-slate-400 text-xs">발생 가능성(Likelihood) vs 재무 영향도(Financial Impact) 평가</p>
+        </div>
+      </div>
+
+      <!-- Risk Matrix Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- High Impact / High Probability -->
+        <div class="p-4 rounded-xl bg-rose-950/40 border border-rose-800/60 space-y-2">
+          <div class="flex items-center justify-between text-xs font-bold text-rose-400">
+            <span>위험 등급: CRITICAL</span>
+            <i class="fa-solid fa-circle-exclamation"></i>
+          </div>
+          <h4 class="text-sm font-bold text-white">삼성전자 P4/테일러 투자 순연</h4>
+          <p class="text-slate-300 text-xs leading-relaxed">
+            - 발생 확률: <b>85%</b> (현재 진행형)<br>
+            - 재무 충격: <b>연간 매출 1,500~2,000억 원 증발</b><br>
+            - 영향: 가동률 저하 및 손익분기점 부근 마진 정체
+          </p>
+        </div>
+
+        <!-- High Impact / Medium Probability -->
+        <div class="p-4 rounded-xl bg-amber-950/40 border border-amber-800/60 space-y-2">
+          <div class="flex items-center justify-between text-xs font-bold text-amber-400">
+            <span>위험 등급: HIGH</span>
+            <i class="fa-solid fa-triangle-exclamation"></i>
+          </div>
+          <h4 class="text-sm font-bold text-white">글로벌 선단 파운드리 진입 실패</h4>
+          <p class="text-slate-300 text-xs leading-relaxed">
+            - 발생 확률: <b>70%</b><br>
+            - 재무 충격: <b>해외 파운드리 밸류에이션 프리미엄 소멸</b><br>
+            - 영향: 국내 메모리 전용 '장비 멀티플 디스카운트(PER 10배 내외)' 영구화
+          </p>
+        </div>
+
+        <!-- Medium Impact / High Probability -->
+        <div class="p-4 rounded-xl bg-yellow-950/40 border border-yellow-800/60 space-y-2">
+          <div class="flex items-center justify-between text-xs font-bold text-yellow-400">
+            <span>위험 등급: MEDIUM</span>
+            <i class="fa-solid fa-clock-rotate-left"></i>
+          </div>
+          <h4 class="text-sm font-bold text-white">중국 메모리 향 수출 감소</h4>
+          <p class="text-slate-300 text-xs leading-relaxed">
+            - 발생 확률: <b>80%</b><br>
+            - 재무 충격: <b>중화권 매출 500억 내외 잠식</b><br>
+            - 영향: Naura, Piotech 등 중국 로컬 장비사로의 시장 잠식 가속
+          </p>
+        </div>
+      </div>
+
+      <!-- Scenarios Table -->
+      <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700">
+        <h4 class="text-xs font-bold text-slate-200 mb-3 uppercase tracking-wider">
+          <i class="fa-solid fa-sliders mr-1.5 text-slate-400"></i> 2025~2026 실적 시나리오별 감익 트리거
+        </h4>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+          <div class="p-3 rounded-lg bg-rose-900/20 border border-rose-700/40">
+            <div class="font-bold text-rose-400 mb-1">비관적 시나리오 (Bear)</div>
+            <p class="text-slate-400 text-[11px] leading-relaxed">
+              삼성 테일러 팹 무기한 연기 및 P4 투자 최소화. 연간 매출 6,800억 원 하회, 고정비 부담으로 재차 영업적자 전환. 주가 PBR 0.7배 하회 가능성.
+            </p>
+          </div>
+          <div class="p-3 rounded-lg bg-slate-700/30 border border-slate-600/40">
+            <div class="font-bold text-slate-200 mb-1">기본 시나리오 (Base)</div>
+            <p class="text-slate-400 text-[11px] leading-relaxed">
+              DRAM 1c 및 3D NAND V9 전환 투자 수혜로 연간 매출 7,500~8,500억 원 달성. OPM 3~6%로 손익분기점 겨우 상회하는 박스권 실적.
+            </p>
+          </div>
+          <div class="p-3 rounded-lg bg-sky-900/20 border border-sky-700/40">
+            <div class="font-bold text-sky-400 mb-1">낙관적 시나리오 (Bull)</div>
+            <p class="text-slate-400 text-[11px] leading-relaxed">
+              삼성 파운드리 게이트올어라운드(GAA)용 신규 ALD 채택 확대 및 HBM용 인터포저 신규 장비 공급 성공 시 매출 1조 원 회복 및 OPM 10%대 재진입.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: ANALYST VERDICT FOR INVESTORS -->
+    <section class="card-surface rounded-2xl p-6 lg:p-8 space-y-4 border-l-4 border-l-rose-500">
+      <div class="flex items-center space-x-3">
+        <div class="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold">
+          <i class="fa-solid fa-clipboard-check"></i>
+        </div>
+        <h3 class="text-lg font-bold text-white">애널리스트 총평: 투자자를 위한 4대 모니터링 체크포인트</h3>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+        <div class="p-3 rounded-lg bg-slate-800/80 border border-slate-700">
+          <span class="font-bold text-rose-300">1. 삼성전자 평택 P4 Phase 2/3 클린룸 완공 및 장비 발주 시점</span>
+          <p class="text-slate-400 mt-1 leading-relaxed">
+            원익IPS의 분기 실적 턴어라운드를 결정지을 유일한 즉각적 촉매. 분기별 공시 및 수주 잔고 추이를 가장 면밀히 추적해야 함.
+          </p>
+        </div>
+        <div class="p-3 rounded-lg bg-slate-800/80 border border-slate-700">
+          <span class="font-bold text-amber-300">2. 분기 매출액 1,900억 원(연 환산 7,500억) 돌파 여부</span>
+          <p class="text-slate-400 mt-1 leading-relaxed">
+            고정비 구조상 분기 매출이 1,800억 이하로 내려갈 경우 즉각 영업적자 위험에 노출되므로 분기별 BEP 방어 여부 필수 확인.
+          </p>
+        </div>
+        <div class="p-3 rounded-lg bg-slate-800/80 border border-slate-700">
+          <span class="font-bold text-yellow-300">3. 미국 테일러 파운드리 팹 가동 일정의 추가 연기 여부</span>
+          <p class="text-slate-400 mt-1 leading-relaxed">
+            파운드리 다변화 기대감이 2026년으로 이미 이연된 상황에서, 추가 지연 발생 시 주가 밸류에이션 리레이팅 지연 불가피.
+          </p>
+        </div>
+        <div class="p-3 rounded-lg bg-slate-800/80 border border-slate-700">
+          <span class="font-bold text-sky-300">4. 차세대 ALD(고유전율 High-k / GAA 메탈 게이트) 진입 성과</span>
+          <p class="text-slate-400 mt-1 leading-relaxed">
+            글로벌 선도사(TEL, AMAT)의 독점 영역인 첨단 노드에서 점유율을 뺏어올 수 있는지 여부가 장기 구조적 한계 극복의 열쇠.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-slate-900 border-t border-slate-800 mt-12 py-8 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 space-y-2">
+      <div class="flex items-center justify-center space-x-2 text-slate-400">
+        <i class="fa-solid fa-microchip text-rose-500"></i>
+        <span class="font-semibold text-slate-300">원익IPS 멀티에이전트 종합 리서치 프로젝트</span>
+        <span>|</span>
+        <span>에이전트 3 (리스크 및 구조적 과제)</span>
+      </div>
+      <p class="text-slate-500 text-[11px]">
+        본 보고서는 DART 공시 원천 데이터 및 실시간 업계 리서치를 기반으로 객관적인 리스크 요인을 심층 분석한 내부 연구 자료이며, 특정 종목에 대한 직접적인 매수/매도 권유가 아닙니다.
+      </p>
+      <div class="pt-2 text-slate-600 text-[10px]">
+        Designed with Soft Slate Dark Theme (#0f172a / #1e293b / #334155 / #f8fafc)
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= CHART.JS INITIALIZATION SCRIPTS ================= -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // 1. Customer Share Donut Chart
+      const ctxCustomer = document.getElementById('customerShareChart').getContext('2d');
+      new Chart(ctxCustomer, {
+        type: 'doughnut',
+        data: {
+          labels: ['삼성전자', 'SK하이닉스', '디스플레이 및 기타'],
+          datasets: [{
+            data: [67.0, 23.0, 10.0],
+            backgroundColor: [
+              '#f43f5e', // Rose for Samsung (Risk concentration)
+              '#38bdf8', // Sky Blue for Hynix
+              '#475569', // Slate Gray for Display/Other
+            ],
+            borderColor: '#1e293b',
+            borderWidth: 3,
+            hoverOffset: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '72%',
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              backgroundColor: '#0f172a',
+              titleColor: '#f8fafc',
+              bodyColor: '#f8fafc',
+              borderColor: '#334155',
+              borderWidth: 1,
+              padding: 10,
+              displayColors: true,
+              callbacks: {
+                label: function(context) {
+                  return ` ${context.label}: ${context.raw}%`;
+                }
+              }
+            }
+          }
+        }
+      });
+
+      // 2. BEP & Historical Financial Chart (Revenue vs Fixed Costs vs Op Profit)
+      const ctxBep = document.getElementById('bepCostChart').getContext('2d');
+      new Chart(ctxBep, {
+        type: 'bar',
+        data: {
+          labels: ['2021년', '2022년', '2023년', '2024년(E)'],
+          datasets: [
+            {
+              type: 'bar',
+              label: '매출액 (억원)',
+              data: [12323, 10110, 6904, 7350],
+              backgroundColor: 'rgba(56, 189, 248, 0.35)',
+              borderColor: '#38bdf8',
+              borderWidth: 1,
+              order: 2
+            },
+            {
+              type: 'line',
+              label: '핵심 고정비(R&D+인건비)',
+              data: [1695, 1660, 1585, 1630],
+              borderColor: '#f59e0b',
+              backgroundColor: '#f59e0b',
+              borderWidth: 2,
+              borderDash: [5, 5],
+              pointRadius: 4,
+              pointHoverRadius: 6,
+              fill: false,
+              order: 1
+            },
+            {
+              type: 'line',
+              label: '영업이익 (억원)',
+              data: [1241, 976, -181, 165],
+              borderColor: '#f43f5e',
+              backgroundColor: '#f43f5e',
+              borderWidth: 3,
+              pointRadius: 5,
+              pointHoverRadius: 7,
+              fill: false,
+              order: 0
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            mode: 'index',
+            intersect: false,
+          },
+          scales: {
+            x: {
+              grid: {
+                color: '#334155',
+                drawBorder: false
+              },
+              ticks: {
+                color: '#94a3b8',
+                font: { family: 'Pretendard', size: 11 }
+              }
+            },
+            y: {
+              grid: {
+                color: '#1e293b',
+                drawBorder: false
+              },
+              ticks: {
+                color: '#94a3b8',
+                font: { family: 'Pretendard', size: 10 },
+                callback: function(value) {
+                  return value.toLocaleString() + '억';
+                }
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: {
+                color: '#cbd5e1',
+                boxWidth: 12,
+                font: { family: 'Pretendard', size: 11 }
+              }
+            },
+            tooltip: {
+              backgroundColor: '#0f172a',
+              titleColor: '#f8fafc',
+              bodyColor: '#f8fafc',
+              borderColor: '#334155',
+              borderWidth: 1,
+              padding: 10
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

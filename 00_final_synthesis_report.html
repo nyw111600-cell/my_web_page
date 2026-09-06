@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>원익IPS (240810) - 총괄 팀장 마스터 종합 분석 보고서</title>
+  <!-- Google Pretendard Font -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <!-- FontAwesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              bg: '#0f172a',       // 소프트 슬레이트 다크 배경
+              surface: '#1e293b',  // 카드 및 컴포넌트 표면
+              surface2: '#273549', // 호버 및 보조 표면
+              border: '#334155',   // 슬레이트 보더
+              text: '#f8fafc',     // 본문 텍스트 (아이보리 화이트)
+              muted: '#94a3b8',    // 보조 텍스트
+              accent: '#38bdf8',   // 스카이블루 액센트
+              primary: '#6366f1',  // 인디고
+              success: '#10b981',  // 에메랄드
+              warning: '#f59e0b',  // 앰버
+              danger: '#ef4444',   // 로즈 레드
+            }
+          },
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #0f172a;
+      color: #f8fafc;
+      font-family: 'Pretendard', sans-serif;
+      overflow-x: hidden;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+    .nav-link {
+      transition: all 0.2s ease-in-out;
+    }
+    .nav-link:hover {
+      background-color: #334155;
+      color: #38bdf8;
+    }
+    .nav-link.active {
+      background-color: #2563eb;
+      color: #ffffff;
+      font-weight: 600;
+      box-shadow: 0 0 15px rgba(37, 99, 235, 0.4);
+    }
+    .card-hover {
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-3px);
+      border-color: #38bdf8;
+      box-shadow: 0 12px 24px -10px rgba(56, 189, 248, 0.15);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col custom-scrollbar">
+
+  <!-- ==================== 상단 공통 내비게이션 바 ==================== -->
+  <header class="sticky top-0 z-50 bg-[#0f172a]/95 backdrop-blur-md border-b border-brand-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- 로고 및 종목 정보 -->
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-primary to-brand-accent flex items-center justify-center text-white font-black text-xl shadow-lg shadow-indigo-500/20">
+            IPS
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="text-lg font-bold tracking-tight text-white">원익IPS</span>
+              <span class="text-xs px-2 py-0.5 rounded bg-slate-800 text-brand-accent border border-slate-700 font-mono">240810.KQ</span>
+              <span class="text-xs px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-semibold">총괄 마스터</span>
+            </div>
+            <p class="text-xs text-brand-muted">반도체 전공정 증착·열처리 4인 에이전트 협업 분석</p>
+          </div>
+        </div>
+
+        <!-- 5대 보고서 상호 연동 내비게이션 탭 -->
+        <nav class="hidden md:flex space-x-1 lg:space-x-2">
+          <a href="00_final_synthesis_report.html" class="nav-link active px-3 py-2 rounded-lg text-xs lg:text-sm flex items-center space-x-1.5">
+            <i class="fa-solid fa-layer-group text-sky-300"></i>
+            <span>00. 종합 리포트</span>
+          </a>
+          <a href="01_business_model.html" class="nav-link px-3 py-2 rounded-lg text-xs lg:text-sm text-slate-300 flex items-center space-x-1.5">
+            <i class="fa-solid fa-cube text-slate-400"></i>
+            <span>01. 비즈니스 모델</span>
+          </a>
+          <a href="02_moat_and_strengths.html" class="nav-link px-3 py-2 rounded-lg text-xs lg:text-sm text-slate-300 flex items-center space-x-1.5">
+            <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+            <span>02. 기술적 해자</span>
+          </a>
+          <a href="03_risks_and_challenges.html" class="nav-link px-3 py-2 rounded-lg text-xs lg:text-sm text-slate-300 flex items-center space-x-1.5">
+            <i class="fa-solid fa-triangle-exclamation text-amber-400"></i>
+            <span>03. 리스크 & 위기</span>
+          </a>
+          <a href="04_financial_deepdive.html" class="nav-link px-3 py-2 rounded-lg text-xs lg:text-sm text-slate-300 flex items-center space-x-1.5">
+            <i class="fa-solid fa-chart-line text-indigo-400"></i>
+            <span>04. 재무 심층 분석</span>
+          </a>
+        </nav>
+
+        <!-- 우측 종합 상태 배지 -->
+        <div class="flex items-center space-x-2">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 mr-1.5 animate-pulse"></span>
+            분석 상태: 종합 완료
+          </span>
+        </div>
+      </div>
+    </div>
+    <!-- 모바일 내비게이션 바 -->
+    <div class="md:hidden flex overflow-x-auto px-4 py-2 border-t border-brand-border space-x-2 bg-brand-surface custom-scrollbar">
+      <a href="00_final_synthesis_report.html" class="whitespace-nowrap px-3 py-1.5 rounded text-xs bg-blue-600 text-white font-semibold">00. 종합</a>
+      <a href="01_business_model.html" class="whitespace-nowrap px-3 py-1.5 rounded text-xs text-slate-300">01. BM</a>
+      <a href="02_moat_and_strengths.html" class="whitespace-nowrap px-3 py-1.5 rounded text-xs text-slate-300">02. 해자</a>
+      <a href="03_risks_and_challenges.html" class="whitespace-nowrap px-3 py-1.5 rounded text-xs text-slate-300">03. 리스크</a>
+      <a href="04_financial_deepdive.html" class="whitespace-nowrap px-3 py-1.5 rounded text-xs text-slate-300">04. 재무</a>
+    </div>
+  </header>
+
+  <!-- ==================== 메인 콘텐츠 영역 ==================== -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+
+    <!-- 1. 마스터 히어로 배너 -->
+    <section class="bg-gradient-to-r from-brand-surface via-[#1e293b] to-[#1e1b4b] rounded-2xl p-6 sm:p-8 border border-brand-border relative overflow-hidden shadow-2xl">
+      <div class="absolute -right-16 -bottom-16 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="relative z-10">
+        <div class="flex flex-wrap items-center gap-2 mb-4">
+          <span class="px-3 py-1 rounded-md text-xs font-semibold bg-brand-primary/20 text-indigo-300 border border-brand-primary/30">
+            총괄 마스터 종합 분석서
+          </span>
+          <span class="px-3 py-1 rounded-md text-xs font-semibold bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+            4인 전문 에이전트 전원 합의 보고서
+          </span>
+          <span class="px-3 py-1 rounded-md text-xs font-semibold bg-brand-surface2 text-brand-muted border border-brand-border">
+            기준: DART 공시 및 증권사 최신 컨센서스 집계
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+          <div class="lg:col-span-2 space-y-3">
+            <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+              원익IPS : 다운턴 탈출과 선단 노드 전방 수혜의 교차점
+            </h1>
+            <p class="text-sm sm:text-base text-brand-muted leading-relaxed">
+              삼성전자 핵심 박막 증착(ALD/PECVD) 파트너 원익IPS는 2023년의 극심한 업황 불황(-181억 손실)을 지나,
+              <strong>무차입 순현금 3,026억 원</strong>의 철벽 재무 안정성을 바탕으로 2025년 영업익 738억 회복,
+              <strong>2026년 수주잔고 4,000억 원 돌파 및 영업익 1,800억 원대 사상 최대 실적 근접 턴어라운드</strong> 국면에 진입했습니다.
+            </p>
+          </div>
+
+          <!-- 스코어보드 카드 -->
+          <div class="bg-brand-surface/90 border border-slate-700/80 rounded-xl p-5 shadow-lg flex flex-col justify-between">
+            <div class="flex justify-between items-center mb-3">
+              <span class="text-xs text-brand-muted font-medium">펀더멘털 종합 평가</span>
+              <span class="text-xs font-bold px-2 py-0.5 rounded bg-blue-900/60 text-sky-300 border border-blue-700/50">84 / 100</span>
+            </div>
+            <div class="flex items-baseline space-x-2">
+              <span class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indigo-300 to-emerald-400">STRONG</span>
+              <span class="text-lg font-bold text-slate-300">TURNAROUND</span>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-700/60 grid grid-cols-2 gap-2 text-xs">
+              <div>
+                <span class="text-brand-muted block">수주 모멘텀</span>
+                <span class="font-bold text-white text-sm">신규 6,275억</span>
+              </div>
+              <div>
+                <span class="text-brand-muted block">투자 리스크</span>
+                <span class="font-bold text-amber-400 text-sm">고객사 CAPEX 편중</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. 핵심 요약 지표 (KPI Cards) -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <!-- KPI 1 -->
+      <div class="bg-brand-surface rounded-xl p-5 border border-brand-border card-hover">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-semibold text-brand-muted">2026년 예상 매출액</span>
+          <div class="w-8 h-8 rounded-lg bg-sky-500/10 flex items-center justify-center text-brand-accent">
+            <i class="fa-solid fa-coins"></i>
+          </div>
+        </div>
+        <div class="text-2xl font-bold text-white">1조 2,500억</div>
+        <p class="text-xs text-emerald-400 mt-1 flex items-center">
+          <i class="fa-solid fa-arrow-trend-up mr-1"></i> 전년 대비 +37.4% 성장 전망
+        </p>
+      </div>
+
+      <!-- KPI 2 -->
+      <div class="bg-brand-surface rounded-xl p-5 border border-brand-border card-hover">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-semibold text-brand-muted">2026년 예상 영업이익</span>
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+            <i class="fa-solid fa-chart-pie"></i>
+          </div>
+        </div>
+        <div class="text-2xl font-bold text-white">1,800억</div>
+        <p class="text-xs text-emerald-400 mt-1 flex items-center">
+          <i class="fa-solid fa-arrow-trend-up mr-1"></i> 영업이익률 14.4% 달성 전망
+        </p>
+      </div>
+
+      <!-- KPI 3 -->
+      <div class="bg-brand-surface rounded-xl p-5 border border-brand-border card-hover">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-semibold text-brand-muted">무차입 순현금성 자산</span>
+          <div class="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-400">
+            <i class="fa-solid fa-vault"></i>
+          </div>
+        </div>
+        <div class="text-2xl font-bold text-white">3,026억</div>
+        <p class="text-xs text-slate-300 mt-1 flex items-center">
+          <i class="fa-solid fa-shield-check mr-1 text-emerald-400"></i> 부채비율 20.06% (초우량)
+        </p>
+      </div>
+
+      <!-- KPI 4 -->
+      <div class="bg-brand-surface rounded-xl p-5 border border-brand-border card-hover">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-semibold text-brand-muted">확보 수주잔고</span>
+          <div class="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400">
+            <i class="fa-solid fa-file-invoice-dollar"></i>
+          </div>
+        </div>
+        <div class="text-2xl font-bold text-white">4,000억+</div>
+        <p class="text-xs text-brand-accent mt-1 flex items-center">
+          <i class="fa-solid fa-circle-check mr-1"></i> 하반기 매출 집중 인식 예정
+        </p>
+      </div>
+    </section>
+
+    <!-- 3. 4대 에이전트 평가 종합 매트릭스 & 레이더 차트 -->
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- 레이더 분석 차트 -->
+      <div class="bg-brand-surface rounded-xl p-6 border border-brand-border flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-base font-bold text-white flex items-center">
+              <i class="fa-solid fa-chart-radar text-sky-400 mr-2"></i> 4대 영역 정밀 평가 매트릭스
+            </h2>
+            <span class="text-xs text-brand-muted">100점 만점 기준</span>
+          </div>
+          <p class="text-xs text-brand-muted mb-4">
+            BM, 기술적 해자, 재무 안정성은 최상위 등급인 반면 고객사 편중 리스크는 주의 깊은 관리가 필요합니다.
+          </p>
+        </div>
+        <div class="h-64 flex items-center justify-center">
+          <canvas id="radarScoreChart"></canvas>
+        </div>
+      </div>
+
+      <!-- 4인 에이전트 핵심 평가 요약 카드 그리드 -->
+      <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- 에이전트 1: BM 요약 -->
+        <a href="01_business_model.html" class="bg-brand-surface rounded-xl p-5 border border-brand-border card-hover flex flex-col justify-between block group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-bold px-2.5 py-1 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">
+                01. 비즈니스 모델 (88점)
+              </span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500 group-hover:text-sky-400 transition-colors"></i>
+            </div>
+            <h3 class="text-sm font-bold text-white mb-2 group-hover:text-sky-300 transition-colors">
+              박막 증착(ALD/PECVD) 원스톱 풀라인업
+            </h3>
+            <p class="text-xs text-brand-muted line-clamp-3">
+              반도체 전공정 핵심인 박막 형성(Thin Film) 장비에서 High-k ALD, 메탈 CVD, GEMINI PECVD 등 미세 패터닝과 절연막 전 영역을 아우르는 수직 포트폴리오를 확립했습니다.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-700/60 flex items-center justify-between text-xs text-sky-400 font-medium">
+            <span>상세 보고서 열람하기</span>
+            <i class="fa-solid fa-angle-right"></i>
+          </div>
+        </a>
+
+        <!-- 에이전트 2: 해자 요약 -->
+        <a href="02_moat_and_strengths.html" class="bg-brand-surface rounded-xl p-5 border border-brand-border card-hover flex flex-col justify-between block group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-bold px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                02. 기술적 경제적 해자 (92점)
+              </span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500 group-hover:text-emerald-400 transition-colors"></i>
+            </div>
+            <h3 class="text-sm font-bold text-white mb-2 group-hover:text-emerald-300 transition-colors">
+              불황에도 연 1,600억 R&D 투입의 전환장벽
+            </h3>
+            <p class="text-xs text-brand-muted line-clamp-3">
+              매출 대비 18~24%에 달하는 대규모 R&D로 High-k 및 저저항 메탈 ALD 독점 국산화. 선단 노드(DRAM 1c/1d, 3D V-NAND 300단) 전환에 따른 증착 스텝 수 폭증의 직접 수혜를 입습니다.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-700/60 flex items-center justify-between text-xs text-emerald-400 font-medium">
+            <span>상세 보고서 열람하기</span>
+            <i class="fa-solid fa-angle-right"></i>
+          </div>
+        </a>
+
+        <!-- 에이전트 3: 리스크 요약 -->
+        <a href="03_risks_and_challenges.html" class="bg-brand-surface rounded-xl p-5 border border-brand-border card-hover flex flex-col justify-between block group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-bold px-2.5 py-1 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                03. 리스크 & 구조적 과제 (68점)
+              </span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500 group-hover:text-amber-400 transition-colors"></i>
+            </div>
+            <h3 class="text-sm font-bold text-white mb-2 group-hover:text-amber-300 transition-colors">
+              고객사 편중과 연 1,600억 고정비 BEP 부담
+            </h3>
+            <p class="text-xs text-brand-muted line-clamp-3">
+              삼성전자향 매출 비중(60~70%) 편중으로 고객사 테일러/평택 CAPEX 집행 지연 시 실적 변동성이 극대화되며, 연간 1,600억 수준의 고정비로 매출 7,500억 밑에서는 적자가 발생합니다.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-700/60 flex items-center justify-between text-xs text-amber-400 font-medium">
+            <span>상세 보고서 열람하기</span>
+            <i class="fa-solid fa-angle-right"></i>
+          </div>
+        </a>
+
+        <!-- 에이전트 4: 재무 요약 -->
+        <a href="04_financial_deepdive.html" class="bg-brand-surface rounded-xl p-5 border border-brand-border card-hover flex flex-col justify-between block group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-bold px-2.5 py-1 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                04. 재무 건전성 & 컨센서스 (88점)
+              </span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500 group-hover:text-indigo-400 transition-colors"></i>
+            </div>
+            <h3 class="text-sm font-bold text-white mb-2 group-hover:text-indigo-300 transition-colors">
+              부채비율 20% 무차입 순현금 & 턴어라운드
+            </h3>
+            <p class="text-xs text-brand-muted line-clamp-3">
+              총자산 1조 1,646억 중 자본이 9,700억에 달하며 현금성자산 3,026억 원을 보유. 2026년 상반기 이미 영업익 291억, 순익 1,120억을 기록하며 실적 퀀텀점프 기반을 마련했습니다.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-700/60 flex items-center justify-between text-xs text-indigo-400 font-medium">
+            <span>상세 보고서 열람하기</span>
+            <i class="fa-solid fa-angle-right"></i>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- 4. 실적 추이 및 2026 컨센서스 시각화 (Chart.js) -->
+    <section class="bg-brand-surface rounded-xl p-6 sm:p-8 border border-brand-border">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 pb-4 border-b border-brand-border gap-4">
+        <div>
+          <h2 class="text-lg font-bold text-white flex items-center">
+            <i class="fa-solid fa-chart-column text-indigo-400 mr-2"></i> 연도별 실적 턴어라운드 및 2026 컨센서스
+          </h2>
+          <p class="text-xs text-brand-muted mt-1">
+            2023년 바닥 통과 $\rightarrow$ 2024년 흑자전환 $\rightarrow$ 2025년 정상화 $\rightarrow$ 2026년 선단공정 슈퍼사이클
+          </p>
+        </div>
+        <div class="flex items-center space-x-2 text-xs">
+          <span class="inline-flex items-center px-2 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700">
+            <span class="w-2.5 h-2.5 rounded-sm bg-sky-500 mr-1.5"></span> 매출액
+          </span>
+          <span class="inline-flex items-center px-2 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700">
+            <span class="w-2.5 h-2.5 rounded-sm bg-indigo-500 mr-1.5"></span> 영업이익
+          </span>
+          <span class="inline-flex items-center px-2 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700">
+            <span class="w-2.5 h-2.5 rounded-sm bg-emerald-400 mr-1.5"></span> 당기순이익
+          </span>
+        </div>
+      </div>
+      <div class="h-80 w-full">
+        <canvas id="performanceChart"></canvas>
+      </div>
+
+      <!-- 정량 데이터 테이블 -->
+      <div class="mt-6 overflow-x-auto">
+        <table class="w-full text-xs text-left text-slate-300 border border-slate-700/60 rounded-lg overflow-hidden">
+          <thead class="bg-slate-800/80 text-brand-muted uppercase font-semibold">
+            <tr>
+              <th class="py-3 px-4">구분 (단위: 억 원)</th>
+              <th class="py-3 px-4 text-right">2023년 (결산)</th>
+              <th class="py-3 px-4 text-right">2024년 (결산)</th>
+              <th class="py-3 px-4 text-right">2025년 (결산)</th>
+              <th class="py-3 px-4 text-right">2026년 1H (공시)</th>
+              <th class="py-3 px-4 text-right bg-blue-950/40 text-sky-300">2026년 (컨센서스 E)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800">
+            <tr class="hover:bg-slate-800/30">
+              <td class="py-3 px-4 font-medium text-white">매출액</td>
+              <td class="py-3 px-4 text-right">6,903</td>
+              <td class="py-3 px-4 text-right">7,482</td>
+              <td class="py-3 px-4 text-right">9,098</td>
+              <td class="py-3 px-4 text-right">3,814</td>
+              <td class="py-3 px-4 text-right font-bold text-sky-400 bg-blue-950/20">12,500 (+37.4%)</td>
+            </tr>
+            <tr class="hover:bg-slate-800/30">
+              <td class="py-3 px-4 font-medium text-white">영업이익</td>
+              <td class="py-3 px-4 text-right text-rose-400">-181 (적자)</td>
+              <td class="py-3 px-4 text-right">106 (흑전)</td>
+              <td class="py-3 px-4 text-right">738</td>
+              <td class="py-3 px-4 text-right">291</td>
+              <td class="py-3 px-4 text-right font-bold text-indigo-400 bg-blue-950/20">1,800 (+143.9%)</td>
+            </tr>
+            <tr class="hover:bg-slate-800/30">
+              <td class="py-3 px-4 font-medium text-white">당기순이익</td>
+              <td class="py-3 px-4 text-right text-rose-400">-234</td>
+              <td class="py-3 px-4 text-right">124</td>
+              <td class="py-3 px-4 text-right">840</td>
+              <td class="py-3 px-4 text-right">1,120</td>
+              <td class="py-3 px-4 text-right font-bold text-emerald-400 bg-blue-950/20">1,600 (+90.5%)</td>
+            </tr>
+            <tr class="hover:bg-slate-800/30">
+              <td class="py-3 px-4 font-medium text-white">영업이익률 (OPM)</td>
+              <td class="py-3 px-4 text-right text-rose-400">-2.6%</td>
+              <td class="py-3 px-4 text-right">1.4%</td>
+              <td class="py-3 px-4 text-right">8.1%</td>
+              <td class="py-3 px-4 text-right">7.6%</td>
+              <td class="py-3 px-4 text-right font-bold text-white bg-blue-950/20">14.4% (+6.3%p)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 5. 총괄 팀장의 최종 종합 펀더멘털 결론 및 총평 -->
+    <section class="bg-gradient-to-br from-[#1e293b] via-[#1e293b] to-[#0f172a] rounded-2xl p-6 sm:p-8 border border-slate-700 shadow-2xl relative">
+      <div class="flex items-center space-x-3 mb-4">
+        <div class="w-10 h-10 rounded-full bg-blue-600/20 text-sky-400 flex items-center justify-center font-bold text-lg border border-blue-500/30">
+          <i class="fa-solid fa-user-tie"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-bold text-white">반도체 전공정 분석 총괄 팀장 최종 브리핑</h3>
+          <p class="text-xs text-brand-muted">에이전트 1~4(BM, 해자, 리스크, 재무) 분석 종합 평가</p>
+        </div>
+      </div>
+
+      <div class="space-y-4 text-sm text-slate-300 leading-relaxed">
+        <p>
+          <strong>1. 사이클 관점: 완벽한 바닥 통과 및 실적 레버리지 구간</strong><br>
+          원익IPS는 반도체 다운턴 시기(2023년 -181억 적자)에도 연구개발비를 단 1원도 줄이지 않고 연 1,600억 원(매출의 20% 이상)을 High-k 및 Metal ALD 국산화에 투입했습니다. 이제 고정비 BEP(매출 7,500억)를 돌파하여 <strong>매출 1조 원 상회 시 영업이익이 가파르게 치솟는 실적 레버리지 구간</strong>에 진입했습니다.
+        </p>
+        <p>
+          <strong>2. 구조적 수혜: DRAM 1c/1d 및 3D NAND 고종횡비(HARC)</strong><br>
+          AI 서버 및 HBM 수요 급증으로 인해 선단 DRAM 공정 전환 속도가 빨라지면서 전하 저장 커패시터 및 비트라인 저저항 메탈 박막 증착 스텝(ALD Passes)이 이전 세대 대비 40% 이상 급증하고 있습니다. 원익IPS는 이 핵심 공정에서 외산(AMAT, ASM)을 대체하는 유일한 토종 챔피언입니다.
+        </p>
+        <p>
+          <strong>3. 선단 공정 중심의 펀더멘털 경쟁력 및 재무 체력</strong><br>
+          삼성전자향 매출 편중이라는 고객사 집중도 리스크가 상존하지만, <strong>부채비율 20% 및 3,000억 원의 무차입 순현금</strong>이 기업 기초체력을 완벽하게 방어하고 있습니다. DRAM 1c/1d 및 3D V-NAND 300단 고종횡비 하드마스크 수요 폭증과 함께 외산 장비 대체율을 지속적으로 높여가는 구조적 실적 회복 국면입니다.
+        </p>
+      </div>
+
+      <!-- 세부 보고서 링크 그리드 -->
+      <div class="mt-8 pt-6 border-t border-slate-700/80">
+        <h4 class="text-xs font-semibold text-brand-muted uppercase tracking-wider mb-4">
+          4인 전문 에이전트별 세부 심층 보고서 바로가기
+        </h4>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <a href="01_business_model.html" class="px-4 py-3 rounded-lg bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-center transition-all text-xs font-semibold text-sky-300 block">
+            <i class="fa-solid fa-cube mb-1 block text-base text-sky-400"></i>
+            01. 비즈니스 모델
+          </a>
+          <a href="02_moat_and_strengths.html" class="px-4 py-3 rounded-lg bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-center transition-all text-xs font-semibold text-emerald-300 block">
+            <i class="fa-solid fa-shield-halved mb-1 block text-base text-emerald-400"></i>
+            02. 경제적 해자
+          </a>
+          <a href="03_risks_and_challenges.html" class="px-4 py-3 rounded-lg bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-center transition-all text-xs font-semibold text-amber-300 block">
+            <i class="fa-solid fa-triangle-exclamation mb-1 block text-base text-amber-400"></i>
+            03. 리스크 & 위기
+          </a>
+          <a href="04_financial_deepdive.html" class="px-4 py-3 rounded-lg bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-center transition-all text-xs font-semibold text-indigo-300 block">
+            <i class="fa-solid fa-chart-line mb-1 block text-base text-indigo-400"></i>
+            04. 재무 심층 분석
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 푸터 -->
+  <footer class="mt-12 border-t border-brand-border bg-[#0a0f1d] py-6 text-center text-xs text-brand-muted">
+    <div class="max-w-7xl mx-auto px-4">
+      <p>원익IPS (240810) 멀티에이전트 협업 기업분석 프로젝트 | 총괄 마스터 종합 보고서</p>
+      <p class="mt-1 text-[11px] text-slate-500">본 보고서는 금융감독원 DART 전자공시 및 증권사 컨센서스 데이터를 기반으로 작성되었으며, 투자 참고용 자료입니다.</p>
+    </div>
+  </footer>
+
+  <!-- Chart.js 스크립트 -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // 1. 레이더 스코어 차트
+      const ctxRadar = document.getElementById('radarScoreChart').getContext('2d');
+      new Chart(ctxRadar, {
+        type: 'radar',
+        data: {
+          labels: ['비즈니스 모델(BM)', '경제적 해자(Moat)', '재무 안정성', '실적 성장 모멘텀', '고객사 다변화'],
+          datasets: [{
+            label: '원익IPS 펀더멘털 평가',
+            data: [88, 92, 95, 86, 60],
+            backgroundColor: 'rgba(56, 189, 248, 0.25)',
+            borderColor: '#38bdf8',
+            pointBackgroundColor: '#6366f1',
+            pointBorderColor: '#ffffff',
+            pointHoverBackgroundColor: '#ffffff',
+            pointHoverBorderColor: '#38bdf8',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            r: {
+              angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
+              grid: { color: 'rgba(255, 255, 255, 0.1)' },
+              pointLabels: {
+                color: '#cbd5e1',
+                font: { size: 10, family: 'Pretendard' }
+              },
+              ticks: {
+                backdropColor: 'transparent',
+                color: '#64748b',
+                stepSize: 20,
+                min: 0,
+                max: 100
+              }
+            }
+          },
+          plugins: {
+            legend: { display: false }
+          }
+        }
+      });
+
+      // 2. 연도별 실적 턴어라운드 차트
+      const ctxPerf = document.getElementById('performanceChart').getContext('2d');
+      new Chart(ctxPerf, {
+        type: 'bar',
+        data: {
+          labels: ['2023년 (결산)', '2024년 (결산)', '2025년 (결산)', '2026년 (컨센서스 E)'],
+          datasets: [
+            {
+              label: '매출액 (억 원)',
+              data: [6903, 7482, 9098, 12500],
+              backgroundColor: '#38bdf8',
+              borderRadius: 6,
+              yAxisID: 'y'
+            },
+            {
+              label: '영업이익 (억 원)',
+              data: [-181, 106, 738, 1800],
+              backgroundColor: '#6366f1',
+              borderRadius: 6,
+              yAxisID: 'y'
+            },
+            {
+              label: '당기순이익 (억 원)',
+              data: [-234, 124, 840, 1600],
+              backgroundColor: '#10b981',
+              borderRadius: 6,
+              yAxisID: 'y'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            mode: 'index',
+            intersect: false
+          },
+          scales: {
+            x: {
+              grid: { color: 'rgba(255, 255, 255, 0.05)' },
+              ticks: { color: '#94a3b8', font: { family: 'Pretendard' } }
+            },
+            y: {
+              grid: { color: 'rgba(255, 255, 255, 0.08)' },
+              ticks: {
+                color: '#94a3b8',
+                font: { family: 'Pretendard' },
+                callback: function(val) { return val.toLocaleString() + '억'; }
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              labels: {
+                color: '#f8fafc',
+                font: { family: 'Pretendard', size: 12 },
+                usePointStyle: true,
+                padding: 15
+              }
+            },
+            tooltip: {
+              backgroundColor: '#1e293b',
+              titleColor: '#f8fafc',
+              bodyColor: '#cbd5e1',
+              borderColor: '#334155',
+              borderWidth: 1,
+              padding: 12,
+              callbacks: {
+                label: function(context) {
+                  return context.dataset.label + ': ' + context.parsed.y.toLocaleString() + '억 원';
+                }
+              }
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
