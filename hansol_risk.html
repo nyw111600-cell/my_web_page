@@ -1,0 +1,411 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>한솔케미칼(014680) 투자 리스크 & 구조적 과제 분석 리포트</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <!-- FontAwesome 6 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-light: #3b82f6;
+      --primary-bg: #eff6ff;
+      --accent: #0284c7;
+      --dark: #0f172a;
+      --gray-900: #1e293b;
+      --gray-700: #334155;
+      --gray-600: #475569;
+      --gray-500: #64748b;
+      --gray-200: #e2e8f0;
+      --gray-100: #f1f5f9;
+      --gray-50: #f8fafc;
+      --white: #ffffff;
+      --success: #059669;
+      --success-bg: #ecfdf5;
+      --warning: #d97706;
+      --warning-bg: #fffbeb;
+      --danger: #dc2626;
+      --danger-bg: #fef2f2;
+      --info: #2563eb;
+      --info-bg: #eff6ff;
+      --border-color: #cbd5e1;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
+      color: var(--gray-700);
+      background-color: var(--gray-50);
+      line-height: 1.65;
+      font-size: 15px;
+      padding: 30px 16px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 1px solid var(--gray-200);
+    }
+    .header-banner {
+      background: linear-gradient(135deg, #0f172a 0%, #7f1d1d 50%, #991b1b 100%);
+      color: var(--white);
+      padding: 40px;
+    }
+    .report-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+    .header-title {
+      font-size: 30px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--white);
+    }
+    .header-subtitle {
+      font-size: 16px;
+      color: #fca5a5;
+      margin-bottom: 20px;
+    }
+    .report-nav {
+      display: flex;
+      gap: 8px;
+      background: #f1f5f9;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border-color);
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .nav-tab {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--gray-600);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .nav-tab:hover {
+      background: var(--white);
+      color: var(--primary);
+    }
+    .nav-tab.active {
+      background: #dc2626;
+      color: var(--white);
+      box-shadow: var(--shadow-sm);
+    }
+    .content-body { padding: 36px; }
+    .section-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 2px solid #fee2e2;
+      padding-bottom: 10px;
+    }
+    .section-title i { color: #dc2626; }
+    .card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+    .callout {
+      padding: 18px 22px;
+      border-radius: 10px;
+      margin: 18px 0;
+      border-left: 4px solid;
+    }
+    .callout-danger { background: #fef2f2; border-color: #ef4444; color: #991b1b; }
+    .callout-warning { background: #fffbeb; border-color: #f59e0b; color: #92400e; }
+    .callout-info { background: #eff6ff; border-color: #3b82f6; color: #1e40af; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header Banner -->
+    <header class="header-banner">
+      <div class="report-badge">
+        <i class="fa-solid fa-triangle-exclamation"></i> 투자 리스크 및 구조적 과제 분석 (Agent 3)
+      </div>
+      <h1 class="header-title">한솔케미칼(014680) 투자 리스크 & 구조적 과제 분석</h1>
+      <div class="header-subtitle">원자재(LNG) 원가 변동 민감도, 고객사 CAPEX 지연 및 전방 신소재 캐즘 위험 점검</div>
+      
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-white/20 text-sm">
+        <div>
+          <span class="text-red-200 block text-xs">최대 리스크 1순위</span>
+          <span class="font-bold text-white text-base">전방 팹 증설 일정 순연</span>
+        </div>
+        <div>
+          <span class="text-red-200 block text-xs">원가 민감도 변수</span>
+          <span class="font-bold text-white text-base">천연가스/LNG 가격 스프레드</span>
+        </div>
+        <div>
+          <span class="text-red-200 block text-xs">신사업 허들</span>
+          <span class="font-bold text-white text-base">실리콘 음극재 전기차 캐즘</span>
+        </div>
+        <div>
+          <span class="text-red-200 block text-xs">고객사 집중도</span>
+          <span class="font-bold text-white text-base">삼성전자 의존도 약 50%</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="report-nav">
+      <a href="hansol_chemical.html" class="nav-tab"><i class="fa-solid fa-gauge-high"></i> 총괄 종합 대시보드</a>
+      <a href="hansol_bm.html" class="nav-tab"><i class="fa-solid fa-sitemap"></i> 1. 비즈니스 모델</a>
+      <a href="hansol_moat.html" class="nav-tab"><i class="fa-solid fa-shield-halved"></i> 2. 경제적 해자</a>
+      <a href="hansol_risk.html" class="nav-tab active"><i class="fa-solid fa-triangle-exclamation"></i> 3. 리스크 분석</a>
+      <a href="hansol_financial.html" class="nav-tab"><i class="fa-solid fa-chart-line"></i> 4. 재무 심층 분석</a>
+    </nav>
+
+    <!-- Content Body -->
+    <div class="content-body">
+
+      <!-- Section 1: 3 Critical Structural Risks -->
+      <section class="mb-10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-triangle-exclamation"></i> 1. 3대 구조적 핵심 리스크 (Critical Risks)
+        </h2>
+        <p class="mb-6 text-slate-700">
+          한솔케미칼은 뛰어난 해자를 보유하고 있으나, <strong>반도체 소재 플랜트의 대규모 고정비 특성</strong>과 <strong>에너지·원자재 원가 변동</strong>, 그리고 <strong>고객사 설비투자 일정</strong>에 직접적인 영향을 받는 구조적 위험 요인을 안고 있습니다.
+        </p>
+
+        <div class="space-y-6">
+          <!-- Risk 1 -->
+          <div class="card border-l-4 border-l-red-600">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-bold text-slate-900 text-lg flex items-center gap-2">
+                <span class="text-red-600 font-extrabold">[Risk 1]</span>
+                전방 고객사(삼성전자 등) CAPEX 속도 조절 및 신규 팹 가동 순연
+              </h3>
+              <span class="bg-red-100 text-red-800 text-xs font-bold px-2.5 py-1 rounded">영향도: 상 / 발생확률: 중</span>
+            </div>
+            <p class="text-sm text-slate-600 leading-relaxed mb-3">
+              한솔케미칼의 매출 절반은 삼성전자 팹에서 발생합니다. 최근 파운드리 시장 경쟁 심화와 글로벌 거시경제 불확실성으로 인해 삼성전자 평택 P4 라인의 장비/소재 반입 시점이 일부 순연되거나, 미국 테일러 팹의 양산 일정이 조정되는 흐름이 관측되고 있습니다. 신규 팹 가동 지연 시 회사가 선제적으로 증설한 생산능력(CAPA)에 대한 감가상각비 부담이 증가하여 일시적 이익률 둔화 요인으로 작용합니다.
+            </p>
+            <div class="bg-red-50 p-3 rounded-lg text-xs text-red-900">
+              <strong>• 모니터링 포인트:</strong> 평택 P4 및 미국 테일러 팹의 클린룸 완공 및 장비 반입 공식 일정, 분기별 케미칼 출하량.
+            </div>
+          </div>
+
+          <!-- Risk 2 -->
+          <div class="card border-l-4 border-l-amber-500">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-bold text-slate-900 text-lg flex items-center gap-2">
+                <span class="text-amber-600 font-extrabold">[Risk 2]</span>
+                원재료(천연가스/LNG) 가격 급등에 따른 마진 스프레드 축소 (판가 전가 래깅)
+              </h3>
+              <span class="bg-amber-100 text-amber-800 text-xs font-bold px-2.5 py-1 rounded">영향도: 중 / 발생확률: 상</span>
+            </div>
+            <p class="text-sm text-slate-600 leading-relaxed mb-3">
+              과산화수소 제조 공정의 핵심 원료는 수소(H₂)이며, 이는 주로 천연가스(LNG) 및 나프타 개질을 통해 추출됩니다. 따라서 지정학적 위기(중동 분쟁 등)로 인해 글로벌 에너지 가격이 급등할 경우 원가 상승 압력이 급격히 커집니다. 비록 2026년 2분기에 단가 인상에 성공했으나, 판가 인상 협상에는 통상 1~2개 분기의 시차(Lagging)가 발생하므로 단기 마진 훼손 위험이 상존합니다.
+            </p>
+            <div class="bg-amber-50 p-3 rounded-lg text-xs text-amber-900">
+              <strong>• 모니터링 포인트:</strong> 동북아 LNG 현물 가격 및 헨리허브 천연가스 선물 추이, 분기별 매출총이익률(GPM) 변동폭.
+            </div>
+          </div>
+
+          <!-- Risk 3 -->
+          <div class="card border-l-4 border-l-sky-600">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-bold text-slate-900 text-lg flex items-center gap-2">
+                <span class="text-sky-600 font-extrabold">[Risk 3]</span>
+                전기차 배터리 캐즘(Chasm) 장기화에 따른 실리콘 음극재 회수 지연
+              </h3>
+              <span class="bg-sky-100 text-sky-800 text-xs font-bold px-2.5 py-1 rounded">영향도: 중 / 발생확률: 상</span>
+            </div>
+            <p class="text-sm text-slate-600 leading-relaxed mb-3">
+              한솔케미칼은 차세대 성장 동력으로 익산 공장 등에 수천억 원 규모의 실리콘 복합 음극재 설비 투자를 집행해왔습니다. 그러나 글로벌 전기차 시장의 일시적 수요 둔화(캐즘)로 인해 완성차 OEM 및 배터리 셀사들의 실리콘 음극재 채택 속도가 당초 기대보다 지연되고 있습니다. 이에 따라 신규 공장 가동률 저조 및 연구개발비/감가비 부담이 이어지고 있습니다.
+            </p>
+            <div class="bg-sky-50 p-3 rounded-lg text-xs text-sky-900">
+              <strong>• 모니터링 포인트:</strong> 고객사 차세대 배터리 폼팩터 실리콘 첨가 비중 및 익산 공장 본격 양산 개시 공시.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Sensitivity Matrix -->
+      <section class="mb-10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-chart-line"></i> 2. 원자재 및 가동률 변동에 따른 이익 민감도 분석
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+          <div class="card">
+            <h3 class="font-bold text-slate-900 text-base mb-3 flex items-center gap-2">
+              <i class="fa-solid fa-sliders text-red-600"></i> 원재료(LNG) 가격 변동별 연간 OPM 민감도 시뮬레이션
+            </h3>
+            <div class="h-64 flex items-center justify-center">
+              <canvas id="opmSensitivityChart"></canvas>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="font-bold text-slate-900 text-base mb-3 flex items-center gap-2">
+              <i class="fa-solid fa-circle-nodes text-blue-600"></i> 리스크 매트릭스 (영향도 vs 발생가능성)
+            </h3>
+            <div class="h-64 flex items-center justify-center">
+              <canvas id="riskMatrixChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-warning">
+          <div class="font-bold text-sm mb-1">⚠️ 다운턴 손익분기점(BEP) 안전판 평가</div>
+          <div class="text-xs leading-relaxed">
+            전방 반도체 라인이 대규모 감산을 단행했던 2023년 극심한 다운턴 당시에도 한솔케미칼은 연간 매출 7,764억 원, <strong>영업이익 1,288억 원(OPM 16.59%)</strong>을 기록하며 적자 전락 없이 흑자를 사수했습니다. 이는 제지·환경 부문의 안정적 현금흐름과 부채비율 38%의 무차입에 가까운 재무 구조가 다운턴 충격을 흡수하는 완충판 역할을 하기 때문입니다.
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Mitigation & Countermeasures -->
+      <section class="mb-10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-shield-virus"></i> 3. 리스크 완화 전략 및 방어 기제
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+            <div class="font-bold text-slate-900 text-sm mb-1 text-blue-900 flex items-center gap-1.5">
+              <i class="fa-solid fa-repeat"></i> 판가 연동 계약 확대
+            </div>
+            <p class="text-slate-600 leading-relaxed">
+              원자재 가격 급등 시 자동으로 단가에 반영되는 원료비 연동제(Cost-Pass-Through) 비중을 대형 고객사와 지속 확대하여 스프레드 변동성을 사전 차단.
+            </p>
+          </div>
+
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+            <div class="font-bold text-slate-900 text-sm mb-1 text-emerald-900 flex items-center gap-1.5">
+              <i class="fa-solid fa-globe"></i> TSMC 해외 매출 다변화
+            </div>
+            <p class="text-slate-600 leading-relaxed">
+              삼성전자 단일 고객사 의존도를 완화하기 위해 대만 TSMC 및 북미 파운드리 팹향 박막 전구체 직납을 강화하여 고객 편중 리스크 분산.
+            </p>
+          </div>
+
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+            <div class="font-bold text-slate-900 text-sm mb-1 text-amber-900 flex items-center gap-1.5">
+              <i class="fa-solid fa-vault"></i> 1,485억 원의 풍부한 유동성
+            </div>
+            <p class="text-slate-600 leading-relaxed">
+              보유 현금성자산 및 단기금융상품 1,485억 원, 부채비율 38%의 극도로 안정적인 재무 버퍼로 CAPEX 지연기에도 주주환원 및 R&D 연속성 유지.
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-50 border-t border-slate-200 p-6 text-xs text-slate-500 flex flex-wrap justify-between items-center gap-2">
+      <div><strong>데이터 출처:</strong> 금융감독원 전자공시시스템(DART), 한국자원정보서비스, 산업동향 분석</div>
+      <div>한솔케미칼(014680) 기업분석 보고서 (에이전트 3: 리스크 분석)</div>
+    </footer>
+  </div>
+
+  <script>
+    // OPM Sensitivity Chart
+    const ctxSens = document.getElementById('opmSensitivityChart').getContext('2d');
+    new Chart(ctxSens, {
+      type: 'bar',
+      data: {
+        labels: ['LNG +30% 급등 (판가 미반영)', 'LNG +15% 상승', '현재 기준 (2026E Base)', '단가 인상 완료 (+10%)', 'LNG -15% 안정화'],
+        datasets: [{
+          label: '예상 영업이익률(OPM %)',
+          data: [15.2, 17.5, 19.8, 21.5, 23.2],
+          backgroundColor: ['#ef4444', '#f59e0b', '#3b82f6', '#10b981', '#059669'],
+          borderRadius: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: { label: c => ' OPM: ' + c.raw + '%' }
+          }
+        },
+        scales: {
+          y: { min: 10, max: 25, ticks: { callback: v => v + '%' } }
+        }
+      }
+    });
+
+    // Risk Matrix Bubble Chart
+    const ctxMatrix = document.getElementById('riskMatrixChart').getContext('2d');
+    new Chart(ctxMatrix, {
+      type: 'bubble',
+      data: {
+        datasets: [
+          {
+            label: '고객사 CAPEX 지연',
+            data: [{ x: 6.5, y: 8.5, r: 16 }],
+            backgroundColor: 'rgba(220, 38, 38, 0.7)'
+          },
+          {
+            label: '원자재(LNG) 원가 급등',
+            data: [{ x: 8.0, y: 6.0, r: 14 }],
+            backgroundColor: 'rgba(217, 119, 6, 0.7)'
+          },
+          {
+            label: '배터리 캐즘/음극재 지연',
+            data: [{ x: 7.5, y: 5.5, r: 12 }],
+            backgroundColor: 'rgba(2, 132, 199, 0.7)'
+          },
+          {
+            label: 'QD 디스플레이 수요 둔화',
+            data: [{ x: 5.0, y: 4.0, r: 10 }],
+            backgroundColor: 'rgba(100, 116, 139, 0.7)'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            title: { display: true, text: '발생 가능성 (Probability →)' },
+            min: 2, max: 10
+          },
+          y: {
+            title: { display: true, text: '손익 영향도 (Impact ↑)' },
+            min: 2, max: 10
+          }
+        },
+        plugins: {
+          legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

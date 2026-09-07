@@ -1,0 +1,554 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>한솔케미칼(014680) 재무 심층 분석 & 핵심지표 리포트</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <!-- FontAwesome 6 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-light: #3b82f6;
+      --primary-bg: #eff6ff;
+      --accent: #0284c7;
+      --dark: #0f172a;
+      --gray-900: #1e293b;
+      --gray-700: #334155;
+      --gray-600: #475569;
+      --gray-500: #64748b;
+      --gray-200: #e2e8f0;
+      --gray-100: #f1f5f9;
+      --gray-50: #f8fafc;
+      --white: #ffffff;
+      --success: #059669;
+      --success-bg: #ecfdf5;
+      --warning: #d97706;
+      --warning-bg: #fffbeb;
+      --info: #2563eb;
+      --info-bg: #eff6ff;
+      --border-color: #cbd5e1;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
+      color: var(--gray-700);
+      background-color: var(--gray-50);
+      line-height: 1.65;
+      font-size: 15px;
+      padding: 30px 16px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 1px solid var(--gray-200);
+    }
+    .header-banner {
+      background: linear-gradient(135deg, #0f172a 0%, #065f46 50%, #047857 100%);
+      color: var(--white);
+      padding: 40px;
+    }
+    .report-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+    .header-title {
+      font-size: 30px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--white);
+    }
+    .header-subtitle {
+      font-size: 16px;
+      color: #a7f3d0;
+      margin-bottom: 20px;
+    }
+    .report-nav {
+      display: flex;
+      gap: 8px;
+      background: #f1f5f9;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border-color);
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .nav-tab {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--gray-600);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .nav-tab:hover {
+      background: var(--white);
+      color: var(--primary);
+    }
+    .nav-tab.active {
+      background: #059669;
+      color: var(--white);
+      box-shadow: var(--shadow-sm);
+    }
+    .content-body { padding: 36px; }
+    .section-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 2px solid var(--success-bg);
+      padding-bottom: 10px;
+    }
+    .section-title i { color: #059669; }
+    .table-container {
+      overflow-x: auto;
+      margin: 16px 0 24px 0;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      background: var(--white);
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; text-align: right; }
+    th, td { padding: 11px 15px; border-bottom: 1px solid var(--gray-200); }
+    th { background: #f8fafc; color: var(--gray-900); font-weight: 700; text-align: center; }
+    th.metric-head, td.metric-name { text-align: left; font-weight: 600; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background-color: #f8fafc; }
+    .highlight-col { background-color: #ecfdf5 !important; color: #065f46 !important; font-weight: 700; }
+    .card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+    .callout {
+      padding: 18px 22px;
+      border-radius: 10px;
+      margin: 18px 0;
+      border-left: 4px solid;
+    }
+    .callout-success { background: #ecfdf5; border-color: #10b981; color: #065f46; }
+    .callout-info { background: #eff6ff; border-color: #3b82f6; color: #1e40af; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header Banner -->
+    <header class="header-banner">
+      <div class="report-badge">
+        <i class="fa-solid fa-file-invoice-dollar"></i> 재무 퀄리티 & 펀더멘털 정밀 검증 (Agent 4)
+      </div>
+      <h1 class="header-title">한솔케미칼(014680) 재무 심층 분석 & 핵심지표</h1>
+      <div class="header-subtitle">2026년 2분기 OPM 20.1% 돌파, 부채비율 38%의 무차입 재무 안정성 및 자본 퀄리티</div>
+      
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-white/20 text-sm">
+        <div>
+          <span class="text-emerald-200 block text-xs">2026 2Q 영업이익</span>
+          <span class="font-bold text-white text-base">497.5억 원 (OPM 20.1%)</span>
+        </div>
+        <div>
+          <span class="text-emerald-200 block text-xs">2026 상반기 누적 순이익</span>
+          <span class="font-bold text-white text-base">962.0억 원 (반기 EPS 8,523원)</span>
+        </div>
+        <div>
+          <span class="text-emerald-200 block text-xs">2026.06 말 부채비율</span>
+          <span class="font-bold text-white text-base">38.39% (초우량)</span>
+        </div>
+        <div>
+          <span class="text-emerald-200 block text-xs">보유 유동성 (현금+단기금융)</span>
+          <span class="font-bold text-white text-base">1,485.6억 원</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="report-nav">
+      <a href="hansol_chemical.html" class="nav-tab"><i class="fa-solid fa-gauge-high"></i> 총괄 종합 대시보드</a>
+      <a href="hansol_bm.html" class="nav-tab"><i class="fa-solid fa-sitemap"></i> 1. 비즈니스 모델</a>
+      <a href="hansol_moat.html" class="nav-tab"><i class="fa-solid fa-shield-halved"></i> 2. 경제적 해자</a>
+      <a href="hansol_risk.html" class="nav-tab"><i class="fa-solid fa-triangle-exclamation"></i> 3. 리스크 분석</a>
+      <a href="hansol_financial.html" class="nav-tab active"><i class="fa-solid fa-chart-line"></i> 4. 재무 심층 분석</a>
+    </nav>
+
+    <!-- Content Body -->
+    <div class="content-body">
+
+      <!-- Section 1: 2026 1H DART Income Statement Breakdown -->
+      <section class="mb-10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-table-list"></i> 1. 2026년 2분기 및 상반기(1H26) DART 확정 실적 심층 분해
+        </h2>
+        <p class="mb-4 text-slate-700">
+          금융감독원 전자공시시스템(DART)에 공시된 2026년 반기보고서(제47기 반기) K-IFRS 연결 재무제표 확정치입니다. 과산화수소 단가 인상 효과가 2분기부터 본격 반영되며 <strong>분기 영업이익률 20.10%</strong>를 달성했습니다.
+        </p>
+
+        <!-- Financial Summary Table -->
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th class="metric-head">주요 손익 항목 (단위: 억 원)</th>
+                <th>2025 2Q</th>
+                <th class="highlight-col">2026 2Q (당기)</th>
+                <th>YoY 증감율</th>
+                <th>2025 1H 누적</th>
+                <th class="highlight-col">2026 1H 누적 (확정)</th>
+                <th>누적 YoY</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="metric-name">매출액 (수익)</td>
+                <td>2,219.2</td>
+                <td class="highlight-col">2,475.4</td>
+                <td class="text-emerald-600 font-bold">+11.5%</td>
+                <td>4,314.9</td>
+                <td class="highlight-col">4,794.1</td>
+                <td class="text-emerald-600 font-bold">+11.1%</td>
+              </tr>
+              <tr>
+                <td class="metric-name">- 제품매출액</td>
+                <td>2,092.9</td>
+                <td>2,308.6</td>
+                <td>+10.3%</td>
+                <td>4,055.6</td>
+                <td>4,484.5</td>
+                <td>+10.6%</td>
+              </tr>
+              <tr>
+                <td class="metric-name">- 상품 및 기타매출</td>
+                <td>126.3</td>
+                <td>166.8</td>
+                <td>+32.1%</td>
+                <td>259.3</td>
+                <td>309.5</td>
+                <td>+19.4%</td>
+              </tr>
+              <tr>
+                <td class="metric-name">매출총이익</td>
+                <td>684.6</td>
+                <td class="highlight-col">743.3</td>
+                <td>+8.6%</td>
+                <td>1,313.0</td>
+                <td class="highlight-col">1,408.9</td>
+                <td>+7.3%</td>
+              </tr>
+              <tr>
+                <td class="metric-name">판매비와관리비</td>
+                <td>196.1</td>
+                <td>245.8</td>
+                <td>+25.3%</td>
+                <td>407.5</td>
+                <td>467.2</td>
+                <td>+14.6%</td>
+              </tr>
+              <tr class="bg-emerald-50 font-bold">
+                <td class="metric-name text-emerald-900">영업이익</td>
+                <td>488.5</td>
+                <td class="highlight-col font-extrabold">497.5</td>
+                <td class="text-emerald-700 font-bold">+1.8%</td>
+                <td>905.5</td>
+                <td class="highlight-col font-extrabold">941.7</td>
+                <td class="text-emerald-700 font-bold">+4.0%</td>
+              </tr>
+              <tr class="font-bold">
+                <td class="metric-name text-blue-900">영업이익률 (OPM)</td>
+                <td>22.01%</td>
+                <td class="highlight-col font-extrabold">20.10%</td>
+                <td>-1.91%p</td>
+                <td>20.99%</td>
+                <td class="highlight-col font-extrabold">19.64%</td>
+                <td>-1.35%p</td>
+              </tr>
+              <tr>
+                <td class="metric-name">관계기업투자손익</td>
+                <td>63.3</td>
+                <td>65.2</td>
+                <td>+3.0%</td>
+                <td>118.3</td>
+                <td>134.6</td>
+                <td>+13.8%</td>
+              </tr>
+              <tr>
+                <td class="metric-name">법인세차감전순이익</td>
+                <td>550.2</td>
+                <td>556.8</td>
+                <td>+1.2%</td>
+                <td>1,008.4</td>
+                <td>1,097.1</td>
+                <td>+8.8%</td>
+              </tr>
+              <tr class="bg-slate-50 font-bold">
+                <td class="metric-name">당기순이익 (연결)</td>
+                <td>486.3</td>
+                <td class="highlight-col">536.6</td>
+                <td class="text-emerald-600">+10.3%</td>
+                <td>841.7</td>
+                <td class="highlight-col">962.0</td>
+                <td class="text-emerald-600 font-bold">+14.3%</td>
+              </tr>
+              <tr>
+                <td class="metric-name">- 지배주주순이익</td>
+                <td>490.7</td>
+                <td>513.8</td>
+                <td>+4.7%</td>
+                <td>854.6</td>
+                <td>926.6</td>
+                <td>+8.4%</td>
+              </tr>
+              <tr class="font-bold text-slate-900">
+                <td class="metric-name">기본주당순이익 (EPS)</td>
+                <td>4,442 원</td>
+                <td class="highlight-col font-extrabold">4,732 원</td>
+                <td>+6.5%</td>
+                <td>7,730 원</td>
+                <td class="highlight-col font-extrabold">8,523 원</td>
+                <td>+10.3%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section 2: Balance Sheet Quality -->
+      <section class="mb-10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-scale-balanced"></i> 2. 대차대조표 퀄리티 및 재무 건전성 지표 (2026.06 말)
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div class="card">
+            <h3 class="font-bold text-slate-900 text-base mb-3 flex items-center gap-2">
+              <i class="fa-solid fa-pie-chart text-emerald-600"></i> 자산 구조 구성 (총자산 1.65조 원)
+            </h3>
+            <div class="h-64 flex items-center justify-center">
+              <canvas id="assetMixChart"></canvas>
+            </div>
+          </div>
+
+          <div class="card flex flex-col justify-between">
+            <div>
+              <h3 class="font-bold text-slate-900 text-base mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-shield-check text-blue-600"></i> 핵심 안정성 비율 점검
+              </h3>
+              <div class="space-y-3 text-sm">
+                <div class="flex justify-between items-center p-2.5 bg-slate-50 rounded-lg">
+                  <span class="text-slate-600">부채비율 (부채총계 / 자본총계)</span>
+                  <span class="font-extrabold text-emerald-700 text-base">38.39 % (초우량)</span>
+                </div>
+                <div class="flex justify-between items-center p-2.5 bg-slate-50 rounded-lg">
+                  <span class="text-slate-600">유동비율 (유동자산 / 유동부채)</span>
+                  <span class="font-bold text-blue-700 text-base">218.85 %</span>
+                </div>
+                <div class="flex justify-between items-center p-2.5 bg-slate-50 rounded-lg">
+                  <span class="text-slate-600">보유 유동성 (현금 + 단기금융)</span>
+                  <span class="font-bold text-slate-900 text-base">1,485.6 억 원</span>
+                </div>
+                <div class="flex justify-between items-center p-2.5 bg-slate-50 rounded-lg">
+                  <span class="text-slate-600">누적 이익잉여금</span>
+                  <span class="font-bold text-slate-900 text-base">9,940.4 억 원 (자본의 83%)</span>
+                </div>
+              </div>
+            </div>
+            <div class="callout callout-success mt-4">
+              <div class="text-xs font-bold mb-1">💡 대차대조표 총평</div>
+              <div class="text-xs">
+                장치 산업임에도 불구하고 부채비율 38.4%, 유동비율 218.8%로 사실상 무차입에 준하는 재무 건전성을 확보하고 있으며, 1조 원에 달하는 막대한 이익잉여금은 차세대 설비투자의 내부 조달을 완벽히 뒷받침합니다.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Historical Trend & Future Projections -->
+      <section class="mb-10">
+        <h2 class="section-title">
+          <i class="fa-solid fa-chart-simple"></i> 3. 3개년 연간 실적 추이 및 2026년 연간 전망치 (컨센서스)
+        </h2>
+
+        <div class="card mb-6">
+          <h3 class="font-bold text-slate-900 text-base mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-chart-column text-blue-600"></i> 연간 매출액 & 영업이익 추이 (2024 ~ 2026E)
+          </h3>
+          <div class="h-72">
+            <canvas id="annualTrendChart"></canvas>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th class="metric-head">결산 연도</th>
+                <th>매출액</th>
+                <th>영업이익</th>
+                <th>영업이익률 (OPM)</th>
+                <th>당기순이익</th>
+                <th>주당배당금 (DPS)</th>
+                <th>배당성향</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="metric-name">2024년 (제45기 결산)</td>
+                <td>7,764 억 원</td>
+                <td>1,288 억 원</td>
+                <td>16.59%</td>
+                <td>1,052 억 원</td>
+                <td class="font-bold">2,100 원</td>
+                <td>21.5%</td>
+              </tr>
+              <tr>
+                <td class="metric-name">2025년 (제46기 결산)</td>
+                <td>8,840 억 원</td>
+                <td>1,562 억 원</td>
+                <td>17.67%</td>
+                <td>1,320 억 원</td>
+                <td class="font-bold">2,100 원</td>
+                <td>17.2%</td>
+              </tr>
+              <tr class="bg-emerald-50 font-bold">
+                <td class="metric-name text-emerald-900">2026년 (수정E 전망치)</td>
+                <td class="highlight-col font-extrabold">9,950 ~ 10,099 억 원</td>
+                <td class="highlight-col font-extrabold">1,980 ~ 2,120 억 원</td>
+                <td class="text-emerald-800 font-extrabold">19.9% ~ 21.0%</td>
+                <td class="highlight-col">1,750 억 원</td>
+                <td class="font-extrabold text-emerald-700">2,600 원 (+23.8%)</td>
+                <td>22.5%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="font-bold text-sm mb-1">📌 주주환원 정책 확대 고지</div>
+          <div class="text-xs leading-relaxed">
+            한솔케미칼은 2026년 들어 <strong>주당 배당금을 기존 2,100원에서 2,600원으로 +23.8% 전격 상향</strong>하였으며, 자사주 매입 및 소각을 병행하여 코리아 디스카운트 해소 및 주주가치 제고에 적극 나서고 있습니다. 상반기 순이익 962억 원 달성으로 연간 배당 재원은 이미 초과 확보된 상태입니다.
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-50 border-t border-slate-200 p-6 text-xs text-slate-500 flex flex-wrap justify-between items-center gap-2">
+      <div><strong>데이터 출처:</strong> 금융감독원 전자공시시스템(DART) K-IFRS 연결 재무제표, 증권가 컨센서스 집계</div>
+      <div>한솔케미칼(014680) 기업분석 보고서 (에이전트 4: 재무 심층 분석)</div>
+    </footer>
+  </div>
+
+  <script>
+    // Asset Mix Doughnut Chart
+    const ctxAsset = document.getElementById('assetMixChart').getContext('2d');
+    new Chart(ctxAsset, {
+      type: 'doughnut',
+      data: {
+        labels: ['유형설비자산 (8,928억)', '현금/단기금융 (1,486억)', '재고자산 (1,424억)', '매출채권 (1,304억)', '관계기업/기타 (3,397억)'],
+        datasets: [{
+          data: [54.0, 9.0, 8.6, 7.9, 20.5],
+          backgroundColor: ['#1e3a8a', '#10b981', '#f59e0b', '#0284c7', '#94a3b8'],
+          borderWidth: 2,
+          borderColor: '#ffffff'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } },
+          tooltip: {
+            callbacks: { label: c => ' ' + c.label + ': ' + c.raw + '%' }
+          }
+        },
+        cutout: '60%'
+      }
+    });
+
+    // Annual Trend Bar/Line Combo Chart
+    const ctxTrend = document.getElementById('annualTrendChart').getContext('2d');
+    new Chart(ctxTrend, {
+      type: 'bar',
+      data: {
+        labels: ['2024년', '2025년', '2026년(E)'],
+        datasets: [
+          {
+            type: 'bar',
+            label: '매출액 (억원)',
+            data: [7764, 8840, 10050],
+            backgroundColor: 'rgba(30, 58, 138, 0.75)',
+            borderRadius: 6,
+            yAxisID: 'y'
+          },
+          {
+            type: 'bar',
+            label: '영업이익 (억원)',
+            data: [1288, 1562, 2050],
+            backgroundColor: 'rgba(16, 185, 129, 0.85)',
+            borderRadius: 6,
+            yAxisID: 'y'
+          },
+          {
+            type: 'line',
+            label: '영업이익률 (OPM %)',
+            data: [16.59, 17.67, 20.40],
+            borderColor: '#dc2626',
+            backgroundColor: '#dc2626',
+            borderWidth: 3,
+            tension: 0.2,
+            pointRadius: 6,
+            yAxisID: 'y1'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            position: 'left',
+            title: { display: true, text: '금액 (억 원)' }
+          },
+          y1: {
+            position: 'right',
+            min: 10,
+            max: 25,
+            grid: { drawOnChartArea: false },
+            ticks: { callback: v => v + '%' },
+            title: { display: true, text: '영업이익률 (%)' }
+          }
+        },
+        plugins: {
+          legend: { position: 'top' }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
