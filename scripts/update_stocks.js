@@ -4,13 +4,17 @@ const path = require('path');
 const HTML_PATH = path.join(__dirname, '..', 'semiconductor_stock_returns.html');
 const JSON_PATH = path.join(__dirname, '..', 'stocks_data.json');
 
-async function fetchStockHistory(code) {
+async function fetchStockFullData(code) {
   const headers = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' };
-  const [r1, r2] = await Promise.all([
-    fetch(`https://m.stock.naver.com/api/stock/${code}/price?page=1`, { headers }).then(r => r.json()),
-    fetch(`https://m.stock.naver.com/api/stock/${code}/price?page=2`, { headers }).then(r => r.json())
+  const [r1, r2, intData] = await Promise.all([
+    fetch(`https://m.stock.naver.com/api/stock/${code}/price?page=1`, { headers }).then(r => r.json()).catch(() => []),
+    fetch(`https://m.stock.naver.com/api/stock/${code}/price?page=2`, { headers }).then(r => r.json()).catch(() => []),
+    fetch(`https://m.stock.naver.com/api/stock/${code}/integration`, { headers }).then(r => r.json()).catch(() => null)
   ]);
-  return [...r1, ...r2];
+  return {
+    history: [...r1, ...r2],
+    integration: intData
+  };
 }
 
 async function updateStocks() {
@@ -37,19 +41,19 @@ async function updateStocks() {
     const batch = stocks.slice(i, i + 7);
     const results = await Promise.all(batch.map(async (s) => {
       try {
-        const all = await fetchStockHistory(s.code);
-        if (!all || all.length < 31) {
-          console.warn(`[WARN] Incomplete history for ${s.name} (${s.code}). Days: ${all ? all.length : 0}`);
+        const { history, integration } = await fetchStockFullData(s.code);
+        if (!history || history.length < 31) {
+          console.warn(`[WARN] Incomplete history for ${s.name} (${s.code}). Days: ${history ? history.length : 0}`);
           return s;
         }
 
-        const parseNum = (str) => parseInt(String(str).replace(/,/g, ''), 10);
-        const cur = parseNum(all[0].closePrice);
-        const prev = parseNum(all[1].closePrice);
-        const p5 = parseNum(all[5].closePrice);
-        const p10 = parseNum(all[10].closePrice);
-        const p20 = parseNum(all[20].closePrice);
-        const p30 = parseNum(all[30].closePrice);
+        const parseNum = (str) => parseInt(String(str || 0).replace(/,/g, ''), 10);
+        const cur = parseNum(history[0].closePrice);
+        const prev = parseNum(history[1].closePrice);
+        const p5 = parseNum(history[5].closePrice);
+        const p10 = parseNum(history[10].closePrice);
+        const p20 = parseNum(history[20].closePrice);
+        const p30 = parseNum(history[30].closePrice);
 
         const calcRate = (base) => base ? parseFloat((((cur - base) / base) * 100).toFixed(2)) : 0;
         const r5 = calcRate(p5);
@@ -60,24 +64,37 @@ async function updateStocks() {
         const dayChange = cur - prev;
         const dayChangeRate = parseFloat((((cur - prev) / prev) * 100).toFixed(2));
 
-        const d0 = all[0].localTradedAt.replace(/-/g, '');
-        const d5 = all[5].localTradedAt.replace(/-/g, '');
-        const d10 = all[10].localTradedAt.replace(/-/g, '');
-        const d20 = all[20].localTradedAt.replace(/-/g, '');
-        const d30 = all[30].localTradedAt.replace(/-/g, '');
+        const d0 = history[0].localTradedAt.replace(/-/g, '');
+        const d5 = history[5].localTradedAt.replace(/-/g, '');
+        const d10 = history[10].localTradedAt.replace(/-/g, '');
+        const d20 = history[20].localTradedAt.replace(/-/g, '');
+        const d30 = history[30].localTradedAt.replace(/-/g, '');
 
         if (!refDates) {
           refDates = {
-            d0: all[0].localTradedAt,
-            d5: all[5].localTradedAt,
-            d10: all[10].localTradedAt,
-            d20: all[20].localTradedAt,
-            d30: all[30].localTradedAt
+            d0: history[0].localTradedAt,
+            d5: history[5].localTradedAt,
+            d10: history[10].localTradedAt,
+            d20: history[20].localTradedAt,
+            d30: history[30].localTradedAt
           };
         }
 
+        // 52-week High and Low from integration.totalInfos
+        let high52w = 0;
+        let low52w = 0;
+        if (integration && Array.isArray(integration.totalInfos)) {
+          const hItem = integration.totalInfos.find(item => item.code === 'highPriceOf52Weeks');
+          const lItem = integration.totalInfos.find(item => item.code === 'lowPriceOf52Weeks');
+          if (hItem && hItem.value) high52w = parseNum(hItem.value);
+          if (lItem && lItem.value) low52w = parseNum(lItem.value);
+        }
+
+        const rate52wHigh = high52w ? parseFloat((((cur - high52w) / high52w) * 100).toFixed(2)) : 0;
+        const rate52wLow = low52w ? parseFloat((((cur - low52w) / low52w) * 100).toFixed(2)) : 0;
+
         // 30 trading days chart data (chronological: oldest to newest)
-        const chartData = all.slice(0, 30).reverse().map(item => ({
+        const chartData = history.slice(0, 30).reverse().map(item => ({
           date: item.localTradedAt.replace(/-/g, ''),
           close: parseNum(item.closePrice)
         }));
@@ -101,6 +118,10 @@ async function updateStocks() {
           r10,
           r20,
           r30,
+          high52w,
+          low52w,
+          rate52wHigh,
+          rate52wLow,
           chartData
         };
       } catch (err) {
