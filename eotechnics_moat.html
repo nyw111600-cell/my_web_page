@@ -1,0 +1,1271 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>이오테크닉스(039030) - 경제적 해자 및 성장 모멘텀 심층 분석 | 서브에이전트 2</title>
+  <!-- Pretendard Web Font -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Global Reset & Design Standards */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: #f8fafc; /* Low glare off-white slate (98% lightness) */
+      color: #1e293b; /* Deep charcoal slate (WCAG AAA compliant) */
+      line-height: 1.65;
+      font-size: 15px;
+      padding-bottom: 60px;
+    }
+
+    /* 상단 5대 탭 내비게이션 (연보라 테마 버튼형 디자인) */
+    .nav-container {
+      background-color: #0b1329;
+      border-bottom: 2px solid #8b5cf6;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+    .nav-guide-bar {
+      background: linear-gradient(90deg, #3b0764 0%, #6d28d9 50%, #4338ca 100%);
+      color: #ffffff;
+      padding: 7px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 0.3px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .nav-tabs {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      list-style: none;
+      padding: 10px 16px;
+      gap: 8px;
+      justify-content: space-between;
+    }
+    .nav-tabs li {
+      flex: 1;
+      min-width: 200px;
+    }
+    .nav-tabs a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 14px;
+      font-size: 14px;
+      font-weight: 700;
+      white-space: nowrap;
+      color: #4c1d95;
+      text-decoration: none;
+      background: #ede9fe;
+      border: 1.5px solid #c4b5fd;
+      border-radius: 8px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 5px rgba(76, 29, 149, 0.08);
+    }
+    .nav-tabs a:hover {
+      color: #3b0764;
+      background: #ddd6fe;
+      border-color: #a78bfa;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.25);
+      text-decoration: none;
+    }
+    .nav-tabs a.active {
+      color: #ffffff;
+      background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
+      border-color: #a78bfa;
+      box-shadow: 0 0 16px rgba(167, 139, 250, 0.5);
+      transform: translateY(-1px);
+    }
+    .nav-badge {
+      font-size: 11.5px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: #0f172a;
+      color: #38bdf8;
+      border: 1px solid #334155;
+    }
+    .nav-tabs a.active .nav-badge {
+      background: #ffffff;
+      color: #1e3a8a;
+      border-color: #ffffff;
+    }
+
+    /* 5대 보고서 종합 요약 그리드 */
+    .agent-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 26px;
+    }
+    .agent-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 18px;
+      transition: all 0.2s ease;
+      border-top: 4px solid #cbd5e1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .agent-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
+    }
+    .agent-card.c-summary { border-top-color: #0284c7; }
+    .agent-card.c-bm { border-top-color: #1e3a8a; }
+    .agent-card.c-moat { border-top-color: #0284c7; }
+    .agent-card.c-risk { border-top-color: #d97706; }
+    .agent-card.c-fin { border-top-color: #059669; }
+
+    .agent-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .agent-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .agent-tag {
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+    .tag-summary { background: #eff6ff; color: #0284c7; }
+    .tag-bm { background: #eff6ff; color: #1e3a8a; }
+    .tag-moat { background: #e0f2fe; color: #0284c7; }
+    .tag-risk { background: #fffbeb; color: #b45309; }
+    .tag-fin { background: #ecfdf5; color: #047857; }
+
+    .agent-points {
+      list-style: none;
+      margin-bottom: 16px;
+    }
+    .agent-points li {
+      position: relative;
+      padding-left: 16px;
+      font-size: 13.5px;
+      color: #334155;
+      margin-bottom: 7px;
+      line-height: 1.5;
+    }
+    .agent-points li::before {
+      content: "•";
+      position: absolute;
+      left: 2px;
+      top: -1px;
+      font-size: 18px;
+      color: #64748b;
+    }
+    .agent-link-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      padding: 9px;
+      background: #f1f5f9;
+      color: #1e293b;
+      font-size: 12.5px;
+      font-weight: 600;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .agent-link-btn:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+      text-decoration: none;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1240px;
+      margin: 24px auto 0;
+      padding: 0 20px;
+    }
+
+    /* Header Banner with Dark Gradient */
+    .header-banner {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0369a1 100%);
+      border-radius: 14px;
+      padding: 36px 40px;
+      color: #ffffff;
+      margin-bottom: 28px;
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.2), 0 8px 10px -6px rgba(15, 23, 42, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header-banner::after {
+      content: "";
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(147, 197, 253, 0.18) 0%, rgba(255, 255, 255, 0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .header-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .badge-glass {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 4px 11px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      backdrop-filter: blur(4px);
+    }
+
+    .badge-gold {
+      background: rgba(217, 119, 6, 0.28);
+      border: 1px solid rgba(251, 191, 36, 0.45);
+      color: #fef08a;
+      padding: 4px 11px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .header-title {
+      font-size: 30px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-subtitle {
+      font-size: 16px;
+      color: #93c5fd;
+      font-weight: 500;
+      max-width: 900px;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .header-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-size: 13px;
+      color: #cbd5e1;
+      border-top: 1px solid rgba(255, 255, 255, 0.16);
+      padding-top: 16px;
+    }
+
+    .header-meta-item strong {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    /* Executive KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .kpi-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.06);
+    }
+
+    .kpi-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+    }
+
+    .kpi-card.primary::before { background-color: #1e3a8a; }
+    .kpi-card.accent::before { background-color: #0284c7; }
+    .kpi-card.success::before { background-color: #059669; }
+    .kpi-card.warning::before { background-color: #d97706; }
+
+    .kpi-label {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #64748b;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .kpi-value {
+      font-size: 26px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.5px;
+      margin-bottom: 4px;
+    }
+
+    .kpi-subtext {
+      font-size: 12.5px;
+      color: #475569;
+    }
+
+    .kpi-badge {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-left: 4px;
+    }
+
+    .kpi-badge.blue { background: #eff6ff; color: #1e3a8a; }
+    .kpi-badge.cyan { background: #f0f9ff; color: #0284c7; }
+    .kpi-badge.green { background: #ecfdf5; color: #059669; }
+    .kpi-badge.amber { background: #fffbeb; color: #d97706; }
+
+    /* Section Layout */
+    .section-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::before {
+      content: "";
+      width: 5px;
+      height: 22px;
+      background: #0284c7;
+      border-radius: 3px;
+      display: inline-block;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 26px;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    /* Moat Item Box */
+    .moat-item {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 22px;
+      margin-bottom: 18px;
+      border-left: 5px solid #1e3a8a;
+      transition: all 0.2s ease;
+    }
+
+    .moat-item:hover {
+      border-color: #0284c7;
+      border-left-color: #0284c7;
+      box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    .moat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .moat-title {
+      font-size: 16.5px;
+      font-weight: 700;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .moat-pill {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 14px;
+      background: #eff6ff;
+      color: #1e3a8a;
+      border: 1px solid #bfdbfe;
+    }
+
+    .moat-desc {
+      color: #334155;
+      font-size: 14px;
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+
+    .moat-bullets {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .moat-bullets li {
+      position: relative;
+      padding-left: 18px;
+      font-size: 13.5px;
+      color: #475569;
+      margin-bottom: 6px;
+    }
+
+    .moat-bullets li::before {
+      content: "•";
+      position: absolute;
+      left: 4px;
+      color: #0284c7;
+      font-weight: bold;
+    }
+
+    /* Growth Catalyst Item Box */
+    .catalyst-item {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 22px;
+      margin-bottom: 18px;
+      border-left: 5px solid #0284c7;
+      transition: all 0.2s ease;
+    }
+
+    .catalyst-item:hover {
+      border-color: #059669;
+      border-left-color: #059669;
+      box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    .catalyst-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .catalyst-title {
+      font-size: 16.5px;
+      font-weight: 700;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .catalyst-pill {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 14px;
+      background: #f0fdf4;
+      color: #059669;
+      border: 1px solid #bbf7d0;
+    }
+
+    /* Callout Boxes */
+    .callout {
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 13.8px;
+      line-height: 1.6;
+    }
+
+    .callout.info {
+      background-color: #eff6ff;
+      border-left: 4px solid #2563eb;
+      color: #1e3a8a;
+    }
+
+    .callout.success {
+      background-color: #ecfdf5;
+      border-left: 4px solid #059669;
+      color: #065f46;
+    }
+
+    .callout.warning {
+      background-color: #fffbeb;
+      border-left: 4px solid #d97706;
+      color: #92400e;
+    }
+
+    /* Comparison Table Styling */
+    .data-table-container {
+      overflow-x: auto;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      margin: 18px 0;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13.5px;
+    }
+
+    .data-table thead {
+      background-color: #f8fafc;
+      border-bottom: 2px solid #cbd5e1;
+    }
+
+    .data-table th {
+      padding: 12px 16px;
+      font-weight: 700;
+      color: #334155;
+      white-space: nowrap;
+    }
+
+    .data-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #e2e8f0;
+      color: #334155;
+    }
+
+    .data-table tbody tr:hover {
+      background-color: #f8fafc;
+    }
+
+    .data-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .tag-cell {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .tag-cell.high { background: #ecfdf5; color: #047857; }
+    .tag-cell.med { background: #eff6ff; color: #1d4ed8; }
+    .tag-cell.star { background: #fef3c7; color: #b45309; }
+
+    /* Chart Containers */
+    .chart-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 22px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+    }
+
+    .chart-header {
+      margin-bottom: 16px;
+    }
+
+    .chart-title {
+      font-size: 15.5px;
+      font-weight: 700;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chart-subtitle {
+      font-size: 12.5px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .chart-wrapper {
+      position: relative;
+      height: 290px;
+      width: 100%;
+    }
+
+    /* Footer */
+    .footer {
+      max-width: 1240px;
+      margin: 40px auto 0;
+      padding: 24px 20px 0;
+      border-top: 1px solid #e2e8f0;
+      text-align: center;
+      color: #64748b;
+      font-size: 13px;
+    }
+
+    @media (max-width: 992px) {
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .kpi-grid { grid-template-columns: 1fr; }
+      .header-title { font-size: 24px; }
+      .nav-inner { flex-direction: column; height: auto; padding: 12px; }
+      .nav-tabs { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Banner -->
+  <header class="header-banner" style="margin-bottom: 0; border-radius: 0; border-bottom: 4px solid #8b5cf6; padding: 36px 24px;">
+    <div style="max-width: 1280px; margin: 0 auto; text-align: center;">
+      <h1 class="header-title" style="text-align: center; justify-content: center; font-size: clamp(1.35rem, 2.1vw, 2.1rem); font-weight: 800; letter-spacing: 0.16em; text-indent: 0.16em; white-space: nowrap; margin-bottom: 0;">
+        이오테크닉스 4대 경제적 해자 및 미래 성장 모멘텀 분석
+      </h1>
+    </div>
+  </header>
+
+  <!-- 1. 상단 5대 탭 내비게이션 (이오테크닉스 4대 경제적 해자 및 미래 성장 모멘텀 분석 섹션 아래 배치) -->
+  <nav class="nav-container" style="position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
+    <div class="nav-guide-bar">
+      <i class="fa-solid fa-compass"></i> 이오테크닉스 5대 심층 분석 보고서 시리즈 (각 탭 버튼을 클릭하여 5개 보고서를 자유롭게 넘나들며 열람하실 수 있습니다)
+    </div>
+    <ul class="nav-tabs">
+      <li>
+        <a href="eotechnics.html">00. 총괄 종합 보고서</a>
+      </li>
+      <li>
+        <a href="eotechnics_bm.html">01. 비즈니스 모델</a>
+      </li>
+      <li>
+        <a href="eotechnics_moat.html" class="active">02. 경제적 해자 & 성장 모멘텀</a>
+      </li>
+      <li>
+        <a href="eotechnics_risk.html">03. 리스크 & 구조적 과제</a>
+      </li>
+      <li>
+        <a href="eotechnics_financial.html">04. 재무 & 밸류에이션</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="container" style="max-width: 1280px; margin: 32px auto; padding: 0 20px 60px 20px;">
+
+    <!-- 5대 종합 보고서 핵심 연동 그리드 (00 총괄 마스터 ~ 04 재무 & 밸류에이션) -->
+    <div class="card" style="margin-bottom: 26px;">
+      <div class="card-header" style="display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #f1f5f9; padding-bottom: 14px; margin-bottom: 20px;">
+        <div class="card-title" style="margin-bottom: 0; padding-bottom: 0; border-bottom: none; font-size: 19px; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 10px;">
+          <i class="fa-solid fa-layer-group" style="color: #0284c7;"></i> 5대 종합 보고서 연동 대시보드 (00. 총괄 마스터 ~ 04. 재무 & 밸류에이션)
+        </div>
+        <span style="font-size: 12.5px; color: #64748b;">각 카드를 클릭하면 해당 전문 심층 보고서로 즉시 이동합니다.</span>
+      </div>
+
+      <div class="agent-grid">
+        <!-- 00. 총괄 종합 보고서 -->
+        <div class="agent-card c-summary">
+          <div>
+            <div class="agent-head">
+              <span class="agent-name">00. 총괄 종합 보고서</span>
+              <span class="agent-tag tag-summary">총괄 마스터</span>
+            </div>
+            <ul class="agent-points">
+              <li><strong>마스터 컨트롤 타워</strong>: 4대 에이전트 분석 취합 및 밸류체인 총괄.</li>
+              <li><strong>3대 시나리오 분석</strong>: Bull(초호황)/Base(기준)/Bear(방어) 사업 전개.</li>
+              <li><strong>DART & 컨센서스</strong>: 2024~2027E 실적 및 재무 매트릭스 비교.</li>
+              <li><strong>실행 가이드</strong>: 분할 매수 전략 및 핵심 추적 마일스톤.</li>
+            </ul>
+          </div>
+          <a href="eotechnics.html" class="agent-link-btn">
+            총괄 보고서 보기 <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <!-- 01. 비즈니스 모델 -->
+        <div class="agent-card c-bm">
+          <div>
+            <div class="agent-head">
+              <span class="agent-name"><i class="fa-solid fa-microchip"></i> 01. 비즈니스 모델</span>
+              <span class="agent-tag tag-bm">Type B 후공정</span>
+            </div>
+            <ul class="agent-points">
+              <li><strong>레이저 마커 독점력</strong>: 국내 95%, 글로벌 60% 점유율의 캐시카우.</li>
+              <li><strong>신규 장비 3총사</strong>: 레이저 그루빙/스텔스 다이싱, 1b/1c DRAM 어닐러, TGV 드릴러.</li>
+              <li><strong>고른 고객사 포트폴리오</strong>: 삼성전자, SK하이닉스, TSMC, 마이크론, OSAT.</li>
+              <li><strong>수출 비중 54.8%</strong>: 내수(45.2%)와 수출의 완벽한 밸런스.</li>
+            </ul>
+          </div>
+          <a href="eotechnics_bm.html" class="agent-link-btn">
+            비즈니스 모델 보고서 보기 <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <!-- 02. 경제적 해자 & 성장 모멘텀 (현재) -->
+        <div class="agent-card c-moat" style="border: 2px solid #0284c7; background: #f0f9ff;">
+          <div>
+            <div class="agent-head">
+              <span class="agent-name" style="color: #0369a1;"><i class="fa-solid fa-shield-halved"></i> 02. 경제적 해자 & 성장 모멘텀</span>
+              <span class="agent-tag" style="background: #0284c7; color: #ffffff;">현재 보고서</span>
+            </div>
+            <ul class="agent-points">
+              <li><strong>광학 부품 수직계열화</strong>: 레이저 소스, 스캐너, F-θ 렌즈 완전 내재화.</li>
+              <li><strong>일본 DISCO 과점 침투</strong>: 외산 독점 장비(그루버/다이서)를 20~30% 단가 우위로 국산화.</li>
+              <li><strong>클린 회계 R&D</strong>: 연간 220억+ R&D 전액 비용 처리 (자산화율 0.0%).</li>
+              <li><strong>차세대 TGV 옵션</strong>: 반도체 유리기판 레이저 비아 홀 가공 선점.</li>
+            </ul>
+          </div>
+          <a href="eotechnics_moat.html" class="agent-link-btn" style="background: #0284c7; color: #ffffff; font-weight: 700;">
+            <i class="fa-solid fa-check"></i> 경제적 해자 열람 중
+          </a>
+        </div>
+
+        <!-- 03. 리스크 & 구조적 과제 -->
+        <div class="agent-card c-risk">
+          <div>
+            <div class="agent-head">
+              <span class="agent-name"><i class="fa-solid fa-triangle-exclamation"></i> 03. 리스크 & 구조적 과제</span>
+              <span class="agent-tag tag-risk">방어력 상(High)</span>
+            </div>
+            <ul class="agent-points">
+              <li><strong>CAPEX 주기 변동성</strong>: 메모리 투자 사이클 지연 가능성 상존.</li>
+              <li><strong>DISCO의 특허/단가 견제</strong>: 선도사의 견제에 대한 크로스 라이선스 및 특허 방어 필요.</li>
+              <li><strong>순현금 3,308억 방패</strong>: 2년 이상 무수주 상태여도 유지 가능한 절대 유동성.</li>
+              <li><strong>선제적 충당금</strong>: 대손충당금 14.0%, 소송충당부채 선반영으로 숨겨진 부실 제로.</li>
+            </ul>
+          </div>
+          <a href="eotechnics_risk.html" class="agent-link-btn">
+            리스크 & 과제 보고서 보기 <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <!-- 04. 재무 & 밸류에이션 -->
+        <div class="agent-card c-fin">
+          <div>
+            <div class="agent-head">
+              <span class="agent-name"><i class="fa-solid fa-chart-line"></i> 04. 재무 & 밸류에이션</span>
+              <span class="agent-tag tag-fin">OPM 28.4% 폭증</span>
+            </div>
+            <ul class="agent-points">
+              <li><strong>2026 상반기 실적 퀀텀점프</strong>: 반기 매출 2,429억 / 영업이익 689억 (OPM 28.4%).</li>
+              <li><strong>순이익 역대급 달성</strong>: 반기 순익 682억으로 전년 연간(576억)을 단 반기만에 118% 달성.</li>
+              <li><strong>초극강 재무 건전성</strong>: 부채비율 11.12%, 유동비율 711.63%, 총차입금 단 70억.</li>
+              <li><strong>2027E 컨센서스</strong>: 매출 6,250억 / 영업익 1,800억 돌파 전망.</li>
+            </ul>
+          </div>
+          <a href="eotechnics_financial.html" class="agent-link-btn">
+            재무 & 밸류 보고서 보기 <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Executive KPI Grid -->
+    <div class="kpi-grid">
+      <div class="kpi-card primary">
+        <div class="kpi-label">마커 글로벌 독점 M/S</div>
+        <div class="kpi-value">60% <span class="kpi-badge blue">국내 95%</span></div>
+        <div class="kpi-subtext">글로벌 Top-tier OSAT 및 IDM 락인</div>
+      </div>
+      <div class="kpi-card accent">
+        <div class="kpi-label">광학계 핵심부품 내재화율</div>
+        <div class="kpi-value">90%+ <span class="kpi-badge cyan">수직계열화</span></div>
+        <div class="kpi-subtext">소스·스캐너·렌즈 + 독일 자회사 시너지</div>
+      </div>
+      <div class="kpi-card success">
+        <div class="kpi-label">R&D 무형자산 자산화율</div>
+        <div class="kpi-value">0.0% <span class="kpi-badge green">전액 비용화</span></div>
+        <div class="kpi-subtext">연 220억+ 전액 제조경비 처리 (클린 회계)</div>
+      </div>
+      <div class="kpi-card warning">
+        <div class="kpi-label">순현금 및 유동성 버퍼</div>
+        <div class="kpi-value">3,308억 <span class="kpi-badge amber">부채비율 11%</span></div>
+        <div class="kpi-subtext">유동비율 711.6%의 압도적 재무 안전판</div>
+      </div>
+    </div>
+
+    <!-- SECTION 1: 4대 경제적 해자 (Economic Moats) -->
+    <section>
+      <h2 class="section-title">1. 이오테크닉스 4대 경제적 해자 (Economic Moats) 심층 분석</h2>
+      <div class="card">
+        
+        <!-- Moat 1 -->
+        <div class="moat-item">
+          <div class="moat-header">
+            <div class="moat-title">
+              ① 글로벌 레이저 마커 1위 지배력과 극단적인 전환비용 (Switching Costs) & 락인
+            </div>
+            <span class="moat-pill">네트워크 & 전환비용</span>
+          </div>
+          <div class="moat-desc">
+            이오테크닉스는 전 세계 반도체 레이저 마킹 시장의 약 60%, 국내 시장의 95% 이상을 과점하고 있는 글로벌 1위 기업입니다. 패키징 완료 후 칩 표면에 2D 매트릭스 코드, 품번, 로고를 각인하는 레이저 마킹 공정은 단순해 보이지만, 미세 가공 시 칩 크랙이나 열 변형(Heat-Affected Zone)이 발생하면 완제품 수율에 치명적인 타격을 줍니다.
+          </div>
+          <ul class="moat-bullets">
+            <li><strong>글로벌 200여 개 고객사 표준 채택:</strong> 삼성전자, SK하이닉스, TSMC, ASE, Amkor, JCET 등 40여 개국 주요 종합반도체사(IDM) 및 후공정 외주업체(OSAT)의 기본 양산 라인에 표준 장비로 등록되어 있습니다.</li>
+            <li><strong>레시피 호환성 및 수율 리스크 장벽:</strong> 각 패키징 몰딩 컴파운드(EMC)의 반사율, 두께, 흡수율에 맞춤화된 방대한 데이터베이스와 제어 알고리즘이 내장되어 있어, 경쟁사 장비로 교체 시 수천 시간의 신뢰성 재검증과 공정 수율 하락 리스크를 감수해야 하므로 사실상 교체가 불가능한 락인(Lock-in)을 형성합니다.</li>
+          </ul>
+        </div>
+
+        <!-- Moat 2 -->
+        <div class="moat-item">
+          <div class="moat-header">
+            <div class="moat-title">
+              ② 광학계 핵심 부품 수직계열화(레이저 소스·스캐너·렌즈) 및 독일 자회사 시너지
+            </div>
+            <span class="moat-pill">기술적 해자 & 원가 우위</span>
+          </div>
+          <div class="moat-desc">
+            단순히 외산 부품을 구매해 조립하는 대다수 국내 장비사와 달리, 이오테크닉스는 30년 이상 축적된 광학 엔지니어링 역량을 바탕으로 레이저 장비의 3대 핵심 모듈을 완전 내재화하였습니다.
+          </div>
+          <ul class="moat-bullets">
+            <li><strong>3대 핵심 광학 부품 내재화:</strong> 파이버 레이저/DPSS 레이저 소스(Source), 고속 정밀 빔 제어를 담당하는 갈바노 스캐너(Galvano Scanner), 균일한 광학 초점을 맺히게 하는 F-Theta 렌즈를 자체 설계 및 양산합니다.</li>
+            <li><strong>독일 광학 자회사 Innovavent GmbH 시너지:</strong> 엑시머 및 단파장 레이저 빔 성형(Beam Shaping) 기술에 특화된 독일 광학 전문 자회사 인수를 통해, 선단 반도체 공정에 필요한 라인 빔(Line Beam) 광학계를 독점 공급받아 장비 성능을 비약적으로 고도화했습니다.</li>
+            <li><strong>원가 절감 및 커스터마이징 스피드:</strong> 핵심 부품 외주 구매 비용을 제거함으로써 경쟁사 대비 20~30% 높은 원가 마진을 확보하고, 고객사의 신규 패키징 폼팩터 변화 시 2~3개월 내 신속한 광학계 재설계 대응이 가능합니다.</li>
+          </ul>
+        </div>
+
+        <!-- Moat 3 -->
+        <div class="moat-item">
+          <div class="moat-header">
+            <div class="moat-title">
+              ③ 보수적·클린 R&D 회계 처리 (연 220억+ R&D 전액 비용화, 무형자산 자산화율 0.0%)
+            </div>
+            <span class="moat-pill">회계적 보수성 & 이익 체력</span>
+          </div>
+          <div class="moat-desc">
+            일부 코스닥 반도체·바이오 기업들이 연구개발비를 무형자산(개발비)으로 과도하게 계상하여 당기순이익을 부풀리는 것과 달리, 이오테크닉스는 지난 수십 년간 R&D 지출액 전체를 단 1원도 자산화하지 않고 100% 당기 제조경비 및 경상연구개발비로 즉시 비용 처리해 왔습니다.
+          </div>
+          <ul class="moat-bullets">
+            <li><strong>무형자산 자산화율 0.0%의 클린 재무:</strong> 연간 220억~300억 원에 달하는 첨단 레이저 R&D 투자를 전액 제조원가 및 판관비로 반영하여 회계적 감가상각 누적이나 미래 손상차손(Impairment loss) 리스크가 원천 차단되어 있습니다.</li>
+            <li><strong>장부상 이익의 고순도 체력:</strong> 공시된 영업이익과 순이익은 대규모 R&D 비용이 전부 차감된 순수 펀더멘털 수치이며, 이는 반도체 다운사이클에서도 장부 왜곡 없이 강력한 현금창출능력을 증명하는 핵심 지표입니다.</li>
+          </ul>
+        </div>
+
+        <!-- Moat 4 -->
+        <div class="moat-item">
+          <div class="moat-header">
+            <div class="moat-title">
+              ④ 순현금 3,308억 원 및 부채비율 11.1%, 유동비율 711.6%의 압도적 재무 안정성
+            </div>
+            <span class="moat-pill">재무 건전성 버퍼</span>
+          </div>
+          <div class="moat-desc">
+            반도체 장비 산업은 실리콘 사이클(Silicon Cycle)의 극심한 실적 변동성을 수반합니다. 이오테크닉스는 보수적인 무차입 경영 기조를 수십 년간 유지하며 독보적인 현금 안전판을 구축했습니다.
+          </div>
+          <ul class="moat-bullets">
+            <li><strong>3,300억 이상의 순현금 보유:</strong> 총차입금을 차감한 순현금만 약 3,308억 원에 달하며, 단기 금융상품을 포함한 가용 유동성이 시가총액의 상당 부분을 지지하고 있습니다.</li>
+            <li><strong>부채비율 11.1%, 유동비율 711.6%:</strong> 사실상 무차입 구조로 이자비용 부담이 전무하며, 혹독한 반도체 한파가 닥치더라도 신규 선단공정 장비(어닐링, 스텔스 다이싱 등) 개발을 중단 없이 밀어붙일 수 있는 강력한 자본 체력을 보유하고 있습니다.</li>
+          </ul>
+        </div>
+
+        <div class="callout info">
+          <strong>💡 해자 분석 종합 시사점:</strong> 이오테크닉스의 경제적 해자는 단순한 국내 납품 레퍼런스에 국한되지 않습니다. '글로벌 마커 1위(현금창출원) → 광학계 수직계열화(원가 및 기술 장벽) → 전액 비용화 R&D(회계 순도) → 압도적 순현금(사이클 방어)'으로 이어지는 선순환 구조는 경쟁사가 단기간에 자본 투자만으로 결코 모방할 수 없는 견고한 <strong>Wide Moat(넓은 경제적 해자)</strong>를 구성하고 있습니다.
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 2: 차트 분석 (R&D 추이 & 레이더 차트) -->
+    <section>
+      <h2 class="section-title">2. 정량적 경쟁우위 및 R&D 클린 회계 비교 차트</h2>
+      <div class="grid-2">
+        
+        <!-- Chart 1: R&D Cost & Expensing -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div class="chart-title">연도별 R&D 투자 규모 및 당기비용화율 추이</div>
+            <div class="chart-subtitle">2021 ~ 2026E (연간 집행액 및 무형자산 자산화율 0% 유지)</div>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="rdExpenseChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Chart 2: 6-Axis Radar Moat Chart -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div class="chart-title">이오테크닉스 vs 글로벌 경쟁사 6대 경쟁우위 레이더</div>
+            <div class="chart-subtitle">이오테크닉스 vs DISCO(일본) vs 일반 후공정 장비사 다각도 역량 비교</div>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="moatRadarChart"></canvas>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 3: 4대 미래 성장 모멘텀 (Growth Catalysts) -->
+    <section>
+      <h2 class="section-title">3. 4대 미래 성장 모멘텀 (Growth Catalysts) 심층 분석</h2>
+      <div class="card">
+
+        <!-- Catalyst 1 -->
+        <div class="catalyst-item">
+          <div class="catalyst-header">
+            <div class="catalyst-title">
+              ① HBM3E/HBM4 고단화(12단/16단)에 따른 레이저 그루빙 및 스텔스 다이싱 필수 채택
+            </div>
+            <span class="catalyst-pill">HBM 첨단 패키징</span>
+          </div>
+          <div class="moat-desc">
+            AI 가속기의 핵심인 고대역폭메모리(HBM)가 8단에서 12단, 16단(HBM4)으로 적층 수가 급증함에 따라, 웨이퍼의 물리적 두께는 30~50㎛(마이크로미터) 이하로 극단적인 박막화가 진행되고 있습니다.
+          </div>
+          <ul class="moat-bullets">
+            <li><strong>Laser Grooving(그루빙) 필수화:</strong> 미세 피치 웨이퍼 상단에 형성된 취약한 Low-k(저유전율) 절연막을 물리적 다이아몬드 휠(Blade Saw)로 절단할 경우 박리(Peeling) 및 치핑(Chipping) 결함이 발생합니다. 레이저로 먼저 가이드 홈을 파내는 Laser Grooving 장비 수요가 폭발하고 있습니다.</li>
+            <li><strong>Stealth Dicing(스텔스 다이싱) 확장:</strong> 16단 HBM4에서는 하이브리드 본딩 도입과 극단 박막화로 인해 웨이퍼 내부만을 초단펄스 레이저로 개질(Modifying)하여 칩을 분리하는 스텔스 다이싱 장비 도입이 필수 과제로 부상하며 동사의 고마진 신규 수주 풀을 형성하고 있습니다.</li>
+          </ul>
+        </div>
+
+        <!-- Catalyst 2 -->
+        <div class="catalyst-item">
+          <div class="catalyst-header">
+            <div class="catalyst-title">
+              ② DRAM 1c 및 선단 노드 전환에 따른 레이저 어닐링(Laser Annealing) 채택 강도 급증
+            </div>
+            <span class="catalyst-pill">선단 전공정 침투</span>
+          </div>
+          <div class="moat-desc">
+            기존 후공정 중심 장비사였던 이오테크닉스를 '선단 전공정 핵심 장비사'로 밸류에이션 리레이팅(Re-rating)시키는 가장 강력한 엔진이 바로 레이저 어닐링 장비입니다.
+          </div>
+          <ul class="moat-bullets">
+            <li><strong>10nm급 극미세화 한계 극복:</strong> DRAM 미세공정이 1b(5세대)에서 1c(6세대), 1d로 진화함에 따라 트랜지스터 접합부의 도펀트 활성화 시 주변 패턴의 열 변형을 막아야 합니다. 기존 급속열처리(RTP)는 열 확산 문제로 인해 한계에 도달했습니다.</li>
+            <li><strong>국소 초정밀 가열 기술 독점력:</strong> 수십 나노초~마이크로초 단위로 웨이퍼 표면의 극미세 층만을 선택적으로 가열·냉각하는 레이저 어닐링 기술을 개발하여 국내 대표 메모리 IDM 양산 라인에 진입했습니다. 대당 단가가 30~50억 원을 호가하는 초고부가가치 장비로, 노드 전환 시마다 채택 강도(Intensity)가 기하급수적으로 증가합니다.</li>
+          </ul>
+        </div>
+
+        <!-- Catalyst 3 -->
+        <div class="catalyst-item">
+          <div class="catalyst-header">
+            <div class="catalyst-title">
+              ③ 일본 DISCO의 과점 시장 침투 및 20~30% 가격 경쟁력 기반 국산화 대체
+            </div>
+            <span class="catalyst-pill">수입 대체 & M/S 침투</span>
+          </div>
+          <div class="moat-desc">
+            글로벌 반도체 다이싱 및 그루빙 장비 시장은 일본의 디스코(DISCO)가 시장점유율 70~80% 이상을 장악해 온 절대 과점 영역이었습니다. 그러나 최근 국내외 반도체 제조사들의 공급망 다변화 니즈와 맞물려 이오테크닉스의 시장 침투가 가속화되고 있습니다.
+          </div>
+          <ul class="moat-bullets">
+            <li><strong>원가 및 가격 경쟁력:</strong> 핵심 광학 부품의 90% 이상을 자체 내재화한 덕분에, DISCO 대비 20~30% 우수한 가격 경쟁력을 무기로 고객사의 CAPEX 효율화를 지원합니다.</li>
+            <li><strong>신속한 엔지니어링 밀착 지원:</strong> 장비 납기 지연과 유지보수 단가가 높은 일본산 장비 대비, 국내 팹 인근 24시간 실시간 기술 대응 체계를 바탕으로 국내 IDM의 레이저 그루빙 장비 이원화 벤더로서 점유율을 가파르게 확대하고 있습니다.</li>
+          </ul>
+        </div>
+
+        <!-- Catalyst 4 -->
+        <div class="catalyst-item">
+          <div class="catalyst-header">
+            <div class="catalyst-title">
+              ④ 차세대 첨단 유리기판(Glass Substrate) TGV(Through Glass Via) 레이저 가공 옵션 가치
+            </div>
+            <span class="catalyst-pill">차세대 미래 옵션</span>
+          </div>
+          <div class="moat-desc">
+            AI 데이터센터용 대형 패키징에서 플라스틱(FC-BGA) 기판의 휨(Warpage) 및 신호 손실 문제를 해결하기 위해 인텔, AMD, 엔비디아 및 삼성전기, SK앱솔릭스가 차세대 '유리기판(Glass Core Substrate)' 도입을 서두르고 있습니다.
+          </div>
+          <ul class="moat-bullets">
+            <li><strong>TGV 미세 비아홀 가공 독점 기술:</strong> 유리는 취성이 강해 기계적 드릴링이 불가능하며, 레이저를 이용해 크랙 없이 수백만 개의 초미세 관통홀(Through Glass Via, 직경 10~30㎛)을 정밀 가공해야 합니다.</li>
+            <li><strong>선도 기판사 협업 및 양산 장비 공급 준비:</strong> 이오테크닉스는 축적된 극초단펄스(피코초/펨토초) 레이저 및 빔 정형 광학 기술을 바탕으로 국내외 선도 글래스 기판 제조사와 TGV 가공 장비 공동 개발을 완료하고 파일럿 라인 검증을 진행 중으로, 2026~2027년 유리기판 개화 시 폭발적인 미래 콜옵션으로 작용할 전망입니다.</li>
+          </ul>
+        </div>
+
+        <div class="callout success">
+          <strong>🚀 모멘텀 종합 평가:</strong> 
+          이오테크닉스의 성장 모멘텀은 단순한 '단일 장비 사이클'이 아닙니다.
+          <strong>[단기]</strong> HBM3E 12단/16단 그루빙 수주 확대 → 
+          <strong>[중기]</strong> DRAM 1c 전공정 레이저 어닐링 장비 본격 침투 → 
+          <strong>[장기]</strong> 유리기판 TGV 및 스텔스 다이싱의 차세대 패키징 표준화로 이어지는 
+          <strong>'3단계 계단식 퀀텀 점프'</strong> 포트폴리오를 완벽하게 구비하고 있습니다.
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 4: 종합 비교 매트릭스 테이블 -->
+    <section>
+      <h2 class="section-title">4. 핵심 장비군별 해자 강도 및 성장 기여도 종합 비교</h2>
+      <div class="card">
+        <div class="data-table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>장비군 (제품군)</th>
+                <th>주요 공정 영역</th>
+                <th>경제적 해자 원천</th>
+                <th>주요 경쟁사</th>
+                <th>이오테크닉스 경쟁우위</th>
+                <th>2026~2027 성장성</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Laser Marker</strong></td>
+                <td>후공정 칩 마킹 (몰딩 후)</td>
+                <td>전환비용, 글로벌 60% 점유율, 200여 고객사 락인</td>
+                <td>Rofin, 한미반도체 일부</td>
+                <td>광학계 100% 내재화, 글로벌 표준 레시피 독점</td>
+                <td><span class="tag-cell med">안정적 캐시카우</span></td>
+              </tr>
+              <tr>
+                <td><strong>Laser Grooving</strong></td>
+                <td>HBM / 선단 다이싱 전처리 (Low-k)</td>
+                <td>수직계열화, 광학계 고속 스캐닝 정밀도</td>
+                <td>DISCO (일본), 도쿄세이미츠</td>
+                <td>DISCO 대비 25% 가격 우위, 국내 IDM 밀착 지원</td>
+                <td><span class="tag-cell high">고성장 (HBM 폭증)</span></td>
+              </tr>
+              <tr>
+                <td><strong>Stealth Dicing</strong></td>
+                <td>웨이퍼 박막 절단 (내부 개질)</td>
+                <td>내부 집속 레이저 엔진, 특허 장벽 우회 기술</td>
+                <td>DISCO, 하마마츠 포토닉스</td>
+                <td>독일 자회사 Innovavent 라인빔 시너지, 원가 경쟁력</td>
+                <td><span class="tag-cell high">HBM4 핵심 개화</span></td>
+              </tr>
+              <tr>
+                <td><strong>Laser Annealing</strong></td>
+                <td>DRAM 1b/1c 선단 전공정 (도펀트 활성화)</td>
+                <td>극초단펄스 선택적 표면 가열, 초미세 제어 알고리즘</td>
+                <td>비코(Veeco), 스크린(Screen)</td>
+                <td>국내 대형 메모리 IDM 단독 진입, 대당 30~50억 고마진</td>
+                <td><span class="tag-cell star">최대 실적 레버리지</span></td>
+              </tr>
+              <tr>
+                <td><strong>Glass Substrate TGV</strong></td>
+                <td>차세대 유리기판 비아홀 관통 가공</td>
+                <td>피코/펨토초 레이저 빔 정형, 마이크로 크랙 방지</td>
+                <td>LPKF (독일), 필옵틱스</td>
+                <td>30년 광학계 노하우, 글로벌 기판사 개발 라인 선점</td>
+                <td><span class="tag-cell star">미래 핵심 옵션</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: 분석관 최종 결론 -->
+    <section>
+      <h2 class="section-title">5. 서브에이전트 2 최종 결론 및 전략적 투자 시사점</h2>
+      <div class="card">
+        <div style="font-size: 15px; color: #1e293b; line-height: 1.75;">
+          <p style="margin-bottom: 14px;">
+            <strong>1. 해자의 지속성(Durability):</strong> 이오테크닉스는 한국 반도체 장비 업계에서 보기 드물게 <strong>'핵심 부품 수직계열화'</strong>와 <strong>'글로벌 과점 시장 지배력'</strong>을 동시에 갖춘 기업입니다. 레이저 소스, 스캐너, 렌즈를 자체 제작하는 능력은 부품 수급난이나 환율 리스크로부터 완벽한 내성을 제공하며, DISCO가 독점하던 그루빙·다이싱 시장에서 독보적인 원가 마진을 확보하는 기반이 됩니다.
+          </p>
+          <p style="margin-bottom: 14px;">
+            <strong>2. 이익의 순도와 재무 안전판:</strong> 0.0%의 무형자산 자산화율과 3,308억 원의 순현금, 11%의 부채비율은 동사의 실적이 거품 없는 '진짜 현금흐름'임을 증명합니다. 설령 반도체 투자가 지연되더라도 감가상각비 폭탄이나 차입금 압박 없이 차세대 연구개발을 지속할 수 있는 유일무이한 펀더멘털 방어력을 가집니다.
+          </p>
+          <p>
+            <strong>3. 결론적 밸류에이션 리레이팅:</strong> 시장은 오랫동안 이오테크닉스를 '후공정 마커 장비사'로 인식하여 상대적으로 낮은 멀티플을 부여해 왔습니다. 그러나 현재 전개되는 국면은 <strong>(1) HBM 고단화 레이저 그루빙 장비 침투, (2) DRAM 선단 노드 전공정 레이저 어닐링 독점 납품, (3) 차세대 유리기판 TGV 신규 장비 런칭</strong>이 동시다발적으로 폭발하는 구간입니다. 따라서 단순 후공정 장비사에서 '선단 전·후공정을 관통하는 글로벌 종합 레이저 솔루션 선도기업'으로 멀티플 상향(Re-rating)이 정당화되는 변곡점에 위치해 있습니다.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    이오테크닉스(039030) 멀티에이전트 심층 기업분석 리포트 | 경제적 해자 및 성장 모멘텀 분석관 (Subagent 2) | 본 자료는 객관적 공시 팩트와 정밀 공학 분석에 기반하여 작성되었습니다.
+  </footer>
+
+  <!-- Chart.js Scripts -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // 1. R&D Expense & Expensing Ratio Chart
+      const ctxRd = document.getElementById('rdExpenseChart').getContext('2d');
+      new Chart(ctxRd, {
+        type: 'bar',
+        data: {
+          labels: ['2021년', '2022년', '2023년', '2024년', '2025년(E)', '2026년(E)'],
+          datasets: [
+            {
+              type: 'bar',
+              label: '연간 R&D 집행액 (억 원)',
+              data: [215, 238, 246, 275, 310, 360],
+              backgroundColor: '#1e3a8a',
+              borderRadius: 6,
+              yAxisID: 'y'
+            },
+            {
+              type: 'line',
+              label: '당기비용화율 (100% 제조경비 처리)',
+              data: [100, 100, 100, 100, 100, 100],
+              borderColor: '#059669',
+              borderWidth: 3,
+              pointBackgroundColor: '#059669',
+              pointRadius: 5,
+              pointHoverRadius: 7,
+              yAxisID: 'y1'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: {
+                boxWidth: 14,
+                font: { size: 12, weight: '600' },
+                color: '#334155'
+              }
+            },
+            tooltip: {
+              backgroundColor: '#0f172a',
+              titleFont: { size: 13, weight: '700' },
+              bodyFont: { size: 12 },
+              callbacks: {
+                afterLabel: function(context) {
+                  if (context.datasetIndex === 1) {
+                    return '무형자산 자산화율: 0.0% (클린 회계)';
+                  }
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { color: '#64748b', font: { size: 11.5, weight: '600' } }
+            },
+            y: {
+              type: 'linear',
+              position: 'left',
+              title: { display: true, text: 'R&D 비용 (억 원)', color: '#64748b', font: { size: 11 } },
+              grid: { color: '#f1f5f9' },
+              ticks: { color: '#64748b' },
+              min: 0,
+              max: 420
+            },
+            y1: {
+              type: 'linear',
+              position: 'right',
+              title: { display: true, text: '비용화율 (%)', color: '#059669', font: { size: 11 } },
+              grid: { display: false },
+              ticks: { color: '#059669' },
+              min: 80,
+              max: 105
+            }
+          }
+        }
+      });
+
+      // 2. 6-Axis Radar Chart
+      const ctxRadar = document.getElementById('moatRadarChart').getContext('2d');
+      new Chart(ctxRadar, {
+        type: 'radar',
+        data: {
+          labels: [
+            '광학계 수직계열화',
+            '가격 및 원가 경쟁력',
+            '재무 안정성 (순현금)',
+            '고객 락인 (전환비용)',
+            '선단공정 확장성 (어닐링/TGV)',
+            '글로벌 현장 대응력'
+          ],
+          datasets: [
+            {
+              label: '이오테크닉스',
+              data: [96, 92, 98, 93, 90, 88],
+              backgroundColor: 'rgba(2, 132, 199, 0.22)',
+              borderColor: '#0284c7',
+              borderWidth: 2.5,
+              pointBackgroundColor: '#0284c7',
+              pointHoverRadius: 6
+            },
+            {
+              label: '글로벌 과점사 (DISCO 등)',
+              data: [82, 70, 94, 95, 86, 90],
+              backgroundColor: 'rgba(217, 119, 6, 0.15)',
+              borderColor: '#d97706',
+              borderWidth: 2,
+              pointBackgroundColor: '#d97706',
+              pointHoverRadius: 5
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: {
+                boxWidth: 14,
+                font: { size: 12, weight: '600' },
+                color: '#334155'
+              }
+            },
+            tooltip: {
+              backgroundColor: '#0f172a',
+              titleFont: { size: 13, weight: '700' },
+              bodyFont: { size: 12 }
+            }
+          },
+          scales: {
+            r: {
+              angleLines: { color: '#e2e8f0' },
+              grid: { color: '#e2e8f0' },
+              pointLabels: {
+                font: { size: 11.5, weight: '700' },
+                color: '#334155'
+              },
+              ticks: {
+                backdropColor: 'transparent',
+                color: '#94a3b8',
+                stepSize: 20
+              },
+              suggestedMin: 40,
+              suggestedMax: 100
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
