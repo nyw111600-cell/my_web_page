@@ -1,0 +1,915 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>파크시스템스 (140860) 비즈니스 모델(BM) 심층 분석 리포트 | 01_business_model</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Pretendard Font -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              DEFAULT: '#1e3a8a',
+              light: '#3b82f6',
+              bg: '#eff6ff'
+            },
+            accent: {
+              DEFAULT: '#0284c7',
+              bg: '#f0f9ff'
+            },
+            navyHeader: '#070d1e'
+          },
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #f8fafc;
+      color: #1e293b;
+      font-family: 'Pretendard', sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    .card-base {
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+      border-radius: 1rem;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-slate-950">
+
+  <!-- ==================== 1. 상단 글로벌 네비게이션 (표준 듀얼라인 헤더) ==================== -->
+  <header class="sticky top-0 z-50 bg-[#f5f3ff]/95 backdrop-blur-md border-b border-purple-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- 1행: 기업명 & 메타 텍스트 바 (높이 56px, 아이콘 Zero) -->
+      <div class="flex items-center justify-between h-14 border-b border-purple-200/70">
+        <div class="flex items-center space-x-3">
+          <span class="text-purple-950 font-bold text-lg tracking-tight">파크시스템스 (Park Systems / 140860)</span>
+          <span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-800 font-medium">코스닥</span>
+        </div>
+        <div class="text-xs text-purple-700 flex items-center space-x-2 font-medium">
+          <span>반도체 전공정 나노계측 원자현미경</span>
+          <span class="text-purple-300">|</span>
+          <span>2026.09 기준</span>
+        </div>
+      </div>
+
+      <!-- 2행: 순수 텍스트 5개 탭 바 (py-2.5, 레이아웃 고정) -->
+      <nav class="flex space-x-1.5 overflow-x-auto py-2.5 text-xs font-semibold custom-scrollbar">
+        <a href="park_systems.html" class="px-4 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition whitespace-nowrap">
+          00. 총괄 리포트
+        </a>
+        <a href="park_systems_bm.html" class="px-4 py-1.5 rounded-lg bg-purple-700 text-white font-bold shadow-sm whitespace-nowrap">
+          01. 비즈니스 모델
+        </a>
+        <a href="park_systems_moat.html" class="px-4 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition whitespace-nowrap">
+          02. 경제적 해자
+        </a>
+        <a href="park_systems_risk.html" class="px-4 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition whitespace-nowrap">
+          03. 리스크 분석
+        </a>
+        <a href="park_systems_financial.html" class="px-4 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition whitespace-nowrap">
+          04. 재무 심층분석
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ==================== 메인 콘텐츠 영역 ==================== -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 flex-grow w-full">
+
+    <!-- 배너 헤더 영역 -->
+    <section class="card-base p-6 sm:p-8 space-y-5">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-1 rounded bg-blue-50 text-blue-900 text-xs font-semibold border border-blue-200">
+            BM 심층 분석관 리포트
+          </span>
+          <span class="px-2.5 py-1 rounded bg-slate-100 text-slate-700 text-xs border border-slate-200">
+            반도체 전/후공정 나노 계측
+          </span>
+        </div>
+        <div class="text-xs text-slate-500 font-medium">
+          데이터 기준: 2025 실적 및 최신 DART 사업보고서
+        </div>
+      </div>
+      <div class="space-y-3">
+        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+          파크시스템스: 원자 단위 계측(AFM)의 독보적 해자와 반도체 선단공정 필수 BM
+        </h1>
+        <p class="text-slate-600 text-sm sm:text-base max-w-5xl leading-relaxed">
+          파크시스템스는 나노미터(nm)를 넘어 서브 옹스트롬(0.01nm) 분해능을 구현하는 글로벌 1위 원자현미경(AFM) 전문 기업입니다. 
+          반도체 공정이 <strong>GAA(Gate-All-Around) 3D 입체화, 3D V-NAND 고단화, HBM4 하이브리드 본딩</strong>으로 초미세화됨에 따라 
+          기존 전자현미경(SEM)의 한계를 극복하는 <strong>대체 불가능한 양산 인라인(In-line) 핵심 계측 표준</strong>으로 자리잡았습니다.
+        </p>
+      </div>
+    </section>
+
+    <!-- 핵심 KPI 카드 그리드 (4열) -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="card-base p-5 space-y-2">
+        <div class="flex items-center justify-between text-slate-500 text-xs font-semibold uppercase">
+          <span>글로벌 AFM 시장 지위</span>
+          <span class="text-amber-700 font-bold">독보적 1위</span>
+        </div>
+        <div class="text-2xl font-black text-slate-900 font-mono">세계 1위 <span class="text-sm font-normal text-slate-500">(25%+)</span></div>
+        <div class="text-xs text-emerald-700 font-semibold bg-emerald-50 border border-emerald-200 px-2 py-1 rounded inline-block">
+          반도체 산업용 AFM 분야 독점적 선도
+        </div>
+      </div>
+
+      <div class="card-base p-5 space-y-2">
+        <div class="flex items-center justify-between text-slate-500 text-xs font-semibold uppercase">
+          <span>산업용 장비 매출 비중</span>
+          <span class="text-blue-700 font-bold">체질 전환 완료</span>
+        </div>
+        <div class="text-2xl font-black text-blue-900 font-mono">70.0% ~ 73%</div>
+        <div class="text-xs text-slate-600">
+          연구용(22%)에서 반도체 양산 중심 체질 전환 완료
+        </div>
+      </div>
+
+      <div class="card-base p-5 space-y-2">
+        <div class="flex items-center justify-between text-slate-500 text-xs font-semibold uppercase">
+          <span>2025 연결 실적 팩트</span>
+          <span class="text-emerald-700 font-bold">사상 최대</span>
+        </div>
+        <div class="text-2xl font-black text-emerald-800 font-mono">2,056억 원</div>
+        <div class="text-xs text-slate-600 flex items-center justify-between">
+          <span>영업이익: <strong class="text-slate-900 font-bold">422억</strong></span>
+          <span class="text-emerald-700 font-bold bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded">OPM 20.5%</span>
+        </div>
+      </div>
+
+      <div class="card-base p-5 space-y-2">
+        <div class="flex items-center justify-between text-slate-500 text-xs font-semibold uppercase">
+          <span>글로벌 탑티어 고객사</span>
+          <span class="text-blue-700 font-bold">티어-1 독점</span>
+        </div>
+        <div class="text-2xl font-black text-slate-900 font-mono">Top 10 중 8개사</div>
+        <div class="text-xs text-slate-600">
+          TSMC, 삼성전자, SK하이닉스, 인텔, 마이크론 등
+        </div>
+      </div>
+    </section>
+
+    <!-- 섹션 1: 기업 개요 및 원자현미경(AFM) 원리 & 계측 장비 내 위상 -->
+    <section class="card-base p-6 sm:p-8 space-y-6">
+      <div class="flex items-center space-x-3 border-b border-slate-200 pb-4">
+        <span class="w-1.5 h-5 bg-blue-800 rounded-full"></span>
+        <h2 class="text-xl font-bold text-slate-900">
+          1. 기업 개요 및 원자현미경(AFM) 작동 원리와 계측 장비 내 위상
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- 좌측: 작동 원리 설명 -->
+        <div class="lg:col-span-7 space-y-4 text-sm leading-relaxed text-slate-700">
+          <p>
+            <strong class="text-slate-900 font-semibold">파크시스템스</strong>는 1997년 박상일 대표(원자현미경 원조 개발자 캘빈 퀘이트 교수 연구실 출신)가 설립한 이래, 오직 나노 계측 및 원자현미경 한 우물만을 파온 세계 최고 권위의 나노 기술 기업입니다.
+          </p>
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <h3 class="text-sm font-bold text-blue-900">
+              원자현미경(AFM, Atomic Force Microscope)의 핵심 물리 메커니즘
+            </h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              AFM은 극미세 탐침(Tip)이 부착된 캔틸레버(Cantilever)가 시편 표면에 수 나노미터 거리로 접근할 때 발생하는 
+              <strong class="text-slate-800">원자 간 상호작용력(반데르발스 힘, van der Waals force)</strong>을 레이저 변위 센서로 감지하여, 표면의 3차원 원자 구조 형상을 
+              <span class="text-emerald-700 font-bold">0.01nm(0.1Å, 서브옹스트롬) 분해능</span>으로 직접 스캔하는 초정밀 장비입니다.
+            </p>
+          </div>
+          <p>
+            파크시스템스만의 독점적 원천기술은 <strong>'True Non-Contact™ (완전 비접촉 모드)'</strong>와 <strong>'XY/Z 분리 스캐너(Decoupled Scanner)'</strong>입니다. 
+            기존의 접촉식(Contact) 또는 태핑(Tapping) 모드는 탐침이 시편을 반복 타격하여 팁 마모와 시편 손상(Scratch)을 유발했으나, 파크시스템스는 탐침과 시편이 닿지 않고 원자 인력 영역에서 공진을 유지하므로 
+            <strong class="text-slate-900">팁 수명 보존, 웨이퍼 손상 제로, 반복 측정의 극단적 신뢰성</strong>을 확보했습니다.
+          </p>
+        </div>
+
+        <!-- 우측: 계측 기술 비교 카드 -->
+        <div class="lg:col-span-5 flex flex-col justify-between p-5 rounded-xl bg-slate-50 border border-slate-200">
+          <div>
+            <span class="text-xs text-blue-800 font-bold uppercase tracking-wider block mb-2">Technological Supremacy</span>
+            <h3 class="text-base font-bold text-slate-900 mb-3">왜 반도체는 SEM/TEM에서 AFM으로 가는가?</h3>
+            <ul class="text-xs space-y-2.5 text-slate-700">
+              <li class="flex items-start">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-600 mt-1.5 mr-2 flex-shrink-0"></span>
+                <span><strong>광학현미경(OM)의 회절 한계:</strong> 200nm 미만 패턴은 광학적으로 식별 불가.</span>
+              </li>
+              <li class="flex items-start">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 mr-2 flex-shrink-0"></span>
+                <span><strong>SEM(전자현미경)의 3D 한계:</strong> 2D 평면 투사 중심이며 높이/단차 계측 불가. 고에너지 전자빔으로 인한 시편 파괴 및 정전기(Charging) 발생.</span>
+              </li>
+              <li class="flex items-start">
+                <span class="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1.5 mr-2 flex-shrink-0"></span>
+                <span><strong>TEM(투과전자현미경)의 파괴성:</strong> 시편을 얇게 쪼개야 하므로 양산 인라인 검사 불가(비가역적 파괴).</span>
+              </li>
+              <li class="flex items-start">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-600 mt-1.5 mr-2 flex-shrink-0"></span>
+                <span><strong>파크시스템스 AFM의 완벽성:</strong> 완전 비파괴(Non-destructive), 진공 불필요(대기압 측정), 완벽한 3D 수직 단차 및 거칠기(Roughness) 측정 가능.</span>
+              </li>
+            </ul>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between text-xs">
+            <span class="text-slate-500">Z축 높이 분해능</span>
+            <span class="text-emerald-700 font-mono font-bold">0.01 nm (원자 1개 직경의 1/10)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 정밀 계측 기술 비교 테이블 -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs text-left text-slate-700 border border-slate-200 rounded-lg overflow-hidden">
+          <thead class="bg-slate-50 text-slate-800 uppercase font-semibold border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4">계측 방식</th>
+              <th class="py-3 px-4">주요 원리</th>
+              <th class="py-3 px-4">수직 분해능(Z축)</th>
+              <th class="py-3 px-4">3D 입체 형상 계측</th>
+              <th class="py-3 px-4">시편 손상 여부</th>
+              <th class="py-3 px-4">양산 라인(In-line) 적용</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <tr class="hover:bg-slate-50 transition">
+              <td class="py-3 px-4 font-semibold text-slate-800">광학 현미경 (OM / WLI)</td>
+              <td class="py-3 px-4">가시광선 파장 반사/간섭</td>
+              <td class="py-3 px-4">~0.1 nm (간섭계 기준)</td>
+              <td class="py-3 px-4 text-emerald-700 font-medium">가능 (단, 수평해상도 열위)</td>
+              <td class="py-3 px-4 text-emerald-700 font-medium">비파괴 (무손상)</td>
+              <td class="py-3 px-4 text-emerald-700 font-medium">광역 고속 스캔 적합</td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition">
+              <td class="py-3 px-4 font-semibold text-slate-800">주사전자현미경 (CD-SEM)</td>
+              <td class="py-3 px-4">전자빔 주사 및 2차 전자 검출</td>
+              <td class="py-3 px-4 text-rose-600">단차 측정 불가 (2D 중심)</td>
+              <td class="py-3 px-4 text-rose-600">불가 (평면 2D 치수 위주)</td>
+              <td class="py-3 px-4 text-amber-600">빔 손상(Beam Shrinkage)</td>
+              <td class="py-3 px-4 text-slate-600">표준 채택 (진공 챔버 필요)</td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition">
+              <td class="py-3 px-4 font-semibold text-slate-800">투과전자현미경 (TEM)</td>
+              <td class="py-3 px-4">박막 통과 전자선 회절 분석</td>
+              <td class="py-3 px-4">~0.05 nm</td>
+              <td class="py-3 px-4 text-amber-600">단면 슬라이스 분석</td>
+              <td class="py-3 px-4 text-rose-600 font-bold">파괴 검사 (시편 절단)</td>
+              <td class="py-3 px-4 text-rose-600 font-bold">양산 불가 (R&D 전용)</td>
+            </tr>
+            <tr class="bg-blue-50/60 border-l-4 border-blue-700 font-medium">
+              <td class="py-3 px-4 font-bold text-blue-900">원자현미경 (Park AFM)</td>
+              <td class="py-3 px-4">원자간 반데르발스 인력 감지</td>
+              <td class="py-3 px-4 text-blue-800 font-mono font-bold">0.01 nm (Sub-Ångström)</td>
+              <td class="py-3 px-4 text-emerald-700 font-bold">완벽한 3D 나노 프로파일링</td>
+              <td class="py-3 px-4 text-emerald-700 font-bold">완전 비파괴 (Non-Contact)</td>
+              <td class="py-3 px-4 text-blue-800 font-bold">전/후공정 핵심 양산 표준 채택</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 섹션 2: DART 원천 팩트 - 제품 라인업 및 매출 구성비 추이 -->
+    <section class="card-base p-6 sm:p-8 space-y-6">
+      <div class="flex items-center space-x-3 border-b border-slate-200 pb-4">
+        <span class="w-1.5 h-5 bg-blue-800 rounded-full"></span>
+        <div>
+          <h2 class="text-xl font-bold text-slate-900">2. DART 원천 팩트: 제품 라인업 및 산업용 vs 연구용 매출 구성비 추이</h2>
+          <p class="text-xs text-slate-500">정기 사업보고서 공시 데이터 기반 실적 검증</p>
+        </div>
+      </div>
+
+      <!-- 제품 라인업 상세 카드 그리드 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- 산업용 라인업 -->
+        <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-blue-50 text-blue-800 border border-blue-200">
+              산업용(Industrial) AFM 라인업 — 매출 비중 ~70%
+            </span>
+            <span class="text-xs text-blue-700 font-semibold">반도체 양산 핵심</span>
+          </div>
+          <ul class="space-y-2 text-xs text-slate-700">
+            <li class="p-2.5 rounded bg-white border border-slate-200">
+              <strong class="text-slate-900 text-sm">Park NX-Wafer:</strong> 
+              300mm 반도체 웨이퍼 전용 전자동 인라인 AFM. CMP 공정 후 나노 조도, 디싱(Dishing), 침식(Erosion) 및 패턴 3D 결함 전자동 계측.
+            </li>
+            <li class="p-2.5 rounded bg-white border border-slate-200">
+              <strong class="text-slate-900 text-sm">Park NX-Mask:</strong> 
+              EUV/DUV 포토마스크 펠리클 탈부착 전후 마스크 결함 검측 및 나노 탐침을 통한 물리적 파티클 제거(Nano-repair).
+            </li>
+            <li class="p-2.5 rounded bg-white border border-slate-200">
+              <strong class="text-slate-900 text-sm">Park NX-Hybrid WLI:</strong> 
+              백색광 간섭계(WLI)의 광역 고속 측정과 AFM의 원자단위 초정밀 측정을 융합. HBM 하이브리드 본딩 및 첨단 패키징 표준.
+            </li>
+            <li class="p-2.5 rounded bg-white border border-slate-200">
+              <strong class="text-slate-900 text-sm">Park NX-TSH:</strong> 
+              초대형 글라스 기판, 대면적 OLED/마이크로LED 및 슬롯 다이 코팅 조도 측정 장비.
+            </li>
+          </ul>
+        </div>
+
+        <!-- 연구용 및 기타 라인업 -->
+        <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-slate-100 text-slate-800 border border-slate-200">
+              연구용(Research) & 신기술 라인업 — 매출 비중 ~22%
+            </span>
+            <span class="text-xs text-slate-600 font-semibold">글로벌 R&D 표준</span>
+          </div>
+          <ul class="space-y-2 text-xs text-slate-700">
+            <li class="p-2.5 rounded bg-white border border-slate-200">
+              <strong class="text-slate-900 text-sm">Park FX40:</strong> 
+              AI 기반 자율주행 원자현미경. 시편 배치 시 탐침 정렬, 레이저 포커싱, 튜닝 전 과정을 인공지능 로봇이 전자동 수행.
+            </li>
+            <li class="p-2.5 rounded bg-white border border-slate-200">
+              <strong class="text-slate-900 text-sm">Park NX10 / NX20:</strong> 
+              전 세계 주요 국공립 연구소, 하버드/스탠퍼드/MIT 및 글로벌 종합 테크 연구소의 표준 AFM.
+            </li>
+            <li class="p-2.5 rounded bg-white border border-slate-200">
+              <strong class="text-slate-900 text-sm">Accurion (아큐리온 합병):</strong> 
+              초정밀 액티브 바이브레이션(Active Vibration) 절연 제진대 및 분광 엘립소메트리(SE) 광학 측정 솔루션.
+            </li>
+            <li class="p-2.5 rounded bg-white border border-slate-200">
+              <strong class="text-slate-900 text-sm">소모품 및 기술 용역:</strong> 
+              전용 캔틸레버(탐침), 정밀 센서 키트 및 유지보수 연간 서비스 계약(고수익 캐시카우).
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 차트 2종 (반응형 그리드) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 pt-2">
+        <!-- 차트 1: 연도별 매출 및 영업이익 추이 -->
+        <div class="lg:col-span-7 bg-slate-50 p-5 rounded-xl border border-slate-200">
+          <div class="flex items-center justify-between mb-1">
+            <h3 class="text-sm font-bold text-slate-900">연도별 매출액 및 산업용/연구용 비중 추이 (단위: 억 원)</h3>
+            <span class="text-xs text-slate-500 font-normal">DART 연결 기준</span>
+          </div>
+          <p class="text-xs text-slate-500 mb-4">산업용 장비가 성장을 주도하며 전체 외형과 수익성 레버리지 견인</p>
+          <div class="h-64">
+            <canvas id="revenueTrendChart"></canvas>
+          </div>
+        </div>
+
+        <!-- 차트 2: 2025 매출 구성비 도넛 차트 -->
+        <div class="lg:col-span-5 bg-slate-50 p-5 rounded-xl border border-slate-200">
+          <div class="flex items-center justify-between mb-1">
+            <h3 class="text-sm font-bold text-slate-900">2025 제품군별 매출 비중</h3>
+            <span class="text-xs text-slate-500 font-normal">총 2,056억 원</span>
+          </div>
+          <p class="text-xs text-slate-500 mb-4">산업용 반도체 장비 비중 70% 돌파</p>
+          <div class="h-64 flex items-center justify-center">
+            <canvas id="productMixChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- 연도별 상세 실적 데이터 테이블 -->
+      <div class="overflow-x-auto pt-2">
+        <table class="w-full text-xs text-left text-slate-700 border border-slate-200 rounded-lg overflow-hidden">
+          <thead class="bg-slate-50 text-slate-800 font-semibold border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4">연도</th>
+              <th class="py-3 px-4 text-right">총 매출액</th>
+              <th class="py-3 px-4 text-right">산업용 AFM (비중)</th>
+              <th class="py-3 px-4 text-right">연구용 AFM (비중)</th>
+              <th class="py-3 px-4 text-right">소모품/서비스 (기타)</th>
+              <th class="py-3 px-4 text-right">영업이익</th>
+              <th class="py-3 px-4 text-right">영업이익률(OPM)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 font-mono">
+            <tr class="hover:bg-slate-50">
+              <td class="py-2.5 px-4 font-bold text-slate-800">2022년</td>
+              <td class="py-2.5 px-4 text-right text-slate-900 font-semibold">1,246억</td>
+              <td class="py-2.5 px-4 text-right text-blue-700">810억 (65.0%)</td>
+              <td class="py-2.5 px-4 text-right">349억 (28.0%)</td>
+              <td class="py-2.5 px-4 text-right">87억 (7.0%)</td>
+              <td class="py-2.5 px-4 text-right text-emerald-700">326억</td>
+              <td class="py-2.5 px-4 text-right text-emerald-700 font-bold">26.2%</td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="py-2.5 px-4 font-bold text-slate-800">2023년</td>
+              <td class="py-2.5 px-4 text-right text-slate-900 font-semibold">1,448억</td>
+              <td class="py-2.5 px-4 text-right text-blue-700">970억 (67.0%)</td>
+              <td class="py-2.5 px-4 text-right">376억 (26.0%)</td>
+              <td class="py-2.5 px-4 text-right">102억 (7.0%)</td>
+              <td class="py-2.5 px-4 text-right text-emerald-700">277억</td>
+              <td class="py-2.5 px-4 text-right text-emerald-700 font-bold">19.1%</td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="py-2.5 px-4 font-bold text-slate-800">2024년</td>
+              <td class="py-2.5 px-4 text-right text-slate-900 font-semibold">1,751억</td>
+              <td class="py-2.5 px-4 text-right text-blue-700">1,225억 (70.0%)</td>
+              <td class="py-2.5 px-4 text-right">394억 (22.5%)</td>
+              <td class="py-2.5 px-4 text-right">132억 (7.5%)</td>
+              <td class="py-2.5 px-4 text-right text-emerald-700">385억</td>
+              <td class="py-2.5 px-4 text-right text-emerald-700 font-bold">22.0%</td>
+            </tr>
+            <tr class="bg-blue-50/50 hover:bg-blue-50 font-bold">
+              <td class="py-2.5 px-4 text-blue-900">2025년</td>
+              <td class="py-2.5 px-4 text-right text-slate-900 font-black">2,056억</td>
+              <td class="py-2.5 px-4 text-right text-blue-800">1,440억 (70.04%)</td>
+              <td class="py-2.5 px-4 text-right text-slate-700">454억 (22.08%)</td>
+              <td class="py-2.5 px-4 text-right text-slate-700">162억 (7.88%)</td>
+              <td class="py-2.5 px-4 text-right text-emerald-700 font-black">422억</td>
+              <td class="py-2.5 px-4 text-right text-emerald-700 font-black">20.5%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 섹션 3: 반도체 선단공정에서의 필수 채택 이유 (3대 킬러 공정) -->
+    <section class="card-base p-6 sm:p-8 space-y-6">
+      <div class="flex items-center space-x-3 border-b border-slate-200 pb-4">
+        <span class="w-1.5 h-5 bg-blue-800 rounded-full"></span>
+        <div>
+          <h2 class="text-xl font-bold text-slate-900">3. 반도체 선단공정(GAA 2nm/3nm, 3D V-NAND, HBM 하이브리드 본딩) 필수 채택 이유</h2>
+          <p class="text-xs text-slate-500">물리적 미세화 한계 돌파를 위한 비파괴 원자 단위 3D 측정의 독점적 가치</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <!-- 1. GAA 2nm/3nm -->
+        <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="text-blue-900 text-sm font-bold">
+            GAA (Gate-All-Around) 2nm/3nm
+          </div>
+          <div class="text-xs text-slate-700 leading-relaxed space-y-2">
+            <p>
+              <strong class="text-slate-900">구조적 난제:</strong> 핀펫(FinFET)의 3면 제어에서 나노시트(Nanosheet)가 수직으로 다층 적층되는 4면 제어 구조로 진화. 
+              시트 간 수 나노미터(Sub-10nm) 갭(Gap)과 채널 수직 프로파일, 선폭 거칠기(LWR/LER)가 전기적 특성을 좌우함.
+            </p>
+            <div class="p-3 rounded bg-white border border-slate-200 text-xs">
+              <span class="text-blue-800 font-bold block mb-1">AFM 필수성:</span>
+              기존 CD-SEM은 상부 투사 방식이라 하부 나노시트 단차와 바닥면 언더컷(Undercut)을 볼 수 없음. 
+              파크시스템스의 <strong>3D Side-wall AFM</strong> 기술은 탐침을 비스듬히 틸팅하여 수직 측벽 형상 및 원자 단위 거칠기를 비파괴로 정확히 측정.
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. 3D V-NAND 고단화 -->
+        <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="text-emerald-800 text-sm font-bold">
+            3D V-NAND 200단~400단 고단화
+          </div>
+          <div class="text-xs text-slate-700 leading-relaxed space-y-2">
+            <p>
+              <strong class="text-slate-900">구조적 난제:</strong> 200단, 300단, 400단으로 수직 적층됨에 따라 초고종횡비(HAR, High Aspect Ratio > 60:1) 채널 홀 에칭이 요구됨. 
+              다층 산화막/질화막 적층 후 CMP 공정 시 웨이퍼 전면의 초정밀 평탄도가 수율의 핵심.
+            </p>
+            <div class="p-3 rounded bg-white border border-slate-200 text-xs">
+              <span class="text-emerald-700 font-bold block mb-1">AFM 필수성:</span>
+              웨이퍼 전면의 미세 디싱(Dishing)과 에로전(Erosion), 산화막 단차를 <strong>Park NX-Wafer</strong>가 자동 스캔하여 CMP 연마 공정 레시피를 실시간 피드백(APC 연동).
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. HBM & 하이브리드 본딩 -->
+        <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="text-indigo-900 text-sm font-bold">
+            HBM & 하이브리드 본딩 (Cu-Cu)
+          </div>
+          <div class="text-xs text-slate-700 leading-relaxed space-y-2">
+            <p>
+              <strong class="text-slate-900">구조적 난제:</strong> HBM4 및 3D SoC 패키징에서 솔더볼 범프를 없애고 구리(Cu) 패드와 유전체(SiO2/SiCN)를 직접 접합하는 
+              하이브리드 본딩(Hybrid Bonding) 도입. Cu 패드의 함몰 깊이(Dishing/Recess)가 <strong>0.5~2.0nm 허용 오차</strong> 내로 제어되어야 접합 가능.
+            </p>
+            <div class="p-3 rounded bg-white border border-slate-200 text-xs">
+              <span class="text-indigo-700 font-bold block mb-1">AFM 필수성:</span>
+              이 서브나노미터 디싱을 측정할 수 있는 기술은 원자현미경뿐임. 
+              <strong>NX-Hybrid WLI</strong>가 광역 초고속 스캔 후 Cu 패드 수천 개를 자동 계측하는 독점 솔루션으로 글로벌 HBM 라인 전격 투입.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 기술 심층 박스 -->
+      <div class="p-5 rounded-xl bg-blue-50/60 border border-blue-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <h3 class="text-sm font-bold text-blue-900">
+            하이브리드 본딩 양산의 게임체인저: NX-Hybrid WLI (AFM + WLI 융합)
+          </h3>
+          <p class="text-xs text-slate-700 leading-relaxed max-w-4xl">
+            기존 AFM의 유일한 단점이었던 '느린 측정 속도(Throughput)'를 백색광 간섭계(WLI)의 초고속 광역 스캐닝과 결합하여 완벽히 극복했습니다. 
+            WLI로 불량 의심 영역을 초단위로 포착하고 AFM 팁이 즉각 원자 단위로 정밀 프로파일링함으로써 양산 팹(In-line Fab) 전면 배치가 가능해졌습니다.
+          </p>
+        </div>
+        <span class="px-3.5 py-1.5 rounded-lg bg-blue-800 text-white font-bold text-xs whitespace-nowrap shadow-sm">
+          공정 인라인 생산성 10배 향상
+        </span>
+      </div>
+    </section>
+
+    <!-- 섹션 4: 고객사 구조 - 글로벌 파운드리 및 종합반도체사 납품 현황 -->
+    <section class="card-base p-6 sm:p-8 space-y-6">
+      <div class="flex items-center space-x-3 border-b border-slate-200 pb-4">
+        <span class="w-1.5 h-5 bg-blue-800 rounded-full"></span>
+        <div>
+          <h2 class="text-xl font-bold text-slate-900">4. 고객사 구조: 글로벌 파운드리 및 종합반도체사(IDM) 납품 현황</h2>
+          <p class="text-xs text-slate-500">특정 고객사 편중 없는 압도적 글로벌 티어-1 고객사 포트폴리오</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- 매트릭스 테이블 -->
+        <div class="lg:col-span-8 overflow-x-auto">
+          <table class="w-full text-xs text-left text-slate-700 border border-slate-200 rounded-lg overflow-hidden">
+            <thead class="bg-slate-50 text-slate-800 font-semibold border-b border-slate-200">
+              <tr>
+                <th class="py-3 px-4">고객사</th>
+                <th class="py-3 px-4">구분</th>
+                <th class="py-3 px-4">주요 도입 장비</th>
+                <th class="py-3 px-4">적용 공정 및 파트너십 현황</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              <tr class="hover:bg-slate-50">
+                <td class="py-3 px-4 font-bold text-slate-900">TSMC (대만)</td>
+                <td class="py-3 px-4 text-blue-700 font-semibold">파운드리 1위</td>
+                <td class="py-3 px-4 font-mono font-medium">NX-Mask, NX-Wafer</td>
+                <td class="py-3 px-4 text-slate-600">EUV 마스크 리페어 표준 장비 단독 공급, 3nm/2nm 공정 인라인 검사</td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="py-3 px-4 font-bold text-slate-900">삼성전자</td>
+                <td class="py-3 px-4 text-blue-700 font-semibold">메모리 / 파운드리</td>
+                <td class="py-3 px-4 font-mono font-medium">NX-Wafer, Hybrid WLI</td>
+                <td class="py-3 px-4 text-slate-600">GAA 나노시트 3D 계측, 1c D램 및 V9 NAND CMP 전공정 인라인 확대</td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="py-3 px-4 font-bold text-slate-900">SK하이닉스</td>
+                <td class="py-3 px-4 text-rose-700 font-semibold">메모리 (HBM)</td>
+                <td class="py-3 px-4 font-mono font-medium">NX-Hybrid WLI, NX-Wafer</td>
+                <td class="py-3 px-4 text-slate-600">HBM3E/HBM4 어드밴스드 패키징 및 하이브리드 본딩 Cu 패드 단차 검사</td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="py-3 px-4 font-bold text-slate-900">인텔 (Intel)</td>
+                <td class="py-3 px-4 text-indigo-700 font-semibold">IDM / IFS</td>
+                <td class="py-3 px-4 font-mono font-medium">NX-Wafer, NX-Mask</td>
+                <td class="py-3 px-4 text-slate-600">Intel 18A 공정(RibbonFET/PowerVia) 및 Foveros 3D 패키징 계측</td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="py-3 px-4 font-bold text-slate-900">마이크론 (Micron)</td>
+                <td class="py-3 px-4 text-amber-700 font-semibold">메모리 IDM</td>
+                <td class="py-3 px-4 font-mono font-medium">NX-Wafer</td>
+                <td class="py-3 px-4 text-slate-600">1-beta 및 1-gamma nm 차세대 D램 CMP 공정 제어 및 양산 라인 투입</td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="py-3 px-4 font-bold text-slate-900">기타 글로벌 탑티어</td>
+                <td class="py-3 px-4 text-slate-600">글로벌 반도체/소재</td>
+                <td class="py-3 px-4 font-mono font-medium">NX-HDM, FX40 등</td>
+                <td class="py-3 px-4 text-slate-600">소니(CIS 센서), Kioxia, Western Digital, 글로벌파운드리즈 등 납품</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 우측: 매출 지역 다변화 현황 -->
+        <div class="lg:col-span-4 p-5 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between space-y-4">
+          <div>
+            <h3 class="text-sm font-bold text-slate-900 mb-2">지역별 매출 분포 (수출 비중 > 80%)</h3>
+            <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+              국내 단일 대기업 락인 위험이 전혀 없는 전형적인 글로벌 장비 공급사 구조를 갖추고 있습니다.
+            </p>
+            <div class="space-y-3 text-xs">
+              <div>
+                <div class="flex justify-between mb-1 text-slate-700 font-medium">
+                  <span>대만 (TSMC 생태계)</span>
+                  <span class="text-blue-700 font-bold">~32%</span>
+                </div>
+                <div class="w-full bg-slate-200 rounded-full h-2">
+                  <div class="bg-blue-700 h-2 rounded-full" style="width: 32%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-1 text-slate-700 font-medium">
+                  <span>한국 (삼성전자, SK하이닉스)</span>
+                  <span class="text-sky-700 font-bold">~25%</span>
+                </div>
+                <div class="w-full bg-slate-200 rounded-full h-2">
+                  <div class="bg-sky-600 h-2 rounded-full" style="width: 25%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-1 text-slate-700 font-medium">
+                  <span>미국 (인텔, 마이크론, 빅테크 R&D)</span>
+                  <span class="text-indigo-700 font-bold">~23%</span>
+                </div>
+                <div class="w-full bg-slate-200 rounded-full h-2">
+                  <div class="bg-indigo-600 h-2 rounded-full" style="width: 23%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-1 text-slate-700 font-medium">
+                  <span>유럽/중국/일본 등</span>
+                  <span class="text-emerald-700 font-bold">~20%</span>
+                </div>
+                <div class="w-full bg-slate-200 rounded-full h-2">
+                  <div class="bg-emerald-600 h-2 rounded-full" style="width: 20%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-slate-200 text-xs text-slate-500">
+            특정 국가 정치적 분쟁 및 단일 고객사 Capex 다운사이클 완충력 보유
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 섹션 5: 신규 장비 라인업 및 미래 성장 동력 -->
+    <section class="card-base p-6 sm:p-8 space-y-6">
+      <div class="flex items-center space-x-3 border-b border-slate-200 pb-4">
+        <span class="w-1.5 h-5 bg-blue-800 rounded-full"></span>
+        <div>
+          <h2 class="text-xl font-bold text-slate-900">5. 신규 장비 라인업: EUV 마스크 리페어 & 화합물 반도체 웨이퍼 계측</h2>
+          <p class="text-xs text-slate-500">ASP(평균판매단가)와 마진율을 끌어올리는 차세대 성장 로드맵</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- 신규 장비 1: EUV 포토마스크 리페어 (Park NX-Mask) -->
+        <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold px-2 py-0.5 rounded bg-purple-50 text-purple-800 border border-purple-200">
+              High-ASP 신규 장비
+            </span>
+            <span class="text-xs text-purple-700 font-mono font-bold">대당 50억~80억 원 상회</span>
+          </div>
+          <h3 class="text-base font-bold text-slate-900">
+            EUV 포토마스크 리페어 및 결함 계측 (NX-Mask)
+          </h3>
+          <p class="text-xs text-slate-700 leading-relaxed">
+            EUV 노광 공정에 쓰이는 포토마스크는 장당 수억~십억 원을 호가하는 초고가 자산입니다. 
+            EUV 마스크 표면에 단 1개의 수 나노미터 파티클만 앉아도 전 웨이퍼 패턴 불량이 발생합니다. 
+            <strong>NX-Mask</strong>는 AFM 탐침으로 극미세 결함을 탐지한 뒤, 
+            <span class="text-purple-800 font-semibold">나노 미케니컬 스크러빙(Nano-mechanical Scrubbing)</span> 기법으로 마스크 패턴 손상 없이 이물질을 완벽히 긁어내 제거합니다.
+          </p>
+          <div class="p-3 rounded-lg bg-white border border-slate-200 text-xs text-slate-600 space-y-1">
+            <div class="text-slate-900 font-semibold">시장 파급력:</div>
+            <div>- 레이저/이온빔 리페어 대비 열 손상(Thermal Damage) 및 위상 왜곡 제로</div>
+            <div>- High-NA EUV 도입에 따라 마스크 패턴 미세화로 AFM 기반 리페어 수요 폭증</div>
+          </div>
+        </div>
+
+        <!-- 신규 장비 2: 화합물 반도체 및 글라스 기판 계측 -->
+        <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">
+              신소재 확장 영역
+            </span>
+            <span class="text-xs text-emerald-700 font-mono font-bold">전력반도체 & 유리기판</span>
+          </div>
+          <h3 class="text-base font-bold text-slate-900">
+            SiC/GaN 화합물 전력반도체 & 글라스 기판 계측
+          </h3>
+          <p class="text-xs text-slate-700 leading-relaxed">
+            전기차(EV) 및 AI 데이터센터 전력 효율화를 위한 <strong>SiC(탄화규소) 및 GaN(질화갈륨)</strong> 웨이퍼는 기판 표면의 기저면 전위(BPD, Basal Plane Dislocation) 및 결정 결함 제어가 수율을 결정합니다. 
+            파크시스템스는 고경도 화합물 반도체 전용 비파괴 광학/AFM 복합 계측기를 공급 중입니다. 
+            아울러 차세대 반도체 패키징의 핵심 소재인 <strong>글라스 기판(Glass Substrate)</strong>의 표면 조도 및 TPV(Through Glass Via) 홀 깊이 계측 장비도 선제 공급하고 있습니다.
+          </p>
+          <div class="p-3 rounded-lg bg-white border border-slate-200 text-xs text-slate-600 space-y-1">
+            <div class="text-slate-900 font-semibold">시장 파급력:</div>
+            <div>- 고경도 SiC 표면 흠집 없이 원자 레벨 표면 프로파일링 독점 제공</div>
+            <div>- 글라스 기판 대면적 슬롯 다이 코팅 및 미세 단차 계측 솔루션 독점 선점</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 아큐리온(Accurion) 인수 시너지 -->
+      <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <div class="flex items-center space-x-2">
+            <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 text-xs font-bold">M&A 가치 극대화</span>
+            <h3 class="text-sm font-bold text-slate-900">독일 아큐리온(Accurion) 합병을 통한 광학 엘립소메트리 & 액티브 제진 기술 내재화</h3>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            독일의 원천 계측 기술 기업 아큐리온을 인수하여 나노 분광 엘립소메트리(SE, 박막 두께/광학 계측)와 AFM 본체에 필수적인 
+            초정밀 액티브 바이브레이션 절연 제진대를 100% 자체 내재화하였습니다. 원가 절감과 장비 통합 완성도를 극대화했습니다.
+          </p>
+        </div>
+        <div class="text-right whitespace-nowrap">
+          <span class="text-xs text-slate-500 block">장비 원가 절감 &</span>
+          <span class="text-sm font-bold text-blue-800">계측 복합 시너지 100% 발휘</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 섹션 6: 비즈니스 모델(BM) 종합 결론 및 투자 시사점 -->
+    <section class="card-base p-6 sm:p-8 border-l-4 border-l-blue-800 space-y-4">
+      <div class="flex items-center space-x-3">
+        <span class="w-2.5 h-6 bg-blue-800 rounded-full"></span>
+        <h3 class="text-lg font-bold text-slate-900">비즈니스 모델(BM) 분석관 최종 총평: '구조적 필연성'을 지닌 나노 계측 독점주</h3>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-slate-700 leading-relaxed pt-2">
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="text-blue-900 font-bold text-sm">미세화가 만든 독점 영역</div>
+          <p>
+            반도체 공정이 2nm 이하 GAA 및 3D 적층 구조로 진입하면서 기존 SEM은 2차원 투사 한계와 빔 파괴 문제로 서브나노 3D 단차 계측이 불가능해졌습니다. 
+            원자현미경(AFM)은 '있으면 좋은 R&D 장비'에서 <strong>'없으면 수율 확보가 불가능한 양산 인라인 필수 장비'</strong>로 신분이 완전히 격상되었습니다.
+          </p>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="text-emerald-800 font-bold text-sm">전공정과 후공정의 동시 수혜</div>
+          <p>
+            파크시스템스의 BM은 전공정(300mm 웨이퍼 CMP, EUV 마스크 리페어)과 후공정(HBM 하이브리드 본딩, 2.5D/3D 어드밴스드 패키징) 양쪽에서 폭발적인 수주 레버리지를 누립니다. 
+            특히 <strong>NX-Hybrid WLI</strong>는 HBM4 시대의 필수 표준으로 확고히 안착했습니다.
+          </p>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="text-indigo-900 font-bold text-sm">고수익 락인과 안정적 현금흐름</div>
+          <p>
+            산업용 장비 비중이 70%를 돌파하며 20%를 상회하는 높은 영업이익률(OPM)을 구조화했습니다. 
+            또한 누적 설치 장비 증가에 따른 소모품(탐침 캔틸레버) 및 유지보수 서비스 매출이 고마진의 지속 가능한 현금흐름(Recurring Revenue)을 창출하고 있습니다.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== 푸터 ==================== -->
+  <footer class="bg-white border-t border-slate-200 px-4 lg:px-8 py-8 text-xs text-slate-500 mt-8">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>
+        <div class="font-bold text-slate-800 text-sm">
+          파크시스템스 (140860) 비즈니스 모델(BM) 심층 분석관 리포트
+        </div>
+        <p class="mt-1 text-slate-500">
+          본 자료는 DART 공시 및 객관적 리서치 팩트에 기반합니다.
+        </p>
+      </div>
+      <div class="flex space-x-4 font-semibold text-slate-600">
+        <a href="park_systems.html" class="hover:text-blue-800 transition">총괄 리포트</a>
+        <a href="park_systems_moat.html" class="hover:text-blue-800 transition">경제적 해자</a>
+        <a href="park_systems_risk.html" class="hover:text-blue-800 transition">리스크 분석</a>
+        <a href="park_systems_financial.html" class="hover:text-blue-800 transition">재무 심층분석</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== Chart.js 스크립트 ==================== -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // 1. 연도별 매출 및 제품 추이 차트 (Bar + Line)
+      const ctxTrend = document.getElementById('revenueTrendChart').getContext('2d');
+      new Chart(ctxTrend, {
+        type: 'bar',
+        data: {
+          labels: ['2022년', '2023년', '2024년', '2025년'],
+          datasets: [
+            {
+              label: '산업용 AFM (억 원)',
+              data: [810, 970, 1225, 1440],
+              backgroundColor: '#0284c7',
+              borderRadius: 4,
+              stack: 'combined'
+            },
+            {
+              label: '연구용 AFM (억 원)',
+              data: [349, 376, 394, 454],
+              backgroundColor: '#3b82f6',
+              borderRadius: 4,
+              stack: 'combined'
+            },
+            {
+              label: '소모품/용역 (억 원)',
+              data: [87, 102, 132, 162],
+              backgroundColor: '#94a3b8',
+              borderRadius: 4,
+              stack: 'combined'
+            },
+            {
+              label: '영업이익 (억 원)',
+              data: [326, 277, 385, 422],
+              type: 'line',
+              borderColor: '#059669',
+              backgroundColor: 'rgba(5, 150, 105, 0.15)',
+              borderWidth: 3,
+              pointBackgroundColor: '#059669',
+              pointRadius: 4,
+              yAxisID: 'y'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            mode: 'index',
+            intersect: false,
+          },
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: {
+                color: '#475569',
+                font: { size: 11, family: 'Pretendard' },
+                boxWidth: 12
+              }
+            },
+            tooltip: {
+              backgroundColor: '#0f172a',
+              titleColor: '#f8fafc',
+              bodyColor: '#cbd5e1',
+              borderColor: '#334155',
+              borderWidth: 1,
+              padding: 10
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { color: '#64748b', font: { family: 'Pretendard' } }
+            },
+            y: {
+              grid: { color: '#f1f5f9' },
+              ticks: { color: '#64748b', font: { family: 'Pretendard' } },
+              title: { display: true, text: '금액 (억 원)', color: '#64748b' }
+            }
+          }
+        }
+      });
+
+      // 2. 2025 제품군별 매출 비중 차트 (Doughnut)
+      const ctxPie = document.getElementById('productMixChart').getContext('2d');
+      new Chart(ctxPie, {
+        type: 'doughnut',
+        data: {
+          labels: ['산업용 AFM (70.04%)', '연구용 AFM (22.08%)', '소모품/용역/기타 (7.88%)'],
+          datasets: [{
+            data: [1440, 454, 162],
+            backgroundColor: [
+              '#0284c7', // 산업용
+              '#3b82f6', // 연구용
+              '#94a3b8'  // 기타
+            ],
+            borderColor: '#ffffff',
+            borderWidth: 2,
+            hoverOffset: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                color: '#334155',
+                font: { size: 11, family: 'Pretendard' },
+                padding: 14,
+                boxWidth: 12
+              }
+            },
+            tooltip: {
+              backgroundColor: '#0f172a',
+              titleColor: '#f8fafc',
+              bodyColor: '#cbd5e1',
+              borderColor: '#334155',
+              borderWidth: 1,
+              callbacks: {
+                label: function(context) {
+                  let value = context.parsed;
+                  let sum = context.dataset.data.reduce((a, b) => a + b, 0);
+                  let percentage = ((value / sum) * 100).toFixed(1) + '%';
+                  return ` ${context.label.split(' ')[0]}: ${value}억 원 (${percentage})`;
+                }
+              }
+            }
+          },
+          cutout: '68%'
+        }
+      });
+    });
+  </script>
+</body>
+</html>

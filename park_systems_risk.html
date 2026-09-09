@@ -1,0 +1,890 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>파크시스템스 (140860) 리스크 및 구조적 과제 심층 분석 | 03_risks_and_challenges</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Pretendard Font -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              DEFAULT: '#1e3a8a',
+              light: '#3b82f6',
+              bg: '#eff6ff'
+            },
+            accent: {
+              DEFAULT: '#0284c7',
+              bg: '#f0f9ff'
+            },
+            navyHeader: '#070d1e'
+          },
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #f8fafc;
+      color: #1e293b;
+      font-family: 'Pretendard', sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    .card-base {
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+      border-radius: 1rem;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-slate-950">
+
+  <!-- ==================== 1. 상단 글로벌 네비게이션 (표준 듀얼라인 헤더) ==================== -->
+  <header class="sticky top-0 z-50 bg-[#f5f3ff]/95 backdrop-blur-md border-b border-purple-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- 1행: 기업명 & 메타 텍스트 바 (높이 56px, 아이콘 Zero) -->
+      <div class="flex items-center justify-between h-14 border-b border-purple-200/70">
+        <div class="flex items-center space-x-3">
+          <span class="text-purple-950 font-bold text-lg tracking-tight">파크시스템스 (Park Systems / 140860)</span>
+          <span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-800 font-medium">코스닥</span>
+        </div>
+        <div class="text-xs text-purple-700 flex items-center space-x-2 font-medium">
+          <span>반도체 전공정 나노계측 원자현미경</span>
+          <span class="text-purple-300">|</span>
+          <span>2026.09 기준</span>
+        </div>
+      </div>
+
+      <!-- 2행: 순수 텍스트 5개 탭 바 (py-2.5, 레이아웃 고정) -->
+      <nav class="flex space-x-1.5 overflow-x-auto py-2.5 text-xs font-semibold custom-scrollbar">
+        <a href="park_systems.html" class="px-4 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition whitespace-nowrap">
+          00. 총괄 리포트
+        </a>
+        <a href="park_systems_bm.html" class="px-4 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition whitespace-nowrap">
+          01. 비즈니스 모델
+        </a>
+        <a href="park_systems_moat.html" class="px-4 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition whitespace-nowrap">
+          02. 경제적 해자
+        </a>
+        <a href="park_systems_risk.html" class="px-4 py-1.5 rounded-lg bg-purple-700 text-white font-bold shadow-sm whitespace-nowrap">
+          03. 리스크 분석
+        </a>
+        <a href="park_systems_financial.html" class="px-4 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition whitespace-nowrap">
+          04. 재무 심층분석
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ==================== 메인 콘텐츠 영역 ==================== -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 flex-grow w-full">
+
+    <!-- 히어로 배너: 다운사이드 리스크 및 구조적 병목 진단 -->
+    <section class="card-base p-6 sm:p-8 space-y-5">
+      <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 border-b border-slate-100 pb-5">
+        <div class="space-y-2">
+          <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-rose-50 text-rose-800 border border-rose-200">
+            다운사이드 리스크 및 구조적 병목 심층 진단
+          </div>
+          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            파크시스템스 구조적 과제 및 5대 핵심 리스크
+          </h1>
+          <p class="text-slate-600 text-sm sm:text-base max-w-4xl leading-relaxed">
+            원자현미경(AFM) 글로벌 1위의 독점적 해자 뒤에 상존하는 <strong>중국 매출 익스포저(34%)</strong>, 
+            <strong>미국 BIS 대중국 반도체 장비 규제 파급</strong>, 
+            <strong>전방 CAPEX 변동에 따른 실적 럼피니스(Lumpiness)</strong>, 
+            그리고 <strong>고정비 급증에 따른 다운사이클 역레버리지 위험</strong>을 팩트 기반으로 냉철하게 분석합니다.
+          </p>
+        </div>
+
+        <!-- Overall Risk Summary Score Card -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-center min-w-[260px] space-y-1">
+          <div class="text-xs uppercase tracking-wider font-semibold text-slate-500">종합 리스크 등급</div>
+          <div class="text-2xl font-black text-amber-700 font-mono">MODERATE-HIGH</div>
+          <div class="text-xs text-slate-600">대중국 규제 & 수주 변동성 집중 감시</div>
+        </div>
+      </div>
+
+      <!-- Quick KPI Chips -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 pt-2">
+        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+          <div class="text-xs text-slate-500 font-medium">중화권 매출 비중</div>
+          <div class="text-xl font-mono font-bold text-rose-700 mt-1">34.2%</div>
+          <div class="text-[11px] text-slate-500 mt-0.5">BIS 규제 직접 모니터링</div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+          <div class="text-xs text-slate-500 font-medium">해외 수출 의존도</div>
+          <div class="text-xl font-mono font-bold text-blue-800 mt-1">92.1%</div>
+          <div class="text-[11px] text-slate-500 mt-0.5">원/달러 환율 변동성 민감</div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+          <div class="text-xs text-slate-500 font-medium">연간 판관비 (2024년)</div>
+          <div class="text-xl font-mono font-bold text-amber-700 mt-1">756.9억 원</div>
+          <div class="text-[11px] text-slate-500 mt-0.5">2년 전 대비 +55.0% 급증</div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+          <div class="text-xs text-slate-500 font-medium">단일 장비 단가 (ASP)</div>
+          <div class="text-xl font-mono font-bold text-emerald-800 mt-1">15억 ~ 70억+</div>
+          <div class="text-[11px] text-slate-500 mt-0.5">분기 2~3대 인도 지연시 쇼크</div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 col-span-2 sm:col-span-1">
+          <div class="text-xs text-slate-500 font-medium">AFM 스루풋(속도) 제약</div>
+          <div class="text-xl font-mono font-bold text-indigo-800 mt-1">Sample 계측</div>
+          <div class="text-[11px] text-slate-500 mt-0.5">광학 대비 Throughput 병목</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 0. 5X5 리스크 매트릭스 (Heatmap) -->
+    <section class="card-base p-6 sm:p-8 space-y-6">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="w-1.5 h-5 bg-blue-800 rounded-full"></span>
+            <h2 class="text-xl font-bold text-slate-900">파크시스템스 핵심 리스크 매트릭스 (Heatmap)</h2>
+          </div>
+          <p class="text-xs text-slate-500 mt-1">사업 영향도(Impact)와 발생 가능성(Likelihood)에 따른 5대 구조적 위험 평가</p>
+        </div>
+        <div class="flex items-center gap-3 text-xs">
+          <span class="flex items-center gap-1.5 font-medium text-rose-700"><span class="w-2.5 h-2.5 rounded-full bg-rose-600"></span> 치명적(Critical)</span>
+          <span class="flex items-center gap-1.5 font-medium text-amber-700"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> 주의(Major)</span>
+          <span class="flex items-center gap-1.5 font-medium text-blue-700"><span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span> 관리 가능(Moderate)</span>
+        </div>
+      </div>
+
+      <!-- Matrix Grid UI -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <!-- R1 -->
+        <div class="p-4 rounded-xl bg-rose-50/60 border border-rose-200 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-rose-100 text-rose-900 border border-rose-300">RISK 01 · 최고 주의</span>
+            <span class="text-xs text-rose-800 font-semibold">영향도: High | 가능성: High</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base">중국 매출 의존도(34%) 및 미 BIS 규제 강화</h3>
+          <p class="text-xs text-slate-700 leading-relaxed">
+            미국 상무부 산업안보국(BIS)의 대중 첨단 반도체(14nm 이하 로직, 18nm DRAM 등) 장비 통제 범위 확장 시, 파크시스템스의 나노 계측 장비에 대한 ECCN 판정 및 수출 라이선스 지연 리스크가 상존합니다.
+          </p>
+          <div class="pt-2 border-t border-rose-200 flex justify-between text-[11px] text-slate-600">
+            <span>핵심 노출: CXMT, SMIC, YMTC 등</span>
+            <span class="text-rose-800 font-bold">위험계수: 8.8 / 10</span>
+          </div>
+        </div>
+
+        <!-- R2 -->
+        <div class="p-4 rounded-xl bg-amber-50/60 border border-amber-200 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-900 border border-amber-300">RISK 02 · 주요 변수</span>
+            <span class="text-xs text-amber-800 font-semibold">영향도: High | 가능성: Med-High</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base">선단공정 CAPEX 지연 및 실적 럼피니스</h3>
+          <p class="text-xs text-slate-700 leading-relaxed">
+            장비 대당 수십억~100억 원에 달하는 고가 단가 특성상, 파운드리(TSMC, 삼성) 및 IDM의 공정 전환 투자 시기나 팹 준공이 1~2개 분기만 지연되어도 분기 매출/이익 급등락이 발생하는 변동성 위험입니다.
+          </p>
+          <div class="pt-2 border-t border-amber-200 flex justify-between text-[11px] text-slate-600">
+            <span>취약 구간: 분기별 수주 잔고 인도 타이밍</span>
+            <span class="text-amber-800 font-bold">위험계수: 7.9 / 10</span>
+          </div>
+        </div>
+
+        <!-- R3 -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-slate-200 text-slate-800">RISK 03 · 기술/시장</span>
+            <span class="text-xs text-slate-600 font-semibold">영향도: Med | 가능성: Med</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base">AFM Throughput 한계 및 신규 장비 침투</h3>
+          <p class="text-xs text-slate-700 leading-relaxed">
+            원자현미경의 탐침(Tip) 물리 스캔 속도 한계로 인한 인라인 전수 검사 진입 장벽과, EUV 마스크 리페어(NX-Mask) 및 하이브리드 WLI의 전방 양산 라인 퀄(Qual) 통과 속도 지연 리스크입니다.
+          </p>
+          <div class="pt-2 border-t border-slate-200 flex justify-between text-[11px] text-slate-600">
+            <span>대체재: 광학(Optical), CD-SEM, Lasertec</span>
+            <span class="text-blue-800 font-bold">위험계수: 6.8 / 10</span>
+          </div>
+        </div>
+
+        <!-- R4 -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-slate-200 text-slate-800">RISK 04 · 비용/재무</span>
+            <span class="text-xs text-slate-600 font-semibold">영향도: Med | 가능성: Med-High</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base">고급 R&D 인력 고정비 급증 & 역레버리지</h3>
+          <p class="text-xs text-slate-700 leading-relaxed">
+            판관비가 2022년 488억에서 2024년 757억으로 연평균 24% 이상 가파르게 증가. 반도체 다운사이클 도래 시 인건비·연구개발비의 비탄력적 고정비화로 인해 영업이익률(OPM)이 급감할 수 있습니다.
+          </p>
+          <div class="pt-2 border-t border-slate-200 flex justify-between text-[11px] text-slate-600">
+            <span>취약점: 매출 성장 둔화 시 마진 훼손</span>
+            <span class="text-blue-800 font-bold">위험계수: 6.5 / 10</span>
+          </div>
+        </div>
+
+        <!-- R5 -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-slate-200 text-slate-800">RISK 05 · 경쟁/특허</span>
+            <span class="text-xs text-slate-600 font-semibold">영향도: Low-Med | 가능성: Med</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base">글로벌 브루커(Bruker) 추격 및 특허 리스크</h3>
+          <p class="text-xs text-slate-700 leading-relaxed">
+            글로벌 전통 AFM 1위였던 브루커의 산업용 반도체 AFM 반격 공세 및 중국 정부 국산화 보조금을 등에 업은 로컬 장비사의 카피/저가 공세, 그리고 글로벌 특허 분쟁 잠재 리스크입니다.
+          </p>
+          <div class="pt-2 border-t border-slate-200 flex justify-between text-[11px] text-slate-600">
+            <span>주요 경쟁: Bruker Dimension 시리즈</span>
+            <span class="text-emerald-700 font-bold">위험계수: 5.4 / 10</span>
+          </div>
+        </div>
+
+        <!-- Mitigation -->
+        <div class="p-4 rounded-xl bg-blue-50/60 border border-blue-200 flex flex-col justify-between space-y-2">
+          <div>
+            <div class="text-xs font-bold text-blue-900 uppercase">리스크 방어막 (Moat Mitigation)</div>
+            <h3 class="font-bold text-slate-900 text-base mt-1">자체 기술 해자의 리스크 상쇄력</h3>
+            <p class="text-xs text-slate-700 mt-2 leading-relaxed">
+              True Non-contact 원천 특허와 팁 마모 방지, 광학-AFM 하이브리드(WLI) 기술 등 대체 불가능한 수율 해결력으로 기술 진입 장벽을 수성 중이나, <strong>거시 지정학 규제는 기술력만으로 극복 불가능</strong>한 외부 상수입니다.
+            </p>
+          </div>
+          <div class="text-xs text-blue-800 font-bold pt-2 border-t border-blue-200">
+            지속적인 수주 잔고 및 BIS 규제 모니터링 필수 →
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 1: 고객사 CAPEX 사이클 리스크 -->
+    <section class="card-base p-6 sm:p-8 space-y-6">
+      <div class="flex items-center gap-3 border-b border-slate-200 pb-4">
+        <span class="w-1.5 h-5 bg-amber-600 rounded-full"></span>
+        <div>
+          <div class="text-xs text-amber-700 font-semibold uppercase tracking-wider">RISK FACTOR 01</div>
+          <h2 class="text-xl font-bold text-slate-900">고객사 CAPEX 사이클 리스크: 전방 설비투자 변동성 및 실적 럼피니스</h2>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-7 space-y-4 text-sm text-slate-700 leading-relaxed">
+          <p>
+            파크시스템스의 핵심 고객군은 글로벌 최선단 파운드리(TSMC, 삼성전자 파운드리, 인텔) 및 메모리 선도 칩메이커(SK하이닉스, 삼성전자, 마이크론)입니다. 반도체 계측(Metrology) 및 검사(Inspection) 장비는 팹의 신규 건설 및 미세 공정 전환 시점에 대규모 발주(PO)가 집행됩니다.
+          </p>
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <div class="text-xs font-bold text-slate-900">
+              단일 장비 고가화(High-ASP)에 따른 분기 실적 변동성 (Lumpiness)
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              산업용 자동화 AFM(NX-Wafer, NX-Hybrid WLI, NX-Mask 등)은 대당 단가가 <strong>15억 원에서 최고 70억~100억 원</strong>에 달합니다. 고객사 팹 클린룸 반입 일정, 셋업 및 검수(Sign-off) 완료 기준 매출 인식 과정에서 <strong>단 2~3대만 다음 분기로 이연(Push-out)되어도 분기 매출이 100~200억 원 이상 급감</strong>하는 구조적 변동성을 보입니다.
+            </p>
+          </div>
+          <p>
+            과거 2023년 메모리 다운사이클 당시 삼성전자와 SK하이닉스의 극단적인 설비투자 축소로 인해 파크시스템스 역시 분기별 수주 인식 지연을 겪으며 영업이익이 일시적으로 역성장(2022년 326억 → 2023년 276억)한 선례가 있습니다.
+          </p>
+        </div>
+
+        <div class="lg:col-span-5 flex flex-col justify-between p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-4">
+          <div>
+            <h3 class="text-xs font-bold text-slate-900 uppercase mb-3">CAPEX 민감도 분석 포인트</h3>
+            <ul class="space-y-3 text-xs text-slate-700">
+              <li class="flex items-start gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-700 mt-1.5 flex-shrink-0"></span>
+                <div>
+                  <strong class="text-slate-900">파운드리 선단 노드 팹 지연:</strong> TSMC 애리조나 팹, 삼성 테일러 팹의 가동 일정 조정 시 초도 양산 라인 투입 장비 지연 불가피.
+                </div>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-700 mt-1.5 flex-shrink-0"></span>
+                <div>
+                  <strong class="text-slate-900">HBM/첨단 패키징 편중 위험:</strong> 일반 메모리 투자가 부진한 상태에서 HBM3E/HBM4 관련 하이브리드 본딩 계측 장비에 대한 수요 의존도가 과도하게 집중될 우려.
+                </div>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-700 mt-1.5 flex-shrink-0"></span>
+                <div>
+                  <strong class="text-slate-900">리드타임 및 납기 불일치:</strong> 장비 제작 리드타임이 4~6개월 소요되므로 전방 고객사의 급작스러운 발주 취소 시 재고자산 부담 가중.
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="p-3 rounded-lg bg-amber-50 border border-amber-200 text-[11px] text-amber-800 leading-relaxed">
+            전방 CAPEX가 10% 축소될 경우, 파크시스템스의 연간 신규 수주액은 15~20% 내외의 탄력성으로 감소할 수 있는 고베타(High Beta) 노출도 보유.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: 중국 시장 매출 비중 및 BIS 수출 통제 규제 분석 -->
+    <section class="card-base p-6 sm:p-8 space-y-6">
+      <div class="flex items-center gap-3 border-b border-slate-200 pb-4">
+        <span class="w-1.5 h-5 bg-rose-700 rounded-full"></span>
+        <div>
+          <div class="text-xs text-rose-700 font-semibold uppercase tracking-wider">RISK FACTOR 02 (최대 모니터링 변수)</div>
+          <h2 class="text-xl font-bold text-slate-900">중국 시장 매출 비중(34%) 및 미 BIS 반도체 장비 수출 통제 규제 파급</h2>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-6 space-y-4 text-sm text-slate-700 leading-relaxed">
+          <p>
+            파크시스템스의 전체 매출 중 <strong>중화권(중국 본토 및 대만) 비중은 약 34% 수준</strong>에 달하며, 이 중 중국 로컬 파운드리/메모리(SMIC, CXMT 등) 및 연구기관向 매출이 상당한 비중을 차지합니다.
+          </p>
+          <div class="p-4 rounded-xl bg-rose-50 border border-rose-200 space-y-2">
+            <h3 class="text-xs font-bold text-rose-900">
+              미 상무부 BIS(Bureau of Industry and Security) 규제 강화 경로
+            </h3>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              미국은 14nm 이하 로직, 18nm 이하 DRAM, 128단 이상 NAND 제조 장비의 대중국 수출을 엄격히 금지하고 있습니다. 파크시스템스의 AFM은 원자 단위(sub-nm)의 3차원 프로파일링을 지원하는 초정밀 장비이므로, <strong>중국 고객사의 엔드유저(End-user) 심사 강화 및 미국산 핵심 부품 포함 비율(De Minimis Rule) 적용</strong> 시 직접적인 규제 타깃이 될 잠재적 위험이 큽니다.
+            </p>
+          </div>
+          <p>
+            중국 고객사들이 미국의 제재를 피하기 위해 장비 도입을 선제적으로 앞당겨 발주(Pull-in)해 온 '반사 수혜 효과'가 일단락될 경우, 2026~2027년 중국향 매출 절벽(Cliff) 현상이 현실화될 수 있습니다.
+          </p>
+        </div>
+
+        <!-- Regional Sales Distribution Chart -->
+        <div class="lg:col-span-6 flex flex-col justify-between p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-xs font-bold text-slate-900">파크시스템스 글로벌 지역별 매출 비중</h3>
+              <span class="text-[11px] text-rose-700 font-mono font-bold">중화권 34.2%</span>
+            </div>
+            <div class="h-56 relative flex items-center justify-center">
+              <canvas id="regionPieChart"></canvas>
+            </div>
+          </div>
+          <div class="grid grid-cols-4 gap-2 text-center pt-3 border-t border-slate-200 text-xs">
+            <div class="p-2 rounded bg-white border border-slate-200">
+              <div class="text-slate-500 text-[10px]">중화권</div>
+              <div class="font-mono font-bold text-rose-700">34.2%</div>
+            </div>
+            <div class="p-2 rounded bg-white border border-slate-200">
+              <div class="text-slate-500 text-[10px]">북미</div>
+              <div class="font-mono font-bold text-blue-800">25.3%</div>
+            </div>
+            <div class="p-2 rounded bg-white border border-slate-200">
+              <div class="text-slate-500 text-[10px]">한국/아시아</div>
+              <div class="font-mono font-bold text-emerald-700">32.5%</div>
+            </div>
+            <div class="p-2 rounded bg-white border border-slate-200">
+              <div class="text-slate-500 text-[10px]">유럽/기타</div>
+              <div class="font-mono font-bold text-indigo-700">8.0%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: 원자현미경(AFM) 단일 기술 의존도 및 신규 어플리케이션 침투 지연 -->
+    <section class="card-base p-6 sm:p-8 space-y-6">
+      <div class="flex items-center gap-3 border-b border-slate-200 pb-4">
+        <span class="w-1.5 h-5 bg-indigo-700 rounded-full"></span>
+        <div>
+          <div class="text-xs text-indigo-700 font-semibold uppercase tracking-wider">RISK FACTOR 03</div>
+          <h2 class="text-xl font-bold text-slate-900">원자현미경(AFM) 단일 기술 의존도 및 신규 어플리케이션 양산 라인 침투 지연</h2>
+        </div>
+      </div>
+
+      <div class="space-y-4 text-sm text-slate-700 leading-relaxed">
+        <p>
+          파크시스템스의 매출 구조는 AFM 단일 기술 플랫폼에 95% 이상 집중되어 있습니다. AFM은 광학(Optical)이나 전자빔(SEM/TEM)에 비해 <strong>원자 단위 수직/수평 고해상도 3D 이미지 측정</strong>이라는 압도적인 정밀도를 자랑하지만, 치명적인 물리적 아킬레스건을 보유하고 있습니다.
+        </p>
+
+        <!-- 3대 병목 분석 카드 -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-2">
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <h3 class="text-xs font-bold text-slate-900">
+              1. Throughput (처리 속도) 한계
+            </h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              기계적 캔틸레버 팁이 물리적으로 나노 표면을 진동하며 스캔하기 때문에, 광학식 검사(초당 수십만 화소) 대비 스캔 속도가 현저히 느립니다. 따라서 웨이퍼 전수 인라인(In-line) 검사가 불가능하며, 샘플링 연구·분석 장비에 머물러 전체 시장 규모(TAM) 확장에 물리적 천장이 존재합니다.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <h3 class="text-xs font-bold text-slate-900">
+              2. NX-Mask (EUV 마스크 리페어) 침투 지연
+            </h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              EUV 포토마스크의 나노 결함을 물리적으로 제거하는 NX-Mask는 고부가가치 장비이나, 글로벌 팹들은 이미 레이저텍(Lasertec), 칼자이스(Carl Zeiss)의 E-beam/광학 리페어 장비 생태계에 깊이 락인되어 있어, 신규 라인 채택 및 퀄(Qual) 테스트 통과 기간이 장기화되는 위험이 있습니다.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <h3 class="text-xs font-bold text-slate-900">
+              3. NX-Hybrid WLI 양산 라인 안착 난제
+            </h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              백색광 간섭계(WLI)의 넓은 화각과 AFM의 고해상도를 결합한 하이브리드 장비는 첨단 2.5D/3D HBM 패키징의 핵심 병기이나, 대형 칩메이커들의 기존 자동화 광학 검사(AOI) 라인과의 인터페이스 통합 및 소프트웨어 안정성 검증에 예상보다 긴 시일이 소요될 수 있습니다.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: 인재 확보 및 고정비 레버리지 역효과, 원자재 및 환율 변동성 -->
+    <section class="card-base p-6 sm:p-8 space-y-6">
+      <div class="flex items-center gap-3 border-b border-slate-200 pb-4">
+        <span class="w-1.5 h-5 bg-emerald-700 rounded-full"></span>
+        <div>
+          <div class="text-xs text-emerald-700 font-semibold uppercase tracking-wider">RISK FACTOR 04</div>
+          <h2 class="text-xl font-bold text-slate-900">고정비(R&D·고급인력) 레버리지 역효과 및 환율·원자재 취약성</h2>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-6 space-y-4 text-sm text-slate-700 leading-relaxed">
+          <p>
+            파크시스템스는 기술 집약적 나노 장비 기업으로, 전체 임직원의 50% 이상이 R&D 및 고급 애플리케이션 엔지니어(석·박사)로 구성되어 있습니다.
+          </p>
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <h3 class="text-xs font-bold text-slate-900">
+              판관비 급증과 영업 레버리지의 양날의 검 (Negative Operating Leverage)
+            </h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              DART 공시 분석 결과, 판관비는 <strong>2022년 488.2억 원 → 2023년 648.5억 원 → 2024년 756.9억 원</strong>으로 급팽창했습니다. 매출액 대비 판관비율은 40%를 상회합니다. 인건비와 경상연구개발비는 불황기에도 줄이기 어려운 경직성 비용(Sticky Cost)이므로, <strong>매출 성장이 정체되거나 역성장하는 국면에서는 영업이익이 급격히 폭락하는 역레버리지 위험</strong>에 직접 노출됩니다.
+            </p>
+          </div>
+          <div class="grid grid-cols-2 gap-3 text-xs">
+            <div class="p-3 rounded-lg bg-slate-50 border border-slate-200">
+              <div class="text-slate-500 font-medium">환율 민감도 (수출 92%)</div>
+              <div class="text-slate-900 font-semibold mt-1">원/달러 환율 50원 하락 시 연간 영업이익 약 35~50억 원 감소 효과</div>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-50 border border-slate-200">
+              <div class="text-slate-500 font-medium">핵심 부품 조달 리스크</div>
+              <div class="text-slate-900 font-semibold mt-1">초정밀 피에조 스캐너, 레이저 소스 등 해외 원천 부품 병목 및 단가 인상 압박</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Operating Leverage Chart -->
+        <div class="lg:col-span-6 p-5 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between space-y-3">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-xs font-bold text-slate-900">매출액 대비 판관비(고정비) 및 영업이익률(OPM) 추이</h3>
+              <span class="text-[11px] text-amber-700 font-mono font-bold">고정비율 43.2%</span>
+            </div>
+            <div class="h-60 relative">
+              <canvas id="costLeverageChart"></canvas>
+            </div>
+          </div>
+          <div class="text-[11px] text-slate-500 text-center bg-white p-2.5 rounded border border-slate-200">
+            * 2023년 다운사이클 시 판관비 증가로 OPM이 26.2%에서 19.0%로 -7.2%p 급락했던 역레버리지 발생 확인
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: 후발 주자 추격 가능성 및 특허 분쟁 잠재 리스크 대응책 -->
+    <section class="card-base p-6 sm:p-8 space-y-6">
+      <div class="flex items-center gap-3 border-b border-slate-200 pb-4">
+        <span class="w-1.5 h-5 bg-blue-800 rounded-full"></span>
+        <div>
+          <div class="text-xs text-blue-800 font-semibold uppercase tracking-wider">RISK FACTOR 05</div>
+          <h2 class="text-xl font-bold text-slate-900">후발 주자 추격 및 글로벌 특허(IP) 분쟁 잠재 리스크</h2>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-7 space-y-4 text-sm text-slate-700 leading-relaxed">
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <h3 class="text-xs font-bold text-slate-900">
+              글로벌 공룡 브루커(Bruker)와의 반도체 AFM 패권 경쟁
+            </h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              미국의 다국적 분석기기 거인 <strong>브루커(Bruker)</strong>는 학술·연구용 AFM 시장의 전통 최강자이며, 최근 반도체 전공정/후공정 전용 Dimension 시리즈를 앞세워 파크시스템스가 장악한 인라인 자동화 시장 재탈환을 강력히 시도하고 있습니다. 브루커의 압도적인 글로벌 영업망과 자금력은 파크시스템스의 가격 결정력을 압박할 수 있습니다.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <h3 class="text-xs font-bold text-slate-900">
+              중국 로컬 계측 장비사의 카피 및 저가 추격
+            </h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              중국 반도체 국산화 기금(빅펀드 3기)의 천문학적 자금을 수혜받은 중국 로컬 계측 장비사들이 파크시스템스의 구형 장비 구조를 리버스 엔지니어링하여 중저가 레거시 라인에 50% 이하 가격으로 공세를 펼칠 위험이 커지고 있습니다.
+            </p>
+          </div>
+
+          <p class="text-xs text-slate-600">
+            <strong>특허 침해 소송 가능성:</strong> 원자현미경 핵심 특허(True Non-contact, 플렉셔 스캐너 분리 기술 등)에 대한 크로스 라이선스 압박 및 글로벌 소송 발생 시 막대한 법률 비용과 주요 해외 시장 수주 지연 위험이 수반됩니다.
+          </p>
+        </div>
+
+        <div class="lg:col-span-5 p-5 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between space-y-4">
+          <div>
+            <h3 class="text-xs font-bold text-slate-900 mb-3">파크시스템스의 방어 전략 및 대응책</h3>
+            <div class="space-y-2.5 text-xs text-slate-700">
+              <div class="p-3 rounded-lg bg-white border border-slate-200 shadow-sm">
+                <strong class="text-slate-900">1. 특허 만료 방어 및 원천 IP 확장:</strong>
+                <p class="text-slate-600 text-[11px] mt-1 leading-relaxed">기본 AFM 특허 외에 3D 샘플링, 자동 팁 체인저(ATX), 전용 캔틸레버 등 시스템 전반을 촘촘한 특허망으로 에워싸는 에버그리닝(Evergreening) 전략 가동.</p>
+              </div>
+              <div class="p-3 rounded-lg bg-white border border-slate-200 shadow-sm">
+                <strong class="text-slate-900">2. 소모품(Tip) 생태계 락인:</strong>
+                <p class="text-slate-600 text-[11px] mt-1 leading-relaxed">자체 전용 AFM 탐침(Tip) 소모품 공급 체계를 통해 비인가 호환 팁 사용 시 계측 오차를 발생시키는 독점적 소프트웨어 알고리즘 연동.</p>
+              </div>
+              <div class="p-3 rounded-lg bg-white border border-slate-200 shadow-sm">
+                <strong class="text-slate-900">3. 독일 Accurion 인수를 통한 기술 내재화:</strong>
+                <p class="text-slate-600 text-[11px] mt-1 leading-relaxed">원천 광학 계측(타원계측 등) 기술을 결합하여 순수 AFM 업체에서 종합 복합 나노계측 솔루션 기업으로 진화.</p>
+              </div>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-slate-200 text-xs text-slate-600 flex items-center justify-between">
+            <span>대응책 유효성 평가:</span>
+            <span class="font-bold text-emerald-700">단기 방어 우수 / 중장기 모니터링 필요</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stress Test / Scenario Analysis -->
+    <section class="card-base p-6 sm:p-8 space-y-6">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+        <div>
+          <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200 mb-1">
+            리스크 스트레스 테스트
+          </div>
+          <h2 class="text-xl font-bold text-slate-900">2026~2027년 실적 시나리오별 민감도 분석 (Stress Test)</h2>
+          <p class="text-xs text-slate-500 mt-0.5">대중국 BIS 제재 심화 및 전방 파운드리 CAPEX 변동에 따른 실적 둔화 시뮬레이션</p>
+        </div>
+        <div class="text-xs font-mono px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-600">
+          단위: 억 원 / OPM %
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Scenario Chart -->
+        <div class="lg:col-span-7 h-72 relative">
+          <canvas id="scenarioChart"></canvas>
+        </div>
+
+        <!-- Scenario Table -->
+        <div class="lg:col-span-5 overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr class="border-b border-slate-200 text-slate-700 bg-slate-50 font-semibold">
+                <th class="py-2.5 px-3">시나리오</th>
+                <th class="py-2.5 px-3">가정 요건</th>
+                <th class="py-2.5 px-3 text-right">매출액</th>
+                <th class="py-2.5 px-3 text-right">영업이익</th>
+                <th class="py-2.5 px-3 text-right">OPM</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-slate-700">
+              <tr class="hover:bg-slate-50">
+                <td class="py-2.5 px-3 font-bold text-blue-800">Bull Case</td>
+                <td class="py-2.5 px-3 text-[11px] text-slate-500">EUV/HBM WLI 침투 급증, 중국 유지</td>
+                <td class="py-2.5 px-3 text-right font-mono font-bold text-slate-900">2,650억</td>
+                <td class="py-2.5 px-3 text-right font-mono font-bold text-blue-800">650억</td>
+                <td class="py-2.5 px-3 text-right font-mono text-blue-800">24.5%</td>
+              </tr>
+              <tr class="hover:bg-slate-50 bg-emerald-50/30">
+                <td class="py-2.5 px-3 font-bold text-emerald-700">Base Case</td>
+                <td class="py-2.5 px-3 text-[11px] text-slate-500">현재 시장 컨센서스 수준 성장</td>
+                <td class="py-2.5 px-3 text-right font-mono font-bold text-slate-900">2,400억</td>
+                <td class="py-2.5 px-3 text-right font-mono font-bold text-emerald-700">540억</td>
+                <td class="py-2.5 px-3 text-right font-mono text-emerald-700">22.5%</td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="py-2.5 px-3 font-bold text-amber-700">Bear Case</td>
+                <td class="py-2.5 px-3 text-[11px] text-slate-500">중국향 매출 25% 축소, CAPEX 이연</td>
+                <td class="py-2.5 px-3 text-right font-mono font-bold text-slate-900">2,050억</td>
+                <td class="py-2.5 px-3 text-right font-mono font-bold text-amber-700">370억</td>
+                <td class="py-2.5 px-3 text-right font-mono text-amber-700">18.0%</td>
+              </tr>
+              <tr class="hover:bg-slate-50 bg-rose-50/40">
+                <td class="py-2.5 px-3 font-bold text-rose-700">Worst Case</td>
+                <td class="py-2.5 px-3 text-[11px] text-slate-500">BIS 전면 규제, 중화권 -50%, CAPEX 컷</td>
+                <td class="py-2.5 px-3 text-right font-mono font-bold text-slate-900">1,750억</td>
+                <td class="py-2.5 px-3 text-right font-mono font-bold text-rose-700">210억</td>
+                <td class="py-2.5 px-3 text-right font-mono text-rose-700">12.0%</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="mt-3 p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-[11px] text-slate-600 leading-relaxed">
+            * Worst 시나리오 시 고정비(판관비 800억대) 부담으로 OPM이 12.0%까지 급전직하할 수 있음을 입증.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Investor Monitoring Checklist -->
+    <section class="card-base p-6 sm:p-8 space-y-6">
+      <div class="border-b border-slate-200 pb-4">
+        <h2 class="text-xl font-bold text-slate-900">투자자 핵심 리스크 모니터링 체크리스트 (Quarterly Watchpoints)</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+          <h3 class="text-amber-800 font-bold">1. 미 BIS 규제 목록 갱신</h3>
+          <p class="text-slate-600 leading-relaxed">
+            매 분기 미국 상무부 산업안보국의 반도체 장비 통제 리스트 및 ECCN 세부 항목에 계측/원자현미경이 명시적으로 추가되는지 여부 실시간 확인.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+          <h3 class="text-blue-800 font-bold">2. 분기말 수주잔고 추이</h3>
+          <p class="text-slate-600 leading-relaxed">
+            DART 정기보고서의 '수주상황' 항목에서 신규 수주 총액과 납기 지연(Push-out) 여부, 그리고 수주잔고 증감 추세를 분기별로 추적.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+          <h3 class="text-indigo-800 font-bold">3. NX-Mask & WLI 레퍼런스</h3>
+          <p class="text-slate-600 leading-relaxed">
+            글로벌 선단 파운드리 및 주요 HBM 패키징 라인에서의 EUV 마스크 리페어 장비 및 하이브리드 WLI의 실질적 양산 팹 진입 발표 여부 확인.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+          <h3 class="text-emerald-800 font-bold">4. 판관비율 관리 및 환율</h3>
+          <p class="text-slate-600 leading-relaxed">
+            매출액 대비 판관비율이 45%를 초과하는지 여부와 원/달러 환율 1,300원 하회 시의 영업이익률 방어 능력 점검.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== 푸터 ==================== -->
+  <footer class="bg-white border-t border-slate-200 px-4 lg:px-8 py-8 text-xs text-slate-500 mt-8">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-2 text-slate-800 font-semibold text-sm">
+          <span>파크시스템스 (140860) 멀티에이전트 리서치 • 03 리스크 분석</span>
+        </div>
+        <p class="mt-1 text-slate-500">
+          데이터 출처: 금융감독원 전자공시시스템(DART), 미국 상무부 산업안보국(BIS) 통제 규정, 각 증권사 리서치 센터 컨센서스 취합
+        </p>
+      </div>
+      <div class="flex space-x-4 font-semibold text-slate-600">
+        <a href="park_systems.html" class="hover:text-blue-800 transition">총괄 리포트</a>
+        <a href="park_systems_bm.html" class="hover:text-blue-800 transition">비즈니스 모델</a>
+        <a href="park_systems_moat.html" class="hover:text-blue-800 transition">경제적 해자</a>
+        <a href="park_systems_financial.html" class="hover:text-blue-800 transition">재무 심층분석</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== Chart.js Implementations ==================== -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // 1. Regional Sales Pie Chart
+      const ctxRegion = document.getElementById('regionPieChart').getContext('2d');
+      new Chart(ctxRegion, {
+        type: 'doughnut',
+        data: {
+          labels: ['중화권 (중국/대만)', '북미 (미국 선단팹)', '한국 및 기타 아시아', '유럽 및 기타'],
+          datasets: [{
+            data: [34.2, 25.3, 32.5, 8.0],
+            backgroundColor: [
+              '#dc2626', // Red for China risk
+              '#0284c7', // Sky
+              '#059669', // Emerald
+              '#6366f1'  // Indigo
+            ],
+            borderColor: '#ffffff',
+            borderWidth: 2,
+            hoverOffset: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'right',
+              labels: {
+                color: '#334155',
+                font: { size: 11, family: 'Pretendard' },
+                boxWidth: 12,
+                padding: 12
+              }
+            },
+            tooltip: {
+              backgroundColor: '#0f172a',
+              titleColor: '#f8fafc',
+              bodyColor: '#cbd5e1',
+              borderColor: '#334155',
+              borderWidth: 1,
+              callbacks: {
+                label: function(context) {
+                  return ` ${context.label}: ${context.raw}%`;
+                }
+              }
+            }
+          },
+          cutout: '62%'
+        }
+      });
+
+      // 2. SG&A Cost vs Revenue Operating Leverage Chart
+      const ctxCost = document.getElementById('costLeverageChart').getContext('2d');
+      new Chart(ctxCost, {
+        type: 'bar',
+        data: {
+          labels: ['2022년', '2023년', '2024년', '2025년', '2026년(E)'],
+          datasets: [
+            {
+              type: 'line',
+              label: '영업이익률 (OPM %)',
+              data: [26.2, 19.0, 22.0, 20.5, 23.5],
+              borderColor: '#0284c7',
+              backgroundColor: '#0284c7',
+              borderWidth: 2.5,
+              pointRadius: 4,
+              pointHoverRadius: 6,
+              yAxisID: 'y1'
+            },
+            {
+              type: 'bar',
+              label: '매출액 (억 원)',
+              data: [1245, 1448, 1751, 2056, 2400],
+              backgroundColor: '#1e3a8a',
+              borderRadius: 4,
+              yAxisID: 'y'
+            },
+            {
+              type: 'bar',
+              label: '판관비/고정비 (억 원)',
+              data: [488, 649, 757, 850, 940],
+              backgroundColor: '#d97706',
+              borderRadius: 4,
+              yAxisID: 'y'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              ticks: { color: '#64748b', font: { size: 11, family: 'Pretendard' } },
+              grid: { display: false }
+            },
+            y: {
+              type: 'linear',
+              position: 'left',
+              ticks: { color: '#64748b', font: { size: 10, family: 'Pretendard' } },
+              grid: { color: '#f1f5f9' },
+              title: { display: true, text: '금액 (억 원)', color: '#64748b', font: { size: 10, family: 'Pretendard' } }
+            },
+            y1: {
+              type: 'linear',
+              position: 'right',
+              ticks: { color: '#0284c7', font: { size: 10, family: 'Pretendard' }, callback: v => v + '%' },
+              grid: { drawOnChartArea: false },
+              title: { display: true, text: 'OPM (%)', color: '#0284c7', font: { size: 10, family: 'Pretendard' } },
+              min: 10,
+              max: 30
+            }
+          },
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: { color: '#334155', font: { size: 10, family: 'Pretendard' }, boxWidth: 12 }
+            },
+            tooltip: {
+              backgroundColor: '#0f172a',
+              titleColor: '#f8fafc',
+              bodyColor: '#cbd5e1',
+              borderColor: '#334155',
+              borderWidth: 1
+            }
+          }
+        }
+      });
+
+      // 3. Scenario Analysis Chart (Stress Test)
+      const ctxScenario = document.getElementById('scenarioChart').getContext('2d');
+      new Chart(ctxScenario, {
+        type: 'bar',
+        data: {
+          labels: ['Bull Case (최상)', 'Base Case (기본)', 'Bear Case (보수적)', 'Worst Case (위기)'],
+          datasets: [
+            {
+              label: '추정 매출액 (억 원)',
+              data: [2650, 2400, 2050, 1750],
+              backgroundColor: [
+                '#3b82f6',
+                '#059669',
+                '#d97706',
+                '#dc2626'
+              ],
+              borderRadius: 4
+            },
+            {
+              label: '추정 영업이익 (억 원)',
+              data: [650, 540, 370, 210],
+              backgroundColor: [
+                '#1e3a8a',
+                '#047857',
+                '#b45309',
+                '#991b1b'
+              ],
+              borderRadius: 4
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              ticks: { color: '#334155', font: { size: 11, weight: 'bold', family: 'Pretendard' } },
+              grid: { display: false }
+            },
+            y: {
+              ticks: { color: '#64748b', font: { size: 10, family: 'Pretendard' } },
+              grid: { color: '#f1f5f9' },
+              title: { display: true, text: '금액 (억 원)', color: '#64748b', font: { size: 10, family: 'Pretendard' } }
+            }
+          },
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: { color: '#334155', font: { size: 11, family: 'Pretendard' }, boxWidth: 12 }
+            },
+            tooltip: {
+              backgroundColor: '#0f172a',
+              titleColor: '#f8fafc',
+              bodyColor: '#cbd5e1',
+              borderColor: '#334155',
+              borderWidth: 1,
+              callbacks: {
+                afterBody: function(items) {
+                  const idx = items[0].dataIndex;
+                  const opms = ['24.5%', '22.5%', '18.0%', '12.0%'];
+                  return `예상 OPM: ${opms[idx]}`;
+                }
+              }
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

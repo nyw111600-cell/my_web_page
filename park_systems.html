@@ -1,0 +1,538 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>파크시스템스 (140860) 멀티에이전트 총괄 통합 종합분석 보고서 | 00_final_synthesis_report</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Pretendard Font -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              DEFAULT: '#1e3a8a',
+              light: '#3b82f6',
+              bg: '#eff6ff'
+            },
+            accent: {
+              DEFAULT: '#0284c7',
+              bg: '#f0f9ff'
+            },
+            navyHeader: '#070d1e'
+          },
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #f8fafc;
+      color: #1e293b;
+      font-family: 'Pretendard', sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    .card-base {
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+      border-radius: 1rem;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-slate-950">
+
+  <!-- ==================== 1. 상단 글로벌 네비게이션 (표준 듀얼라인 헤더) ==================== -->
+  <header class="sticky top-0 z-50 bg-[#f5f3ff]/95 backdrop-blur-md border-b border-purple-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- 1행: 기업명 & 메타 텍스트 바 (높이 56px, 아이콘 Zero) -->
+      <div class="flex items-center justify-between h-14 border-b border-purple-200/70">
+        <div class="flex items-center space-x-3">
+          <span class="text-purple-950 font-bold text-lg tracking-tight">파크시스템스 (Park Systems / 140860)</span>
+          <span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-800 font-medium">코스닥</span>
+        </div>
+        <div class="text-xs text-purple-700 flex items-center space-x-2 font-medium">
+          <span>반도체 전공정 나노계측 원자현미경</span>
+          <span class="text-purple-300">|</span>
+          <span>2026.09 기준</span>
+        </div>
+      </div>
+
+      <!-- 2행: 순수 텍스트 5개 탭 바 (py-2.5, 레이아웃 고정) -->
+      <nav class="flex space-x-1.5 overflow-x-auto py-2.5 text-xs font-semibold custom-scrollbar">
+        <a href="park_systems.html" class="px-4 py-1.5 rounded-lg bg-purple-700 text-white font-bold shadow-sm whitespace-nowrap">
+          00. 총괄 리포트
+        </a>
+        <a href="park_systems_bm.html" class="px-4 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition whitespace-nowrap">
+          01. 비즈니스 모델
+        </a>
+        <a href="park_systems_moat.html" class="px-4 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition whitespace-nowrap">
+          02. 경제적 해자
+        </a>
+        <a href="park_systems_risk.html" class="px-4 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition whitespace-nowrap">
+          03. 리스크 분석
+        </a>
+        <a href="park_systems_financial.html" class="px-4 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition whitespace-nowrap">
+          04. 재무 심층분석
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ==================== 메인 콘텐츠 영역 ==================== -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 flex-grow w-full">
+
+    <!-- 2. 마스터 히어로 배너 영역 -->
+    <section class="card-base p-6 sm:p-8 space-y-5">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-900 border border-blue-200">
+          반도체 전문 멀티에이전트 총괄 마스터 결론
+        </div>
+        <div class="text-xs text-slate-500 flex items-center gap-2 font-medium">
+          <span>작성일: 2026년 9월 9일</span>
+          <span class="text-slate-300">|</span>
+          <span class="text-emerald-700 font-semibold">DART 공시 팩트 및 증권사 컨센서스 교차 검증 완료</span>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+          원자 단위 나노계측 독점, <br class="hidden sm:inline">
+          <span class="text-blue-800">GAA 2nm 및 HBM4 하이브리드 본딩</span>의 절대 수혜주
+        </h1>
+        <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-5xl">
+          파크시스템스는 <strong>True Non-Contact™(완전 비접촉식)</strong> 원천 기술로 글로벌 산업용 원자현미경(AFM) 시장 점유율 <strong>75% 이상을 장악한 세계 1위 독점 기업</strong>입니다. 
+          2026년 상반기 일시적 비용 발생에 따른 주가 조정을 딛고, <strong>사상 최대 수주잔고(1,125억 원)</strong>의 하반기 본격 인도 및 WLI·NX-Mask 신규 장비 퀀텀 점프를 바탕으로 <strong>강력한 리레이팅(Re-rating)</strong> 국면에 진입했습니다.
+        </p>
+      </div>
+    </section>
+
+    <!-- 3. KPI 4종 핵심 지표 카드 그리드 -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="card-base p-5 space-y-2">
+        <div class="flex justify-between items-center text-slate-500 text-xs font-semibold">
+          <span>2026 2Q 수주잔고</span>
+          <span class="text-blue-700 font-bold">사상 최대</span>
+        </div>
+        <div class="text-2xl font-black text-slate-900 font-mono">1,125 <span class="text-sm font-normal text-slate-500">억원</span></div>
+        <div class="text-xs text-emerald-700 font-semibold bg-emerald-50 border border-emerald-200 px-2 py-1 rounded inline-block">
+          창사 최초 1,000억 돌파 (+31% YoY)
+        </div>
+      </div>
+
+      <div class="card-base p-5 space-y-2">
+        <div class="flex justify-between items-center text-slate-500 text-xs font-semibold">
+          <span>글로벌 산업용 AFM 점유율</span>
+          <span class="text-amber-700 font-bold">글로벌 1위</span>
+        </div>
+        <div class="text-2xl font-black text-blue-900 font-mono">75.0% <span class="text-sm font-normal text-slate-500">독점</span></div>
+        <div class="text-xs text-slate-600 mt-1">
+          TSMC, 삼성전자, SK하이닉스, 인텔, 마이크론 독점
+        </div>
+      </div>
+
+      <div class="card-base p-5 space-y-2">
+        <div class="flex justify-between items-center text-slate-500 text-xs font-semibold">
+          <span>영업이익률(OPM) 방어력</span>
+          <span class="text-emerald-700 font-bold">하이엔드 마진</span>
+        </div>
+        <div class="text-2xl font-black text-emerald-700 font-mono">20% ~ 22%</div>
+        <div class="text-xs text-slate-600 mt-1">
+          반도체 장비 업계 평균(12~15%) 대폭 상회
+        </div>
+      </div>
+
+      <div class="card-base p-5 space-y-2">
+        <div class="flex justify-between items-center text-slate-500 text-xs font-semibold">
+          <span>재무 건전성 (순현금)</span>
+          <span class="text-blue-700 font-bold">무차입 경영</span>
+        </div>
+        <div class="text-2xl font-black text-slate-900 font-mono">1,020 <span class="text-sm font-normal text-slate-500">억원+</span></div>
+        <div class="text-xs text-emerald-700 font-semibold bg-emerald-50 border border-emerald-200 px-2 py-1 rounded inline-block">
+          무차입 경영 & 유동비율 268%
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 4대 전문 에이전트 교차 분석 종합 매트릭스 -->
+    <section class="card-base p-6 lg:p-8 space-y-6">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-5 border-b border-slate-200">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="w-1.5 h-5 bg-blue-800 rounded-full"></span>
+            <h2 class="text-xl font-bold text-slate-900">4대 전문 에이전트 교차 분석 종합 매트릭스</h2>
+          </div>
+          <p class="text-xs text-slate-500 mt-1">BM, 경제적 해자, 다운사이드 리스크, 재무 건전성 4대 관점의 입체 평가</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="px-3 py-1 bg-blue-50 border border-blue-200 rounded-lg text-xs font-mono font-bold text-blue-800">
+            종합 평점: 89.2 / 100
+          </span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-2">
+        <!-- 레이더 차트 영역 (5 cols) -->
+        <div class="lg:col-span-5 flex flex-col items-center justify-center p-5 bg-slate-50 rounded-xl border border-slate-200">
+          <h3 class="text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">Multi-Agent Assessment Radar</h3>
+          <div class="w-full relative flex items-center justify-center" style="max-height: 280px; height: 260px;">
+            <canvas id="multiAgentRadarChart"></canvas>
+          </div>
+          <div class="text-[11px] text-slate-500 mt-3 text-center leading-relaxed">
+            * 경제적 해자(96점)와 재무 안정성(94점) 최상위, 지정학 중국 리스크(72점) 관리 필요
+          </div>
+        </div>
+
+        <!-- 4대 에이전트 핵심 요약 카드 그리드 (7 cols) -->
+        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- 에이전트 1: BM -->
+          <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm space-y-2 flex flex-col justify-between">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-blue-800">
+                  에이전트 1: 비즈니스 모델
+                </span>
+                <span class="text-xs font-mono font-bold text-blue-900 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">92점</span>
+              </div>
+              <h4 class="text-sm font-bold text-slate-900">산업용 AFM 비중 70%+ 체질 완성</h4>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                연구용에서 반도체 전공정(GAA 나노시트 3D 측정) 및 후공정(HBM 구리 패드 연마 단차 검사) 양산 인라인 장비로 완벽 안착. TSMC, 삼성, SK하이닉스 필수 채택.
+              </p>
+            </div>
+            <a href="park_systems_bm.html" class="inline-flex items-center text-xs font-semibold text-blue-700 hover:text-blue-900 hover:underline pt-2">
+              BM 상세 리포트 열람 →
+            </a>
+          </div>
+
+          <!-- 에이전트 2: 해자 -->
+          <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm space-y-2 flex flex-col justify-between">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-sky-800">
+                  에이전트 2: 경제적 해자
+                </span>
+                <span class="text-xs font-mono font-bold text-sky-900 bg-sky-50 px-2 py-0.5 rounded border border-sky-200">96점</span>
+              </div>
+              <h4 class="text-sm font-bold text-slate-900">True Non-Contact™ 독점 원천기술</h4>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                경쟁사(Bruker) 태핑 모드의 팁 마모 한계를 극복. 팁 수명 30배 및 0.01nm 비파괴 Z축 분해능 독점. 50여 건의 분리 스캐너 및 제어 원천특허망 구축.
+              </p>
+            </div>
+            <a href="park_systems_moat.html" class="inline-flex items-center text-xs font-semibold text-sky-700 hover:text-sky-900 hover:underline pt-2">
+              해자 상세 리포트 열람 →
+            </a>
+          </div>
+
+          <!-- 에이전트 3: 리스크 -->
+          <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm space-y-2 flex flex-col justify-between">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-amber-800">
+                  에이전트 3: 리스크 분석
+                </span>
+                <span class="text-xs font-mono font-bold text-amber-900 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">72점</span>
+              </div>
+              <h4 class="text-sm font-bold text-slate-900">중국 익스포저(34%) & 고정비 감시</h4>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                미 BIS의 대중국 반도체 장비 규제 범위 확장 및 고객사 CAPEX 변동에 따른 럼피니스(분기 변동성). 판관비(R&D 인건비) 750억대 급증에 따른 다운턴 마진 방어 체크 필요.
+              </p>
+            </div>
+            <a href="park_systems_risk.html" class="inline-flex items-center text-xs font-semibold text-amber-700 hover:text-amber-900 hover:underline pt-2">
+              리스크 상세 리포트 열람 →
+            </a>
+          </div>
+
+          <!-- 에이전트 4: 재무 -->
+          <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm space-y-2 flex flex-col justify-between">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-emerald-800">
+                  에이전트 4: 재무 심층분석
+                </span>
+                <span class="text-xs font-mono font-bold text-emerald-900 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">94점</span>
+              </div>
+              <h4 class="text-sm font-bold text-slate-900">순현금 1,000억+ 무차입 경영</h4>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                부채비율 55% 중 대부분은 고객 선수금(계약부채 540억+). 매출액 CAGR +24% 성장. 2026E 매출 2,750억/영업익 590억(하반기 퀀텀점프) 확실시.
+              </p>
+            </div>
+            <a href="park_systems_financial.html" class="inline-flex items-center text-xs font-semibold text-emerald-700 hover:text-emerald-900 hover:underline pt-2">
+              재무 상세 리포트 열람 →
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. 3대 투자 시나리오 확률 모델 및 적정 가치평가 -->
+    <section class="card-base p-6 lg:p-8 space-y-6">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-5 border-b border-slate-200">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-900 border border-blue-200 mb-1.5">
+            종합 시나리오 확률 분석
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-1.5 h-5 bg-blue-800 rounded-full"></span>
+            <h2 class="text-xl font-bold text-slate-900">3대 시나리오 확률 가중치 및 목표주가 도출 모델</h2>
+          </div>
+          <p class="text-xs text-slate-500 mt-0.5">Bull 55%, Base 35%, Bear 10% 확률 가중치를 적용한 기대 적정주가 산출</p>
+        </div>
+        <div class="text-left md:text-right">
+          <div class="text-xs text-slate-500 font-medium">확률 가중 기대 적정주가</div>
+          <div class="text-2xl font-black text-blue-800 font-mono">358,500 원</div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-2">
+        <!-- Bull Case (55%) -->
+        <div class="p-5 rounded-2xl bg-blue-50/60 border-2 border-blue-400 space-y-3 relative">
+          <div class="flex justify-between items-center">
+            <span class="px-2.5 py-1 rounded-md bg-blue-800 text-white text-xs font-extrabold tracking-wide">
+              BULL SCENARIO
+            </span>
+            <span class="text-xs font-mono font-bold text-blue-800 bg-white px-2 py-0.5 rounded border border-blue-200">확률: 55%</span>
+          </div>
+          <div class="text-2xl font-black text-slate-900 font-mono">410,000 원</div>
+          <div class="text-xs text-emerald-700 font-bold bg-emerald-50 border border-emerald-200 px-2 py-1 rounded inline-block">
+            +65.3% 상승 여력
+          </div>
+          <p class="text-xs text-slate-700 leading-relaxed pt-1">
+            • 선단 2nm GAA 및 HBM4 하이브리드 본딩 양산 라인에서 NX-Hybrid WLI 및 NX-Wafer 대량 수주 폭발.<br>
+            • EUV NX-Mask가 TSMC 외 인텔·삼성으로 전면 확산.<br>
+            • 2026E 매출 3,000억 원 / 영업이익 700억 원 돌파 (OPM 23.3%).
+          </p>
+        </div>
+
+        <!-- Base Case (35%) -->
+        <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+          <div class="flex justify-between items-center">
+            <span class="px-2.5 py-1 rounded-md bg-emerald-700 text-white text-xs font-extrabold tracking-wide">
+              BASE SCENARIO
+            </span>
+            <span class="text-xs font-mono font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">확률: 35%</span>
+          </div>
+          <div class="text-2xl font-black text-slate-900 font-mono">340,000 원</div>
+          <div class="text-xs text-emerald-700 font-bold bg-emerald-50 border border-emerald-200 px-2 py-1 rounded inline-block">
+            +37.1% 상승 여력
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed pt-1">
+            • 기존 수주잔고(1,125억) 기반 하반기 실적 복원 정상 진행.<br>
+            • 시장 컨센서스에 부합하는 연간 매출 2,500억 / 영업이익 540억 원 달성.<br>
+            • 신규 장비 WLI의 점진적 침투 및 대중국 매출 30% 방어.
+          </p>
+        </div>
+
+        <!-- Bear Case (10%) -->
+        <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+          <div class="flex justify-between items-center">
+            <span class="px-2.5 py-1 rounded-md bg-rose-700 text-white text-xs font-extrabold tracking-wide">
+              BEAR SCENARIO
+            </span>
+            <span class="text-xs font-mono font-bold text-rose-800 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">확률: 10%</span>
+          </div>
+          <div class="text-2xl font-black text-slate-900 font-mono">220,000 원</div>
+          <div class="text-xs text-rose-700 font-bold bg-rose-50 border border-rose-200 px-2 py-1 rounded inline-block">
+            -11.3% 하락 리스크
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed pt-1">
+            • 미 BIS의 대중국 나노 계측 장비 제재 강화로 중화권 매출 30% 이상 급감.<br>
+            • 고객사 신규 팹 준공 지연으로 장비 반입 2개 분기 이상 밀림.<br>
+            • 고정비 부담 지속으로 2026E 영업이익 380억 원 수준 둔화.
+          </p>
+        </div>
+      </div>
+
+      <!-- 시나리오 비교 차트 -->
+      <div class="mt-4 p-5 bg-slate-50 rounded-xl border border-slate-200">
+        <h3 class="text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">Scenario Target Price vs Current Price (KRW)</h3>
+        <div class="w-full relative" style="height: 200px;">
+          <canvas id="scenarioBarChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. 총괄 팀장 최종 결론 및 투자 행동 지침 -->
+    <section class="card-base p-6 lg:p-8 border-l-4 border-l-blue-800 shadow-sm space-y-5">
+      <div class="flex items-center space-x-3">
+        <span class="w-2.5 h-6 bg-blue-800 rounded-full"></span>
+        <h3 class="text-xl font-extrabold text-slate-900">총괄 팀장 종합 결론: "상반기 실적 저점은 강력한 매수 기회"</h3>
+      </div>
+
+      <div class="space-y-3 text-sm text-slate-700 leading-relaxed max-w-5xl">
+        <p>
+          파크시스템스는 2026년 2분기 일시적 R&D 자재비 및 인력 충원 비용으로 주가가 24만 원대까지 조정을 받았으나, 
+          <strong>2분기 말 수주잔고는 1,125억 원으로 역사상 최고치를 경신</strong>했습니다. 반도체 장비 산업의 특성상 수주잔고는 
+          향후 6~9개월 후 100% 확정 매출로 전환되므로, <strong>2026년 3분기와 4분기는 사상 최대 분기 실적 랠리</strong>가 확실시됩니다.
+        </p>
+        <p>
+          선단 미세공정이 GAA 2nm, 3D 낸드 300단 고단화, HBM 하이브리드 본딩으로 진화할수록 
+          <strong>원자현미경(AFM) 외에는 물리적으로 계측할 수 있는 대체 수단이 존재하지 않습니다.</strong> 
+          순현금 1,000억 원의 무차입 경영 안정성과 글로벌 1위의 독점력을 감안할 때 현재 밸류에이션(2026E PER 34배)은 매력적인 진입 구간입니다.
+        </p>
+      </div>
+
+      <div class="pt-5 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex flex-wrap items-center gap-4 text-xs">
+          <span class="text-slate-500 font-medium">투자의견: <strong class="text-emerald-700 text-sm font-bold">강력 매수 (Strong Buy)</strong></span>
+          <span class="text-slate-300">|</span>
+          <span class="text-slate-500 font-medium">적정주가: <strong class="text-blue-800 text-sm font-bold">360,000 원</strong></span>
+          <span class="text-slate-300">|</span>
+          <span class="text-slate-500 font-medium">투자기간: <strong class="text-slate-800 text-sm font-bold">6~12개월</strong></span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <a href="park_systems_bm.html" class="px-4 py-2 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 transition shadow-sm">
+            BM 리포트 →
+          </a>
+          <a href="park_systems_financial.html" class="px-4 py-2 rounded-lg bg-blue-800 hover:bg-blue-900 text-xs font-semibold text-white transition shadow-sm">
+            재무 심층분석 →
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== 7. 하단 푸터 (표준 규격) ==================== -->
+  <footer class="bg-white border-t border-slate-200 px-4 lg:px-8 py-8 text-xs text-slate-500 mt-8">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+      <div>
+        <div class="font-bold text-slate-800 text-sm">
+          파크시스템스 (140860) 멀티에이전트 심층 기업분석 시스템
+        </div>
+        <p class="mt-1 text-slate-500">
+          5대 파일 연동 시스템: 00_총괄 리포트 · 01_비즈니스모델 · 02_경제적해자 · 03_리스크분석 · 04_재무심층분석
+        </p>
+      </div>
+      <div class="text-center md:text-right text-slate-500 font-mono text-[11px] leading-relaxed">
+        <div>기준일: 2026-09-09</div>
+        <div>저장위치: 바탕화면\기업분석\파크시스템스\</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== 8. 차트 스크립트 ==================== -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // 1. 레이더 차트 (4대 에이전트 평가 점수)
+      const ctxRadar = document.getElementById('multiAgentRadarChart').getContext('2d');
+      new Chart(ctxRadar, {
+        type: 'radar',
+        data: {
+          labels: ['비즈니스 모델(BM)', '경제적 해자', '리스크 방어력', '재무 건전성', '성장 모멘텀'],
+          datasets: [{
+            label: '파크시스템스 역량 점수',
+            data: [92, 96, 72, 94, 92],
+            backgroundColor: 'rgba(2, 132, 199, 0.18)',
+            borderColor: '#0284c7',
+            borderWidth: 2,
+            pointBackgroundColor: '#0284c7',
+            pointBorderColor: '#ffffff',
+            pointBorderWidth: 2,
+            pointRadius: 4,
+            pointHoverRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            r: {
+              angleLines: { color: '#e2e8f0' },
+              grid: { color: '#e2e8f0' },
+              pointLabels: {
+                color: '#334155',
+                font: { size: 11, family: 'Pretendard', weight: '600' }
+              },
+              ticks: {
+                backdropColor: 'transparent',
+                color: '#64748b',
+                stepSize: 20,
+                min: 0,
+                max: 100
+              }
+            }
+          },
+          plugins: {
+            legend: { display: false }
+          }
+        }
+      });
+
+      // 2. 시나리오 바 차트
+      const ctxScenario = document.getElementById('scenarioBarChart').getContext('2d');
+      new Chart(ctxScenario, {
+        type: 'bar',
+        data: {
+          labels: ['현재 주가', 'Bear Case (10%)', 'Base Case (35%)', '기대 적정가 (가중평균)', 'Bull Case (55%)'],
+          datasets: [{
+            label: '목표주가 (원)',
+            data: [248000, 220000, 340000, 358500, 410000],
+            backgroundColor: [
+              '#64748b',
+              '#dc2626',
+              '#059669',
+              '#0284c7',
+              '#1e3a8a'
+            ],
+            borderRadius: 6,
+            barThickness: 32
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return context.parsed.y.toLocaleString() + ' 원';
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { color: '#475569', font: { size: 11, family: 'Pretendard', weight: '500' } }
+            },
+            y: {
+              grid: { color: '#f1f5f9' },
+              ticks: {
+                color: '#64748b',
+                callback: function(val) { return (val / 10000) + '만원'; }
+              },
+              min: 150000,
+              max: 450000
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

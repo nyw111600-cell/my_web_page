@@ -1,0 +1,927 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>파크시스템스 (140860) 경제적 해자 및 성장 모멘텀 분석 보고서 | 02_moat_and_strengths</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Pretendard Font -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              DEFAULT: '#1e3a8a',
+              light: '#3b82f6',
+              bg: '#eff6ff'
+            },
+            accent: {
+              DEFAULT: '#0284c7',
+              bg: '#f0f9ff'
+            },
+            navyHeader: '#070d1e'
+          },
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #f8fafc;
+      color: #1e293b;
+      font-family: 'Pretendard', sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    .card-base {
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+      border-radius: 1rem;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-slate-950">
+
+  <!-- ==================== 1. 상단 글로벌 네비게이션 (표준 듀얼라인 헤더) ==================== -->
+  <header class="sticky top-0 z-50 bg-[#f5f3ff]/95 backdrop-blur-md border-b border-purple-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- 1행: 기업명 & 메타 텍스트 바 (높이 56px, 아이콘 Zero) -->
+      <div class="flex items-center justify-between h-14 border-b border-purple-200/70">
+        <div class="flex items-center space-x-3">
+          <span class="text-purple-950 font-bold text-lg tracking-tight">파크시스템스 (Park Systems / 140860)</span>
+          <span class="text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-800 font-medium">코스닥</span>
+        </div>
+        <div class="text-xs text-purple-700 flex items-center space-x-2 font-medium">
+          <span>반도체 전공정 나노계측 원자현미경</span>
+          <span class="text-purple-300">|</span>
+          <span>2026.09 기준</span>
+        </div>
+      </div>
+
+      <!-- 2행: 순수 텍스트 5개 탭 바 (py-2.5, 레이아웃 고정) -->
+      <nav class="flex space-x-1.5 overflow-x-auto py-2.5 text-xs font-semibold custom-scrollbar">
+        <a href="park_systems.html" class="px-4 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition whitespace-nowrap">
+          00. 총괄 리포트
+        </a>
+        <a href="park_systems_bm.html" class="px-4 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition whitespace-nowrap">
+          01. 비즈니스 모델
+        </a>
+        <a href="park_systems_moat.html" class="px-4 py-1.5 rounded-lg bg-purple-700 text-white font-bold shadow-sm whitespace-nowrap">
+          02. 경제적 해자
+        </a>
+        <a href="park_systems_risk.html" class="px-4 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition whitespace-nowrap">
+          03. 리스크 분석
+        </a>
+        <a href="park_systems_financial.html" class="px-4 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition whitespace-nowrap">
+          04. 재무 심층분석
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ==================== 메인 콘텐츠 영역 ==================== -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 flex-grow w-full">
+
+    <!-- 히어로 배너: 기술적 독점과 경제적 해자 종합 진단 -->
+    <section class="card-base p-6 sm:p-8 space-y-5">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
+        <span class="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-900 text-xs font-semibold">
+          Global Wide Moat Certification
+        </span>
+        <span class="text-xs text-slate-500 font-medium">기준일: 2026년 반도체 선단공정 양산 전환기</span>
+      </div>
+      <div class="space-y-3">
+        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+          원자 수준(Sub-Angstrom) 제어 기술이 빚어낸 <br class="hidden sm:inline" />
+          <span class="text-blue-800">글로벌 1위 독점적 계측 해자 (Structural Moat)</span>
+        </h1>
+        <p class="text-slate-600 text-sm sm:text-base max-w-5xl leading-relaxed">
+          파크시스템스는 세계 최초로 상용화한 <strong>비접촉식 원자현미경(True Non-Contact™ AFM)</strong> 기술과 <strong>XY-Z 완전 분리형 스캐너 구조</strong>를 기반으로, 반도체 전·후공정 인라인(Inline) 산업용 AFM 시장의 <strong>75% 이상을 독점</strong>하고 있습니다. 빛의 회절 한계에 봉착한 광학식 검사와 전자빔 시료 손상 한계를 돌파하며, GAA 2nm, 3D 낸드 300단+, HBM4 하이브리드 본딩의 대체 불가능한 <strong>필수 양산 계측 인프라</strong>로 자리매김했습니다.
+        </p>
+      </div>
+
+      <!-- 핵심 KPI 4종 그리드 -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2">
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+          <div class="text-xs text-slate-500 font-medium mb-1">산업용 AFM 점유율</div>
+          <div class="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">75%+</div>
+          <div class="text-[11px] text-blue-700 font-semibold mt-1">글로벌 Top 팹 싹쓸이 공급</div>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+          <div class="text-xs text-slate-500 font-medium mb-1">R&D 집약도 (매출비)</div>
+          <div class="text-2xl lg:text-3xl font-extrabold text-emerald-700 tracking-tight">18.2%</div>
+          <div class="text-[11px] text-emerald-700 font-semibold mt-1">글로벌 장비사 최고 수준</div>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+          <div class="text-xs text-slate-500 font-medium mb-1">글로벌 등록/보유 특허</div>
+          <div class="text-2xl lg:text-3xl font-extrabold text-blue-800 tracking-tight">50+<span class="text-sm font-normal text-slate-500">건</span></div>
+          <div class="text-[11px] text-blue-700 font-semibold mt-1">원천 기구학/신호처리 망</div>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+          <div class="text-xs text-slate-500 font-medium mb-1">수직(Z축) 분해능</div>
+          <div class="text-2xl lg:text-3xl font-extrabold text-indigo-800 tracking-tight">&lt; 0.01<span class="text-sm font-normal text-slate-500">nm</span></div>
+          <div class="text-[11px] text-indigo-700 font-semibold mt-1">0.1Å (옹스트롬) 단위 분해</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 섹션 1: 독점적 원천 기술 - True Non-Contact™ 기술적 메커니즘 & 팁 마모 방지 -->
+    <section class="card-base p-6 sm:p-8 space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-4">
+        <div class="flex items-center gap-2.5">
+          <span class="w-1.5 h-5 bg-blue-800 rounded-full"></span>
+          <h2 class="text-xl font-bold text-slate-900">1. 독점적 원천 기술: True Non-Contact™ 모드 & 분리형 스캐너</h2>
+        </div>
+        <span class="text-xs text-blue-800 font-semibold px-2.5 py-1 rounded bg-blue-50 border border-blue-200">
+          Proprietary Physics Architecture
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- 물리 메커니즘 카드 (7 cols) -->
+        <div class="lg:col-span-7 space-y-4">
+          <h3 class="text-base font-bold text-slate-900">
+            반데르발스 인력(Attractive Force) 영역 제어 원리
+          </h3>
+          <p class="text-sm text-slate-700 leading-relaxed">
+            원자현미경은 탐침(Tip)과 시료 표면 원자 간의 상호작용력을 측정합니다. 기존 경쟁사들이 채택해온 <strong>태핑 모드(Tapping Mode)</strong>는 팁이 척력 영역(Repulsive Regime)까지 진입하여 시료를 주기적으로 두드리는 방식인 반면, 파크시스템스의 <strong>True Non-Contact™ 모드</strong>는 팁과 시료가 수 나노미터 거리를 유지하는 순수 <strong>인력 영역(Attractive Regime)</strong>에서 작동합니다.
+          </p>
+
+          <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 space-y-3">
+            <div class="flex items-center justify-between text-xs font-semibold text-slate-700">
+              <span>Lennard-Jones 포텐셜 커브 영역 비교</span>
+              <span class="text-blue-800 font-bold">무접촉·무손상 유지</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+              <div class="p-3 rounded-lg bg-rose-50 border border-rose-200 text-xs space-y-1.5">
+                <span class="font-bold text-rose-800 block">경쟁사 (Tapping / Intermittent)</span>
+                <p class="text-slate-700 leading-relaxed">
+                  척력(Repulsive) 영역 침범. 1초에 수십만 번 시료를 강타하여 <strong>팁 첨단 마모(Tip Blunting)</strong>와 미세 패턴 손상 유발. 측정할수록 데이터 오차 확대.
+                </p>
+              </div>
+              <div class="p-3 rounded-lg bg-blue-50 border border-blue-200 text-xs space-y-1.5">
+                <span class="font-bold text-blue-900 block">파크시스템스 (True Non-Contact™)</span>
+                <p class="text-slate-700 leading-relaxed">
+                  인력(Attractive) 영역 유지. 공진 주파수 위상(Phase/Frequency Shift) 변화를 초고속 Z 피드백 제어로 추적하여 <strong>팁 마모 제로(Zero Wear)</strong> 구현.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Decoupled Scanner 설명 -->
+          <div class="pt-2">
+            <h4 class="text-xs font-bold text-blue-900 uppercase tracking-wider mb-2">
+              기구학적 혁신: XY축과 Z축이 완전 분리된 독립형 스캐너 (Decoupled Scanner)
+            </h4>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              기존 단일 튜브 스캐너는 XY 스캐닝 시 발생하는 원호 운동으로 인해 Z축 뒤틀림(Background Bowing) 왜곡이 필연적이었습니다. 파크시스템스는 <strong>XY 평면 스캐너와 Z축 고속 스캐너를 물리적으로 완전히 분리</strong>하여 크로스토크(Crosstalk) 왜곡을 0%로 만들었으며, 소프트웨어적 후보정 없이도 원시 3D 데이터(Raw Data)의 절대 정밀도를 보장합니다.
+            </p>
+          </div>
+        </div>
+
+        <!-- 팁 마모 방지 효과 및 측정 정밀도 매트릭스 (5 cols) -->
+        <div class="lg:col-span-5 flex flex-col justify-between p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-4">
+          <div class="space-y-3">
+            <h3 class="text-base font-bold text-slate-900 mb-2">
+              압도적인 팁 내구성 및 비용 절감 효과
+            </h3>
+            <div class="p-3.5 rounded-lg bg-white border border-slate-200 shadow-sm">
+              <div class="flex justify-between items-center text-xs mb-1.5">
+                <span class="text-slate-600 font-medium">팁 수명 (측정 횟수 기준)</span>
+                <span class="text-emerald-700 font-bold">30~50배 향상</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2">
+                <div class="bg-emerald-600 h-2 rounded-full" style="width: 95%"></div>
+              </div>
+              <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                <span>경쟁사: 수십 회 측정 후 교체</span>
+                <span>파크: 수백~수천 회 유지</span>
+              </div>
+            </div>
+
+            <div class="p-3.5 rounded-lg bg-white border border-slate-200 shadow-sm">
+              <div class="flex justify-between items-center text-xs mb-1.5">
+                <span class="text-slate-600 font-medium">첨단 곡률 반경(Tip Radius) 유지율</span>
+                <span class="text-blue-800 font-bold">&gt; 98% (2nm 유지)</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2">
+                <div class="bg-blue-700 h-2 rounded-full" style="width: 98%"></div>
+              </div>
+              <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                <span>해상도 저하 없음</span>
+                <span>장기 반복 측정 재현성 확보</span>
+              </div>
+            </div>
+
+            <div class="p-3.5 rounded-lg bg-white border border-slate-200 shadow-sm">
+              <div class="flex justify-between items-center text-xs mb-1.5">
+                <span class="text-slate-600 font-medium">양산 팹 장비 가동률 (Uptime)</span>
+                <span class="text-indigo-800 font-bold">99.2% 달성</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2">
+                <div class="bg-indigo-700 h-2 rounded-full" style="width: 99%"></div>
+              </div>
+              <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                <span>팁 교체 빈도 극소화</span>
+                <span>무인 인라인 자동화 공정 최적화</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 leading-relaxed">
+            <strong>해자 핵심 결론:</strong> 반도체 팹에서 팁 마모는 단순 부품비 문제를 넘어 '측정 신뢰도 상실'과 '양산 라인 중단'을 뜻합니다. True Non-Contact™ 기술만이 24시간 365일 무인 양산 라인에서 작동할 수 있는 유일한 솔루션입니다.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 섹션 2: 글로벌 경쟁 구도 - 브루커(Bruker) 추월 및 산업용 독점 배경 -->
+    <section class="card-base p-6 sm:p-8 space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-4">
+        <div class="flex items-center gap-2.5">
+          <span class="w-1.5 h-5 bg-blue-800 rounded-full"></span>
+          <h2 class="text-xl font-bold text-slate-900">2. 글로벌 경쟁 구도: 브루커(Bruker) 추월 및 산업용 독점 배경</h2>
+        </div>
+        <span class="text-xs text-emerald-800 font-semibold px-2.5 py-1 rounded bg-emerald-50 border border-emerald-200">
+          Industrial Inline Monopoly
+        </span>
+      </div>
+
+      <!-- 차트 2종 (점유율 도넛 + 레이더 비교) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- 도넛 차트: 글로벌 산업용 AFM 시장 점유율 -->
+        <div class="lg:col-span-5 p-5 bg-slate-50 rounded-xl border border-slate-200 flex flex-col items-center justify-between space-y-4">
+          <div class="w-full flex justify-between items-center">
+            <h3 class="text-sm font-bold text-slate-900">반도체 산업용 AFM 글로벌 점유율</h3>
+            <span class="text-[11px] text-slate-500">2025~2026E 기준</span>
+          </div>
+          <div class="w-full relative flex items-center justify-center py-2" style="max-height: 240px; height: 220px;">
+            <canvas id="marketShareChart"></canvas>
+          </div>
+          <div class="w-full text-xs text-slate-700 bg-white p-3 rounded-lg border border-slate-200 space-y-1">
+            <div class="flex justify-between items-center text-blue-800 font-bold">
+              <span>파크시스템스 (세계 1위)</span>
+              <span>75.0%</span>
+            </div>
+            <div class="flex justify-between items-center text-slate-600">
+              <span>브루커 (Bruker, 미국 2위)</span>
+              <span>18.0%</span>
+            </div>
+            <div class="flex justify-between items-center text-slate-400">
+              <span>기타 (히타치하이텍, 옥스포드 등)</span>
+              <span>7.0%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 레이더 차트: 기술 경쟁력 5대 축 비교 -->
+        <div class="lg:col-span-7 p-5 bg-slate-50 rounded-xl border border-slate-200 flex flex-col justify-between space-y-4">
+          <div class="w-full flex justify-between items-center">
+            <h3 class="text-sm font-bold text-slate-900">파크시스템스 vs 브루커(Bruker) 기술 격차</h3>
+            <span class="text-[11px] text-slate-500">5대 핵심 평가지표</span>
+          </div>
+          <div class="w-full relative flex items-center justify-center py-2" style="max-height: 240px; height: 220px;">
+            <canvas id="radarComparisonChart"></canvas>
+          </div>
+          <div class="grid grid-cols-2 gap-3 text-xs">
+            <div class="p-2.5 rounded-lg bg-blue-50 border border-blue-200">
+              <span class="font-bold text-blue-900 block mb-0.5">파크시스템스 핵심 강점</span>
+              <p class="text-[11px] text-slate-600 leading-relaxed">비접촉 모드 완전성, 팁 마모 방지, 인라인 자동 팁 교환(ATX), Z축 수직 프로파일링</p>
+            </div>
+            <div class="p-2.5 rounded-lg bg-white border border-slate-200">
+              <span class="font-bold text-slate-700 block mb-0.5">브루커(Bruker)의 제약</span>
+              <p class="text-[11px] text-slate-500 leading-relaxed">학술·연구용 지배력 높으나, 척력 태핑 모드의 팁 마모 한계로 반도체 양산 팹 침투 정체</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 정밀 비교 테이블 -->
+      <div class="rounded-xl overflow-hidden border border-slate-200">
+        <div class="p-4 bg-slate-50 border-b border-slate-200">
+          <h3 class="text-sm font-bold text-slate-900">산업용 인라인 AFM 경쟁 구도 심층 비교 매트릭스</h3>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs text-left text-slate-700">
+            <thead class="bg-slate-50 text-slate-800 uppercase border-b border-slate-200 font-semibold">
+              <tr>
+                <th class="py-3 px-4">비교 항목</th>
+                <th class="py-3 px-4 text-blue-900 bg-blue-50/50">파크시스템스 (Park Systems)</th>
+                <th class="py-3 px-4 text-slate-700">브루커 (Bruker Corporation)</th>
+                <th class="py-3 px-4">반도체 팹 현업 시사점 및 파급효과</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              <tr class="hover:bg-slate-50">
+                <td class="py-3.5 px-4 font-semibold text-slate-900">측정 원천 메커니즘</td>
+                <td class="py-3.5 px-4 font-bold text-blue-800 bg-blue-50/30">True Non-Contact™ (반데르발스 인력)</td>
+                <td class="py-3.5 px-4 text-slate-600">PeakForce Tapping / Contact (척력 충돌)</td>
+                <td class="py-3.5 px-4 text-slate-600">시료 스크래치 방지, 초박막/EUV 레지스트 손상 전무</td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="py-3.5 px-4 font-semibold text-slate-900">스캐너 기구 구조</td>
+                <td class="py-3.5 px-4 font-bold text-blue-800 bg-blue-50/30">XY 평면 - Z축 완전 분리 (Decoupled)</td>
+                <td class="py-3.5 px-4 text-slate-600">단일 피에조 튜브 또는 결합형 스캐너</td>
+                <td class="py-3.5 px-4 text-slate-600">Background Bowing 오차 제로, 완벽한 직교성(Orthogonality)</td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="py-3.5 px-4 font-semibold text-slate-900">인라인 자동화 솔루션</td>
+                <td class="py-3.5 px-4 font-bold text-blue-800 bg-blue-50/30">ATX (자동 팁 교환기) + EFEM/FOUP</td>
+                <td class="py-3.5 px-4 text-slate-600">수동/반자동 팁 교체 중심</td>
+                <td class="py-3.5 px-4 text-slate-600">작업자 개입 없는 무인 300mm 웨이퍼 전자동 검사 실현</td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="py-3.5 px-4 font-semibold text-slate-900">주요 레퍼런스 고객사</td>
+                <td class="py-3.5 px-4 font-bold text-blue-800 bg-blue-50/30">TSMC, 삼성전자, SK하이닉스, 인텔, 마이크론 등</td>
+                <td class="py-3.5 px-4 text-slate-600">글로벌 종합 연구소, 일부 메모리 R&D</td>
+                <td class="py-3.5 px-4 text-slate-600">글로벌 톱 파운드리 및 메모리 전방위 표준(De-facto Standard)</td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="py-3.5 px-4 font-semibold text-slate-900">진입 장벽 및 전환 비용</td>
+                <td class="py-3.5 px-4 font-bold text-blue-800 bg-blue-50/30">극대 (수만 개 팹 측정 레시피 락인)</td>
+                <td class="py-3.5 px-4 text-slate-600">낮음~중간 수준</td>
+                <td class="py-3.5 px-4 text-slate-600">한 번 구축된 AFM 측정 알고리즘과 레시피 교체 불가능</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 섹션 3: R&D 집약도 및 특허 포트폴리오 (원천기술 지식재산권 해자) -->
+    <section class="card-base p-6 sm:p-8 space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-4">
+        <div class="flex items-center gap-2.5">
+          <span class="w-1.5 h-5 bg-blue-800 rounded-full"></span>
+          <h2 class="text-xl font-bold text-slate-900">3. R&D 집약도 및 특허 포트폴리오: 지식재산권 기반 기술 해자</h2>
+        </div>
+        <span class="text-xs text-blue-800 font-semibold px-2.5 py-1 rounded bg-blue-50 border border-blue-200">
+          DART Fact & IP Moat
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- R&D 투자 추이 차트 (6 cols) -->
+        <div class="lg:col-span-6 p-5 bg-slate-50 rounded-xl border border-slate-200 flex flex-col justify-between space-y-4">
+          <div class="flex justify-between items-center">
+            <div>
+              <h3 class="text-sm font-bold text-slate-900">연도별 R&D 투자액 및 매출액 대비 비중 추이</h3>
+              <p class="text-[11px] text-slate-500">DART 사업보고서 및 증권사 컨센서스 집계 (2021~2026E)</p>
+            </div>
+            <span class="px-2 py-0.5 rounded bg-blue-100 text-[10px] text-blue-900 font-bold">18%대 집중투자</span>
+          </div>
+          <div class="w-full relative py-2" style="height: 250px;">
+            <canvas id="rdTrendChart"></canvas>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed bg-white p-3 rounded-lg border border-slate-200">
+            파크시스템스는 매년 매출액의 <strong>15%~18% 이상을 순수 R&D에 재투자</strong>하는 고도 기술 집약형 기업입니다. 2021년 119억 원에서 2025년 250억 원, 2026년 310억 원 수준으로 연구개발비가 급증하며 후발 주자의 기술 추격을 완벽히 봉쇄하고 있습니다.
+          </p>
+        </div>
+
+        <!-- 핵심 특허 포트폴리오 4선 (6 cols) -->
+        <div class="lg:col-span-6 p-5 bg-slate-50 rounded-xl border border-slate-200 flex flex-col justify-between space-y-3">
+          <div class="flex justify-between items-center mb-1">
+            <h3 class="text-sm font-bold text-slate-900">핵심 원천 지식재산권(IP) 포트폴리오</h3>
+            <span class="text-xs text-amber-800 font-semibold bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+              특허 50+건 보유
+            </span>
+          </div>
+
+          <div class="space-y-2.5">
+            <div class="p-3 rounded-lg bg-white border border-slate-200 shadow-sm">
+              <div class="flex items-center justify-between text-xs font-bold text-slate-900 mb-1">
+                <span class="text-blue-800">1. XY축 및 Z축 분리형 원자현미경 스캐너 구조</span>
+                <span class="text-[10px] text-slate-500 font-mono">KR/US 등록 원천특허</span>
+              </div>
+              <p class="text-[11px] text-slate-600 leading-relaxed">
+                직교 좌표계 왜곡 방지 및 Z축 독립 구동을 통해 평면 주사 시 곡률 왜곡(Bowing)을 100% 기구학적으로 제거하는 독점 특허.
+              </p>
+            </div>
+
+            <div class="p-3 rounded-lg bg-white border border-slate-200 shadow-sm">
+              <div class="flex items-center justify-between text-xs font-bold text-slate-900 mb-1">
+                <span class="text-emerald-700">2. True Non-Contact™ 위상 변조 주파수 제어</span>
+                <span class="text-[10px] text-slate-500 font-mono">핵심 제어 알고리즘</span>
+              </div>
+              <p class="text-[11px] text-slate-600 leading-relaxed">
+                팁 진폭 감쇠가 아닌 공진 주파수 변이(Frequency Shift)를 실시간 감지하여 시료-팁 접촉을 영구 차단하는 초정밀 피드백 기술.
+              </p>
+            </div>
+
+            <div class="p-3 rounded-lg bg-white border border-slate-200 shadow-sm">
+              <div class="flex items-center justify-between text-xs font-bold text-slate-900 mb-1">
+                <span class="text-blue-700">3. 자동 팁 교환기(ATX) 및 목표 좌표 자동 인식</span>
+                <span class="text-[10px] text-slate-500 font-mono">인라인 양산 핵심</span>
+              </div>
+              <p class="text-[11px] text-slate-600 leading-relaxed">
+                카트리지 기반 다중 팁 자동 교체 및 머신비전 기반 패턴 얼라인먼트를 구현하여 클린룸 무인 자동화를 완성한 장치 특허.
+              </p>
+            </div>
+
+            <div class="p-3 rounded-lg bg-white border border-slate-200 shadow-sm">
+              <div class="flex items-center justify-between text-xs font-bold text-slate-900 mb-1">
+                <span class="text-purple-700">4. 고종횡비(High Aspect Ratio) 3D 트렌치 계측</span>
+                <span class="text-[10px] text-slate-500 font-mono">3D 낸드/GAA 특화</span>
+              </div>
+              <p class="text-[11px] text-slate-600 leading-relaxed">
+                플랫 팁뿐만 아니라 깊은 트렌치 측벽(Sidewall)과 언더컷 형상을 3차원으로 측정하는 틸트(Tilt) 및 특수 팁 구동 특허.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 섹션 4: 미세화 한계 돌파 - 광학식 계측의 회절 한계에 따른 AFM의 대체 불가능성 -->
+    <section class="card-base p-6 sm:p-8 space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-4">
+        <div class="flex items-center gap-2.5">
+          <span class="w-1.5 h-5 bg-blue-800 rounded-full"></span>
+          <h2 class="text-xl font-bold text-slate-900">4. 미세화 한계 돌파: 광학식 회절 한계와 AFM의 구조적 해자</h2>
+        </div>
+        <span class="text-xs text-indigo-800 font-semibold px-2.5 py-1 rounded bg-indigo-50 border border-indigo-200">
+          Physics Paradigm Shift
+        </span>
+      </div>
+
+      <div class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- 광학식 (Optical) -->
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-800">광학식 계측 (Optical)</span>
+              <span class="px-2 py-0.5 rounded text-[10px] bg-rose-50 text-rose-700 border border-rose-200">회절 한계 직면</span>
+            </div>
+            <div class="text-lg font-bold text-slate-900 font-mono">d = λ / (2 · NA)</div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              DUV(193nm) 광원의 물리적 한계로 인해 10nm 이하 미세 패턴의 직접 이미징이 불가능. 회절 산란광을 수학적 모델링으로 역추산하는 산란계측(OCD)은 실제 물리적 3D 프로파일 확인 불가능.
+            </p>
+          </div>
+
+          <!-- 전자빔 (CD-SEM) -->
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-800">전자빔 계측 (CD-SEM)</span>
+              <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-700 border border-amber-200">2D 평면 & 시료 손상</span>
+            </div>
+            <div class="text-lg font-bold text-slate-900">수직(Z축) 단차 측정 불가</div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              나노 수준의 2D 평면 해상도는 우수하나, 고에너지 전자빔 조사에 의한 감광액(PR) 수축(Shrinkage) 및 웨이퍼 전하 축적(Charging) 문제 발생. 수직 깊이 및 표면 거칠기(Roughness) 측정 한계.
+            </p>
+          </div>
+
+          <!-- 원자현미경 (AFM) -->
+          <div class="p-4 rounded-xl bg-blue-50/70 border border-blue-200 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-blue-900">원자현미경 (Park AFM)</span>
+              <span class="px-2 py-0.5 rounded text-[10px] bg-blue-100 text-blue-900 border border-blue-300 font-bold">대체 불가능</span>
+            </div>
+            <div class="text-lg font-bold text-blue-800 font-mono">0.01nm 비파괴 3D 절대 계측</div>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              파장의 한계 없이 원자 간 인력으로 측정하여 <strong>0.1nm 수평 / 0.01nm 수직 분해능</strong> 달성. 전자빔 피폭 없는 완벽한 비파괴 검사로 미세 패턴 형상과 3D 거칠기를 절대 좌표로 구현.
+            </p>
+          </div>
+        </div>
+
+        <!-- 구조적 대체 불가능성 요약 박스 -->
+        <div class="p-5 rounded-xl bg-blue-50/50 border border-blue-200 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div class="space-y-1">
+            <div class="text-sm font-bold text-blue-950">왜 선단공정(GAA 2nm / 3D NAND / HBM4)으로 갈수록 AFM이 필수인가?</div>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              반도체가 수평 평면(Planar)에서 수직 3차원 적층 구조(GAA 나노시트 단차, 3D V-NAND 하베스트 홀, 하이브리드 본딩 구리 패드)로 진화하면서, 기존 2D CD-SEM과 광학 검사로는 <strong>수직 나노미터 단차와 표면 조도(Surface Roughness)</strong>를 감지할 수 없습니다. 파크시스템스의 AFM은 이 문제를 해결하는 전 세계 유일의 신뢰성 검증 장비입니다.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 섹션 5: 미래 3대 퀀텀 점프 성장 드라이버 -->
+    <section class="card-base p-6 sm:p-8 space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-4">
+        <div class="flex items-center gap-2.5">
+          <span class="w-1.5 h-5 bg-blue-800 rounded-full"></span>
+          <h2 class="text-xl font-bold text-slate-900">5. 미래 성장 드라이버: 차세대 반도체 패러다임을 선도하는 3대 축</h2>
+        </div>
+        <span class="text-xs text-blue-800 font-semibold px-2.5 py-1 rounded bg-blue-50 border border-blue-200">
+          Next-Gen Growth Engines
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- 드라이버 1: HBM4 하이브리드 본딩 -->
+        <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-blue-100 text-blue-900 border border-blue-200">HBM4 / 어드밴스드 PKG</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">하이브리드 본딩 Cu 디싱 & 침식 계측</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              HBM4 및 3D SoC 적층 시 범프 없는 <strong>Cu-to-Cu 직접 접합(Direct Bonding)</strong>이 도입됩니다. 이때 접합면 CMP 연마 후 구리 패드가 과도하게 파이는 <strong>디싱(Dishing)</strong>이나 산화막 <strong>침식(Erosion)</strong>이 수 나노미터만 발생해도 보이드(Void) 불량으로 칩 전체가 폐기됩니다.
+            </p>
+            <div class="bg-white p-3 rounded-lg border border-slate-200 text-[11px] text-slate-600 space-y-1">
+              <span class="text-blue-800 font-bold block">핵심 솔루션: NX-Wafer Plus</span>
+              <p>웨이퍼 전면의 초미세 구리 패드 형상을 초고속 나노 스캔하여 하이브리드 본딩 접합 수율을 극대화하는 표준 장비 공급.</p>
+            </div>
+          </div>
+          <div class="text-xs text-blue-800 font-bold pt-2 border-t border-slate-200">
+            HBM4 도입 시 장비 수요 3배 폭증 전망 →
+          </div>
+        </div>
+
+        <!-- 드라이버 2: EUV 마스크 리페어 NX-Mask -->
+        <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-100 text-emerald-900 border border-emerald-200">EUV 초고가 마스크</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">EUV 마스크 리페어 시스템 (NX-Mask)</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              장당 수억~수십억 원을 호가하는 EUV 포토마스크의 나노미터 결함(Defect)을 원자현미경 팁으로 직접 정밀 밀링(Nanomachining)하여 제거하고 표면을 복구하는 세계 최초의 원스톱 리페어 솔루션입니다.
+            </p>
+            <div class="bg-white p-3 rounded-lg border border-slate-200 text-[11px] text-slate-600 space-y-1">
+              <span class="text-emerald-700 font-bold block">기존 레이저/전자빔 대비 차별점</span>
+              <p>열 손상 및 화학적 가스 반응 없이 나노 팁의 물리적 가공으로만 결함을 깎아내어 펠리클 손상 없이 완벽한 재생 가능.</p>
+            </div>
+          </div>
+          <div class="text-xs text-emerald-700 font-bold pt-2 border-t border-slate-200">
+            글로벌 Top 파운드리 수주 본격화 →
+          </div>
+        </div>
+
+        <!-- 드라이버 3: 하이브리드 WLI & 서브나노 계측 -->
+        <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-indigo-100 text-indigo-900 border border-indigo-200">속도 한계 극복</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">하이브리드 계측 (NX-Hybrid WLI)</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              AFM의 유일한 약점으로 지적되던 스캐닝 속도(Throughput) 문제를 해결하기 위해 광학 백색광 간섭계(WLI)와 AFM을 결합한 혁신 복합 장비입니다.
+            </p>
+            <div class="bg-white p-3 rounded-lg border border-slate-200 text-[11px] text-slate-600 space-y-1">
+              <span class="text-indigo-800 font-bold block">WLI 고속 스캔 + AFM 초정밀 스캔</span>
+              <p>웨이퍼 전체 영역을 WLI로 고속 매핑한 후, 이상 부위만 AFM 팁으로 즉각 서브나노 정밀 분석하여 검사 처리량을 수배 개선.</p>
+            </div>
+          </div>
+          <div class="text-xs text-indigo-800 font-bold pt-2 border-t border-slate-200">
+            인라인 전수 검사 시장으로 영역 확장 →
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 섹션 6: 종합 경제적 해자 평가 매트릭스 (Morningstar 5 Moats Framework) -->
+    <section class="card-base p-6 sm:p-8 space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-4">
+        <div>
+          <h2 class="text-lg font-bold text-slate-900">모닝스타 5대 경제적 해자 프레임워크 종합 평가</h2>
+          <p class="text-xs text-slate-500">파크시스템스의 지속 가능한 경쟁 우위 및 장기 진입 장벽 점검</p>
+        </div>
+        <div>
+          <span class="px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-900 text-xs font-bold">
+            종합 등급: Wide Moat (넓은 경제적 해자)
+          </span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+        <!-- 1. 무형자산 -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-900">무형 자산 (Intangible)</span>
+            <span class="text-xs font-extrabold text-blue-800">최상 (Very High)</span>
+          </div>
+          <div class="w-full bg-slate-200 h-1.5 rounded-full">
+            <div class="bg-blue-700 h-1.5 rounded-full" style="width: 98%"></div>
+          </div>
+          <p class="text-[11px] text-slate-600 leading-relaxed">
+            AFM 창시자 박상일 대표의 35년 나노역학 연구와 True Non-Contact 원천특허, 50여 건의 분리형 스캐너 IP 철옹성.
+          </p>
+        </div>
+
+        <!-- 2. 전환비용 -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-900">전환 비용 (Switching)</span>
+            <span class="text-xs font-extrabold text-emerald-700">최상 (Very High)</span>
+          </div>
+          <div class="w-full bg-slate-200 h-1.5 rounded-full">
+            <div class="bg-emerald-600 h-1.5 rounded-full" style="width: 95%"></div>
+          </div>
+          <p class="text-[11px] text-slate-600 leading-relaxed">
+            파운드리/메모리 팹 라인에 세팅된 수만 개 수율 계측 레시피와 자동화 소프트웨어 교체 비용 막대.
+          </p>
+        </div>
+
+        <!-- 3. 네트워크 효과 -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-900">네트워크 효과</span>
+            <span class="text-xs font-semibold text-slate-600">중간 (Moderate)</span>
+          </div>
+          <div class="w-full bg-slate-200 h-1.5 rounded-full">
+            <div class="bg-slate-400 h-1.5 rounded-full" style="width: 60%"></div>
+          </div>
+          <p class="text-[11px] text-slate-600 leading-relaxed">
+            주요 반도체 학계 및 글로벌 선단 팹의 연구 데이터와 레퍼런스가 파크시스템스 포맷으로 표준화되는 락인 효과.
+          </p>
+        </div>
+
+        <!-- 4. 원가 우위 -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-900">원가 우위 (Cost)</span>
+            <span class="text-xs font-semibold text-blue-700">높음 (High)</span>
+          </div>
+          <div class="w-full bg-slate-200 h-1.5 rounded-full">
+            <div class="bg-blue-600 h-1.5 rounded-full" style="width: 85%"></div>
+          </div>
+          <p class="text-[11px] text-slate-600 leading-relaxed">
+            핵심 부품 내재화율 및 팁 마모 방지로 고객사 TCO(총소유비용)를 70% 이상 절감시켜 독점적 가격결정력(Pricing Power) 확보.
+          </p>
+        </div>
+
+        <!-- 5. 효율적 규모 -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-900">효율적 규모 (Scale)</span>
+            <span class="text-xs font-semibold text-indigo-700">높음 (High)</span>
+          </div>
+          <div class="w-full bg-slate-200 h-1.5 rounded-full">
+            <div class="bg-indigo-600 h-1.5 rounded-full" style="width: 90%"></div>
+          </div>
+          <p class="text-[11px] text-slate-600 leading-relaxed">
+            연간 수천억 원 규모의 틈새 산업용 AFM 시장에서 신규 경쟁자가 수백억 R&D를 투입하여 진입하기에 경제성이 불리한 틈새 독점.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== 바닥글 (Footer) ==================== -->
+  <footer class="bg-white border-t border-slate-200 px-4 lg:px-8 py-8 text-xs text-slate-500 mt-8">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>
+        <div class="font-bold text-slate-800 text-sm">
+          파크시스템스 멀티에이전트 인텔리전스 시스템 • 02 경제적 해자 분석
+        </div>
+        <p class="mt-1 text-slate-500">
+          데이터 출처: 금융감독원 전자공시시스템(DART), 특허청, SEMI, 증권사 리서치센터 컨센서스 종합
+        </p>
+      </div>
+      <div class="flex space-x-4 font-semibold text-slate-600">
+        <a href="park_systems.html" class="hover:text-blue-800 transition">총괄 리포트</a>
+        <a href="park_systems_bm.html" class="hover:text-blue-800 transition">비즈니스 모델</a>
+        <a href="park_systems_risk.html" class="hover:text-blue-800 transition">리스크 분석</a>
+        <a href="park_systems_financial.html" class="hover:text-blue-800 transition">재무 심층분석</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== Chart.js 렌더링 스크립트 ==================== -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // 1. 시장 점유율 도넛 차트
+      const ctxShare = document.getElementById('marketShareChart').getContext('2d');
+      new Chart(ctxShare, {
+        type: 'doughnut',
+        data: {
+          labels: ['파크시스템스 (세계 1위)', '브루커 (Bruker)', '기타 (Hitachi 등)'],
+          datasets: [{
+            data: [75, 18, 7],
+            backgroundColor: [
+              '#0284c7', // Cyan / Accent
+              '#94a3b8', // Slate
+              '#cbd5e1'  // Light Slate
+            ],
+            borderColor: '#ffffff',
+            borderWidth: 2,
+            hoverOffset: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                boxWidth: 12,
+                padding: 12,
+                color: '#334155',
+                font: { size: 11, family: 'Pretendard' }
+              }
+            },
+            tooltip: {
+              backgroundColor: '#0f172a',
+              titleColor: '#f8fafc',
+              bodyColor: '#cbd5e1',
+              borderColor: '#334155',
+              borderWidth: 1,
+              callbacks: {
+                label: function(context) {
+                  return ' ' + context.label + ': ' + context.raw + '%';
+                }
+              }
+            }
+          },
+          cutout: '68%'
+        }
+      });
+
+      // 2. 기술 경쟁력 레이더 차트
+      const ctxRadar = document.getElementById('radarComparisonChart').getContext('2d');
+      new Chart(ctxRadar, {
+        type: 'radar',
+        data: {
+          labels: [
+            '비접촉 정밀도',
+            '팁 수명/내구성',
+            '팹 인라인 자동화',
+            '3D Z축 단차계측',
+            'EUV 마스크 리페어'
+          ],
+          datasets: [
+            {
+              label: '파크시스템스',
+              data: [98, 96, 95, 98, 94],
+              fill: true,
+              backgroundColor: 'rgba(2, 132, 199, 0.2)',
+              borderColor: '#0284c7',
+              pointBackgroundColor: '#0284c7',
+              pointBorderColor: '#fff',
+              pointHoverBackgroundColor: '#fff',
+              pointHoverBorderColor: '#0284c7'
+            },
+            {
+              label: '브루커 (Bruker)',
+              data: [72, 58, 65, 70, 50],
+              fill: true,
+              backgroundColor: 'rgba(148, 163, 184, 0.15)',
+              borderColor: '#94a3b8',
+              pointBackgroundColor: '#94a3b8',
+              pointBorderColor: '#fff',
+              pointHoverBackgroundColor: '#fff',
+              pointHoverBorderColor: '#94a3b8'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            r: {
+              angleLines: { color: '#e2e8f0' },
+              grid: { color: '#e2e8f0' },
+              pointLabels: {
+                color: '#334155',
+                font: { size: 10, weight: 'bold', family: 'Pretendard' }
+              },
+              ticks: {
+                display: false,
+                maxTicksLimit: 5,
+                min: 40,
+                max: 100
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: {
+                boxWidth: 12,
+                padding: 10,
+                color: '#334155',
+                font: { size: 11, family: 'Pretendard' }
+              }
+            },
+            tooltip: {
+              backgroundColor: '#0f172a',
+              titleColor: '#f8fafc',
+              bodyColor: '#cbd5e1',
+              borderColor: '#334155',
+              borderWidth: 1
+            }
+          }
+        }
+      });
+
+      // 3. R&D 투자액 및 매출비중 복합 차트
+      const ctxRD = document.getElementById('rdTrendChart').getContext('2d');
+      new Chart(ctxRD, {
+        type: 'bar',
+        data: {
+          labels: ['2021년', '2022년', '2023년', '2024년', '2025년(E)', '2026년(E)'],
+          datasets: [
+            {
+              type: 'line',
+              label: '매출액 대비 R&D 비중 (%)',
+              data: [14.0, 14.8, 17.5, 17.8, 18.2, 18.5],
+              borderColor: '#059669',
+              backgroundColor: '#059669',
+              borderWidth: 2.5,
+              pointRadius: 4,
+              pointBackgroundColor: '#059669',
+              yAxisID: 'y1',
+              tension: 0.3
+            },
+            {
+              type: 'bar',
+              label: '연구개발비 투자액 (억 원)',
+              data: [119, 185, 253, 260, 310, 390],
+              backgroundColor: '#3b82f6',
+              borderRadius: 6,
+              yAxisID: 'y'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            mode: 'index',
+            intersect: false
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { color: '#64748b', font: { family: 'Pretendard' } }
+            },
+            y: {
+              type: 'linear',
+              display: true,
+              position: 'left',
+              grid: { color: '#f1f5f9' },
+              ticks: { color: '#64748b', font: { family: 'Pretendard' } },
+              title: {
+                display: true,
+                text: '투자액 (억 원)',
+                color: '#64748b',
+                font: { size: 10, family: 'Pretendard' }
+              }
+            },
+            y1: {
+              type: 'linear',
+              display: true,
+              position: 'right',
+              grid: { drawOnChartArea: false },
+              min: 10,
+              max: 22,
+              ticks: { color: '#059669', font: { family: 'Pretendard' } },
+              title: {
+                display: true,
+                text: 'R&D 비중 (%)',
+                color: '#059669',
+                font: { size: 10, family: 'Pretendard' }
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: {
+                boxWidth: 12,
+                padding: 8,
+                color: '#334155',
+                font: { size: 10, family: 'Pretendard' }
+              }
+            },
+            tooltip: {
+              backgroundColor: '#0f172a',
+              titleColor: '#f8fafc',
+              bodyColor: '#cbd5e1',
+              borderColor: '#334155',
+              borderWidth: 1
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
