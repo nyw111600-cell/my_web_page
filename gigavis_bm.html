@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>기가비스 기업분석 - 01. 비즈니스 모델</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    body { font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif; }
+  </style>
+</head>
+<body class="bg-[#f8fafc] text-[#1e293b] min-h-screen">
+  
+  <header class="bg-[#f5f3ff]/95 backdrop-blur-md border-b border-purple-200/80 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="h-14 flex items-center justify-between border-b border-purple-200/70">
+        <div class="flex items-center space-x-3">
+          <span class="text-lg font-bold text-purple-950">기가비스 (GigaVis / 420770)</span>
+          <span class="px-2.5 py-0.5 rounded text-xs font-semibold bg-purple-100 text-purple-800">Type B: 후공정·패키징 장비</span>
+        </div>
+        <div class="text-xs font-medium text-purple-700">
+          반도체 고성능 기판 AOI/AOR 솔루션 리포트 | 2026.09
+        </div>
+      </div>
+      <nav class="flex space-x-2 py-2.5 overflow-x-auto text-sm">
+        <a href="gigavis.html" class="px-3.5 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition text-sm">00. 총괄 리포트</a>
+        <a href="gigavis_bm.html" class="px-3.5 py-1.5 rounded-lg bg-purple-700 text-white font-bold shadow-sm text-sm">01. 비즈니스 모델</a>
+        <a href="gigavis_moat.html" class="px-3.5 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition text-sm">02. 경제적 해자</a>
+        <a href="gigavis_risk.html" class="px-3.5 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition text-sm">03. 리스크 분석</a>
+        <a href="gigavis_financial.html" class="px-3.5 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition text-sm">04. 재무 심층분석</a>
+      </nav>
+    </div>
+  </header>
+  
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    
+    <!-- 섹션 1: 기업 개요 및 밸류체인 포지셔닝 -->
+    <section class="bg-white rounded-xl border border-[#e2e8f0] shadow-sm p-6 sm:p-8">
+      <div class="border-b border-[#e2e8f0] pb-4 mb-6">
+        <div class="text-xs font-semibold text-[#0284c7] uppercase tracking-wider mb-1">Business Overview & Positioning</div>
+        <h1 class="text-2xl font-bold text-[#1e293b]">비즈니스 모델: 고성능 반도체 기판의 수율 관리 수호자</h1>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-[#f8fafc] p-5 rounded-lg border border-[#e2e8f0]">
+          <div class="text-xs text-[#64748b] font-medium mb-1">핵심 타깃 시장</div>
+          <div class="text-xl font-bold text-[#1e3a8a] mb-2">FC-BGA / FC-CSP</div>
+          <p class="text-sm text-[#475569] leading-relaxed">
+            AI 가속기 및 서버용 고집적 반도체 패키징 기판 제조 공정 내 필수 검사 및 수리 솔루션 독점적 제공.
+          </p>
+        </div>
+        <div class="bg-[#f8fafc] p-5 rounded-lg border border-[#e2e8f0]">
+          <div class="text-xs text-[#64748b] font-medium mb-1">핵심 가치 제안 (Value Prop)</div>
+          <div class="text-xl font-bold text-[#059669] mb-2">검사부터 양품화까지</div>
+          <p class="text-sm text-[#475569] leading-relaxed">
+            결함 검출(AOI)에 그치지 않고 세계 최고 2/2㎛ 수준 레이저 자동 수리(AOR)를 통해 버려지는 고가 기판을 양품화.
+          </p>
+        </div>
+        <div class="bg-[#f8fafc] p-5 rounded-lg border border-[#e2e8f0]">
+          <div class="text-xs text-[#64748b] font-medium mb-1">글로벌 비즈니스 비중</div>
+          <div class="text-xl font-bold text-[#0284c7] mb-2">해외 매출 비중 70~90%</div>
+          <p class="text-sm text-[#475569] leading-relaxed">
+            일본 이비덴, 신코전기, 대만 유니마이크론, 난야 등 글로벌 Top 기판 제조사 라인에 직납 체계 구축.
+          </p>
+        </div>
+      </div>
+
+      <div class="bg-[#eff6ff] border-l-4 border-[#1e3a8a] p-4 rounded-r-lg">
+        <h4 class="text-sm font-bold text-[#1e3a8a] mb-1">반도체 기판 고다층화와 기가비스의 필수 불가결성</h4>
+        <p class="text-sm text-[#334155] leading-relaxed">
+          AI 칩의 연산량 급증으로 패키지 기판은 면적이 100×100mm 이상으로 대형화되고 층수가 20층 이상으로 적층되고 있습니다. 기판의 층수가 늘어날수록 단 한 층의 미세 패턴 단락이나 돌기로 인해 전체 기판이 폐기될 위험이 기하급수적으로 증가합니다. 기가비스의 광학검사(AOI)와 자동광학수리(AOR)는 수백만 원에 달하는 고부가 기판의 완성 수율을 극대화하는 핵심 설비입니다.
+        </p>
+      </div>
+    </section>
+
+    <!-- 섹션 2: 5대 핵심 제품 및 서비스 라인업 -->
+    <section class="bg-white rounded-xl border border-[#e2e8f0] shadow-sm p-6 sm:p-8">
+      <div class="border-b border-[#e2e8f0] pb-4 mb-6">
+        <div class="text-xs font-semibold text-[#0284c7] uppercase tracking-wider mb-1">Product Lineup & Technical Specs</div>
+        <h2 class="text-xl font-bold text-[#1e293b]">기가비스 핵심 제품 포트폴리오</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- 제품 1: AOI -->
+        <div class="border border-[#e2e8f0] rounded-xl p-5 hover:border-[#1e3a8a] transition shadow-xs">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-[#1e3a8a]">자동광학검사기 (AOI)</h3>
+            <span class="text-xs bg-[#eff6ff] text-[#1e3a8a] px-2 py-0.5 rounded font-semibold">주력 제품</span>
+          </div>
+          <p class="text-sm text-[#475569] mb-4 leading-relaxed">
+            반도체 기판 회로 형성 후 패턴 결함을 자동으로 스캔 및 검출하는 초정밀 광학 장비.
+          </p>
+          <ul class="text-xs text-[#334155] space-y-2 border-t border-[#f1f5f9] pt-3">
+            <li><strong>검사 한계:</strong> Min. 1.5 / 1.5 ㎛ Line/Space</li>
+            <li><strong>분해능:</strong> Min. 0.5 ㎛ 초고해상도 광학계</li>
+            <li><strong>적용 패널:</strong> Max. 650 × 610 mm 대형 기판</li>
+            <li><strong>매출 비중:</strong> 49.4% (2026H1 기준 139.9억원)</li>
+          </ul>
+        </div>
+
+        <!-- 제품 2: AOR -->
+        <div class="border border-[#e2e8f0] rounded-xl p-5 hover:border-[#059669] transition shadow-xs">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-[#059669]">자동광학수리기 (AOR)</h3>
+            <span class="text-xs bg-[#ecfdf5] text-[#059669] px-2 py-0.5 rounded font-semibold">수익성 핵심</span>
+          </div>
+          <p class="text-sm text-[#475569] mb-4 leading-relaxed">
+            AOI가 검출한 기판 내 미세 단락(Short) 및 구리 돌기를 레이저로 미세 가공하여 양품화.
+          </p>
+          <ul class="text-xs text-[#334155] space-y-2 border-t border-[#f1f5f9] pt-3">
+            <li><strong>수리 한계:</strong> Min. 2 / 2 ㎛ 정밀 레이저 수리</li>
+            <li><strong>처리 속도:</strong> 시간당 83개 결함 수리 (Throughput)</li>
+            <li><strong>적용 수지:</strong> ABF, FR4, BF Resin 등 전 방위</li>
+            <li><strong>독점력:</strong> 글로벌 유일 수준의 양산 적용 장비</li>
+          </ul>
+        </div>
+
+        <!-- 제품 3: VRS -->
+        <div class="border border-[#e2e8f0] rounded-xl p-5 hover:border-[#0284c7] transition shadow-xs">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-[#0284c7]">결함 확인·검증기 (VRS)</h3>
+            <span class="text-xs bg-[#eff6ff] text-[#0284c7] px-2 py-0.5 rounded font-semibold">검증 플랫폼</span>
+          </div>
+          <p class="text-sm text-[#475569] mb-4 leading-relaxed">
+            AOI 검사 결과를 3COMS Color 및 형광 광학계로 정밀 확대 관측하여 최종 결함을 확인.
+          </p>
+          <ul class="text-xs text-[#334155] space-y-2 border-t border-[#f1f5f9] pt-3">
+            <li><strong>광학 사양:</strong> 가시광(Visible) 및 형광(Fluorescence)</li>
+            <li><strong>줌 배율:</strong> 3.5배 ~ 25배 연속 광학 줌</li>
+            <li><strong>자동 초점:</strong> 초점 심도 확장(DOF × 8) 광학계</li>
+            <li><strong>매출 비중:</strong> 3.6% (2026H1 기준 10.1억원)</li>
+          </ul>
+        </div>
+
+        <!-- 제품 4: FA 자동화 설비 -->
+        <div class="border border-[#e2e8f0] rounded-xl p-5 hover:border-[#d97706] transition shadow-xs">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-[#d97706]">FA 자동화 설비 (In-Line)</h3>
+            <span class="text-xs bg-[#fffbeb] text-[#d97706] px-2 py-0.5 rounded font-semibold">무인화 패키지</span>
+          </div>
+          <p class="text-sm text-[#475569] mb-4 leading-relaxed">
+            기판 이송, 적재, 반전, 정렬을 완전 무인 자동화하여 작업자 접촉 오염을 100% 차단.
+          </p>
+          <ul class="text-xs text-[#334155] space-y-2 border-t border-[#f1f5f9] pt-3">
+            <li><strong>주요 기능:</strong> Roll to Roll, Clean In-Line, Loader/Unloader</li>
+            <li><strong>신규 진화:</strong> 반도체 클린룸용 EFEM 결합형 라인</li>
+            <li><strong>매출 규모:</strong> 47.2억원 (2026H1 비중 16.7%)</li>
+            <li><strong>단가 상승:</strong> 장비 단품 납품 대비 수배 규모 턴키 수주</li>
+          </ul>
+        </div>
+
+        <!-- 제품 5: 소프트웨어 라인업 -->
+        <div class="border border-[#e2e8f0] rounded-xl p-5 hover:border-purple-600 transition shadow-xs md:col-span-2 lg:col-span-2">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-purple-900">전용 소프트웨어 제품군 (GVIS CAM, DTS, GiDC)</h3>
+            <span class="text-xs bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-semibold">독자 SW 생태계</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-[#334155]">
+            <div class="bg-[#f8fafc] p-3 rounded border border-[#e2e8f0]">
+              <div class="font-bold text-[#1e3a8a] mb-1">GVIS CAM</div>
+              <p class="text-[#475569] leading-relaxed">설계 데이터(ODB++, Gerber 등)를 읽어 검사 기준 좌표와 영역을 자동 생성하는 필수 전용 CAM 소프트웨어.</p>
+            </div>
+            <div class="bg-[#f8fafc] p-3 rounded border border-[#e2e8f0]">
+              <div class="font-bold text-[#059669] mb-1">DTS (Defect Tracking)</div>
+              <p class="text-[#475569] leading-relaxed">검사·수리된 결함 데이터를 Layer/Lot/장비별로 실시간 추적하여 팹 수율 관리를 지원하는 데이터베이스 솔루션.</p>
+            </div>
+            <div class="bg-[#f8fafc] p-3 rounded border border-[#e2e8f0]">
+              <div class="font-bold text-purple-700 mb-1">GiDC (AI 결함분류)</div>
+              <p class="text-[#475569] leading-relaxed">다중 인공지능 딥러닝과 DRC 알고리즘을 융합하여 결함 유형을 사람 없이 100% 자동 분류하는 ADC 플랫폼.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 섹션 3: DART 원천 팩트 - 제품별 매출 추이 및 시각화 -->
+    <section class="bg-white rounded-xl border border-[#e2e8f0] shadow-sm p-6 sm:p-8">
+      <div class="border-b border-[#e2e8f0] pb-4 mb-6">
+        <div class="text-xs font-semibold text-[#0284c7] uppercase tracking-wider mb-1">Revenue Breakdown (DART Official Fact)</div>
+        <h2 class="text-xl font-bold text-[#1e293b]">제품군별 공식 매출 실적 및 비중 추이</h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-6">
+        <div class="lg:col-span-5 flex flex-col items-center">
+          <div class="w-64 h-64">
+            <canvas id="productMixChart"></canvas>
+          </div>
+          <div class="text-xs text-[#64748b] mt-3">2026년 상반기 연결 매출 포트폴리오 (단위: %)</div>
+        </div>
+        <div class="lg:col-span-7">
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-left border-collapse">
+              <thead>
+                <tr class="bg-[#f8fafc] text-[#334155] border-y border-[#cbd5e1]">
+                  <th class="py-2.5 px-3 font-semibold">구분</th>
+                  <th class="py-2.5 px-3 font-semibold text-right">2024년 (제21기)</th>
+                  <th class="py-2.5 px-3 font-semibold text-right">2025년 (제22기)</th>
+                  <th class="py-2.5 px-3 font-semibold text-right bg-purple-50 text-purple-900">2026년 상반기</th>
+                  <th class="py-2.5 px-3 font-semibold text-right">26H1 비중</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[#e2e8f0]">
+                <tr class="hover:bg-[#f8fafc]">
+                  <td class="py-2 px-3 font-medium text-[#1e293b]">AOI (검사기)</td>
+                  <td class="py-2 px-3 text-right">8,757 백만원</td>
+                  <td class="py-2 px-3 text-right font-medium">18,309 백만원</td>
+                  <td class="py-2 px-3 text-right font-bold text-[#1e3a8a] bg-purple-50/50">13,990 백만원</td>
+                  <td class="py-2 px-3 text-right font-bold text-[#1e3a8a]">49.4%</td>
+                </tr>
+                <tr class="hover:bg-[#f8fafc]">
+                  <td class="py-2 px-3 font-medium text-[#1e293b]">AOR (수리기)</td>
+                  <td class="py-2 px-3 text-right">2,631 백만원</td>
+                  <td class="py-2 px-3 text-right font-medium">9,749 백만원</td>
+                  <td class="py-2 px-3 text-right font-bold text-[#059669] bg-purple-50/50">2,967 백만원</td>
+                  <td class="py-2 px-3 text-right font-bold text-[#059669]">10.5%</td>
+                </tr>
+                <tr class="hover:bg-[#f8fafc]">
+                  <td class="py-2 px-3 font-medium text-[#1e293b]">FA (자동화)</td>
+                  <td class="py-2 px-3 text-right">4,671 백만원</td>
+                  <td class="py-2 px-3 text-right font-medium">12,007 백만원</td>
+                  <td class="py-2 px-3 text-right font-bold text-[#d97706] bg-purple-50/50">4,720 백만원</td>
+                  <td class="py-2 px-3 text-right font-bold text-[#d97706]">16.7%</td>
+                </tr>
+                <tr class="hover:bg-[#f8fafc]">
+                  <td class="py-2 px-3 font-medium text-[#1e293b]">VRS (확인기)</td>
+                  <td class="py-2 px-3 text-right">1,822 백만원</td>
+                  <td class="py-2 px-3 text-right">3,096 백만원</td>
+                  <td class="py-2 px-3 text-right bg-purple-50/50">1,012 백만원</td>
+                  <td class="py-2 px-3 text-right">3.6%</td>
+                </tr>
+                <tr class="hover:bg-[#f8fafc]">
+                  <td class="py-2 px-3 font-medium text-[#1e293b]">Software</td>
+                  <td class="py-2 px-3 text-right">1,101 백만원</td>
+                  <td class="py-2 px-3 text-right">2,092 백만원</td>
+                  <td class="py-2 px-3 text-right bg-purple-50/50">1,290 백만원</td>
+                  <td class="py-2 px-3 text-right">4.6%</td>
+                </tr>
+                <tr class="hover:bg-[#f8fafc]">
+                  <td class="py-2 px-3 text-[#475569]">용역(CS/유지보수)</td>
+                  <td class="py-2 px-3 text-right">6,419 백만원</td>
+                  <td class="py-2 px-3 text-right">6,899 백만원</td>
+                  <td class="py-2 px-3 text-right bg-purple-50/50">4,169 백만원</td>
+                  <td class="py-2 px-3 text-right">14.7%</td>
+                </tr>
+                <tr class="hover:bg-[#f8fafc]">
+                  <td class="py-2 px-3 text-[#475569]">임대료 등</td>
+                  <td class="py-2 px-3 text-right">732 백만원</td>
+                  <td class="py-2 px-3 text-right">283 백만원</td>
+                  <td class="py-2 px-3 text-right bg-purple-50/50">148 백만원</td>
+                  <td class="py-2 px-3 text-right">0.5%</td>
+                </tr>
+                <tr class="bg-[#f8fafc] font-bold text-[#1e293b]">
+                  <td class="py-2.5 px-3">합계 매출액</td>
+                  <td class="py-2.5 px-3 text-right">26,133 백만원</td>
+                  <td class="py-2.5 px-3 text-right">52,435 백만원</td>
+                  <td class="py-2.5 px-3 text-right text-purple-950 bg-purple-100/60">28,295 백만원</td>
+                  <td class="py-2.5 px-3 text-right text-purple-950">100.0%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-xs text-[#64748b] bg-[#f8fafc] p-3 rounded border border-[#e2e8f0]">
+        출처: 금융감독원 전자공시(DART) 기가비스 2026.06 반기보고서 및 2025.12 사업보고서 연결 실적 기준.
+      </div>
+    </section>
+
+    <!-- 섹션 4: 글로벌 고객 네트워크 및 판매 구조 -->
+    <section class="bg-white rounded-xl border border-[#e2e8f0] shadow-sm p-6 sm:p-8">
+      <div class="border-b border-[#e2e8f0] pb-4 mb-6">
+        <div class="text-xs font-semibold text-[#0284c7] uppercase tracking-wider mb-1">Global Customer Footprint</div>
+        <h2 class="text-xl font-bold text-[#1e293b]">글로벌 톱티어 기판 제조사 납품 네트워크</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div class="border border-[#e2e8f0] p-5 rounded-lg bg-[#f8fafc]">
+          <div class="text-sm font-bold text-[#1e3a8a] mb-2">일본 고객군 (글로벌 1~2위)</div>
+          <p class="text-xs text-[#475569] mb-3 leading-relaxed">
+            전 세계 FC-BGA 시장을 주도하는 <strong>이비덴(Ibiden)</strong>, <strong>신코전기(Shinko Electric)</strong>와 15년 이상의 독점적 협력 관계 유지.
+          </p>
+          <div class="text-xs text-[#64748b]">
+            2026년 6월 일본 상위 제조사 대상 94억원 신규 수주 체결 완료.
+          </div>
+        </div>
+
+        <div class="border border-[#e2e8f0] p-5 rounded-lg bg-[#f8fafc]">
+          <div class="text-sm font-bold text-[#059669] mb-2">중화권/대만 고객군</div>
+          <p class="text-xs text-[#475569] mb-3 leading-relaxed">
+            세계 최대 기판 제조사 <strong>유니마이크론(Unimicron)</strong>, <strong>난야(Nanya PCB)</strong>, 킨서스(Kinsus) 등 현지 에이전시 및 직납 체계 공고화.
+          </p>
+          <div class="text-xs text-[#64748b]">
+            대만 타이베이 및 신주 거점 CS팀 가동 중.
+          </div>
+        </div>
+
+        <div class="border border-[#e2e8f0] p-5 rounded-lg bg-[#f8fafc]">
+          <div class="text-sm font-bold text-[#0284c7] mb-2">국내 핵심 고객군</div>
+          <p class="text-xs text-[#475569] mb-3 leading-relaxed">
+            국내 유일 글로벌 레벨 FC-BGA 공급사인 <strong>삼성전기</strong>, <strong>대덕전자</strong>, <strong>LG이노텍</strong>에 라인 표준 장비로 납품 중.
+          </p>
+          <div class="text-xs text-[#64748b]">
+            차세대 서버/AI 기판 라인 및 유리기판 연구라인 대응.
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-[#f8fafc] rounded-lg border border-[#cbd5e1] text-xs text-[#334155] leading-relaxed">
+        <strong>직거래 및 유지보수(CS) 선순환 구조:</strong> 기가비스는 설비 판매를 모두 본사 및 현지 법인(일본, 대만, 베트남 등)을 통한 직거래로 수행합니다. 장비 설치 후 사후 서비스(용역매출)가 연간 70억~80억 원 수준으로 꾸준히 발생하여 고정적인 캐시카우 역할을 수행하고 있습니다.
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-[#e2e8f0] bg-white mt-12 py-6 text-center text-xs text-[#64748b]">
+    기가비스(GigaVis) 전문 에이전트 기업분석 보고서 | 반도체 멀티에이전트 분석 시스템
+  </footer>
+
+  <script>
+    const ctx = document.getElementById('productMixChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['AOI 검사기', 'FA 자동화', 'AOR 수리기', '용역(CS)', 'Software', 'VRS/기타'],
+        datasets: [{
+          data: [49.4, 16.7, 10.5, 14.7, 4.6, 4.1],
+          backgroundColor: [
+            '#1e3a8a',
+            '#d97706',
+            '#059669',
+            '#64748b',
+            '#7c3aed',
+            '#cbd5e1'
+          ],
+          borderWidth: 2,
+          borderColor: '#ffffff'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              boxWidth: 10,
+              font: { size: 11, family: 'Pretendard' }
+            }
+          }
+        },
+        cutout: '65%'
+      }
+    });
+  </script>
+</body>
+</html>

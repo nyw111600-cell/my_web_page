@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>기가비스 기업분석 - 03. 리스크 및 구조적 과제</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    body { font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif; }
+  </style>
+</head>
+<body class="bg-[#f8fafc] text-[#1e293b] min-h-screen">
+  
+  <header class="bg-[#f5f3ff]/95 backdrop-blur-md border-b border-purple-200/80 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="h-14 flex items-center justify-between border-b border-purple-200/70">
+        <div class="flex items-center space-x-3">
+          <span class="text-lg font-bold text-purple-950">기가비스 (GigaVis / 420770)</span>
+          <span class="px-2.5 py-0.5 rounded text-xs font-semibold bg-purple-100 text-purple-800">Type B: 후공정·패키징 장비</span>
+        </div>
+        <div class="text-xs font-medium text-purple-700">
+          반도체 고성능 기판 AOI/AOR 솔루션 리포트 | 2026.09
+        </div>
+      </div>
+      <nav class="flex space-x-2 py-2.5 overflow-x-auto text-sm">
+        <a href="gigavis.html" class="px-3.5 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition text-sm">00. 총괄 리포트</a>
+        <a href="gigavis_bm.html" class="px-3.5 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition text-sm">01. 비즈니스 모델</a>
+        <a href="gigavis_moat.html" class="px-3.5 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition text-sm">02. 경제적 해자</a>
+        <a href="gigavis_risk.html" class="px-3.5 py-1.5 rounded-lg bg-purple-700 text-white font-bold shadow-sm text-sm">03. 리스크 분석</a>
+        <a href="gigavis_financial.html" class="px-3.5 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition text-sm">04. 재무 심층분석</a>
+      </nav>
+    </div>
+  </header>
+  
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    
+    <!-- 섹션 1: 리스크 분석 총괄 -->
+    <section class="bg-white rounded-xl border border-[#e2e8f0] shadow-sm p-6 sm:p-8">
+      <div class="border-b border-[#e2e8f0] pb-4 mb-6">
+        <div class="text-xs font-semibold text-[#d97706] uppercase tracking-wider mb-1">Risk Factors & Structural Challenges</div>
+        <h1 class="text-2xl font-bold text-[#1e293b]">투자 리스크 및 구조적 과제 정밀 점검</h1>
+      </div>
+
+      <div class="p-4 bg-[#fffbeb] border-l-4 border-[#d97706] rounded-r-lg text-xs text-[#92400e] leading-relaxed mb-6">
+        <strong>리스크 총평:</strong> 기가비스는 2/2㎛ 광학 검사·수리 분야에서 세계 최고 수준의 해자를 보유하고 있으나, 전방 고객사(이비덴, 유니마이크론, 삼성전기 등)의 신규 증설(CAPEX) 집행 속도와 분기별 수주 편차에 실적이 극도로 민감하게 연동되는 전형적인 수주형 장비주의 구조적 취약성을 내포하고 있습니다.
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="border border-[#e2e8f0] p-4 rounded-lg bg-[#f8fafc]">
+          <div class="text-xs text-[#64748b] mb-1">전방 CAPEX 사이클</div>
+          <div class="text-sm font-bold text-[#dc2626]">높음 (High)</div>
+          <p class="text-[11px] text-[#475569] mt-1">기판 증설 지연 시 장비 수주 공백 발생</p>
+        </div>
+        <div class="border border-[#e2e8f0] p-4 rounded-lg bg-[#f8fafc]">
+          <div class="text-xs text-[#64748b] mb-1">고객사 편중도</div>
+          <div class="text-sm font-bold text-[#d97706]">중간 (Medium)</div>
+          <p class="text-[11px] text-[#475569] mt-1">글로벌 상위 5개사가 수주의 70% 차지</p>
+        </div>
+        <div class="border border-[#e2e8f0] p-4 rounded-lg bg-[#f8fafc]">
+          <div class="text-xs text-[#64748b] mb-1">외환 변동성 (환율)</div>
+          <div class="text-sm font-bold text-[#d97706]">중간 (Medium)</div>
+          <p class="text-[11px] text-[#475569] mt-1">해외 매출 70~90%로 원화 강세 시 불리</p>
+        </div>
+        <div class="border border-[#e2e8f0] p-4 rounded-lg bg-[#f8fafc]">
+          <div class="text-xs text-[#64748b] mb-1">유리기판 지연 위험</div>
+          <div class="text-sm font-bold text-[#2563eb]">관리 가능 (Low-Med)</div>
+          <p class="text-[11px] text-[#475569] mt-1">기존 FC-BGA 수요가 펀더멘털 지탱</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 섹션 2: 4대 핵심 리스크 심층 분석 -->
+    <section class="space-y-6">
+      <!-- 리스크 1 -->
+      <div class="bg-white rounded-xl border border-[#e2e8f0] shadow-sm p-6">
+        <div class="flex items-center space-x-2 mb-3">
+          <span class="w-2 h-2 rounded-full bg-[#dc2626]"></span>
+          <h3 class="text-base font-bold text-[#1e293b]">1. 전방 기판 제조사의 설비투자(CAPEX) 집행 지연 및 분기 변동성</h3>
+        </div>
+        <p class="text-xs text-[#475569] leading-relaxed mb-3">
+          반도체 장비사는 고객사의 신규 팹 준공 및 라인 셋업 스케줄에 맞춰 일괄 납품되는 특성을 가집니다. 실제로 2024년 글로벌 PC 및 일반 서버 수요 둔화로 인해 기판 제조사들이 FC-BGA 라인 투자를 6개월~1년씩 일제히 지연시키자, 기가비스의 2024년 연간 매출은 261.3억원으로 급감하고 영업적자(-17.9억원)를 기록한 바 있습니다. 고객사 투자 스케줄 변동에 따른 분기별 수주 절벽(Lumpiness) 위험은 상존합니다.
+        </p>
+        <div class="bg-[#f8fafc] p-3 rounded border border-[#e2e8f0] text-xs text-[#334155]">
+          <strong>체크포인트:</strong> 2026년 상반기 기준 기가비스 수주잔고는 652.7억원으로 역대 최고 수준을 달성하여 단기 실적 가시성은 확보되었으나, 2027년 이후 추가적인 대규모 수주 사이클이 지속되는지 전방 IT 업황을 면밀히 관찰해야 합니다.
+        </div>
+      </div>
+
+      <!-- 리스크 2 -->
+      <div class="bg-white rounded-xl border border-[#e2e8f0] shadow-sm p-6">
+        <div class="flex items-center space-x-2 mb-3">
+          <span class="w-2 h-2 rounded-full bg-[#d97706]"></span>
+          <h3 class="text-base font-bold text-[#1e293b]">2. 압도적인 해외 매출 비중에 따른 환율 민감도 (엔화/달러화 변동)</h3>
+        </div>
+        <p class="text-xs text-[#475569] leading-relaxed mb-3">
+          DART 공시에 따르면 2025년 기준 제품 매출의 91.6%(414.5억원), 2026년 상반기 기준 67.2%(161.2억원)가 일본, 대만, 동남아 등 해외에서 발생합니다. 특히 일본 기판사(이비덴, 신코)와의 거래 비중이 커 엔화(JPY) 약세가 심화될 경우 가격 경쟁력 유지 압박이나 원화 환산 마진 축소가 발생할 수 있습니다.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <div class="bg-[#f8fafc] p-3 rounded border border-[#e2e8f0]">
+            <span class="font-bold text-[#1e3a8a]">원/달러 환율 10% 하락 시:</span>
+            <p class="text-[#475569] mt-0.5">외화표시 매출채권 평가손 및 수출 단가 절하 영향</p>
+          </div>
+          <div class="bg-[#f8fafc] p-3 rounded border border-[#e2e8f0]">
+            <span class="font-bold text-[#059669]">환헤지 전략:</span>
+            <p class="text-[#475569] mt-0.5">선물환 파생상품 계약 및 현지 결제 통화 다변화 추진 중</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 리스크 3 -->
+      <div class="bg-white rounded-xl border border-[#e2e8f0] shadow-sm p-6">
+        <div class="flex items-center space-x-2 mb-3">
+          <span class="w-2 h-2 rounded-full bg-[#d97706]"></span>
+          <h3 class="text-base font-bold text-[#1e293b]">3. 차세대 유리기판(Glass Substrate) 상용화 지연 가능성</h3>
+        </div>
+        <p class="text-xs text-[#475569] leading-relaxed mb-3">
+          시장 일각에서는 유리기판이 2026년 말부터 대량 양산될 것으로 기대하고 있으나, 최근 삼성전기 등 국내 업체의 시제품 신뢰성 테스트에서 미세 균열 및 공정 단가 문제가 지적되면서 본격 양산 시점이 2027~2028년으로 순연될 가능성이 제기되고 있습니다. 기가비스의 TGV 검사 장비 수주가 단기에 폭발하기보다는 점진적 파일럿 라인 도입 형태로 진행될 가능성을 염두에 두어야 합니다.
+        </p>
+      </div>
+
+      <!-- 리스크 4 -->
+      <div class="bg-white rounded-xl border border-[#e2e8f0] shadow-sm p-6">
+        <div class="flex items-center space-x-2 mb-3">
+          <span class="w-2 h-2 rounded-full bg-[#2563eb]"></span>
+          <h3 class="text-base font-bold text-[#1e293b]">4. 고정비 레버리지 역효과와 손익분기점(BEP) 분석</h3>
+        </div>
+        <p class="text-xs text-[#475569] leading-relaxed mb-3">
+          기가비스는 우수한 R&D 인력(47명)과 신사옥 시설 등 연간 250억~300억 원 수준의 판관비 및 고정 제조경비가 발생합니다. 분기 매출액이 80억 원(연간 약 320억 원) 밑으로 떨어지면 손익분기점(BEP)을 하회하여 급격히 영업적자로 반전되는 높은 영업레버리지 특성을 지닙니다.
+        </p>
+      </div>
+    </section>
+
+    <!-- 섹션 3: 리스크 완화 매트릭스 및 재무적 완충력 -->
+    <section class="bg-white rounded-xl border border-[#e2e8f0] shadow-sm p-6 sm:p-8">
+      <div class="border-b border-[#e2e8f0] pb-4 mb-6">
+        <div class="text-xs font-semibold text-[#0284c7] uppercase tracking-wider mb-1">Risk Mitigation & Financial Buffer</div>
+        <h2 class="text-xl font-bold text-[#1e293b]">위험 방어 체계 및 재무적 완충력</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div class="p-4 bg-[#eff6ff] rounded-lg border border-[#bfdbfe]">
+          <div class="text-xs font-bold text-[#1e3a8a] mb-1">방어 1. 무차입 순현금 1,345억원</div>
+          <p class="text-xs text-[#334155] leading-relaxed">
+            현금성자산 465.5억원 + 단기금융상품 880억원을 보유하여 3년 이상의 극심한 다운턴이 와도 외부 차입 없이 연구개발과 고정비를 완벽히 버텨낼 수 있는 자금력 확보.
+          </p>
+        </div>
+
+        <div class="p-4 bg-[#ecfdf5] rounded-lg border border-[#a7f3d0]">
+          <div class="text-xs font-bold text-[#059669] mb-1">방어 2. 고정 CS 용역 매출</div>
+          <p class="text-xs text-[#334155] leading-relaxed">
+            이미 전 세계 톱티어 공장에 깔려 있는 수백 대의 AOI/AOR 장비로부터 연간 70억~80억 원의 유지보수 용역 매출이 안정적으로 발생하여 기초 현금흐름 방어.
+          </p>
+        </div>
+
+        <div class="p-4 bg-[#f8fafc] rounded-lg border border-[#cbd5e1]">
+          <div class="text-xs font-bold text-[#0284c7] mb-1">방어 3. FA In-Line 턴키 패키징</div>
+          <p class="text-xs text-[#334155] leading-relaxed">
+            장비 단품 판매에서 벗어나 자동화 물류(In-Line)를 일괄 수주함으로써 대당 수주 단가를 2~3배 높여 고정비 커버 능력을 극대화.
+          </p>
+        </div>
+      </div>
+
+      <!-- 리스크 종합 평가 테이블 -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs text-left border-collapse">
+          <thead>
+            <tr class="bg-[#f8fafc] text-[#334155] border-y border-[#cbd5e1]">
+              <th class="py-2.5 px-3 font-semibold">리스크 항목</th>
+              <th class="py-2.5 px-3 font-semibold text-center">발생 확률</th>
+              <th class="py-2.5 px-3 font-semibold text-center">실적 영향도</th>
+              <th class="py-2.5 px-3 font-semibold">완화 전략 및 모니터링 지표</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[#e2e8f0]">
+            <tr class="hover:bg-[#f8fafc]">
+              <td class="py-2.5 px-3 font-medium text-[#1e293b]">전방 고객사 CAPEX 지연</td>
+              <td class="py-2.5 px-3 text-center text-[#d97706] font-bold">중간 (Moderate)</td>
+              <td class="py-2.5 px-3 text-center text-[#dc2626] font-bold">높음 (High)</td>
+              <td class="py-2.5 px-3 text-[#475569]">수주잔고(현재 652.7억원) 소진 추이 및 엔비디아/빅테크 칩 출하량 모니터링</td>
+            </tr>
+            <tr class="hover:bg-[#f8fafc]">
+              <td class="py-2.5 px-3 font-medium text-[#1e293b]">엔화 및 달러 환율 변동</td>
+              <td class="py-2.5 px-3 text-center text-[#d97706] font-bold">중간 (Moderate)</td>
+              <td class="py-2.5 px-3 text-center text-[#d97706] font-bold">중간 (Medium)</td>
+              <td class="py-2.5 px-3 text-[#475569]">통화별 분산 결제 및 정기적 파생상품 헤지 포지션 운영</td>
+            </tr>
+            <tr class="hover:bg-[#f8fafc]">
+              <td class="py-2.5 px-3 font-medium text-[#1e293b]">유리기판 상용화 지연</td>
+              <td class="py-2.5 px-3 text-center text-[#dc2626] font-bold">높음 (High)</td>
+              <td class="py-2.5 px-3 text-center text-[#059669] font-bold">낮음 (Low)</td>
+              <td class="py-2.5 px-3 text-[#475569]">단기 실적은 기존 FC-BGA 대면적화가 주도하며, 유리기판은 중장기 옵션으로 인식</td>
+            </tr>
+            <tr class="hover:bg-[#f8fafc]">
+              <td class="py-2.5 px-3 font-medium text-[#1e293b]">후발 주자 기술 추격</td>
+              <td class="py-2.5 px-3 text-center text-[#059669] font-bold">낮음 (Low)</td>
+              <td class="py-2.5 px-3 text-center text-[#d97706] font-bold">중간 (Medium)</td>
+              <td class="py-2.5 px-3 text-[#475569]">2/2㎛ 이하 광학계 특허망 구축 및 독자 AI 결함분류 SW 락인 강화</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-[#e2e8f0] bg-white mt-12 py-6 text-center text-xs text-[#64748b]">
+    기가비스(GigaVis) 전문 에이전트 기업분석 보고서 | 반도체 멀티에이전트 분석 시스템
+  </footer>
+</body>
+</html>

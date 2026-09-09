@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>기가비스 기업분석 - 02. 경제적 해자 및 성장 모멘텀</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    body { font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif; }
+  </style>
+</head>
+<body class="bg-[#f8fafc] text-[#1e293b] min-h-screen">
+  
+  <header class="bg-[#f5f3ff]/95 backdrop-blur-md border-b border-purple-200/80 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="h-14 flex items-center justify-between border-b border-purple-200/70">
+        <div class="flex items-center space-x-3">
+          <span class="text-lg font-bold text-purple-950">기가비스 (GigaVis / 420770)</span>
+          <span class="px-2.5 py-0.5 rounded text-xs font-semibold bg-purple-100 text-purple-800">Type B: 후공정·패키징 장비</span>
+        </div>
+        <div class="text-xs font-medium text-purple-700">
+          반도체 고성능 기판 AOI/AOR 솔루션 리포트 | 2026.09
+        </div>
+      </div>
+      <nav class="flex space-x-2 py-2.5 overflow-x-auto text-sm">
+        <a href="gigavis.html" class="px-3.5 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition text-sm">00. 총괄 리포트</a>
+        <a href="gigavis_bm.html" class="px-3.5 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition text-sm">01. 비즈니스 모델</a>
+        <a href="gigavis_moat.html" class="px-3.5 py-1.5 rounded-lg bg-purple-700 text-white font-bold shadow-sm text-sm">02. 경제적 해자</a>
+        <a href="gigavis_risk.html" class="px-3.5 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition text-sm">03. 리스크 분석</a>
+        <a href="gigavis_financial.html" class="px-3.5 py-1.5 rounded-lg text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition text-sm">04. 재무 심층분석</a>
+      </nav>
+    </div>
+  </header>
+  
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    
+    <!-- 섹션 1: 경제적 해자 개요 -->
+    <section class="bg-white rounded-xl border border-[#e2e8f0] shadow-sm p-6 sm:p-8">
+      <div class="border-b border-[#e2e8f0] pb-4 mb-6">
+        <div class="text-xs font-semibold text-[#0284c7] uppercase tracking-wider mb-1">Economic Moat Analysis</div>
+        <h1 class="text-2xl font-bold text-[#1e293b]">경제적 해자: 독점적 광학 기술과 진입장벽</h1>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div class="border border-[#e2e8f0] p-5 rounded-lg bg-[#f8fafc]">
+          <div class="text-xs font-semibold text-[#1e3a8a] uppercase mb-1">Moat 1. 기술 독점성</div>
+          <div class="text-lg font-bold text-[#1e293b] mb-2">2/2㎛ AOR 레이저 수리</div>
+          <p class="text-xs text-[#475569] leading-relaxed">
+            전 세계에서 2/2㎛ 미세 피치 회로의 쇼트(Short) 결함을 손상 없이 레이저로 깎아내 양품화할 수 있는 양산 검증 설비는 기가비스가 사실상 유일합니다.
+          </p>
+        </div>
+
+        <div class="border border-[#e2e8f0] p-5 rounded-lg bg-[#f8fafc]">
+          <div class="text-xs font-semibold text-[#059669] uppercase mb-1">Moat 2. 고객사 락인 (Lock-in)</div>
+          <div class="text-lg font-bold text-[#1e293b] mb-2">DTS 및 CAM SW 수직통합</div>
+          <p class="text-xs text-[#475569] leading-relaxed">
+            전용 CAM 소프트웨어와 결함 추적 시스템(DTS)이 이비덴, 삼성전기 등 고객사의 MES/스마트팩토리 전산망에 깊숙이 연동되어 장비 교체 비용이 천문학적입니다.
+          </p>
+        </div>
+
+        <div class="border border-[#e2e8f0] p-5 rounded-lg bg-[#f8fafc]">
+          <div class="text-xs font-semibold text-[#0284c7] uppercase mb-1">Moat 3. 수율 레버리지</div>
+          <div class="text-lg font-bold text-[#1e293b] mb-2">ROI 회수 기간 3~6개월</div>
+          <p class="text-xs text-[#475569] leading-relaxed">
+            FC-BGA 기판 1장당 가격이 수백만 원에 달하므로, AOR 설비가 살려내는 기판 금액만으로 고객사는 수개월 내에 장비 도입 원가를 회수합니다.
+          </p>
+        </div>
+      </div>
+
+      <div class="bg-[#ecfdf5] border-l-4 border-[#059669] p-4 rounded-r-lg text-xs text-[#065f46] leading-relaxed">
+        <strong>독보적 진입장벽:</strong> 반도체 패키지 기판 검사 시장은 일반 PCB 검사 장비사(이스라엘 오보텍, 캠텍 등)가 쉽게 진입하지 못하는 3㎛ 이하의 나노미터급 분해능 영역입니다. 기가비스는 20년 이상 축적된 자체 광학계 설계 및 AI 불량 판별 알고리즘으로 난공불락의 기술적 해자를 구축했습니다.
+      </div>
+    </section>
+
+    <!-- 섹션 2: 3대 핵심 성장 모멘텀 -->
+    <section class="bg-white rounded-xl border border-[#e2e8f0] shadow-sm p-6 sm:p-8">
+      <div class="border-b border-[#e2e8f0] pb-4 mb-6">
+        <div class="text-xs font-semibold text-[#0284c7] uppercase tracking-wider mb-1">Key Growth Catalysts</div>
+        <h2 class="text-xl font-bold text-[#1e293b]">차세대 반도체 트렌드와 3대 수혜 모멘텀</h2>
+      </div>
+
+      <div class="space-y-6">
+        <!-- 모멘텀 1: AI 가속기 및 FC-BGA 대면적화 -->
+        <div class="border border-[#e2e8f0] rounded-lg p-5 bg-[#f8fafc]">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-[#1e3a8a]">1. AI 가속기 폭증에 따른 FC-BGA 대면적·고다층화 직접 수혜</h3>
+            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-blue-100 text-blue-800 mt-1 sm:mt-0">현재 실적 견인 엔진</span>
+          </div>
+          <p class="text-xs text-[#475569] mb-3 leading-relaxed">
+            엔비디아 블랙웰(Blackwell), 차세대 루빈(Rubin) 및 빅테크 커스텀 ASIC 칩은 면적이 기존 대비 2~3배 커진 초대형 FC-BGA 기판을 요구합니다. 기판 면적이 100×100mm 이상으로 커지고 배선 층수가 20층을 넘어서면 미세 패턴 결함 발생 확률이 지수함수적으로 증가합니다. 이에 따라 기판 제조사는 라인당 AOI 검사기 및 AOR 수리기 투입 대수를 종전 대비 1.5~2배 확대 배치하고 있습니다.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+            <div class="bg-white p-3 rounded border border-[#e2e8f0]">
+              <span class="text-[#64748b]">기판 면적 변화:</span>
+              <div class="font-bold text-[#1e293b]">50×50mm → 100×100mm+</div>
+            </div>
+            <div class="bg-white p-3 rounded border border-[#e2e8f0]">
+              <span class="text-[#64748b]">적층 수 변화:</span>
+              <div class="font-bold text-[#1e293b]">12~14층 → 20~24층 초고다층</div>
+            </div>
+            <div class="bg-white p-3 rounded border border-[#e2e8f0]">
+              <span class="text-[#64748b]">AOR 수요 강도:</span>
+              <div class="font-bold text-[#059669]">필수 도입 설비로 위상 격상</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 모멘텀 2: 유리기판 및 TGV 선점 -->
+        <div class="border border-[#e2e8f0] rounded-lg p-5 bg-[#f8fafc]">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-[#0284c7]">2. 차세대 유리기판(Glass Substrate) 및 TGV 검사 솔루션 선점</h3>
+            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-cyan-100 text-cyan-800 mt-1 sm:mt-0">미래 게임체인저</span>
+          </div>
+          <p class="text-xs text-[#475569] mb-3 leading-relaxed">
+            인텔, AMD 등이 추진 중인 유리기판은 기존 유기물 기판 대비 열팽창 계수가 낮고 평탄도가 뛰어나 고성능 AI 패키징의 차세대 표준으로 떠오르고 있습니다. 하지만 유리는 투명하고 깨지기 쉬우며 수만 개의 관통 전극 홀(TGV, Through Glass Via)을 정밀 가공해야 합니다. 기가비스는 TGV 내부 결함 및 미세 크랙 검사 기술 개발을 선제적으로 완료하였으며, 일본 톱티어 기판사(이비덴 등)에 테스트 장비를 공급하여 호평을 받았습니다.
+          </p>
+          <div class="bg-white p-3 rounded border border-[#e2e8f0] text-xs text-[#334155]">
+            <strong>글로벌 협력 진행 상황:</strong> 일본 이비덴 유리기판 R&D 라인에 패턴 및 TGV 검사 리포트 제출 완료. 국내 주요 부품사(삼성전기 등)의 유리기판 파일럿 라인과도 기술 협력을 긴밀히 진행 중.
+          </div>
+        </div>
+
+        <!-- 모멘텀 3: 첨단 패키징 PLP/WLP 검사 영역 확장 -->
+        <div class="border border-[#e2e8f0] rounded-lg p-5 bg-[#f8fafc]">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-purple-900">3. 패널레벨패키징(PLP) 및 웨이퍼레벨(WLP) AOI로의 확장</h3>
+            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-purple-100 text-purple-800 mt-1 sm:mt-0">시장 TAM 3배 확대</span>
+          </div>
+          <p class="text-xs text-[#475569] leading-relaxed">
+            기존 기판 영역(FC-BGA)에 머물지 않고 FOPLP(Fan-out Panel Level Packaging) 및 WLP 초미세 범프(Bump) 3D 입체 검사 솔루션 개발을 추진하고 있습니다. 이를 통해 반도체 OSAT 및 파운드리 후공정 첨단 패키징 라인으로 타깃 시장(TAM)이 획기적으로 확장되고 있습니다.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 섹션 3: DART 연구개발 집약도 및 파이프라인 실적 -->
+    <section class="bg-white rounded-xl border border-[#e2e8f0] shadow-sm p-6 sm:p-8">
+      <div class="border-b border-[#e2e8f0] pb-4 mb-6">
+        <div class="text-xs font-semibold text-[#0284c7] uppercase tracking-wider mb-1">R&D Capabilities & Patents</div>
+        <h2 class="text-xl font-bold text-[#1e293b]">R&D 투자 규모 및 핵심 과제 파이프라인</h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-6">
+        <div class="lg:col-span-6">
+          <div class="h-64">
+            <canvas id="rdChart"></canvas>
+          </div>
+          <div class="text-xs text-[#64748b] text-center mt-2">연도별 연구개발비 집행액 및 매출 대비 비중</div>
+        </div>
+
+        <div class="lg:col-span-6 space-y-4">
+          <div class="p-4 bg-[#f8fafc] rounded-lg border border-[#e2e8f0]">
+            <div class="text-xs text-[#64748b] font-medium mb-1">R&D 전문 인력 구성 (총 47명)</div>
+            <div class="grid grid-cols-3 gap-2 text-xs text-center mt-2">
+              <div class="bg-white p-2 rounded border border-[#cbd5e1]">
+                <div class="font-bold text-[#1e3a8a]">24명 (51%)</div>
+                <div class="text-[#64748b] text-[11px]">SW개발팀</div>
+              </div>
+              <div class="bg-white p-2 rounded border border-[#cbd5e1]">
+                <div class="font-bold text-[#059669]">13명 (28%)</div>
+                <div class="text-[#64748b] text-[11px]">자동화기구팀</div>
+              </div>
+              <div class="bg-white p-2 rounded border border-[#cbd5e1]">
+                <div class="font-bold text-[#0284c7]">10명 (21%)</div>
+                <div class="text-[#64748b] text-[11px]">Vision광학팀</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-4 bg-[#eff6ff] rounded-lg border border-[#bfdbfe] text-xs text-[#1e3a8a] leading-relaxed">
+            <strong>R&D 방어벽:</strong> 업황 다운턴이었던 2024년에도 연구개발비를 줄이지 않고 매출의 23.1%(60.4억원)를 과감히 투입하였습니다. 이 시기에 완성한 초고속 AF 광학계 및 3D 범프 측정 모듈이 2025~2026년 실적 턴어라운드의 핵심 원동력이 되었습니다.
+          </div>
+        </div>
+      </div>
+
+      <!-- 연구개발 과제 목록 요약 테이블 -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs text-left border-collapse">
+          <thead>
+            <tr class="bg-[#f8fafc] text-[#334155] border-y border-[#cbd5e1]">
+              <th class="py-2.5 px-3 font-semibold">구분</th>
+              <th class="py-2.5 px-3 font-semibold">연구개발 과제명</th>
+              <th class="py-2.5 px-3 font-semibold">적용 제품군</th>
+              <th class="py-2.5 px-3 font-semibold">개발 의의 및 경쟁 우위</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[#e2e8f0]">
+            <tr class="hover:bg-[#f8fafc]">
+              <td class="py-2 px-3 font-bold text-[#059669]">진행 과제</td>
+              <td class="py-2 px-3 font-medium text-[#1e293b]">TGV(Through Glass Via) 검사 솔루션</td>
+              <td class="py-2 px-3">차세대 유리기판 AOI</td>
+              <td class="py-2 px-3 text-[#475569]">유리 기판 내 수만 개 마이크로 홀 결함 및 크랙 검사 표준 선점</td>
+            </tr>
+            <tr class="hover:bg-[#f8fafc]">
+              <td class="py-2 px-3 font-bold text-[#059669]">진행 과제</td>
+              <td class="py-2 px-3 font-medium text-[#1e293b]">차세대 2/2㎛ 레이저 가공기술</td>
+              <td class="py-2 px-3">차세대 AOR 수리기</td>
+              <td class="py-2 px-3 text-[#475569]">초미세 피치 단락 수리 정밀도 30% 향상 및 잔사 무결점화</td>
+            </tr>
+            <tr class="hover:bg-[#f8fafc]">
+              <td class="py-2 px-3 font-bold text-[#059669]">진행 과제</td>
+              <td class="py-2 px-3 font-medium text-[#1e293b]">고해상도 PLP / WLP AOI</td>
+              <td class="py-2 px-3">첨단 패키징 검사기</td>
+              <td class="py-2 px-3 text-[#475569]">패널레벨 및 웨이퍼레벨 팬아웃(Fan-out) 후공정 시장 진출</td>
+            </tr>
+            <tr class="hover:bg-[#f8fafc]">
+              <td class="py-2 px-3 font-bold text-[#1e3a8a]">완료 과제</td>
+              <td class="py-2 px-3 font-medium text-[#1e293b]">Focus Stacking 고속 AF 광학계</td>
+              <td class="py-2 px-3">Ultimate AOI</td>
+              <td class="py-2 px-3 text-[#475569]">초점 심도를 8배 확장하여 기판 굴곡에 구애받지 않고 초고속 전면 스캔</td>
+            </tr>
+            <tr class="hover:bg-[#f8fafc]">
+              <td class="py-2 px-3 font-bold text-[#1e3a8a]">완료 과제</td>
+              <td class="py-2 px-3 font-medium text-[#1e293b]">GiDC 딥러닝 자동 불량분류기</td>
+              <td class="py-2 px-3">소프트웨어 플랫폼</td>
+              <td class="py-2 px-3 text-[#475569]">검사 결과 불량 유형을 AI가 99% 이상 정확도로 실시간 자동 분류</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-[#e2e8f0] bg-white mt-12 py-6 text-center text-xs text-[#64748b]">
+    기가비스(GigaVis) 전문 에이전트 기업분석 보고서 | 반도체 멀티에이전트 분석 시스템
+  </footer>
+
+  <script>
+    const ctx = document.getElementById('rdChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['2024년', '2025년', '2026년(반기*2환산)'],
+        datasets: [
+          {
+            type: 'bar',
+            label: '연구개발비 (억원)',
+            data: [60.4, 59.4, 62.3],
+            backgroundColor: '#1e3a8a',
+            yAxisID: 'y',
+            borderRadius: 4
+          },
+          {
+            type: 'line',
+            label: '매출 대비 R&D 비중 (%)',
+            data: [23.1, 11.3, 11.0],
+            borderColor: '#059669',
+            backgroundColor: '#059669',
+            borderWidth: 2,
+            pointRadius: 4,
+            yAxisID: 'y1'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: 'R&D 비용 (억원)', font: { size: 10 } },
+            grid: { color: '#f1f5f9' }
+          },
+          y1: {
+            position: 'right',
+            beginAtZero: true,
+            max: 30,
+            title: { display: true, text: 'R&D 비중 (%)', font: { size: 10 } },
+            grid: { drawOnChartArea: false }
+          },
+          x: { grid: { display: false } }
+        },
+        plugins: {
+          legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 11, family: 'Pretendard' } } }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
