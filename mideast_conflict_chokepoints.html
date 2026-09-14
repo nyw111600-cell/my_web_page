@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>중동 전구 분쟁 및 에너지 초크포인트 봉쇄 상황 인텔리전스 리포트</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: #f8fafc;
+      color: #1e293b;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    .card-shadow {
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+    }
+    .card-shadow-lg {
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    }
+    /* 모달 줌 뷰어 스타일 */
+    .img-zoom-container {
+      overflow: hidden;
+      cursor: zoom-in;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- 상단 헤더 (규격: 유형 B 단일 깔끔한 타이틀 바, 높이 56px, 연보라) -->
+  <header class="bg-[#f5f3ff]/95 backdrop-blur-md border-b border-purple-200/80 sticky top-0 z-40 h-14">
+    <div class="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <a href="index.html" class="inline-flex items-center px-2.5 py-1 rounded text-xs font-semibold bg-purple-100 text-purple-900 hover:bg-purple-200 border border-purple-300/80 transition mr-2">← 메인화면</a>
+        <h1 class="text-purple-950 font-bold text-sm sm:text-base tracking-tight truncate">
+          중동 전구 분쟁 및 에너지 초크포인트 봉쇄 상황도 인텔리전스 리포트
+        </h1>
+        <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-purple-100 text-purple-800 border border-purple-200">
+          긴급 브리핑
+        </span>
+      </div>
+      <div class="text-right">
+        <span class="text-xs text-purple-700 font-medium hidden md:inline">
+          기준 시점: 2026.09.10 - 09.14 업데이트 | 지정학·물류 리스크
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- 메인 본문 컨테이너 -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+    <!-- 브리핑 개요 및 핵심 4대 리스크 매트릭스 -->
+    <section>
+      <div class="mb-3 flex items-center justify-between">
+        <div>
+          <h2 class="text-lg font-bold text-slate-900">핵심 지정학적 안보 및 공급망 위기 지표</h2>
+          <p class="text-xs text-slate-500 mt-0.5">이란의 호르무즈 차단 시도와 후티 반군의 사우디 육상 송유관 피격 및 바브엘만데브 장악 복합 사태</p>
+        </div>
+        <span class="text-xs font-semibold px-2.5 py-1 rounded bg-red-50 text-red-700 border border-red-200">
+          위기 경보: 최고 단계(CRITICAL)
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- KPI 1 -->
+        <div class="bg-white p-4 rounded-lg border border-slate-200 card-shadow">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+            <span class="text-xs font-bold text-red-700 bg-red-50 px-2 py-0.5 rounded border border-red-100">해협 봉쇄</span>
+            <span class="text-xs text-slate-500">길이 160km / 폭 50km</span>
+          </div>
+          <h3 class="font-bold text-slate-800 text-sm mt-2">호르무즈 해협 위협</h3>
+          <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+            이란 해군의 상선 공격 및 기뢰 부설 시도로 봉쇄 위기 고조. 미 해군의 항구 봉쇄 유지 및 군사적 차단 저지 작전 대치.
+          </p>
+          <div class="mt-2.5 pt-2 border-t border-slate-100 text-[11px] text-slate-500 font-medium">
+            영향: 글로벌 해상 원유 물동량 약 20% 위협
+          </div>
+        </div>
+
+        <!-- KPI 2 -->
+        <div class="bg-white p-4 rounded-lg border border-slate-200 card-shadow">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+            <span class="text-xs font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-100">가동 전면중단</span>
+            <span class="text-xs text-slate-500">총연장 약 1,200km</span>
+          </div>
+          <h3 class="font-bold text-slate-800 text-sm mt-2">사우디 동서 송유관 피격</h3>
+          <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+            이라크발 드론 및 후티 반군 합동 피격으로 10일 타격 발생, 11일 전면 가동 중단(압카이크-리야드-메디나-얀부항).
+          </p>
+          <div class="mt-2.5 pt-2 border-t border-slate-100 text-[11px] text-slate-500 font-medium">
+            영향: 호르무즈 우회 육상 원유 수송망 완전 마비
+          </div>
+        </div>
+
+        <!-- KPI 3 -->
+        <div class="bg-white p-4 rounded-lg border border-slate-200 card-shadow">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+            <span class="text-xs font-bold text-red-700 bg-red-50 px-2 py-0.5 rounded border border-red-100">요충지 장악</span>
+            <span class="text-xs text-slate-500">길이 115km / 폭 36km</span>
+          </div>
+          <h3 class="font-bold text-slate-800 text-sm mt-2">바브엘만데브 해협 봉쇄</h3>
+          <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+            예멘 친이란 후티 반군이 해안 요충지 장악 및 해상 봉쇄 선언. 모카·후데이다 중심 홍해 남단 상선 진입 차단.
+          </p>
+          <div class="mt-2.5 pt-2 border-t border-slate-100 text-[11px] text-slate-500 font-medium">
+            영향: 수에즈 운하 연계 아시아-유럽 무역로 차단
+          </div>
+        </div>
+
+        <!-- KPI 4 -->
+        <div class="bg-white p-4 rounded-lg border border-slate-200 card-shadow">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+            <span class="text-xs font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">복합 마비</span>
+            <span class="text-xs text-slate-500">대체 수송로 부재</span>
+          </div>
+          <h3 class="font-bold text-slate-800 text-sm mt-2">원유 수송로 복합 포위</h3>
+          <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+            동서 송유관을 통한 홍해 우회 수출이 불가능해진 상태에서 2대 해협 동시 봉쇄로 사우디 등 중동 산유국 원유 출하 불능.
+          </p>
+          <div class="mt-2.5 pt-2 border-t border-slate-100 text-[11px] text-slate-500 font-medium">
+            영향: 국제 유가 폭등 및 글로벌 에너지 쇼크 우려
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 인터랙티브 컨트롤 바 (탭 전환 및 안내) -->
+    <section class="bg-white p-3 rounded-lg border border-slate-200 card-shadow flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center space-x-1.5" id="viewTabContainer">
+        <button onclick="switchView('split')" id="tabBtn-split" class="px-3 py-1.5 rounded text-xs font-bold bg-slate-900 text-white shadow-sm transition">
+          모아보기 (2분할 분할 뷰)
+        </button>
+        <button onclick="switchView('overview')" id="tabBtn-overview" class="px-3 py-1.5 rounded text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">
+          전구 종합 분쟁 상황도 (단일 뷰)
+        </button>
+        <button onclick="switchView('pipeline')" id="tabBtn-pipeline" class="px-3 py-1.5 rounded text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">
+          사우디 송유관 & 해협 마비 분석도 (단일 뷰)
+        </button>
+      </div>
+      <div class="text-xs text-slate-500 flex items-center">
+        <span class="font-semibold text-slate-700 mr-1.5">안내:</span> 이미지를 클릭하시면 원본 고해상도 확대 모달이 활성화됩니다.
+      </div>
+    </section>
+
+    <!-- 뷰 1: 모아보기 (2분할 분할 뷰) -->
+    <section id="view-split" class="space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- 좌측: 전구 종합 분쟁 상황도 (가중치 7) -->
+        <div class="lg:col-span-7 bg-white rounded-lg border border-slate-200 card-shadow overflow-hidden flex flex-col">
+          <div class="p-4 border-b border-slate-100 flex items-center justify-between">
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="text-xs font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-800 border border-blue-200">상황도 1</span>
+                <h3 class="font-bold text-slate-900 text-sm">중동 분쟁 종합 상황도 (2026.09.10~14)</h3>
+              </div>
+              <p class="text-xs text-slate-500 mt-1">미국-이란 대치선 및 사우디-후티 반군 교전 전선 종합 배치도</p>
+            </div>
+            <button onclick="openModal('mideast_conflict_map.png', '중동 분쟁 종합 상황도 (2026.09.10~14 업데이트)')" class="px-2.5 py-1 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded border border-slate-300 transition">
+              고화질 확대
+            </button>
+          </div>
+          <div class="p-3 bg-slate-50 flex-grow flex items-center justify-center img-zoom-container" onclick="openModal('mideast_conflict_map.png', '중동 분쟁 종합 상황도 (2026.09.10~14 업데이트)')">
+            <img src="./mideast_conflict_map.png" alt="중동 분쟁 상황도" class="rounded border border-slate-200 w-full object-contain max-h-[520px] hover:opacity-95 transition cursor-pointer">
+          </div>
+          <div class="p-3 bg-white border-t border-slate-100 text-xs text-slate-600 leading-relaxed">
+            <strong class="text-slate-800">핵심 포인트:</strong> 이란의 호르무즈 해협 미 해군 차단 시도 및 상선 공격, 미군의 이란 기뢰 부설 자산 공습, 후티 반군의 아브하 공항 및 기지 공격 등 미-이란 및 사우디-후티 양면전 양상.
+          </div>
+        </div>
+
+        <!-- 우측: 사우디 동서 송유관 피격 및 해협 장악도 (가중치 5) -->
+        <div class="lg:col-span-5 bg-white rounded-lg border border-slate-200 card-shadow overflow-hidden flex flex-col">
+          <div class="p-4 border-b border-slate-100 flex items-center justify-between">
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="text-xs font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">상황도 2</span>
+                <h3 class="font-bold text-slate-900 text-sm">사우디 동서 송유관 피격 및 해협 봉쇄</h3>
+              </div>
+              <p class="text-xs text-slate-500 mt-1">호르무즈 봉쇄 우회로(동서 1,200km 파이프라인) 차단 상세도</p>
+            </div>
+            <button onclick="openModal('mideast_pipeline_blockade.png', '동서 송유관 피격으로 육상 원유 수송도 위기 맞은 사우디')" class="px-2.5 py-1 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded border border-slate-300 transition">
+              고화질 확대
+            </button>
+          </div>
+          <div class="p-3 bg-slate-50 flex-grow flex items-center justify-center img-zoom-container" onclick="openModal('mideast_pipeline_blockade.png', '동서 송유관 피격으로 육상 원유 수송도 위기 맞은 사우디')">
+            <img src="./mideast_pipeline_blockade.png" alt="사우디 송유관 파괴 및 후티 바브엘만데브 장악" class="rounded border border-slate-200 w-full object-contain max-h-[520px] hover:opacity-95 transition cursor-pointer">
+          </div>
+          <div class="p-3 bg-white border-t border-slate-100 text-xs text-slate-600 leading-relaxed">
+            <strong class="text-slate-800">핵심 포인트:</strong> 압카이크에서 홍해 얀부항을 잇는 1,200km 송유관 가동이 중단되면서, 남단의 바브엘만데브 해협 후티 반군 장악과 동단의 호르무즈 이란 봉쇄로 사우디가 육·해상 양면에서 완전 봉쇄됨.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 뷰 2: 전구 종합 분쟁 상황도 (단독 집중 뷰) -->
+    <section id="view-overview" class="hidden space-y-4">
+      <div class="bg-white rounded-lg border border-slate-200 card-shadow overflow-hidden">
+        <div class="p-4 border-b border-slate-100 flex items-center justify-between">
+          <div>
+            <h3 class="font-bold text-slate-900 text-base">중동 분쟁 종합 상황도 (2026년 9월 10~14일 업데이트)</h3>
+            <p class="text-xs text-slate-500 mt-0.5">출처: CENTCOM, JINSA, WSJ, ISW, AP, 포스뉴스, 로이터 종합</p>
+          </div>
+          <button onclick="openModal('mideast_conflict_map.png', '중동 분쟁 종합 상황도 (2026.09.10~14 업데이트)')" class="px-3 py-1.5 text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 rounded transition">
+            전체화면 뷰어 열기
+          </button>
+        </div>
+        <div class="p-4 bg-slate-100 flex justify-center cursor-pointer" onclick="openModal('mideast_conflict_map.png', '중동 분쟁 종합 상황도 (2026.09.10~14 업데이트)')">
+          <img src="./mideast_conflict_map.png" alt="중동 분쟁 상황도" class="rounded shadow border border-slate-300 max-h-[750px] w-auto object-contain">
+        </div>
+      </div>
+    </section>
+
+    <!-- 뷰 3: 사우디 동서 송유관 피격 분석도 (단독 집중 뷰) -->
+    <section id="view-pipeline" class="hidden space-y-4">
+      <div class="bg-white rounded-lg border border-slate-200 card-shadow overflow-hidden">
+        <div class="p-4 border-b border-slate-100 flex items-center justify-between">
+          <div>
+            <h3 class="font-bold text-slate-900 text-base">동서 송유관 피격으로 육상 원유 수송도 위기 맞은 사우디</h3>
+            <p class="text-xs text-slate-500 mt-0.5">사우디아라비아 육상 수송망 압카이크-얀부항 단절 및 해협 봉쇄 분석</p>
+          </div>
+          <button onclick="openModal('mideast_pipeline_blockade.png', '동서 송유관 피격으로 육상 원유 수송도 위기 맞은 사우디')" class="px-3 py-1.5 text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 rounded transition">
+            전체화면 뷰어 열기
+          </button>
+        </div>
+        <div class="p-4 bg-slate-100 flex justify-center cursor-pointer" onclick="openModal('mideast_pipeline_blockade.png', '동서 송유관 피격으로 육상 원유 수송도 위기 맞은 사우디')">
+          <img src="./mideast_pipeline_blockade.png" alt="사우디 송유관 파괴" class="rounded shadow border border-slate-300 max-h-[750px] w-auto object-contain">
+        </div>
+      </div>
+    </section>
+
+    <!-- 심층 분석 1: 2대 전선별 일자별 교전 및 전개 타임라인 (테이블) -->
+    <section class="bg-white rounded-lg border border-slate-200 card-shadow overflow-hidden">
+      <div class="p-4 border-b border-slate-100 bg-slate-50/50 flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base">일자별 전황 전개 및 교전 타임라인 (2026.09.10 ~ 09.14)</h3>
+          <p class="text-xs text-slate-500 mt-0.5">공식 발표 및 군사 씽크탱크(CENTCOM, ISW-CTP, JINSA) 집계 데이터</p>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span class="text-xs font-semibold px-2 py-0.5 rounded bg-blue-100 text-blue-900">미국-동맹국 vs 이란</span>
+          <span class="text-xs font-semibold px-2 py-0.5 rounded bg-red-100 text-red-900">사우디 vs 예멘 후티</span>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse text-xs">
+          <thead>
+            <tr class="bg-slate-100/75 text-slate-700 font-bold border-b border-slate-200">
+              <th class="p-3 w-28 whitespace-nowrap">일자</th>
+              <th class="p-3 w-1/2 border-r border-slate-200">
+                <span class="inline-block w-2.5 h-2.5 rounded-full bg-blue-600 mr-1"></span>
+                미국 대 이란 전선 (페르시아만 / 호르무즈 해협)
+              </th>
+              <th class="p-3 w-1/2">
+                <span class="inline-block w-2.5 h-2.5 rounded-full bg-red-600 mr-1"></span>
+                사우디 대 후티 반군 전선 (홍해 / 동서 송유관)
+              </th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 text-slate-700">
+            <tr class="hover:bg-slate-50 transition">
+              <td class="p-3 font-semibold text-slate-900 whitespace-nowrap bg-slate-50/50">9월 10일</td>
+              <td class="p-3 border-r border-slate-200 leading-relaxed">
+                <strong class="text-slate-900">이란, 호르무즈 해협 미 해군 차단 시도 및 상선 공격</strong>
+                <p class="text-slate-500 mt-0.5">이란 해군 고속정 및 해안 포대 자산 기동. CENTCOM과 JINSA, WSJ 긴급 타진.</p>
+              </td>
+              <td class="p-3 leading-relaxed">
+                <strong class="text-slate-900">후티 반군, 사우디 동서 송유관 드론 공격 & 사우디 대규모 공습</strong>
+                <p class="text-slate-500 mt-0.5">사우디 핵심 동서 송유관 피격 타격 발생. 사우디 공군 예멘 내 후티 거점 즉각 보복 폭격 실시(로이터).</p>
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition">
+              <td class="p-3 font-semibold text-slate-900 whitespace-nowrap bg-slate-50/50">9월 11일</td>
+              <td class="p-3 border-r border-slate-200 leading-relaxed">
+                <strong class="text-slate-900">이란 미사일 생산 재개 정황 식별</strong>
+                <p class="text-slate-500 mt-0.5">이란 탄도미사일 제조 기지 가동 포착(WSJ, JINSA 보고서). 미군 방공망 최고 경계 태세 발령.</p>
+              </td>
+              <td class="p-3 leading-relaxed">
+                <strong class="text-slate-900">사우디 동서 송유관 전면 가동 중단 & 후티 해상 봉쇄 선언</strong>
+                <p class="text-slate-500 mt-0.5">사우디 에너지부, 안전 검사 및 추가 피격 방지 위해 송유 중단 발표. 후티 반군 모카 일대 장악 및 해상 봉쇄 선언. 사우디군 모카 공항 공습(ISW).</p>
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition">
+              <td class="p-3 font-semibold text-slate-900 whitespace-nowrap bg-slate-50/50">9월 12~13일</td>
+              <td class="p-3 border-r border-slate-200 leading-relaxed">
+                <strong class="text-slate-900">미군, 이란 기뢰 부설 자산 정밀 공습</strong>
+                <p class="text-slate-500 mt-0.5">미 해군 항공모함 전단 및 공군 전력, 오만만 및 해협 내 기뢰 부설 함정·창고 시설 타격(폭스 뉴스, PBS).</p>
+              </td>
+              <td class="p-3 leading-relaxed">
+                <strong class="text-slate-900">후티, 사우디 아브하 공항 및 남부 군사 기지 복합 타격</strong>
+                <p class="text-slate-500 mt-0.5">자폭 드론 및 순항 미사일로 사우디 아브하 공항 인근 방공망 타격 시도(AP, 아이언 마운틴).</p>
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition">
+              <td class="p-3 font-semibold text-slate-900 whitespace-nowrap bg-slate-50/50">9월 14일</td>
+              <td class="p-3 border-r border-slate-200 leading-relaxed">
+                <strong class="text-slate-900">미 해군, 이란 주요 항구 봉쇄 유지 작전</strong>
+                <p class="text-slate-500 mt-0.5">CENTCOM 지휘 하에 페르시아만 진입로 통제 및 이란 해군 해상 작전 봉쇄 유지 지속.</p>
+              </td>
+              <td class="p-3 leading-relaxed">
+                <strong class="text-slate-900">국경 및 홍해 연안 전면 교전 지속</strong>
+                <p class="text-slate-500 mt-0.5">예멘 서부 후데이다-모카 축선 및 사우디 남부 국경 일대 교전 격화. 바브엘만데브 해협 긴장 최고조(AP).</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 심층 분석 2: 3대 초크포인트 제원 및 공급망 타격 비교 -->
+    <section class="bg-white rounded-lg border border-slate-200 card-shadow overflow-hidden">
+      <div class="p-4 border-b border-slate-100 bg-slate-50/50">
+        <h3 class="font-bold text-slate-900 text-sm sm:text-base">3대 핵심 초크포인트(병목 구간) 제원 및 원유 물류 마비 분석</h3>
+        <p class="text-xs text-slate-500 mt-0.5">호르무즈 해협, 바브엘만데브 해협, 사우디 동서 육상 송유관 동시 차단 효과</p>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse text-xs">
+          <thead>
+            <tr class="bg-slate-100/75 text-slate-700 font-bold border-b border-slate-200">
+              <th class="p-3">구분</th>
+              <th class="p-3">지리적 위치 및 규격</th>
+              <th class="p-3">전략적 핵심 역할</th>
+              <th class="p-3">현재 상태 및 위협 주체</th>
+              <th class="p-3">원유 수송 대체성 평가</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 text-slate-700">
+            <tr class="hover:bg-slate-50 transition">
+              <td class="p-3 font-bold text-slate-900">호르무즈 해협</td>
+              <td class="p-3">페르시아만 입구<br><span class="text-slate-500">길이 약 160km, 폭 약 50km</span></td>
+              <td class="p-3">글로벌 해상 원유 수송량의 20%(일 약 2,000만 배럴) 통과</td>
+              <td class="p-3">
+                <span class="px-2 py-0.5 rounded bg-red-50 text-red-700 font-semibold border border-red-200">이란 해군 봉쇄 시도</span><br>
+                <span class="text-[11px] text-slate-500">기뢰 부설 및 유조선 나포/공격</span>
+              </td>
+              <td class="p-3 font-semibold text-red-700">
+                대체재 전무 (사우디/UAE 송유관 외 대체 불가)
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition">
+              <td class="p-3 font-bold text-slate-900">사우디 동서 송유관</td>
+              <td class="p-3">압카이크 - 리야드 - 메디나 - 얀부<br><span class="text-slate-500">총연장 약 1,200km 육상관</span></td>
+              <td class="p-3">호르무즈 해협 우회하여 홍해(얀부항)로 일 500만 배럴 수송</td>
+              <td class="p-3">
+                <span class="px-2 py-0.5 rounded bg-amber-50 text-amber-800 font-semibold border border-amber-200">가동 전면 중단</span><br>
+                <span class="text-[11px] text-slate-500">이라크발 및 후티 드론 피격(10~11일)</span>
+              </td>
+              <td class="p-3 font-semibold text-red-700">
+                기능 상실 (호르무즈 우회 유일 육상루트 차단)
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition">
+              <td class="p-3 font-bold text-slate-900">바브엘만데브 해협</td>
+              <td class="p-3">홍해 남단 입구 (예멘-지부티)<br><span class="text-slate-500">길이 약 115km, 폭 약 36km</span></td>
+              <td class="p-3">홍해와 아덴만을 연결, 수에즈 운하 진입 필수 관문</td>
+              <td class="p-3">
+                <span class="px-2 py-0.5 rounded bg-red-50 text-red-700 font-semibold border border-red-200">후티 반군 장악 및 봉쇄</span><br>
+                <span class="text-[11px] text-slate-500">해안 미사일/드론 사거리 통제</span>
+              </td>
+              <td class="p-3 font-semibold text-slate-800">
+                아프리카 희망봉 우회 필수 (운송 14일 이상 지연 및 운임 폭증)
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 시사점 및 금융/원자재 시장 파급효과 박스 -->
+    <section class="bg-blue-50/70 border border-blue-200 rounded-lg p-4 text-xs leading-relaxed text-blue-950">
+      <div class="flex items-center space-x-2 mb-2">
+        <span class="font-bold text-blue-900 text-sm">군사·에너지 안보 핵심 종합 시사점</span>
+        <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-blue-200/80 text-blue-900">Analyst Insight</span>
+      </div>
+      <ul class="list-disc list-inside space-y-1 text-slate-700">
+        <li><strong>육·해상 동시 차단에 따른 원유 수출 불가:</strong> 과거 호르무즈 해협 위기 시 사우디는 동서 송유관을 통해 얀부항에서 원유를 선적하여 공급해왔으나, 이번 사태에서는 송유관 피격 가동 중단과 바브엘만데브 해협 봉쇄가 동시다발적으로 발생하여 대체 우회로가 원천 차단되었습니다.</li>
+        <li><strong>미 해군의 제공·제해권 장악 작전:</strong> 미 중부사령부(CENTCOM)가 이란 기뢰 부설 전력을 정밀 타격하고 항구 봉쇄를 유지하고 있으나, 이란의 미사일 재생산 정황과 비정규 대함 공격 자산 분산 배치로 단기 정상화는 불확실합니다.</li>
+        <li><strong>글로벌 물류 및 원자재 시장 충격:</strong> 희망봉 우회 항로 강제 전환으로 컨테이너선 및 유조선 용선료 급등, 브렌트유·WTI 등 국제 원유 선물 급등세가 장기화될 위험이 매우 높습니다.</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <!-- 바닥글 (Footer) -->
+  <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4">
+      중동 전구 분쟁 및 에너지 초크포인트 상황 인텔리전스 리포트 | 본 자료는 제공된 상황도 분석 기반으로 작성되었습니다.
+    </div>
+  </footer>
+
+  <!-- 이미지 고해상도 확대 모달 (Modal / Lightbox) -->
+  <div id="imageModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex flex-col items-center justify-center p-4">
+    <!-- 모달 상단 툴바 -->
+    <div class="w-full max-w-6xl flex items-center justify-between py-2 text-white border-b border-slate-700">
+      <span id="modalTitle" class="text-sm font-bold truncate pr-4">이미지 미리보기</span>
+      <div class="flex items-center space-x-2">
+        <button onclick="zoomImage(1.2)" class="px-2.5 py-1 text-xs font-semibold bg-slate-800 hover:bg-slate-700 rounded border border-slate-600 transition">
+          확대 (+)
+        </button>
+        <button onclick="zoomImage(0.8)" class="px-2.5 py-1 text-xs font-semibold bg-slate-800 hover:bg-slate-700 rounded border border-slate-600 transition">
+          축소 (-)
+        </button>
+        <button onclick="resetZoom()" class="px-2.5 py-1 text-xs font-semibold bg-slate-800 hover:bg-slate-700 rounded border border-slate-600 transition">
+          초기화
+        </button>
+        <button onclick="closeModal()" class="px-3 py-1 text-xs font-bold bg-red-600 hover:bg-red-700 text-white rounded transition ml-2">
+          닫기 (ESC)
+        </button>
+      </div>
+    </div>
+
+    <!-- 모달 이미지 뷰어 영역 -->
+    <div class="w-full max-w-6xl flex-grow overflow-auto flex items-center justify-center p-2" id="modalContainer">
+      <img id="modalImg" src="" alt="확대 이미지" class="transition-transform duration-150 ease-out max-h-[85vh] max-w-full object-contain select-none">
+    </div>
+  </div>
+
+  <!-- 클라이언트 상호작용 스크립트 -->
+  <script>
+    // 탭 전환 기능
+    function switchView(mode) {
+      const views = ['split', 'overview', 'pipeline'];
+      views.forEach(v => {
+        const el = document.getElementById('view-' + v);
+        const btn = document.getElementById('tabBtn-' + v);
+        if (v === mode) {
+          el.classList.remove('hidden');
+          btn.className = 'px-3 py-1.5 rounded text-xs font-bold bg-slate-900 text-white shadow-sm transition';
+        } else {
+          el.classList.add('hidden');
+          btn.className = 'px-3 py-1.5 rounded text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition';
+        }
+      });
+    }
+
+    // 모달 및 줌 기능
+    let currentScale = 1;
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImg');
+    const modalTitle = document.getElementById('modalTitle');
+
+    function openModal(src, title) {
+      modalImg.src = src;
+      modalTitle.innerText = title;
+      currentScale = 1;
+      modalImg.style.transform = `scale(${currentScale})`;
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+      modalImg.src = '';
+    }
+
+    function zoomImage(factor) {
+      currentScale = Math.min(Math.max(currentScale * factor, 0.5), 3.5);
+      modalImg.style.transform = `scale(${currentScale})`;
+    }
+
+    function resetZoom() {
+      currentScale = 1;
+      modalImg.style.transform = `scale(${currentScale})`;
+    }
+
+    // ESC 키로 모달 닫기
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+        closeModal();
+      }
+    });
+
+    // 배경 클릭 시 닫기
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal || e.target.id === 'modalContainer') {
+        closeModal();
+      }
+    });
+  </script>
+</body>
+</html>
