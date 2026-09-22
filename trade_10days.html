@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>관세청 품목별 수출 잠정치 10일 단위 통계 대시보드</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+    * {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    }
+    body {
+      background-color: #f8fafc;
+      color: #1e293b;
+    }
+    .card {
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.75rem;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+    }
+    .metric-card {
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+    }
+    .badge-positive {
+      background-color: #ecfdf5;
+      color: #059669;
+      border: 1px solid #a7f3d0;
+    }
+    .badge-negative {
+      background-color: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fecaca;
+    }
+    .badge-neutral {
+      background-color: #f1f5f9;
+      color: #475569;
+      border: 1px solid #cbd5e1;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#f8fafc] text-slate-800 antialiased selection:bg-purple-100 selection:text-purple-900">
+
+  <!-- Header (Type B Specification: Height 56px, Soft Lavender bg-[#f5f3ff]/95) -->
+  <header class="sticky top-0 z-50 h-14 bg-[#f5f3ff]/95 backdrop-blur-md border-b border-purple-200/80 px-4 lg:px-8 flex items-center justify-between shadow-sm">
+    <div class="flex items-center space-x-2 truncate">
+      <a href="index.html" class="inline-flex items-center px-2.5 py-1 rounded text-xs font-semibold bg-purple-100 text-purple-900 hover:bg-purple-200 border border-purple-300/80 transition mr-2">← 메인화면</a>
+      <span class="text-purple-950 font-bold text-base tracking-tight truncate">관세청 품목별 수출 잠정치 10일 단위 통계 대시보드</span>
+      <span class="hidden sm:inline-flex px-2 py-0.5 rounded text-xs bg-emerald-100 text-emerald-900 font-semibold border border-emerald-300">자동 갱신 연동</span>
+    </div>
+    <div class="flex items-center space-x-3 text-xs text-purple-800 font-medium whitespace-nowrap">
+      <span class="hidden md:inline">최근 갱신: 2026.09.22 11:02:50</span>
+      <span class="hidden lg:inline text-purple-300">|</span>
+      <span>단위: 천 달러, %</span>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+    <!-- Global Batch Sync & Mode Control Bar -->
+    <section class="card p-5 bg-white border border-slate-200 shadow-sm">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        
+        <!-- Left: Notification on Independent Controls -->
+        <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded text-xs font-bold bg-[#1e3a8a] text-white tracking-wider">개별 제어 지원</span>
+            <div class="flex flex-col">
+              <span class="text-sm font-bold text-slate-900">품목별 독립 기준시점 & 비교구간 선택</span>
+              <span class="text-xs text-slate-500">각 품목 카드 내부에서 원하는 기준 및 비교 기간을 각각 자유롭게 설정할 수 있습니다.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Center: Batch Sync Controls -->
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 border-t lg:border-t-0 pt-3 lg:pt-0 border-slate-100">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold text-slate-700 whitespace-nowrap">전체 품목 일괄 동기화:</span>
+            <select id="batchCompSelect" class="bg-slate-50 border border-slate-300 text-slate-900 text-xs rounded-lg p-1.5 font-medium">
+              <!-- populated -->
+            </select>
+            <button type="button" onclick="applyBatchPeriod()" class="px-3 py-1.5 rounded text-xs font-semibold bg-[#1e3a8a] text-white hover:bg-blue-900 transition shadow-xs whitespace-nowrap">
+              모든 품목에 일괄 적용
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: Aggregation Mode Toggle -->
+        <div class="flex flex-col items-start lg:items-end gap-1 border-t lg:border-t-0 pt-3 lg:pt-0 border-slate-200">
+          <span class="text-xs text-slate-500 font-medium">데이터 산출 방식</span>
+          <div class="inline-flex rounded-md shadow-sm p-0.5 bg-slate-100 border border-slate-200" role="group">
+            <button type="button" id="btnModePure" onclick="switchMode('pure')" class="px-3 py-1.5 text-xs font-semibold rounded bg-white text-blue-900 shadow-sm transition">
+              순수 10일 구간별 (권장)
+            </button>
+            <button type="button" id="btnModeCum" onclick="switchMode('cum')" class="px-3 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900 transition">
+              공시 누적치 (원본)
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Executive Overview Card: Total Export Comparison -->
+    <section class="card p-6 bg-white border border-slate-200 shadow-sm" id="sectionTotalOverview">
+      <div class="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-slate-100 gap-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <h2 class="text-lg font-bold text-slate-900 tracking-tight">전체 수출 실적 총괄 요약</h2>
+            <span class="px-2 py-0.5 rounded text-xs font-semibold bg-blue-50 text-blue-800 border border-blue-200">대한민국 총수출 (전체)</span>
+          </div>
+          <p class="text-xs text-slate-500 mt-1" id="execCompareSubtext">기준 시점 vs 선택 비교 구간</p>
+        </div>
+        <!-- Change Status Badge -->
+        <div class="flex items-center gap-3">
+          <div class="text-right">
+            <div class="text-xs text-slate-500 font-medium">총수출 증감율</div>
+            <div class="text-2xl font-black tracking-tight" id="execTotalPct">+0.00%</div>
+          </div>
+          <div id="execTotalBadge" class="px-3 py-1.5 rounded-lg text-sm font-bold badge-positive">
+            증가세 지속
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Key Figures Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-5">
+        <div class="metric-card p-4">
+          <div class="text-xs font-medium text-slate-500" id="execRefTitle">기준 시점 실적</div>
+          <div class="text-xl font-bold text-slate-900 mt-1" id="execLatestAmt">- 천 달러</div>
+          <div class="text-xs text-slate-500 mt-0.5" id="execLatestAmtKRW">약 0.0억 달러</div>
+        </div>
+        <div class="metric-card p-4">
+          <div class="text-xs font-medium text-slate-500" id="execCompHeaderTitle">비교 구간 실적</div>
+          <div class="text-xl font-bold text-slate-800 mt-1" id="execCompAmt">- 천 달러</div>
+          <div class="text-xs text-slate-500 mt-0.5" id="execCompAmtKRW">약 0.0억 달러</div>
+        </div>
+        <div class="metric-card p-4">
+          <div class="text-xs font-medium text-slate-500">수출 실적 증감액</div>
+          <div class="text-xl font-bold mt-1" id="execDiffAmt">- 천 달러</div>
+          <div class="text-xs text-slate-500 mt-0.5" id="execDiffAmtKRW">약 0.0억 달러</div>
+        </div>
+        <div class="metric-card p-4 bg-slate-50">
+          <div class="text-xs font-medium text-slate-500">최대 기여 품목 (반도체 비중)</div>
+          <div class="text-xl font-bold text-[#1e3a8a] mt-1" id="execSemiconShare">-</div>
+          <div class="text-xs text-slate-500 mt-0.5" id="execSemiconStatus">-</div>
+        </div>
+      </div>
+
+      <!-- Growth Leader & Laggard Highlights -->
+      <div class="mt-5 pt-4 border-t border-slate-100 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">최대 증가 상위 품목</span>
+          <div id="topGainersList" class="flex items-center gap-2 flex-wrap text-slate-700">
+            <!-- populated -->
+          </div>
+        </div>
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="font-bold text-rose-800 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">하락 또는 부진 품목</span>
+          <div id="topLosersList" class="flex items-center gap-2 flex-wrap text-slate-700">
+            <!-- populated -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation Pills for Items & View Mode Switch -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sticky top-14 z-40 bg-[#f8fafc]/95 py-2 backdrop-blur">
+      <div class="flex items-center gap-1.5 overflow-x-auto pb-1 max-w-full" id="itemNavPills">
+        <!-- populated dynamically -->
+      </div>
+      <div class="flex items-center gap-2 text-xs font-medium whitespace-nowrap self-end sm:self-auto">
+        <span class="text-slate-500">카드 배치:</span>
+        <button type="button" id="btnViewGrid" onclick="setViewMode('grid')" class="px-2.5 py-1 rounded border text-xs font-semibold bg-white text-slate-800 shadow-xs border-slate-300">그리드 (2열)</button>
+        <button type="button" id="btnViewFull" onclick="setViewMode('full')" class="px-2.5 py-1 rounded border text-xs font-medium bg-slate-100 text-slate-600 border-slate-200">전체 너비 (1열)</button>
+      </div>
+    </div>
+
+    <!-- Individual Items Container -->
+    <div id="itemsContainer" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Cards rendered via JavaScript -->
+    </div>
+
+    <!-- Master Comparison Matrix Table -->
+    <section class="card p-6 bg-white border border-slate-200 shadow-sm">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 gap-2">
+        <div>
+          <h2 class="text-base font-bold text-slate-900 tracking-tight">품목별 개별 설정 기준 수출 실적 및 증감율 종합 비교표</h2>
+          <p class="text-xs text-slate-500 mt-0.5">각 품목 카드에서 개별 설정한 기준 시점 및 비교 대상 구간 실적 현황</p>
+        </div>
+        <div class="text-xs text-slate-500 font-medium">
+          단위: 천 달러, %
+        </div>
+      </div>
+      
+      <div class="overflow-x-auto mt-4">
+        <table class="w-full text-xs text-left text-slate-700 border-collapse">
+          <thead>
+            <tr class="bg-slate-50 text-slate-700 border-b border-slate-200 font-semibold">
+              <th scope="col" class="py-3 px-3 text-center w-12">순위</th>
+              <th scope="col" class="py-3 px-4">품목명</th>
+              <th scope="col" class="py-3 px-3 text-center">지정 기준 시점</th>
+              <th scope="col" class="py-3 px-4 text-right">기준 실적</th>
+              <th scope="col" class="py-3 px-3 text-center">지정 비교 구간</th>
+              <th scope="col" class="py-3 px-4 text-right">비교 실적</th>
+              <th scope="col" class="py-3 px-4 text-right">증감액</th>
+              <th scope="col" class="py-3 px-4 text-right">증감율(%)</th>
+              <th scope="col" class="py-3 px-3 text-center">추세</th>
+            </tr>
+          </thead>
+          <tbody id="matrixTableBody" class="divide-y divide-slate-200">
+            <!-- populated -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Notes & Automation Guide -->
+    <footer class="text-xs text-slate-500 p-4 border-t border-slate-200 space-y-1">
+      <div class="font-semibold text-slate-700">자동화 파이프라인 및 데이터 안내:</div>
+      <div>1. <strong>데이터 클라우드 보관소</strong>: <code>data/trade/</code> (잠정치 엑셀 보관)</div>
+      <div>2. <strong>클라우드 24시간 자동 갱신 원리</strong>: GitHub Actions 클라우드 스케줄러가 관세청(tradedata.go.kr) 최신 공시를 상시 모니터링하여, PC 전원이 꺼져 있어도 새로운 10일 잠정치가 등록되면 자동으로 수집하여 본 대시보드를 최신 상태로 재배포합니다.</div>
+      <div>3. <strong>품목별 독립 제어</strong>: 각 품목 카드의 상단 셀렉터를 통해 기준 시점과 비교 구간을 품목마다 완전히 다르게 지정할 수 있습니다.</div>
+    </footer>
+
+  </main>
+
+  <script>
+    const RAW_DATA = {"items": ["전체", "반도체", "철강제품", "승용차", "석유제품", "무선통신기기", "선박", "자동차부품", "컴퓨터주변기기", "정밀기기", "가전제품"], "pure_intervals": [{"id": "202607_1", "label": "2026.07.01 ~ 07.10 (7월 초순)", "short": "26.07 초순", "month": "202607", "period_type": "초순", "전체": 29954981.0, "반도체": 11210210.0, "철강제품": 1463419.0, "승용차": 1892511.0, "석유제품": 1904764.0, "무선통신기기": 784320.0, "선박": 1542354.0, "자동차부품": 613343.0, "컴퓨터주변기기": 866247.0, "정밀기기": 333130.0, "가전제품": 229864.0}, {"id": "202607_2", "label": "2026.07.11 ~ 07.20 (7월 중순)", "short": "26.07 중순", "month": "202607", "period_type": "중순", "전체": 25253219.0, "반도체": 10909874.0, "철강제품": 1183932.0, "승용차": 1335487.0, "석유제품": 1817080.0, "무선통신기기": 552416.0, "선박": 905760.0, "자동차부품": 434348.0, "컴퓨터주변기기": 1165051.0, "정밀기기": 220972.0, "가전제품": 194143.0}, {"id": "202607_3", "label": "2026.07.21 ~ 07.31 (7월 하순)", "short": "26.07 하순", "month": "202607", "period_type": "하순", "전체": 43982135.0, "반도체": 19053334.0, "철강제품": 2023056.0, "승용차": 2711279.0, "석유제품": 2399161.0, "무선통신기기": 714367.0, "선박": 663638.0, "자동차부품": 806829.0, "컴퓨터주변기기": 2907271.0, "정밀기기": 445094.0, "가전제품": 273485.0}, {"id": "202608_1", "label": "2026.08.01 ~ 08.10 (8월 초순)", "short": "26.08 초순", "month": "202608", "period_type": "초순", "전체": 21263370.0, "반도체": 9951704.0, "철강제품": 888770.0, "승용차": 181405.0, "석유제품": 2003274.0, "무선통신기기": 470566.0, "선박": 470680.0, "자동차부품": 222029.0, "컴퓨터주변기기": 587424.0, "정밀기기": 206115.0, "가전제품": 113074.0}, {"id": "202608_2", "label": "2026.08.11 ~ 08.20 (8월 중순)", "short": "26.08 중순", "month": "202608", "period_type": "중순", "전체": 33955890.0, "반도체": 16082865.0, "철강제품": 1502446.0, "승용차": 1339402.0, "석유제품": 2232920.0, "무선통신기기": 569670.0, "선박": 443247.0, "자동차부품": 574842.0, "컴퓨터주변기기": 1690698.0, "정밀기기": 318022.0, "가전제품": 193746.0}, {"id": "202608_3", "label": "2026.08.21 ~ 08.31 (8월 하순)", "short": "26.08 하순", "month": "202608", "period_type": "하순", "전체": 43063170.0, "반도체": 20794750.0, "철강제품": 1644786.0, "승용차": 2122508.0, "석유제품": 2645899.0, "무선통신기기": 609850.0, "선박": 717257.0, "자동차부품": 618511.0, "컴퓨터주변기기": 4131958.0, "정밀기기": 336908.0, "가전제품": 203175.0}, {"id": "202609_1", "label": "2026.09.01 ~ 09.10 (9월 초순)", "short": "26.09 초순", "month": "202609", "period_type": "초순", "전체": 34973081.0, "반도체": 16483056.0, "철강제품": 1362183.0, "승용차": 1707722.0, "석유제품": 1870248.0, "무선통신기기": 654257.0, "선박": 1495389.0, "자동차부품": 664559.0, "컴퓨터주변기기": 634522.0, "정밀기기": 341020.0, "가전제품": 199166.0}, {"id": "202609_2", "label": "2026.09.11 ~ 09.20 (9월 중순)", "short": "26.09 중순", "month": "202609", "period_type": "중순", "전체": 36436268.0, "반도체": 17645063.0, "철강제품": 1350044.0, "승용차": 2027057.0, "석유제품": 2141899.0, "무선통신기기": 591188.0, "선박": 951064.0, "자동차부품": 468880.0, "컴퓨터주변기기": 1695512.0, "정밀기기": 299513.0, "가전제품": 178818.0}], "cumulative_intervals": [{"id": "202607_01~10", "label": "2026.07 (01~10일 누적)", "short": "26.07 01~10", "month": "202607", "period": "01~10", "전체": 29954981.0, "반도체": 11210210.0, "철강제품": 1463419.0, "승용차": 1892511.0, "석유제품": 1904764.0, "무선통신기기": 784320.0, "선박": 1542354.0, "자동차부품": 613343.0, "컴퓨터주변기기": 866247.0, "정밀기기": 333130.0, "가전제품": 229864.0}, {"id": "202607_01~20", "label": "2026.07 (01~20일 누적)", "short": "26.07 01~20", "month": "202607", "period": "01~20", "전체": 55208200.0, "반도체": 22120084.0, "철강제품": 2647351.0, "승용차": 3227998.0, "석유제품": 3721844.0, "무선통신기기": 1336736.0, "선박": 2448114.0, "자동차부품": 1047691.0, "컴퓨터주변기기": 2031298.0, "정밀기기": 554102.0, "가전제품": 424007.0}, {"id": "202607_01~31", "label": "2026.07 (01~31일 누적)", "short": "26.07 01~31", "month": "202607", "period": "01~31", "전체": 99190335.0, "반도체": 41173418.0, "철강제품": 4670407.0, "승용차": 5939277.0, "석유제품": 6121005.0, "무선통신기기": 2051103.0, "선박": 3111752.0, "자동차부품": 1854520.0, "컴퓨터주변기기": 4938569.0, "정밀기기": 999196.0, "가전제품": 697492.0}, {"id": "202608_01~10", "label": "2026.08 (01~10일 누적)", "short": "26.08 01~10", "month": "202608", "period": "01~10", "전체": 21263370.0, "반도체": 9951704.0, "철강제품": 888770.0, "승용차": 181405.0, "석유제품": 2003274.0, "무선통신기기": 470566.0, "선박": 470680.0, "자동차부품": 222029.0, "컴퓨터주변기기": 587424.0, "정밀기기": 206115.0, "가전제품": 113074.0}, {"id": "202608_01~20", "label": "2026.08 (01~20일 누적)", "short": "26.08 01~20", "month": "202608", "period": "01~20", "전체": 55219260.0, "반도체": 26034569.0, "철강제품": 2391216.0, "승용차": 1520807.0, "석유제품": 4236194.0, "무선통신기기": 1040236.0, "선박": 913927.0, "자동차부품": 796871.0, "컴퓨터주변기기": 2278122.0, "정밀기기": 524137.0, "가전제품": 306820.0}, {"id": "202608_01~31", "label": "2026.08 (01~31일 누적)", "short": "26.08 01~31", "month": "202608", "period": "01~31", "전체": 98282430.0, "반도체": 46829319.0, "철강제품": 4036002.0, "승용차": 3643315.0, "석유제품": 6882093.0, "무선통신기기": 1650086.0, "선박": 1631184.0, "자동차부품": 1415382.0, "컴퓨터주변기기": 6410080.0, "정밀기기": 861045.0, "가전제품": 509995.0}, {"id": "202609_01~10", "label": "2026.09 (01~10일 누적)", "short": "26.09 01~10", "month": "202609", "period": "01~10", "전체": 34973081.0, "반도체": 16483056.0, "철강제품": 1362183.0, "승용차": 1707722.0, "석유제품": 1870248.0, "무선통신기기": 654257.0, "선박": 1495389.0, "자동차부품": 664559.0, "컴퓨터주변기기": 634522.0, "정밀기기": 341020.0, "가전제품": 199166.0}, {"id": "202609_01~20", "label": "2026.09 (01~20일 누적)", "short": "26.09 01~20", "month": "202609", "period": "01~20", "전체": 71409349.0, "반도체": 34128119.0, "철강제품": 2712227.0, "승용차": 3734779.0, "석유제품": 4012147.0, "무선통신기기": 1245445.0, "선박": 2446453.0, "자동차부품": 1133439.0, "컴퓨터주변기기": 2330034.0, "정밀기기": 640533.0, "가전제품": 377984.0}]};
+
+    let currentMode = 'pure';
+    let currentViewMode = 'grid';
+    let activeFilterItem = 'all';
+
+    const itemSettings = {};
+
+    function initItemSettings() {
+      const ds = getDataset();
+      const latestId = ds[ds.length - 1].id;
+      const defaultCompIdx = Math.max(0, ds.length - 4);
+      const defaultCompId = ds[defaultCompIdx].id;
+
+      RAW_DATA.items.forEach(it => {
+        if (!itemSettings[it]) {
+          itemSettings[it] = {
+            refId: latestId,
+            compId: defaultCompId
+          };
+        } else {
+          if (!ds.some(x => x.id === itemSettings[it].refId)) itemSettings[it].refId = latestId;
+          if (!ds.some(x => x.id === itemSettings[it].compId)) itemSettings[it].compId = defaultCompId;
+        }
+      });
+    }
+
+    const chartInstances = {};
+
+    function formatNumber(num) {
+      return Math.round(num).toLocaleString('ko-KR');
+    }
+
+    function formatKRW(valThousandUSD) {
+      const bUSD = (valThousandUSD * 1000) / 100000000;
+      return '약 ' + bUSD.toFixed(1) + '억 달러';
+    }
+
+    function getDataset() {
+      return currentMode === 'pure' ? RAW_DATA.pure_intervals : RAW_DATA.cumulative_intervals;
+    }
+
+    function getIntervalById(id) {
+      const ds = getDataset();
+      return ds.find(x => x.id === id) || ds[ds.length - 1];
+    }
+
+    function populateBatchDropdown() {
+      const select = document.getElementById('batchCompSelect');
+      select.innerHTML = '';
+      const ds = getDataset();
+      const defIdx = Math.max(0, ds.length - 4);
+      for (let i = ds.length - 2; i >= 0; i--) {
+        const item = ds[i];
+        const opt = document.createElement('option');
+        opt.value = item.id;
+        opt.textContent = item.label;
+        if (i === defIdx) opt.selected = true;
+        select.appendChild(opt);
+      }
+    }
+
+    function applyBatchPeriod() {
+      const select = document.getElementById('batchCompSelect');
+      const targetCompId = select.value;
+      RAW_DATA.items.forEach(it => {
+        itemSettings[it].compId = targetCompId;
+      });
+      renderAll();
+    }
+
+    function switchMode(mode) {
+      if (currentMode === mode) return;
+      currentMode = mode;
+      
+      const btnPure = document.getElementById('btnModePure');
+      const btnCum = document.getElementById('btnModeCum');
+      
+      if (mode === 'pure') {
+        btnPure.className = 'px-3 py-1.5 text-xs font-semibold rounded bg-white text-blue-900 shadow-sm transition';
+        btnCum.className = 'px-3 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900 transition';
+      } else {
+        btnCum.className = 'px-3 py-1.5 text-xs font-semibold rounded bg-white text-blue-900 shadow-sm transition';
+        btnPure.className = 'px-3 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900 transition';
+      }
+
+      initItemSettings();
+      populateBatchDropdown();
+      renderAll();
+    }
+
+    function setViewMode(mode) {
+      currentViewMode = mode;
+      const btnGrid = document.getElementById('btnViewGrid');
+      const btnFull = document.getElementById('btnViewFull');
+      const container = document.getElementById('itemsContainer');
+
+      if (mode === 'grid') {
+        btnGrid.className = 'px-2.5 py-1 rounded border text-xs font-semibold bg-white text-slate-800 shadow-xs border-slate-300';
+        btnFull.className = 'px-2.5 py-1 rounded border text-xs font-medium bg-slate-100 text-slate-600 border-slate-200';
+        container.className = 'grid grid-cols-1 lg:grid-cols-2 gap-6';
+      } else {
+        btnFull.className = 'px-2.5 py-1 rounded border text-xs font-semibold bg-white text-slate-800 shadow-xs border-slate-300';
+        btnGrid.className = 'px-2.5 py-1 rounded border text-xs font-medium bg-slate-100 text-slate-600 border-slate-200';
+        container.className = 'grid grid-cols-1 gap-6';
+      }
+
+      Object.values(chartInstances).forEach(chart => {
+        chart.resize();
+      });
+    }
+
+    function filterItem(itemName) {
+      activeFilterItem = itemName;
+      
+      document.querySelectorAll('.item-nav-pill').forEach(pill => {
+        if (pill.dataset.item === itemName) {
+          pill.className = 'item-nav-pill px-3 py-1 rounded-full text-xs font-semibold bg-[#1e3a8a] text-white transition whitespace-nowrap';
+        } else {
+          pill.className = 'item-nav-pill px-3 py-1 rounded-full text-xs font-medium bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 transition whitespace-nowrap';
+        }
+      });
+
+      document.querySelectorAll('.item-card-wrapper').forEach(card => {
+        if (itemName === 'all' || card.dataset.item === itemName) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function renderNavPills() {
+      const navContainer = document.getElementById('itemNavPills');
+      navContainer.innerHTML = '';
+
+      const allBtn = document.createElement('button');
+      allBtn.type = 'button';
+      allBtn.dataset.item = 'all';
+      allBtn.className = 'item-nav-pill px-3 py-1 rounded-full text-xs font-semibold bg-[#1e3a8a] text-white transition whitespace-nowrap';
+      allBtn.textContent = '전체 품목 보기 (' + RAW_DATA.items.length + '개)';
+      allBtn.onclick = () => filterItem('all');
+      navContainer.appendChild(allBtn);
+
+      RAW_DATA.items.forEach(it => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.dataset.item = it;
+        btn.className = 'item-nav-pill px-3 py-1 rounded-full text-xs font-medium bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 transition whitespace-nowrap';
+        btn.textContent = it;
+        btn.onclick = () => filterItem(it);
+        navContainer.appendChild(btn);
+      });
+    }
+
+    function renderExecutive() {
+      const totalSettings = itemSettings['전체'] || Object.values(itemSettings)[0];
+      const ref = getIntervalById(totalSettings.refId);
+      const comp = getIntervalById(totalSettings.compId);
+
+      document.getElementById('execCompareSubtext').textContent = '기준: ' + ref.label + ' vs ' + comp.label;
+      document.getElementById('execRefTitle').textContent = '기준 시점 실적 (' + ref.short + ')';
+      document.getElementById('execCompHeaderTitle').textContent = '비교 구간 실적 (' + comp.short + ')';
+
+      const lTotal = ref['전체'] || 0;
+      const cTotal = comp['전체'] || 0;
+      const diffTotal = lTotal - cTotal;
+      const pctTotal = cTotal !== 0 ? (diffTotal / cTotal) * 100 : 0;
+
+      document.getElementById('execLatestAmt').textContent = formatNumber(lTotal) + ' 천 달러';
+      document.getElementById('execLatestAmtKRW').textContent = formatKRW(lTotal);
+
+      document.getElementById('execCompAmt').textContent = formatNumber(cTotal) + ' 천 달러';
+      document.getElementById('execCompAmtKRW').textContent = formatKRW(cTotal);
+
+      const diffEl = document.getElementById('execDiffAmt');
+      const diffKRWEl = document.getElementById('execDiffAmtKRW');
+      const pctEl = document.getElementById('execTotalPct');
+      const badgeEl = document.getElementById('execTotalBadge');
+
+      const sign = diffTotal >= 0 ? '+' : '';
+      diffEl.textContent = sign + formatNumber(diffTotal) + ' 천 달러';
+      diffKRWEl.textContent = sign + formatKRW(diffTotal);
+
+      pctEl.textContent = sign + pctTotal.toFixed(2) + '%';
+
+      if (diffTotal >= 0) {
+        diffEl.className = 'text-xl font-bold text-emerald-600 mt-1';
+        pctEl.className = 'text-2xl font-black tracking-tight text-emerald-600';
+        badgeEl.className = 'px-3 py-1.5 rounded-lg text-sm font-bold badge-positive';
+        badgeEl.textContent = '총수출 증가세';
+      } else {
+        diffEl.className = 'text-xl font-bold text-rose-600 mt-1';
+        pctEl.className = 'text-2xl font-black tracking-tight text-rose-600';
+        badgeEl.className = 'px-3 py-1.5 rounded-lg text-sm font-bold badge-negative';
+        badgeEl.textContent = '총수출 둔화';
+      }
+
+      if (ref['반도체']) {
+        const semiAmt = ref['반도체'];
+        const semiShare = lTotal !== 0 ? (semiAmt / lTotal) * 100 : 0;
+        document.getElementById('execSemiconShare').textContent = semiShare.toFixed(1) + '% (1위)';
+        document.getElementById('execSemiconStatus').textContent = '수출액 ' + formatKRW(semiAmt);
+      }
+
+      const itemsList = RAW_DATA.items.filter(x => x !== '전체');
+      const diffList = itemsList.map(it => {
+        const rItem = getIntervalById(itemSettings[it].refId);
+        const cItem = getIntervalById(itemSettings[it].compId);
+        const l = rItem[it] || 0;
+        const c = cItem[it] || 0;
+        const d = l - c;
+        const p = c !== 0 ? (d / c) * 100 : 0;
+        return { item: it, diff: d, pct: p };
+      });
+
+      diffList.sort((a, b) => b.pct - a.pct);
+
+      const topGainers = diffList.slice(0, 3);
+      const topLosers = [...diffList].reverse().slice(0, 3);
+
+      const gainersEl = document.getElementById('topGainersList');
+      gainersEl.innerHTML = topGainers.map(x => 
+        `<span class="bg-slate-100 px-2 py-0.5 rounded font-medium text-slate-800">
+          ${x.item} <strong class="text-emerald-700">${x.pct >= 0 ? '+' : ''}${x.pct.toFixed(1)}%</strong>
+        </span>`
+      ).join('');
+
+      const losersEl = document.getElementById('topLosersList');
+      losersEl.innerHTML = topLosers.map(x => 
+        `<span class="bg-slate-100 px-2 py-0.5 rounded font-medium text-slate-800">
+          ${x.item} <strong class="${x.pct < 0 ? 'text-rose-700' : 'text-slate-700'}">${x.pct >= 0 ? '+' : ''}${x.pct.toFixed(1)}%</strong>
+        </span>`
+      ).join('');
+    }
+
+    function renderItemCards() {
+      const container = document.getElementById('itemsContainer');
+      container.innerHTML = '';
+
+      const ds = getDataset();
+
+      RAW_DATA.items.forEach((item, itemIdx) => {
+        const cfg = itemSettings[item];
+        const refIntv = getIntervalById(cfg.refId);
+        const compIntv = getIntervalById(cfg.compId);
+
+        const lVal = refIntv[item] || 0;
+        const cVal = compIntv[item] || 0;
+        const diff = lVal - cVal;
+        const pct = cVal !== 0 ? (diff / cVal) * 100 : 0;
+        const totalAmt = refIntv['전체'] || 1;
+        const share = (lVal / totalAmt) * 100;
+
+        const isPositive = diff >= 0;
+        const diffSign = isPositive ? '+' : '';
+
+        const cardWrapper = document.createElement('div');
+        cardWrapper.className = 'item-card-wrapper';
+        cardWrapper.dataset.item = item;
+
+        const card = document.createElement('div');
+        card.className = 'card p-5 bg-white border border-slate-200 shadow-sm flex flex-col h-full';
+
+        const refOptionsHtml = ds.slice().reverse().map(d => 
+          `<option value="${d.id}" ${d.id === cfg.refId ? 'selected' : ''}>${d.label}</option>`
+        ).join('');
+
+        const compOptionsHtml = ds.slice().reverse().map(d => 
+          `<option value="${d.id}" ${d.id === cfg.compId ? 'selected' : ''}>${d.label}</option>`
+        ).join('');
+
+        const presets = ds.slice(-4, -1).reverse();
+        const presetButtonsHtml = presets.map(p => 
+          `<button type="button" onclick="setItemPreset('${item}', '${p.id}')" class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 hover:bg-slate-200 border border-slate-200 transition">${p.short}</button>`
+        ).join('');
+
+        card.innerHTML = `
+          <!-- Item Card Header -->
+          <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-slate-400">#${itemIdx === 0 ? 'TOTAL' : itemIdx}</span>
+              <h3 class="text-base font-bold text-slate-900 tracking-tight">${item}</h3>
+              ${item === '반도체' ? '<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-blue-100 text-blue-900 border border-blue-200">주력 1위</span>' : ''}
+              ${item === '승용차' ? '<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-indigo-100 text-indigo-900 border border-indigo-200">주력 품목</span>' : ''}
+              ${item === '선박' ? '<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-cyan-100 text-cyan-900 border border-cyan-200">고성장</span>' : ''}
+            </div>
+            <div class="text-right">
+              <span class="text-xs font-semibold text-slate-500">기준 비중: <strong class="text-slate-900">${share.toFixed(1)}%</strong></span>
+            </div>
+          </div>
+
+          <!-- 품목별 독립 기준 & 비교 기간 선택기 -->
+          <div class="mt-3.5 p-3 rounded-lg bg-blue-50/50 border border-blue-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+            <div class="flex-1">
+              <label class="block text-[11px] font-bold text-[#1e3a8a] mb-1">기준 시점 (Base):</label>
+              <select onchange="updateItemRef('${item}', this.value)" class="w-full bg-white border border-blue-200 text-slate-900 text-xs rounded-md p-1.5 font-medium focus:ring-blue-500 focus:border-blue-500">
+                ${refOptionsHtml}
+              </select>
+            </div>
+            <div class="hidden sm:flex items-center text-slate-300 font-bold px-1 pt-4">vs</div>
+            <div class="flex-1">
+              <label class="block text-[11px] font-bold text-sky-800 mb-1">비교 대상 구간 (Compare):</label>
+              <select onchange="updateItemComp('${item}', this.value)" class="w-full bg-white border border-sky-200 text-slate-900 text-xs rounded-md p-1.5 font-medium focus:ring-sky-500 focus:border-sky-500">
+                ${compOptionsHtml}
+              </select>
+            </div>
+          </div>
+
+          <!-- Quick Preset Chips -->
+          <div class="flex items-center gap-1 mt-2 text-[11px] flex-wrap">
+            <span class="text-slate-400 text-[10px] mr-0.5">빠른비교:</span>
+            ${presetButtonsHtml}
+          </div>
+
+          <!-- Rate of Change Card -->
+          <div class="mt-3 p-4 rounded-lg bg-slate-50 border border-slate-200">
+            <div class="flex items-center justify-between pb-2 mb-3 border-b border-slate-200 text-xs font-medium text-slate-600">
+              <span class="font-bold text-slate-800">품목별 실적 및 증감율 분석 카드</span>
+              <span class="text-[11px] text-slate-500">비교: ${compIntv.short} 대비</span>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div>
+                <div class="text-[11px] font-medium text-slate-500">기준 시점 실적 (${refIntv.short})</div>
+                <div class="text-sm font-bold text-slate-900 mt-0.5">${formatNumber(lVal)}</div>
+                <div class="text-[10px] text-slate-400">${formatKRW(lVal)}</div>
+              </div>
+              <div>
+                <div class="text-[11px] font-medium text-slate-500">비교 대상 실적 (${compIntv.short})</div>
+                <div class="text-sm font-bold text-slate-700 mt-0.5">${formatNumber(cVal)}</div>
+                <div class="text-[10px] text-slate-400">${formatKRW(cVal)}</div>
+              </div>
+              <div>
+                <div class="text-[11px] font-medium text-slate-500">실적 증감액</div>
+                <div class="text-sm font-bold ${isPositive ? 'text-emerald-600' : 'text-rose-600'} mt-0.5">
+                  ${diffSign}${formatNumber(diff)}
+                </div>
+                <div class="text-[10px] text-slate-400">${diffSign}${formatKRW(diff)}</div>
+              </div>
+              <div class="bg-white p-2 rounded border border-slate-200 flex flex-col justify-center items-center shadow-xs">
+                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">증감율(%)</div>
+                <div class="text-base font-black ${isPositive ? 'text-emerald-600' : 'text-rose-600'} mt-0.5">
+                  ${diffSign}${pct.toFixed(2)}%
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Independent Chart -->
+          <div class="mt-4 flex-1">
+            <div class="flex items-center justify-between text-xs text-slate-500 mb-1.5">
+              <span class="font-semibold text-slate-700">10일 간격 수출 추이 차트</span>
+              <div class="flex items-center gap-2 text-[10px]">
+                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-xs bg-[#1e3a8a] inline-block"></span> 기준 시점</span>
+                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-xs bg-[#0284c7] inline-block"></span> 비교 대상</span>
+              </div>
+            </div>
+            <div class="relative w-full h-56">
+              <canvas id="chart_${itemIdx}"></canvas>
+            </div>
+          </div>
+
+          <!-- Collapsible Table -->
+          <div class="mt-4 pt-3 border-t border-slate-100">
+            <button type="button" onclick="toggleItemTable(${itemIdx})" class="text-xs font-semibold text-blue-700 hover:text-blue-900 flex items-center justify-between w-full py-1">
+              <span>10일 구간별 전체 데이터 내역 확인</span>
+              <span id="toggleText_${itemIdx}" class="text-[11px] font-normal text-slate-500">열기 ↓</span>
+            </button>
+            <div id="tableContainer_${itemIdx}" class="hidden mt-2 overflow-x-auto">
+              <table class="w-full text-[11px] text-left text-slate-600 border-collapse">
+                <thead>
+                  <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
+                    <th class="py-1.5 px-2">구간명</th>
+                    <th class="py-1.5 px-2 text-right">수출액(천 달러)</th>
+                    <th class="py-1.5 px-2 text-right">전구간 대비</th>
+                    <th class="py-1.5 px-2 text-right">비중(%)</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200">
+                  ${ds.map((intv, i) => {
+                    const val = intv[item] || 0;
+                    const prevVal = i > 0 ? ds[i - 1][item] : null;
+                    const chg = prevVal !== null && prevVal !== 0 ? ((val - prevVal) / prevVal) * 100 : null;
+                    const totalVal = intv['전체'] || 1;
+                    const itemShare = (val / totalVal) * 100;
+                    const isRefRow = intv.id === cfg.refId;
+                    const isCompRow = intv.id === cfg.compId;
+
+                    let rowBg = 'hover:bg-slate-50';
+                    if (isRefRow) rowBg = 'bg-blue-100/70 font-bold text-blue-950';
+                    else if (isCompRow) rowBg = 'bg-sky-50 font-semibold text-sky-950';
+
+                    return `
+                      <tr class="${rowBg}">
+                        <td class="py-1 px-2">
+                          ${intv.short}
+                          ${isRefRow ? '<span class="ml-1 text-[9px] px-1 py-0.2 rounded bg-[#1e3a8a] text-white font-bold">기준</span>' : ''}
+                          ${isCompRow ? '<span class="ml-1 text-[9px] px-1 py-0.2 rounded bg-[#0284c7] text-white font-bold">비교</span>' : ''}
+                        </td>
+                        <td class="py-1 px-2 text-right">${formatNumber(val)}</td>
+                        <td class="py-1 px-2 text-right font-medium ${chg !== null && chg >= 0 ? 'text-emerald-700' : 'text-rose-700'}">
+                          ${chg !== null ? (chg >= 0 ? '+' : '') + chg.toFixed(1) + '%' : '-'}
+                        </td>
+                        <td class="py-1 px-2 text-right text-slate-500">${itemShare.toFixed(1)}%</td>
+                      </tr>
+                    `;
+                  }).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+
+        cardWrapper.appendChild(card);
+        container.appendChild(cardWrapper);
+
+        initItemChart(item, itemIdx);
+      });
+    }
+
+    function updateItemRef(item, refId) {
+      itemSettings[item].refId = refId;
+      renderAll();
+    }
+
+    function updateItemComp(item, compId) {
+      itemSettings[item].compId = compId;
+      renderAll();
+    }
+
+    function setItemPreset(item, compId) {
+      const ds = getDataset();
+      if (ds.some(x => x.id === compId)) {
+        itemSettings[item].compId = compId;
+        renderAll();
+      }
+    }
+
+    function toggleItemTable(itemIdx) {
+      const tbl = document.getElementById('tableContainer_' + itemIdx);
+      const txt = document.getElementById('toggleText_' + itemIdx);
+      if (tbl.classList.contains('hidden')) {
+        tbl.classList.remove('hidden');
+        txt.textContent = '닫기 ↑';
+      } else {
+        tbl.classList.add('hidden');
+        txt.textContent = '열기 ↓';
+      }
+    }
+
+    function initItemChart(item, itemIdx) {
+      const canvas = document.getElementById('chart_' + itemIdx);
+      if (!canvas) return;
+
+      if (chartInstances[itemIdx]) {
+        chartInstances[itemIdx].destroy();
+      }
+
+      const ds = getDataset();
+      const labels = ds.map(d => d.short);
+      const dataValues = ds.map(d => d[item] || 0);
+      
+      const cfg = itemSettings[item];
+      const ref = getIntervalById(cfg.refId);
+      const comp = getIntervalById(cfg.compId);
+
+      const bgColors = ds.map(d => {
+        if (d.id === ref.id) return '#1e3a8a';
+        if (d.id === comp.id) return '#0284c7';
+        return '#cbd5e1';
+      });
+
+      const hoverColors = ds.map(d => {
+        if (d.id === ref.id) return '#1e40af';
+        if (d.id === comp.id) return '#0369a1';
+        return '#94a3b8';
+      });
+
+      const ctx = canvas.getContext('2d');
+      chartInstances[itemIdx] = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              type: 'line',
+              label: '추세선',
+              data: dataValues,
+              borderColor: '#3b82f6',
+              borderWidth: 2,
+              tension: 0.25,
+              pointBackgroundColor: '#1e3a8a',
+              pointBorderColor: '#ffffff',
+              pointBorderWidth: 1.5,
+              pointRadius: 3.5,
+              pointHoverRadius: 6,
+              fill: false,
+              order: 1
+            },
+            {
+              type: 'bar',
+              label: '수출액',
+              data: dataValues,
+              backgroundColor: bgColors,
+              hoverBackgroundColor: hoverColors,
+              borderRadius: 4,
+              order: 2
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: { duration: 350 },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#1e293b',
+              titleColor: '#f8fafc',
+              bodyColor: '#e2e8f0',
+              padding: 10,
+              displayColors: false,
+              callbacks: {
+                title: function(items) {
+                  const idx = items[0].dataIndex;
+                  return ds[idx].label;
+                },
+                label: function(context) {
+                  const val = context.raw;
+                  const idx = context.dataIndex;
+                  let lines = ['수출액: ' + formatNumber(val) + ' 천 달러 (' + formatKRW(val) + ')'];
+                  if (idx > 0) {
+                    const prev = ds[idx - 1][item] || 0;
+                    const diff = val - prev;
+                    const pct = prev !== 0 ? (diff / prev) * 100 : 0;
+                    const sign = diff >= 0 ? '+' : '';
+                    lines.push('직전 구간 대비: ' + sign + pct.toFixed(1) + '%');
+                  }
+                  if (ds[idx].id === ref.id) lines.push('[지정 기준 시점]');
+                  if (ds[idx].id === comp.id) lines.push('[지정 비교 대상 구간]');
+                  return lines;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { font: { size: 10 }, color: '#64748b' }
+            },
+            y: {
+              beginAtZero: true,
+              grid: { color: '#f1f5f9' },
+              ticks: {
+                font: { size: 10 },
+                color: '#64748b',
+                callback: function(value) {
+                  if (value >= 1000000) return (value / 1000000).toFixed(1) + 'M';
+                  if (value >= 1000) return (value / 1000).toFixed(0) + 'K';
+                  return value;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function renderMatrixTable() {
+      const tbody = document.getElementById('matrixTableBody');
+      tbody.innerHTML = '';
+
+      const allCfg = itemSettings['전체'] || Object.values(itemSettings)[0];
+      const allRef = getIntervalById(allCfg.refId);
+      const allComp = getIntervalById(allCfg.compId);
+      const allL = allRef['전체'] || 0;
+      const allC = allComp['전체'] || 0;
+      const allDiff = allL - allC;
+      const allPct = allC !== 0 ? (allDiff / allC) * 100 : 0;
+
+      const allRow = document.createElement('tr');
+      allRow.className = 'bg-slate-100/70 font-bold border-b-2 border-slate-300';
+      allRow.innerHTML = `
+        <td class="py-3 px-3 text-center text-slate-500">-</td>
+        <td class="py-3 px-4 text-slate-900">전체 (총수출)</td>
+        <td class="py-3 px-3 text-center text-blue-900 bg-blue-50/50">${allRef.short}</td>
+        <td class="py-3 px-4 text-right text-slate-900 font-bold">${formatNumber(allL)}</td>
+        <td class="py-3 px-3 text-center text-sky-900 bg-sky-50/50">${allComp.short}</td>
+        <td class="py-3 px-4 text-right text-slate-700">${formatNumber(allC)}</td>
+        <td class="py-3 px-4 text-right ${allDiff >= 0 ? 'text-emerald-700' : 'text-rose-700'}">
+          ${allDiff >= 0 ? '+' : ''}${formatNumber(allDiff)}
+        </td>
+        <td class="py-3 px-4 text-right font-bold ${allPct >= 0 ? 'text-emerald-700' : 'text-rose-700'}">
+          ${allPct >= 0 ? '+' : ''}${allPct.toFixed(2)}%
+        </td>
+        <td class="py-3 px-3 text-center">
+          <span class="px-2 py-0.5 rounded text-[11px] font-semibold ${allPct >= 0 ? 'badge-positive' : 'badge-negative'}">
+            ${allPct >= 0 ? '증가' : '감소'}
+          </span>
+        </td>
+      `;
+      tbody.appendChild(allRow);
+
+      const itemsList = RAW_DATA.items.filter(x => x !== '전체');
+      const rowsData = itemsList.map(it => {
+        const cfg = itemSettings[it];
+        const ref = getIntervalById(cfg.refId);
+        const comp = getIntervalById(cfg.compId);
+        const l = ref[it] || 0;
+        const c = comp[it] || 0;
+        const diff = l - c;
+        const pct = c !== 0 ? (diff / c) * 100 : 0;
+        return { item: it, refLabel: ref.short, compLabel: comp.short, refVal: l, compVal: c, diff: diff, pct: pct };
+      });
+
+      rowsData.sort((a, b) => b.refVal - a.refVal);
+
+      rowsData.forEach((row, idx) => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-50 transition border-b border-slate-100';
+        tr.innerHTML = `
+          <td class="py-2.5 px-3 text-center font-medium text-slate-400">${idx + 1}</td>
+          <td class="py-2.5 px-4 font-bold text-slate-900 flex items-center gap-1.5">
+            ${row.item}
+            ${idx === 0 ? '<span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-100 text-amber-900 font-semibold">1위</span>' : ''}
+          </td>
+          <td class="py-2.5 px-3 text-center text-blue-900 bg-blue-50/40">${row.refLabel}</td>
+          <td class="py-2.5 px-4 text-right font-semibold text-slate-900">${formatNumber(row.refVal)}</td>
+          <td class="py-2.5 px-3 text-center text-sky-900 bg-sky-50/40">${row.compLabel}</td>
+          <td class="py-2.5 px-4 text-right text-slate-600">${formatNumber(row.compVal)}</td>
+          <td class="py-2.5 px-4 text-right font-medium ${row.diff >= 0 ? 'text-emerald-700' : 'text-rose-700'}">
+            ${row.diff >= 0 ? '+' : ''}${formatNumber(row.diff)}
+          </td>
+          <td class="py-2.5 px-4 text-right font-bold ${row.pct >= 0 ? 'text-emerald-700' : 'text-rose-700'}">
+            ${row.pct >= 0 ? '+' : ''}${row.pct.toFixed(2)}%
+          </td>
+          <td class="py-2.5 px-3 text-center">
+            <span class="px-2 py-0.5 rounded text-[10px] font-semibold ${row.pct >= 0 ? 'badge-positive' : 'badge-negative'}">
+              ${row.pct >= 0 ? '상승' : '하락'}
+            </span>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderAll() {
+      renderExecutive();
+      renderItemCards();
+      renderMatrixTable();
+      filterItem(activeFilterItem);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initItemSettings();
+      populateBatchDropdown();
+      renderNavPills();
+      renderAll();
+    });
+  </script>
+</body>
+</html>

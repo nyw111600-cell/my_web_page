@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D 빌딩 건축 시뮬레이터 | Three.js Interactive 3D</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Three.js CDN (r128) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- OrbitControls CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      user-select: none;
+    }
+    #webgl-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    /* 반투명 글래스 패널 */
+    .control-card {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(10px);
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+    }
+    /* 슬라이더 커스텀 */
+    input[type=range] {
+      accent-color: #1e3a8a;
+    }
+  </style>
+</head>
+<body class="w-screen h-screen flex flex-col">
+
+  <!-- 상단 공통 타이틀 헤더 (유형 B: 단일 페이지 대시보드 및 도구) -->
+  <header class="h-14 bg-[#f5f3ff]/95 backdrop-blur-md border-b border-purple-200/80 px-4 flex items-center justify-between z-30 shrink-0">
+    <div class="flex items-center space-x-3">
+      <a href="index.html" class="inline-flex items-center px-2.5 py-1 rounded text-xs font-semibold bg-purple-100 text-purple-900 hover:bg-purple-200 border border-purple-300/80 transition mr-2">← 메인화면</a>
+      <h1 class="text-base font-bold text-purple-950 tracking-tight">인터랙티브 3D 빌딩 건축 시뮬레이터 (3D Building Construction Simulator)</h1>
+      <span class="px-2 py-0.5 rounded text-[11px] font-medium bg-purple-100 text-purple-800 border border-purple-200">WebGL GPU 가속</span>
+    </div>
+    <div class="text-xs font-medium text-purple-700 flex items-center space-x-3">
+      <span>엔진: Three.js r128 & GSAP</span>
+      <span>|</span>
+      <span>인터랙션: 마우스 360도 회전 / 줌 / 팬</span>
+      <span>|</span>
+      <span>기준: 2026.09</span>
+    </div>
+  </header>
+
+  <!-- 3D 뷰포트 메인 컨테이너 -->
+  <main class="relative flex-1 w-full h-[calc(100vh-3.5rem)] overflow-hidden">
+    <!-- WebGL 캔버스 -->
+    <div id="canvas-container" class="absolute inset-0 w-full h-full">
+      <canvas id="webgl-canvas"></canvas>
+    </div>
+
+    <!-- 좌측 상단: 실시간 건설 현황 HUD 카드 -->
+    <div class="absolute top-4 left-4 z-20 w-80 control-card rounded-xl p-4 space-y-3">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+        <span class="text-xs font-bold text-slate-800 tracking-wider">실시간 시공 모니터링</span>
+        <span id="status-badge" class="px-2 py-0.5 text-[11px] font-bold rounded bg-blue-100 text-blue-800 border border-blue-200">준비 완료</span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2">
+        <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+          <p class="text-[11px] font-medium text-slate-500">현재 공정 층수</p>
+          <p class="text-lg font-bold text-slate-900 mt-0.5"><span id="hud-floor">0</span> <span class="text-xs font-normal text-slate-500">/ <span id="hud-total-floor">25</span>F</span></p>
+        </div>
+        <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+          <p class="text-[11px] font-medium text-slate-500">시공 건축 높이</p>
+          <p class="text-lg font-bold text-blue-900 mt-0.5"><span id="hud-height">0.0</span> <span class="text-xs font-normal text-slate-500">m</span></p>
+        </div>
+        <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+          <p class="text-[11px] font-medium text-slate-500">전체 공정률</p>
+          <p class="text-lg font-bold text-emerald-700 mt-0.5"><span id="hud-percent">0</span><span class="text-xs font-normal text-slate-500">%</span></p>
+        </div>
+        <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+          <p class="text-[11px] font-medium text-slate-500">타워크레인 상태</p>
+          <p id="hud-crane-status" class="text-sm font-bold text-amber-700 mt-1">대기 중</p>
+        </div>
+      </div>
+
+      <!-- 진행률 게이지 바 -->
+      <div class="space-y-1">
+        <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+          <div id="progress-fill" class="bg-blue-600 h-full w-0 transition-all duration-300"></div>
+        </div>
+        <div class="flex justify-between text-[10px] text-slate-400">
+          <span>기초 지반 공사</span>
+          <span>상량식 및 준공</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 우측 상단: 시공 및 제어 컨트롤 패널 -->
+    <div class="absolute top-4 right-4 z-20 w-84 control-card rounded-xl p-4 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+        <span class="text-xs font-bold text-slate-800 tracking-wider">시공 컨트롤러</span>
+        <span class="text-[11px] text-slate-500">실시간 조작</span>
+      </div>
+
+      <!-- 메인 동작 버튼 -->
+      <div class="space-y-2">
+        <div class="grid grid-cols-2 gap-2">
+          <button id="btn-build" class="w-full py-2 px-3 bg-blue-900 hover:bg-blue-800 text-white rounded-lg text-xs font-bold shadow transition active:scale-95">
+            건축 시작
+          </button>
+          <button id="btn-pause" class="w-full py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 rounded-lg text-xs font-semibold transition active:scale-95">
+            일시정지
+          </button>
+        </div>
+        <button id="btn-reset" class="w-full py-2 px-3 bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 rounded-lg text-xs font-semibold transition active:scale-95">
+          처음부터 다시 짓기
+        </button>
+      </div>
+
+      <!-- 배속 제어 -->
+      <div class="space-y-1.5">
+        <label class="text-[11px] font-semibold text-slate-600 flex justify-between">
+          <span>시공 속도</span>
+          <span id="speed-label" class="text-blue-700 font-bold">1.5x</span>
+        </label>
+        <div class="grid grid-cols-3 gap-1.5">
+          <button class="speed-btn py-1 text-xs border rounded font-medium bg-white text-slate-700 border-slate-300 hover:bg-slate-50" data-speed="1.0">1.0x</button>
+          <button class="speed-btn py-1 text-xs border rounded font-bold bg-blue-50 text-blue-900 border-blue-400" data-speed="1.5">1.5x</button>
+          <button class="speed-btn py-1 text-xs border rounded font-medium bg-white text-slate-700 border-slate-300 hover:bg-slate-50" data-speed="3.0">3.0x (고속)</button>
+        </div>
+      </div>
+
+      <!-- 층수 설정 슬라이더 -->
+      <div class="space-y-1.5 pt-1 border-t border-slate-200">
+        <div class="flex justify-between items-center">
+          <label class="text-[11px] font-semibold text-slate-600">목표 빌딩 층수</label>
+          <span id="floor-slider-val" class="text-xs font-bold text-blue-900 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">25층 (100.0m)</span>
+        </div>
+        <input id="floor-slider" type="range" min="10" max="40" value="25" step="1" class="w-full h-1.5 bg-slate-200 rounded-lg cursor-pointer">
+        <div class="flex justify-between text-[10px] text-slate-400">
+          <span>10층 (중층)</span>
+          <span>25층 (고층)</span>
+          <span>40층 (초고층)</span>
+        </div>
+      </div>
+
+      <!-- 외관 디자인 스타일 -->
+      <div class="space-y-1.5 pt-1 border-t border-slate-200">
+        <label class="text-[11px] font-semibold text-slate-600">외관 커튼월 스타일</label>
+        <div class="grid grid-cols-2 gap-1.5">
+          <button class="style-btn py-1 text-[11px] border rounded font-bold bg-blue-50 text-blue-900 border-blue-400" data-style="blue-glass">스카이블루 글래스</button>
+          <button class="style-btn py-1 text-[11px] border rounded font-medium bg-white text-slate-700 border-slate-300 hover:bg-slate-50" data-style="dark-glass">다크 옵시디언</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 좌측 하단: 시점 프리셋 버튼 모음 -->
+    <div class="absolute bottom-4 left-4 z-20 control-card rounded-xl p-3 space-y-2">
+      <span class="text-[11px] font-bold text-slate-700 block border-b border-slate-200 pb-1">카메라 시점 프리셋</span>
+      <div class="flex space-x-1.5">
+        <button id="view-quarter" class="py-1.5 px-2.5 text-xs font-bold bg-blue-50 text-blue-900 border border-blue-300 rounded hover:bg-blue-100 transition">
+          입체 쿼터뷰
+        </button>
+        <button id="view-ground" class="py-1.5 px-2.5 text-xs font-medium bg-white text-slate-700 border border-slate-300 rounded hover:bg-slate-50 transition">
+          보행자 앙각뷰
+        </button>
+        <button id="view-top" class="py-1.5 px-2.5 text-xs font-medium bg-white text-slate-700 border border-slate-300 rounded hover:bg-slate-50 transition">
+          상공 조감뷰
+        </button>
+      </div>
+    </div>
+
+    <!-- 우측 하단: 렌더링 옵션 & 환경 모드 토글 -->
+    <div class="absolute bottom-4 right-4 z-20 control-card rounded-xl p-3 flex items-center space-x-2">
+      <button id="btn-toggle-daynight" class="py-1.5 px-3 text-xs font-medium bg-white text-slate-700 border border-slate-300 rounded hover:bg-slate-50 transition">
+        야간 조명 모드
+      </button>
+      <button id="btn-toggle-wireframe" class="py-1.5 px-3 text-xs font-medium bg-white text-slate-700 border border-slate-300 rounded hover:bg-slate-50 transition">
+        구조 골조 보기
+      </button>
+      <button id="btn-toggle-rotate" class="py-1.5 px-3 text-xs font-medium bg-white text-slate-700 border border-slate-300 rounded hover:bg-slate-50 transition">
+        자동 회전 정지
+      </button>
+    </div>
+
+    <!-- 중앙 하단: 마우스 조작 안내 캡션 바 -->
+    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 px-4 py-1.5 rounded-full bg-slate-900/80 backdrop-blur-md text-white text-[11px] font-medium shadow-lg pointer-events-none flex items-center space-x-4 border border-slate-700">
+      <span>마우스 좌클릭 드래그: 360도 회전</span>
+      <span>|</span>
+      <span>휠 스크롤: 줌 인/아웃</span>
+      <span>|</span>
+      <span>우클릭 드래그: 시점 평행 이동</span>
+    </div>
+  </main>
+
+  <!-- Three.js 3D 건축 시뮬레이션 핵심 로직 -->
+  <script>
+    // --- 1. 전역 설정 및 변수 ---
+    const FLOOR_HEIGHT = 4.0; // 층당 4.0m
+    const FLOOR_WIDTH = 26.0; // 건물 가로폭
+    const FLOOR_DEPTH = 20.0; // 건물 세로깊이
+
+    let totalFloors = 25;
+    let currentBuiltFloor = 0;
+    let isBuilding = false;
+    let isPaused = false;
+    let buildSpeed = 1.5;
+    let currentStyle = 'blue-glass';
+    let isNight = false;
+    let isWireframe = false;
+    let autoRotate = true;
+
+    // Three.js 핵심 객체
+    let scene, camera, renderer, controls;
+    let buildingGroup, craneGroup, surroundingsGroup;
+    let dirLight, ambientLight, hemiLight;
+    let floorObjects = [];
+    let animTimeline = null;
+    let beaconLight = null;
+
+    // DOM 참조
+    const canvasContainer = document.getElementById('canvas-container');
+    const canvas = document.getElementById('webgl-canvas');
+    const hudFloor = document.getElementById('hud-floor');
+    const hudTotalFloor = document.getElementById('hud-total-floor');
+    const hudHeight = document.getElementById('hud-height');
+    const hudPercent = document.getElementById('hud-percent');
+    const hudCraneStatus = document.getElementById('hud-crane-status');
+    const statusBadge = document.getElementById('status-badge');
+    const progressFill = document.getElementById('progress-fill');
+    const btnBuild = document.getElementById('btn-build');
+    const btnPause = document.getElementById('btn-pause');
+    const btnReset = document.getElementById('btn-reset');
+    const floorSlider = document.getElementById('floor-slider');
+    const floorSliderVal = document.getElementById('floor-slider-val');
+
+    // 재질(Materials) 정의
+    const materials = {
+      slab: new THREE.MeshStandardMaterial({
+        color: 0xd1d5db,
+        roughness: 0.6,
+        metalness: 0.2
+      }),
+      core: new THREE.MeshStandardMaterial({
+        color: 0x64748b,
+        roughness: 0.8,
+        metalness: 0.1
+      }),
+      column: new THREE.MeshStandardMaterial({
+        color: 0x334155,
+        roughness: 0.4,
+        metalness: 0.6
+      }),
+      glassBlue: new THREE.MeshPhysicalMaterial({
+        color: 0x38bdf8,
+        metalness: 0.8,
+        roughness: 0.1,
+        transparent: true,
+        opacity: 0.65,
+        reflectivity: 0.9,
+        clearcoat: 1.0,
+        clearcoatRoughness: 0.1
+      }),
+      glassDark: new THREE.MeshPhysicalMaterial({
+        color: 0x0f172a,
+        metalness: 0.9,
+        roughness: 0.15,
+        transparent: true,
+        opacity: 0.75,
+        reflectivity: 0.95,
+        clearcoat: 1.0,
+        clearcoatRoughness: 0.1
+      }),
+      mullion: new THREE.MeshStandardMaterial({
+        color: 0x1e293b,
+        roughness: 0.5,
+        metalness: 0.7
+      }),
+      craneYellow: new THREE.MeshStandardMaterial({
+        color: 0xfbbf24,
+        roughness: 0.4,
+        metalness: 0.5
+      }),
+      ground: new THREE.MeshStandardMaterial({
+        color: 0xf1f5f9,
+        roughness: 0.9,
+        metalness: 0.05
+      }),
+      road: new THREE.MeshStandardMaterial({
+        color: 0x334155,
+        roughness: 0.8,
+        metalness: 0.1
+      }),
+      grass: new THREE.MeshStandardMaterial({
+        color: 0xa7f3d0,
+        roughness: 0.9
+      })
+    };
+
+    // --- 2. Three.js 초기화 ---
+    function initThree() {
+      const width = canvasContainer.clientWidth;
+      const height = canvasContainer.clientHeight;
+
+      // 씬 생성
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0xf8fafc);
+      scene.fog = new THREE.FogExp2(0xf8fafc, 0.0035);
+
+      // 카메라 생성
+      camera = new THREE.PerspectiveCamera(42, width / height, 1, 1500);
+      camera.position.set(70, 60, 85);
+
+      // 렌더러 생성
+      renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        antialias: true,
+        powerPreference: "high-performance"
+      });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.05;
+
+      // OrbitControls 설정
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.maxPolarAngle = Math.PI / 2 - 0.03; // 바닥 아래로 카메라 이동 방지
+      controls.minDistance = 15;
+      controls.maxDistance = 260;
+      controls.target.set(0, (totalFloors * FLOOR_HEIGHT) / 3, 0);
+      controls.autoRotate = autoRotate;
+      controls.autoRotateSpeed = 0.8;
+
+      // 조명 설정
+      setupLighting();
+
+      // 바닥 및 주변 환경 구성
+      setupEnvironment();
+
+      // 빌딩 그룹 및 타워크레인 생성
+      buildingGroup = new THREE.Group();
+      scene.add(buildingGroup);
+
+      buildCrane();
+      generateBuildingStructure();
+
+      // 윈도우 리사이즈 대응
+      window.addEventListener('resize', onWindowResize);
+
+      // 애니메이션 루프 시작
+      animate();
+    }
+
+    // --- 3. 조명 설정 ---
+    function setupLighting() {
+      ambientLight = new THREE.AmbientLight(0xffffff, 0.65);
+      scene.add(ambientLight);
+
+      hemiLight = new THREE.HemisphereLight(0xffffff, 0x94a3b8, 0.4);
+      hemiLight.position.set(0, 200, 0);
+      scene.add(hemiLight);
+
+      dirLight = new THREE.DirectionalLight(0xfffaed, 1.25);
+      dirLight.position.set(90, 150, 70);
+      dirLight.castShadow = true;
+      dirLight.shadow.mapSize.width = 2048;
+      dirLight.shadow.mapSize.height = 2048;
+      dirLight.shadow.camera.near = 10;
+      dirLight.shadow.camera.far = 400;
+      const d = 90;
+      dirLight.shadow.camera.left = -d;
+      dirLight.shadow.camera.right = d;
+      dirLight.shadow.camera.top = d;
+      dirLight.shadow.camera.bottom = -d;
+      dirLight.shadow.bias = -0.0003;
+      scene.add(dirLight);
+    }
+
+    // --- 4. 환경 (지반, 도로, 주변 배경) ---
+    function setupEnvironment() {
+      surroundingsGroup = new THREE.Group();
+
+      // 메인 대지
+      const groundGeo = new THREE.PlaneGeometry(350, 350);
+      const ground = new THREE.Mesh(groundGeo, materials.ground);
+      ground.rotation.x = -Math.PI / 2;
+      ground.receiveShadow = true;
+      surroundingsGroup.add(ground);
+
+      // 건축 부지 포장 콘크리트 베이스 패드
+      const siteGeo = new THREE.BoxGeometry(FLOOR_WIDTH + 14, 1.2, FLOOR_DEPTH + 14);
+      const siteMat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, roughness: 0.7 });
+      const site = new THREE.Mesh(siteGeo, siteMat);
+      site.position.set(0, 0.6, 0);
+      site.receiveShadow = true;
+      site.castShadow = true;
+      surroundingsGroup.add(site);
+
+      // 도심 도로 구획
+      const roadXGeo = new THREE.PlaneGeometry(350, 10);
+      const roadX = new THREE.Mesh(roadXGeo, materials.road);
+      roadX.rotation.x = -Math.PI / 2;
+      roadX.position.set(0, 0.02, 35);
+      roadX.receiveShadow = true;
+      surroundingsGroup.add(roadX);
+
+      const roadZGeo = new THREE.PlaneGeometry(10, 350);
+      const roadZ = new THREE.Mesh(roadZGeo, materials.road);
+      roadZ.rotation.x = -Math.PI / 2;
+      roadZ.position.set(-35, 0.02, 0);
+      roadZ.receiveShadow = true;
+      surroundingsGroup.add(roadZ);
+
+      // 주변 미니어처 빌딩 실루엣 (원경)
+      const mockBuildingMat = new THREE.MeshStandardMaterial({
+        color: 0xcfd8dc,
+        roughness: 0.9,
+        transparent: true,
+        opacity: 0.6
+      });
+
+      const mockPositions = [
+        { x: -55, z: -45, w: 18, d: 18, h: 42 },
+        { x: 50, z: -50, w: 22, d: 20, h: 55 },
+        { x: 55, z: 25, w: 16, d: 16, h: 36 },
+        { x: -50, z: 50, w: 20, d: 18, h: 48 },
+        { x: 0, z: -70, w: 30, d: 16, h: 65 },
+        { x: -75, z: 0, w: 16, d: 24, h: 30 }
+      ];
+
+      mockPositions.forEach(b => {
+        const geo = new THREE.BoxGeometry(b.w, b.h, b.d);
+        const mesh = new THREE.Mesh(geo, mockBuildingMat);
+        mesh.position.set(b.x, b.h / 2, b.z);
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+        surroundingsGroup.add(mesh);
+      });
+
+      // 미세 그리드 헬퍼
+      const grid = new THREE.GridHelper(260, 52, 0xcbc4e8, 0xe2e8f0);
+      grid.position.y = 0.05;
+      surroundingsGroup.add(grid);
+
+      scene.add(surroundingsGroup);
+    }
+
+    // --- 5. 타워크레인 제작 ---
+    function buildCrane() {
+      craneGroup = new THREE.Group();
+
+      // 수직 마스트 트러스 기둥
+      const mastGeo = new THREE.BoxGeometry(2.2, 28, 2.2);
+      const mast = new THREE.Mesh(mastGeo, materials.craneYellow);
+      mast.position.set(0, 14, 0);
+      mast.castShadow = true;
+      craneGroup.add(mast);
+
+      // 운전실 캡
+      const cabGeo = new THREE.BoxGeometry(3.0, 3.2, 3.0);
+      const cab = new THREE.Mesh(cabGeo, materials.column);
+      cab.position.set(0, 29, 0);
+      craneGroup.add(cab);
+
+      // 수평 지브 붐대 (작업 팔)
+      const jibGeo = new THREE.BoxGeometry(40, 1.8, 1.8);
+      const jib = new THREE.Mesh(jibGeo, materials.craneYellow);
+      jib.position.set(12, 31, 0);
+      jib.castShadow = true;
+      craneGroup.add(jib);
+
+      // 카운터웨이트 (무게추)
+      const weightGeo = new THREE.BoxGeometry(6, 3, 3);
+      const weight = new THREE.Mesh(weightGeo, materials.core);
+      weight.position.set(-9, 30.5, 0);
+      weight.castShadow = true;
+      craneGroup.add(weight);
+
+      // 와이어 케이블 및 트롤리 훅
+      const trolleyGeo = new THREE.BoxGeometry(1.5, 0.8, 1.5);
+      const trolley = new THREE.Mesh(trolleyGeo, materials.column);
+      trolley.position.set(16, 29.5, 0);
+      craneGroup.add(trolley);
+
+      const wireGeo = new THREE.CylinderGeometry(0.06, 0.06, 12, 8);
+      const wireMat = new THREE.MeshBasicMaterial({ color: 0x334155 });
+      const wire = new THREE.Mesh(wireGeo, wireMat);
+      wire.position.set(16, 23, 0);
+      craneGroup.add(wire);
+
+      const hookGeo = new THREE.ConeGeometry(0.7, 1.4, 6);
+      const hook = new THREE.Mesh(hookGeo, materials.column);
+      hook.rotation.x = Math.PI;
+      hook.position.set(16, 16.5, 0);
+      craneGroup.add(hook);
+
+      // 건물 코어 옆에 배치
+      craneGroup.position.set(FLOOR_WIDTH / 2 + 5, 1.2, 0);
+      scene.add(craneGroup);
+    }
+
+    // --- 6. 빌딩 구조체(층별) 생성 ---
+    function generateBuildingStructure() {
+      // 기존 층 제거
+      floorObjects.forEach(f => buildingGroup.remove(f.group));
+      floorObjects = [];
+
+      const activeGlass = (currentStyle === 'blue-glass') ? materials.glassBlue : materials.glassDark;
+
+      for (let i = 0; i < totalFloors; i++) {
+        const floorGroup = new THREE.Group();
+        const yOffset = i * FLOOR_HEIGHT + 1.2; // 기초 위 시작 높이
+
+        // 1. 슬래브 바닥 (Floor Slab)
+        const slabGeo = new THREE.BoxGeometry(FLOOR_WIDTH, 0.7, FLOOR_DEPTH);
+        const slabMesh = new THREE.Mesh(slabGeo, materials.slab);
+        slabMesh.position.set(0, 0.35, 0);
+        slabMesh.castShadow = true;
+        slabMesh.receiveShadow = true;
+        floorGroup.add(slabMesh);
+
+        // 2. 중앙 코어 엘리베이터 샤프트 (Concrete Core)
+        const coreGeo = new THREE.BoxGeometry(8, FLOOR_HEIGHT - 0.7, 7);
+        const coreMesh = new THREE.Mesh(coreGeo, materials.core);
+        coreMesh.position.set(0, 0.7 + (FLOOR_HEIGHT - 0.7) / 2, 0);
+        coreMesh.castShadow = true;
+        floorGroup.add(coreMesh);
+
+        // 3. 모서리 및 외곽 지지 기둥 (Structural Columns)
+        const colRadius = 0.55;
+        const colHeight = FLOOR_HEIGHT - 0.7;
+        const colGeo = new THREE.CylinderGeometry(colRadius, colRadius, colHeight, 12);
+        
+        const colPositions = [
+          [-FLOOR_WIDTH / 2 + 1.2, -FLOOR_DEPTH / 2 + 1.2],
+          [ FLOOR_WIDTH / 2 - 1.2, -FLOOR_DEPTH / 2 + 1.2],
+          [-FLOOR_WIDTH / 2 + 1.2,  FLOOR_DEPTH / 2 - 1.2],
+          [ FLOOR_WIDTH / 2 - 1.2,  FLOOR_DEPTH / 2 - 1.2],
+          [ 0, -FLOOR_DEPTH / 2 + 1.2],
+          [ 0,  FLOOR_DEPTH / 2 - 1.2]
+        ];
+
+        colPositions.forEach(pos => {
+          const colMesh = new THREE.Mesh(colGeo, materials.column);
+          colMesh.position.set(pos[0], 0.7 + colHeight / 2, pos[1]);
+          colMesh.castShadow = true;
+          floorGroup.add(colMesh);
+        });
+
+        // 4. 유리 커튼월 외벽 (Glass Curtain Wall)
+        const glassGeo = new THREE.BoxGeometry(FLOOR_WIDTH - 0.2, FLOOR_HEIGHT - 0.7, FLOOR_DEPTH - 0.2);
+        const glassMesh = new THREE.Mesh(glassGeo, activeGlass);
+        glassMesh.position.set(0, 0.7 + colHeight / 2, 0);
+        glassMesh.castShadow = false;
+        glassMesh.receiveShadow = true;
+        floorGroup.add(glassMesh);
+
+        // 5. 프레임 멀리언 라인 (Mullions)
+        const mullionEdge = new THREE.EdgesGeometry(glassGeo);
+        const mullionLine = new THREE.LineSegments(mullionEdge, new THREE.LineBasicMaterial({
+          color: 0x1e293b,
+          transparent: true,
+          opacity: 0.4
+        }));
+        mullionLine.position.copy(glassMesh.position);
+        floorGroup.add(mullionLine);
+
+        // 옥상 루프탑 특수 구조물 (마지막 층)
+        if (i === totalFloors - 1) {
+          // 헬리패드 데크
+          const helipadGeo = new THREE.CylinderGeometry(6.5, 6.5, 0.5, 32);
+          const helipadMat = new THREE.MeshStandardMaterial({ color: 0x475569, roughness: 0.6 });
+          const helipad = new THREE.Mesh(helipadGeo, helipadMat);
+          helipad.position.set(0, FLOOR_HEIGHT + 0.3, 0);
+          helipad.castShadow = true;
+          floorGroup.add(helipad);
+
+          // 헬리패드 마킹 링
+          const ringGeo = new THREE.RingGeometry(3.5, 4.2, 32);
+          const ringMat = new THREE.MeshBasicMaterial({ color: 0xfacc15, side: THREE.DoubleSide });
+          const ring = new THREE.Mesh(ringGeo, ringMat);
+          ring.rotation.x = -Math.PI / 2;
+          ring.position.set(0, FLOOR_HEIGHT + 0.6, 0);
+          floorGroup.add(ring);
+
+          // 루프탑 안테나 송신탑
+          const antGeo = new THREE.CylinderGeometry(0.15, 0.5, 14, 12);
+          const antMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.8 });
+          const antenna = new THREE.Mesh(antGeo, antMat);
+          antenna.position.set(0, FLOOR_HEIGHT + 7.5, 0);
+          antenna.castShadow = true;
+          floorGroup.add(antenna);
+
+          // 항공 장애 안전등 (붉은 점멸등)
+          const beaconGeo = new THREE.SphereGeometry(0.45, 16, 16);
+          const beaconMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
+          const beacon = new THREE.Mesh(beaconGeo, beaconMat);
+          beacon.position.set(0, FLOOR_HEIGHT + 14.5, 0);
+          floorGroup.add(beacon);
+
+          beaconLight = new THREE.PointLight(0xef4444, 2.0, 30);
+          beaconLight.position.set(0, FLOOR_HEIGHT + 14.5, 0);
+          floorGroup.add(beaconLight);
+        }
+
+        // 초기 상태: 층 전체를 숨김(비활성화)
+        floorGroup.position.set(0, yOffset, 0);
+        floorGroup.visible = false;
+        floorGroup.scale.set(0.85, 0.01, 0.85); // 솟아오르는 모션 준비
+
+        buildingGroup.add(floorGroup);
+
+        floorObjects.push({
+          group: floorGroup,
+          targetY: yOffset,
+          floorIndex: i + 1,
+          heightMeters: (i + 1) * FLOOR_HEIGHT
+        });
+      }
+
+      // 타워크레인 초기 위치
+      craneGroup.position.y = 1.2;
+      updateHUD(0);
+    }
+
+    // --- 7. 시공 애니메이션 엔진 (GSAP 연동) ---
+    function startConstruction() {
+      if (isBuilding && isPaused) {
+        // 일시정지 해제
+        isPaused = false;
+        if (animTimeline) animTimeline.resume();
+        statusBadge.innerText = '시공 진행 중';
+        statusBadge.className = 'px-2 py-0.5 text-[11px] font-bold rounded bg-emerald-100 text-emerald-800 border border-emerald-200';
+        hudCraneStatus.innerText = '인양 가동 중';
+        hudCraneStatus.className = 'text-sm font-bold text-emerald-700 mt-1';
+        return;
+      }
+
+      if (isBuilding) return;
+
+      isBuilding = true;
+      isPaused = false;
+      statusBadge.innerText = '시공 진행 중';
+      statusBadge.className = 'px-2 py-0.5 text-[11px] font-bold rounded bg-emerald-100 text-emerald-800 border border-emerald-200';
+      hudCraneStatus.innerText = '인양 가동 중';
+      hudCraneStatus.className = 'text-sm font-bold text-emerald-700 mt-1';
+
+      btnBuild.disabled = true;
+      btnBuild.classList.add('opacity-60', 'cursor-not-allowed');
+
+      // GSAP 타임라인 구성
+      animTimeline = gsap.timeline({
+        onComplete: onConstructionComplete
+      });
+
+      const baseDuration = (0.75 / buildSpeed);
+
+      floorObjects.forEach((floorObj, idx) => {
+        const floorGrp = floorObj.group;
+        const targetCraneY = 1.2 + Math.min(idx * FLOOR_HEIGHT, (totalFloors - 3) * FLOOR_HEIGHT);
+
+        // 1. 해당 층 생성 및 솟아오름 모션
+        animTimeline.to({}, {
+          duration: 0.05,
+          onStart: () => {
+            floorGrp.visible = true;
+          }
+        });
+
+        // 스케일 및 좌표 복원 애니메이션 (지반에서 묵직하게 솟구치며 안착)
+        animTimeline.to(floorGrp.scale, {
+          x: 1,
+          y: 1,
+          z: 1,
+          duration: baseDuration,
+          ease: "back.out(1.2)",
+          onUpdate: () => {
+            // 크레인 살짝 회전 진동 효과
+            craneGroup.rotation.y = Math.sin(Date.now() * 0.005) * 0.35;
+          },
+          onComplete: () => {
+            currentBuiltFloor = idx + 1;
+            updateHUD(currentBuiltFloor);
+          }
+        }, "<");
+
+        // 2. 타워크레인 잭업 상승 동기화
+        animTimeline.to(craneGroup.position, {
+          y: targetCraneY,
+          duration: baseDuration * 0.9,
+          ease: "power1.inOut"
+        }, "<");
+      });
+    }
+
+    function pauseConstruction() {
+      if (!isBuilding || isPaused) return;
+      isPaused = true;
+      if (animTimeline) animTimeline.pause();
+
+      statusBadge.innerText = '일시 정지';
+      statusBadge.className = 'px-2 py-0.5 text-[11px] font-bold rounded bg-amber-100 text-amber-800 border border-amber-200';
+      hudCraneStatus.innerText = '일시 대기';
+      hudCraneStatus.className = 'text-sm font-bold text-amber-700 mt-1';
+
+      btnBuild.disabled = false;
+      btnBuild.classList.remove('opacity-60', 'cursor-not-allowed');
+      btnBuild.innerText = '시공 재개';
+    }
+
+    function resetConstruction() {
+      if (animTimeline) {
+        animTimeline.kill();
+        animTimeline = null;
+      }
+      isBuilding = false;
+      isPaused = false;
+      currentBuiltFloor = 0;
+
+      btnBuild.disabled = false;
+      btnBuild.classList.remove('opacity-60', 'cursor-not-allowed');
+      btnBuild.innerText = '건축 시작';
+
+      statusBadge.innerText = '준비 완료';
+      statusBadge.className = 'px-2 py-0.5 text-[11px] font-bold rounded bg-blue-100 text-blue-800 border border-blue-200';
+      hudCraneStatus.innerText = '대기 중';
+      hudCraneStatus.className = 'text-sm font-bold text-amber-700 mt-1';
+
+      // 층 전체 숨김 및 초기화
+      floorObjects.forEach(f => {
+        f.group.visible = false;
+        f.group.scale.set(0.85, 0.01, 0.85);
+      });
+
+      // 크레인 원위치
+      gsap.to(craneGroup.position, { y: 1.2, duration: 0.6, ease: "power2.out" });
+      craneGroup.rotation.y = 0;
+
+      updateHUD(0);
+    }
+
+    function onConstructionComplete() {
+      isBuilding = false;
+      isPaused = false;
+      btnBuild.disabled = false;
+      btnBuild.classList.remove('opacity-60', 'cursor-not-allowed');
+      btnBuild.innerText = '다시 짓기';
+
+      statusBadge.innerText = '준공 완공';
+      statusBadge.className = 'px-2 py-0.5 text-[11px] font-bold rounded bg-emerald-100 text-emerald-800 border border-emerald-200';
+      hudCraneStatus.innerText = '시공 완료';
+      hudCraneStatus.className = 'text-sm font-bold text-blue-700 mt-1';
+
+      // 타워크레인 회전 세레모니
+      gsap.to(craneGroup.rotation, {
+        y: Math.PI * 2,
+        duration: 4,
+        ease: "power2.inOut"
+      });
+    }
+
+    // --- 8. HUD 및 UI 수치 업데이트 ---
+    function updateHUD(floorNum) {
+      hudFloor.innerText = floorNum;
+      hudTotalFloor.innerText = totalFloors;
+      const height = (floorNum * FLOOR_HEIGHT).toFixed(1);
+      hudHeight.innerText = height;
+
+      const percent = totalFloors > 0 ? Math.round((floorNum / totalFloors) * 100) : 0;
+      hudPercent.innerText = percent;
+      progressFill.style.width = percent + '%';
+    }
+
+    // --- 9. 카메라 시점 전환 애니메이션 ---
+    function setCameraView(preset) {
+      const centerY = (totalFloors * FLOOR_HEIGHT) / 2.2;
+      let targetCamPos = { x: 70, y: 60, z: 85 };
+      let targetLookAt = { x: 0, y: centerY, z: 0 };
+
+      if (preset === 'quarter') {
+        targetCamPos = { x: 65, y: centerY + 30, z: 75 };
+        targetLookAt = { x: 0, y: centerY, z: 0 };
+      } else if (preset === 'ground') {
+        // 보행자 앙각 (지상에서 위로 쳐다봄)
+        targetCamPos = { x: 18, y: 3.5, z: 42 };
+        targetLookAt = { x: 0, y: (totalFloors * FLOOR_HEIGHT) * 0.65, z: 0 };
+      } else if (preset === 'top') {
+        // 탑다운 조감도
+        targetCamPos = { x: 2, y: totalFloors * FLOOR_HEIGHT + 75, z: 8 };
+        targetLookAt = { x: 0, y: 0, z: 0 };
+      }
+
+      gsap.to(camera.position, {
+        x: targetCamPos.x,
+        y: targetCamPos.y,
+        z: targetCamPos.z,
+        duration: 1.4,
+        ease: "power2.inOut",
+        onUpdate: () => controls.update()
+      });
+
+      gsap.to(controls.target, {
+        x: targetLookAt.x,
+        y: targetLookAt.y,
+        z: targetLookAt.z,
+        duration: 1.4,
+        ease: "power2.inOut",
+        onUpdate: () => controls.update()
+      });
+    }
+
+    // --- 10. 이벤트 리스너 바인딩 ---
+    btnBuild.addEventListener('click', () => startConstruction());
+    btnPause.addEventListener('click', () => pauseConstruction());
+    btnReset.addEventListener('click', () => resetConstruction());
+
+    // 층수 슬라이더 조작
+    floorSlider.addEventListener('input', (e) => {
+      const val = parseInt(e.target.value);
+      totalFloors = val;
+      const meters = (val * FLOOR_HEIGHT).toFixed(1);
+      floorSliderVal.innerText = `${val}층 (${meters}m)`;
+      hudTotalFloor.innerText = val;
+      resetConstruction();
+      generateBuildingStructure();
+      controls.target.set(0, (totalFloors * FLOOR_HEIGHT) / 3, 0);
+    });
+
+    // 속도 버튼
+    document.querySelectorAll('.speed-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.speed-btn').forEach(b => {
+          b.className = 'speed-btn py-1 text-xs border rounded font-medium bg-white text-slate-700 border-slate-300 hover:bg-slate-50';
+        });
+        btn.className = 'speed-btn py-1 text-xs border rounded font-bold bg-blue-50 text-blue-900 border-blue-400';
+        buildSpeed = parseFloat(btn.getAttribute('data-speed'));
+        document.getElementById('speed-label').innerText = buildSpeed.toFixed(1) + 'x';
+      });
+    });
+
+    // 스타일 버튼
+    document.querySelectorAll('.style-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.style-btn').forEach(b => {
+          b.className = 'style-btn py-1 text-[11px] border rounded font-medium bg-white text-slate-700 border-slate-300 hover:bg-slate-50';
+        });
+        btn.className = 'style-btn py-1 text-[11px] border rounded font-bold bg-blue-50 text-blue-900 border-blue-400';
+        currentStyle = btn.getAttribute('data-style');
+        generateBuildingStructure();
+      });
+    });
+
+    // 카메라 프리셋 버튼
+    document.getElementById('view-quarter').addEventListener('click', () => setCameraView('quarter'));
+    document.getElementById('view-ground').addEventListener('click', () => setCameraView('ground'));
+    document.getElementById('view-top').addEventListener('click', () => setCameraView('top'));
+
+    // 자동 회전 토글
+    const btnToggleRotate = document.getElementById('btn-toggle-rotate');
+    btnToggleRotate.addEventListener('click', () => {
+      autoRotate = !autoRotate;
+      controls.autoRotate = autoRotate;
+      btnToggleRotate.innerText = autoRotate ? '자동 회전 정지' : '자동 회전 시작';
+      btnToggleRotate.className = autoRotate 
+        ? 'py-1.5 px-3 text-xs font-bold bg-blue-50 text-blue-900 border border-blue-300 rounded'
+        : 'py-1.5 px-3 text-xs font-medium bg-white text-slate-700 border border-slate-300 rounded';
+    });
+
+    // 야간/주간 조명 모드
+    const btnToggleDayNight = document.getElementById('btn-toggle-daynight');
+    btnToggleDayNight.addEventListener('click', () => {
+      isNight = !isNight;
+      if (isNight) {
+        btnToggleDayNight.innerText = '주간 조명 모드';
+        btnToggleDayNight.className = 'py-1.5 px-3 text-xs font-bold bg-slate-900 text-white border border-slate-800 rounded';
+        gsap.to(scene.background, { r: 0.04, g: 0.06, b: 0.12, duration: 1.0 });
+        gsap.to(scene.fog.color, { r: 0.04, g: 0.06, b: 0.12, duration: 1.0 });
+        gsap.to(ambientLight, { intensity: 0.25, duration: 1.0 });
+        gsap.to(dirLight, { intensity: 0.35, duration: 1.0 });
+        materials.ground.color.setHex(0x1e293b);
+      } else {
+        btnToggleDayNight.innerText = '야간 조명 모드';
+        btnToggleDayNight.className = 'py-1.5 px-3 text-xs font-medium bg-white text-slate-700 border border-slate-300 rounded';
+        gsap.to(scene.background, { r: 0.97, g: 0.98, b: 0.99, duration: 1.0 });
+        gsap.to(scene.fog.color, { r: 0.97, g: 0.98, b: 0.99, duration: 1.0 });
+        gsap.to(ambientLight, { intensity: 0.65, duration: 1.0 });
+        gsap.to(dirLight, { intensity: 1.25, duration: 1.0 });
+        materials.ground.color.setHex(0xf1f5f9);
+      }
+    });
+
+    // 골조 와이어프레임 토글
+    const btnToggleWireframe = document.getElementById('btn-toggle-wireframe');
+    btnToggleWireframe.addEventListener('click', () => {
+      isWireframe = !isWireframe;
+      btnToggleWireframe.innerText = isWireframe ? '실사 렌더링 복귀' : '구조 골조 보기';
+      btnToggleWireframe.className = isWireframe 
+        ? 'py-1.5 px-3 text-xs font-bold bg-amber-50 text-amber-900 border border-amber-300 rounded'
+        : 'py-1.5 px-3 text-xs font-medium bg-white text-slate-700 border border-slate-300 rounded';
+
+      materials.slab.wireframe = isWireframe;
+      materials.core.wireframe = isWireframe;
+      materials.column.wireframe = isWireframe;
+      materials.glassBlue.wireframe = isWireframe;
+      materials.glassDark.wireframe = isWireframe;
+    });
+
+    // 윈도우 리사이즈
+    function onWindowResize() {
+      const width = canvasContainer.clientWidth;
+      const height = canvasContainer.clientHeight;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+    }
+
+    // --- 11. 메인 렌더 애니메이션 루프 ---
+    function animate() {
+      requestAnimationFrame(animate);
+
+      // 컨트롤 업데이트 (감쇠 및 오토로테이트)
+      controls.update();
+
+      // 루프탑 항공 안전등 점멸 (Blink)
+      if (beaconLight) {
+        const time = Date.now() * 0.003;
+        beaconLight.intensity = Math.sin(time) > 0.3 ? 2.5 : 0.05;
+      }
+
+      renderer.render(scene, camera);
+    }
+
+    // 초기화 실행
+    window.addEventListener('DOMContentLoaded', () => {
+      initThree();
+    });
+  </script>
+</body>
+</html>
