@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>빛샘전자 (072950) 종합 정밀 기업분석 보고서</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+      margin: 0;
+      padding: 0;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      height: 6px;
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background-color: #cbd5e1;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- 상단 헤더 (연보라 Soft Lavender 테마) -->
+  <header class="sticky top-0 z-50 bg-[#f5f3ff]/95 backdrop-blur-md border-b border-purple-200/80 shadow-sm">
+    <!-- 상단 1행: 메인화면 이동 버튼, 기업명 및 메타정보 (높이 56px) -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between border-b border-purple-200/70">
+      <div class="flex items-center space-x-3">
+        <a href="index.html" class="inline-flex items-center px-2.5 py-1 rounded text-xs font-semibold bg-purple-100 text-purple-900 hover:bg-purple-200 border border-purple-300/80 transition mr-1">
+          ← 메인화면
+        </a>
+        <h1 class="text-base sm:text-lg font-bold text-purple-950 tracking-tight">
+          빛샘전자 <span class="text-xs sm:text-sm font-normal text-purple-700">(VISSEM Electronics / 072950.KQ)</span>
+        </h1>
+        <span class="hidden md:inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-purple-100 text-purple-800 border border-purple-200">
+          멀티에이전트 심층 재무 인과분석 보고서
+        </span>
+      </div>
+      <div class="text-right text-xs font-medium text-purple-700">
+        <span class="hidden sm:inline">DART 원천 XBRL 결산 데이터 검증 | </span>기준일: 2026.09.30
+      </div>
+    </div>
+
+    <!-- 상단 2행: 5개 탭 바 (순수 텍스트 탭) -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 overflow-x-auto custom-scrollbar">
+      <nav class="flex space-x-2" aria-label="Tabs">
+        <button onclick="switchTab('tab-00')" id="btn-tab-00" class="tab-btn px-3.5 py-1.5 rounded text-xs sm:text-sm font-bold bg-purple-700 text-white shadow-sm transition">
+          00. 총괄 리포트
+        </button>
+        <button onclick="switchTab('tab-01')" id="btn-tab-01" class="tab-btn px-3.5 py-1.5 rounded text-xs sm:text-sm font-medium text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition">
+          01. 비즈니스 모델
+        </button>
+        <button onclick="switchTab('tab-02')" id="btn-tab-02" class="tab-btn px-3.5 py-1.5 rounded text-xs sm:text-sm font-medium text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition">
+          02. 경제적 해자
+        </button>
+        <button onclick="switchTab('tab-03')" id="btn-tab-03" class="tab-btn px-3.5 py-1.5 rounded text-xs sm:text-sm font-medium text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition">
+          03. 리스크 분석
+        </button>
+        <button onclick="switchTab('tab-04')" id="btn-tab-04" class="tab-btn px-3.5 py-1.5 rounded text-xs sm:text-sm font-medium text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition">
+          04. 재무 정밀 분석 & 인과 해부
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 메인 컨테이너 -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+    <!-- TAB 00: 총괄 리포트 -->
+    <div id="tab-00" class="tab-content active space-y-6">
+      
+      <!-- 핵심 요약 KPI 카드 그리드 -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-white p-4 rounded border border-slate-200 shadow-sm">
+          <div class="text-xs font-medium text-slate-500 mb-1">기준 시가총액 / 현재가</div>
+          <div class="text-lg sm:text-xl font-bold text-slate-900">1,250억 원</div>
+          <div class="text-xs text-blue-600 font-semibold mt-1">15,500원 (상장주식수 805만주)</div>
+        </div>
+        <div class="bg-white p-4 rounded border border-slate-200 shadow-sm">
+          <div class="text-xs font-medium text-slate-500 mb-1">2026 상반기 누적 매출액</div>
+          <div class="text-lg sm:text-xl font-bold text-slate-900">800.8억 원</div>
+          <div class="text-xs text-emerald-600 font-semibold mt-1">전년동기비 +39.8% (방산 온기 반영)</div>
+        </div>
+        <div class="bg-white p-4 rounded border border-slate-200 shadow-sm">
+          <div class="text-xs font-medium text-slate-500 mb-1">2026 상반기 영업이익</div>
+          <div class="text-lg sm:text-xl font-bold text-slate-900">74.2억 원</div>
+          <div class="text-xs text-emerald-600 font-semibold mt-1">전년비 +145.8% 폭증 (OPM 9.27%)</div>
+        </div>
+        <div class="bg-white p-4 rounded border border-slate-200 shadow-sm">
+          <div class="text-xs font-medium text-slate-500 mb-1">영업 레버리지도 (DOL)</div>
+          <div class="text-lg sm:text-xl font-bold text-purple-900">3.66배</div>
+          <div class="text-xs text-emerald-600 font-semibold mt-1">판관비율 5.54%로 급감 (-1.95%p)</div>
+        </div>
+      </div>
+
+      <!-- 총괄 팀장 진단 보고서 시트 -->
+      <div class="bg-white rounded border border-slate-200 shadow-sm p-6 space-y-6">
+        <div class="border-b border-slate-100 pb-4">
+          <div class="inline-block px-2.5 py-1 rounded text-xs font-semibold bg-blue-50 text-blue-800 border border-blue-200 mb-2">
+            총괄 에이전트 팀장 종합 진단
+          </div>
+          <h2 class="text-xl font-bold text-slate-900">
+            방산 흡수합병 시너지와 강력한 영업 레버리지의 폭발: 퀀텀점프 달성
+          </h2>
+          <p class="text-sm text-slate-600 mt-1">
+            4인 독립 서브에이전트(BM, 경제적 해자, 리스크, 재무 심층 분석관) 교차 검증 총괄 평가
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-4">
+            <h3 class="text-sm font-bold text-slate-900 flex items-center">
+              <span class="w-1.5 h-4 bg-blue-700 mr-2 rounded-sm inline-block"></span>
+              4대 서브에이전트 합동 팩트체크 종합 결론
+            </h3>
+            
+            <div class="p-4 bg-slate-50 rounded border border-slate-200 text-sm leading-relaxed text-slate-700 space-y-3">
+              <p>
+                <strong>1. 사업 구조의 대전환 (Agent 01 - BM 분석관):</strong><br>
+                과거 저수익 유선 통신/LED 부품 위주에서 2025년 9월 1일 자회사 일진전자산업을 100% 흡수합병하며 LIG넥스원의 정밀유도무기(천궁-II, 비궁 등)용 특수 케이블 하네스 제조사로 변모했습니다. 방산 부문은 2026년 상반기 매출 257.8억 원(비중 32.2%), 영업이익 38.0억 원(OPM 14.73%)을 기록하여 전사 영업이익의 **51.2%**를 창출하는 최대 핵심 캐시카우로 도약했습니다.
+              </p>
+              <p>
+                <strong>2. 난공불락의 진입장벽과 전환비용 (Agent 02 - 경제적 해자 분석관):</strong><br>
+                국방 무기체계는 극심한 충격·진동·EMP 차폐를 견뎌야 하는 군사규격(MIL-SPEC) 및 국방품질인증(국방부장관 표창 수상)을 통과해야 하며, 한번 규격이 확정되면 설계동결(Design Freeze) 원칙에 따라 공급사 변경이 불가능합니다. 또한 KTX 차상컴퓨터(OBCS)는 알스톰 원천기술 국산화 독점 벤더로서 20~30년 수명 주기 동안 초고마진(OPM 21.1%) MRO를 독점하고 있습니다.
+              </p>
+              <p>
+                <strong>3. 손익계산서의 완벽한 레버리지 체질화 (Agent 04 - 재무 심층 분석관):</strong><br>
+                단순 수치 변화를 넘어선 입체적 원인 분석 결과: ① 매출 성장은 솔더의 'P 효과(원자재가 연동 판가 인상 45%)'와 방산의 'Q 효과(천궁-II 양산 물량 급증 85%)'가 절묘하게 결합되었으며, ② 제조 고정비(노무비/상각비)가 흡수되며 분기 안전한계율(Margin of Safety)이 42.3%를 돌파했습니다. ③ 듀퐁 분석상 ROE가 5.74%에서 **14.13%**로 도약한 원동력은 부채 증가가 아닌 **순이익률 개선(7.94%)**과 **총자산회전율 상승(1.29회)**에 기인합니다.
+              </p>
+              <p>
+                <strong>4. 리스크와 안전판의 대치 (Agent 03 - 리스크 분석관):</strong><br>
+                방산의 '인도 기준(한 시점에 소유권 이전)' 매출 인식에 따른 분기별 실적 쏠림 현상과 주석(+94.5%)·은(+166.3%) 원자재 급등 리스크가 상존하나, 무차입에 가까운 순현금 133.8억 원(보유 유동성 233.8억 원, 부채비율 37.5%) 및 부동산 담보 여력(260억 원)이 극도의 하방 안정성을 제공하고 있습니다.
+              </p>
+            </div>
+
+            <!-- 시각화 차트: 연간 매출 및 영업이익 성장 추이 -->
+            <div class="pt-2">
+              <div class="text-xs font-semibold text-slate-700 mb-2">연간 및 상반기 매출액/영업이익 추이 (연결 기준, 단위: 억 원)</div>
+              <div class="h-64">
+                <canvas id="chartAnnualPerformance"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- 우측 종합 진단 요약 박스 -->
+          <div class="space-y-4">
+            <div class="bg-blue-50/60 p-4 rounded border border-blue-200 text-xs space-y-3">
+              <div class="font-bold text-blue-900 text-sm">에이전트 팀 종합 스코어카드</div>
+              <div class="flex justify-between items-center py-1 border-b border-blue-200/80">
+                <span class="text-slate-600">사업 포트폴리오</span>
+                <span class="font-bold text-blue-800">최상 (방산 51% + 소재 33%)</span>
+              </div>
+              <div class="flex justify-between items-center py-1 border-b border-blue-200/80">
+                <span class="text-slate-600">이익 성장률 (YoY)</span>
+                <span class="font-bold text-emerald-700">+145.8% (초고성장)</span>
+              </div>
+              <div class="flex justify-between items-center py-1 border-b border-blue-200/80">
+                <span class="text-slate-600">영업 레버리지도(DOL)</span>
+                <span class="font-bold text-purple-800">3.66배 (고정비 통제)</span>
+              </div>
+              <div class="flex justify-between items-center py-1 border-b border-blue-200/80">
+                <span class="text-slate-600">경제적 해자 등급</span>
+                <span class="font-bold text-emerald-700">Narrow-to-Wide (방산·철도)</span>
+              </div>
+              <div class="flex justify-between items-center py-1 border-b border-blue-200/80">
+                <span class="text-slate-600">재무 건전성 (Net Cash)</span>
+                <span class="font-bold text-emerald-700">순현금 133.8억 원</span>
+              </div>
+              <div class="flex justify-between items-center py-1">
+                <span class="text-slate-600">Forward PER (2026F)</span>
+                <span class="font-bold text-blue-800">약 9.6배 (극저평가)</span>
+              </div>
+            </div>
+
+            <div class="bg-amber-50/60 p-4 rounded border border-amber-200 text-xs space-y-2 text-slate-700">
+              <div class="font-bold text-amber-900 text-sm">팀장 선정 핵심 모니터링 수치</div>
+              <p>• LIG넥스원 천궁-II 중동(UAE, 사우디 등 10조+ 수주) 양산 납기일정</p>
+              <p>• LME 국제 주석(Sn) 및 은(Ag) 시세 안정화 추이</p>
+              <p>• 분기별 계약부채(선수금 84.6억 원) 잔액 추이 (차기 납품 선행)</p>
+              <p>• 방산사업부 분기 영업이익률 14% 유지 여부</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 주요 실적 요약 테이블 -->
+        <div class="pt-4 overflow-x-auto">
+          <div class="text-xs font-semibold text-slate-700 mb-2">최근 4개년 및 2026 상반기 DART 결산 실적표 (단위: 억 원, 원, %)</div>
+          <table class="min-w-full text-xs text-left border-collapse border border-slate-200">
+            <thead>
+              <tr class="bg-slate-100 text-slate-700 border-b border-slate-200 font-semibold">
+                <th class="p-2.5 border-r border-slate-200">구분</th>
+                <th class="p-2.5 border-r border-slate-200">2023년</th>
+                <th class="p-2.5 border-r border-slate-200">2024년</th>
+                <th class="p-2.5 border-r border-slate-200">2025년</th>
+                <th class="p-2.5 border-r border-slate-200">2025년 상반기</th>
+                <th class="p-2.5 bg-blue-50/50 font-bold text-blue-900">2026년 상반기</th>
+                <th class="p-2.5 bg-purple-50/50 font-bold text-purple-900">2026년 추정(F)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 text-slate-700">
+              <tr class="hover:bg-slate-50">
+                <td class="p-2.5 font-medium border-r border-slate-200">매출액</td>
+                <td class="p-2.5 border-r border-slate-200">741.0</td>
+                <td class="p-2.5 border-r border-slate-200">851.2</td>
+                <td class="p-2.5 border-r border-slate-200">1,208.6</td>
+                <td class="p-2.5 border-r border-slate-200">572.9</td>
+                <td class="p-2.5 font-bold text-blue-900 bg-blue-50/30">800.8 (+39.8%)</td>
+                <td class="p-2.5 font-bold text-purple-900 bg-purple-50/30">1,680.0</td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="p-2.5 font-medium border-r border-slate-200">영업이익</td>
+                <td class="p-2.5 border-r border-slate-200">36.7</td>
+                <td class="p-2.5 border-r border-slate-200">50.7</td>
+                <td class="p-2.5 border-r border-slate-200">89.9</td>
+                <td class="p-2.5 border-r border-slate-200">30.2</td>
+                <td class="p-2.5 font-bold text-emerald-700 bg-emerald-50/30">74.2 (+145.8%)</td>
+                <td class="p-2.5 font-bold text-emerald-700 bg-purple-50/30">156.2</td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="p-2.5 font-medium border-r border-slate-200">영업이익률 (OPM)</td>
+                <td class="p-2.5 border-r border-slate-200">4.95%</td>
+                <td class="p-2.5 border-r border-slate-200">5.96%</td>
+                <td class="p-2.5 border-r border-slate-200">7.44%</td>
+                <td class="p-2.5 border-r border-slate-200">5.27%</td>
+                <td class="p-2.5 font-bold text-emerald-700 bg-emerald-50/30">9.27% (+4.00%p)</td>
+                <td class="p-2.5 font-bold text-purple-900 bg-purple-50/30">9.30%</td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="p-2.5 font-medium border-r border-slate-200">지배주주순이익</td>
+                <td class="p-2.5 border-r border-slate-200">40.2</td>
+                <td class="p-2.5 border-r border-slate-200">50.4</td>
+                <td class="p-2.5 border-r border-slate-200">75.6</td>
+                <td class="p-2.5 border-r border-slate-200">25.0</td>
+                <td class="p-2.5 font-bold text-blue-900 bg-blue-50/30">61.9 (+147.6%)</td>
+                <td class="p-2.5 font-bold text-purple-900 bg-purple-50/30">127.5</td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="p-2.5 font-medium border-r border-slate-200">주당순이익 (EPS)</td>
+                <td class="p-2.5 border-r border-slate-200">504원</td>
+                <td class="p-2.5 border-r border-slate-200">630원</td>
+                <td class="p-2.5 border-r border-slate-200">943원</td>
+                <td class="p-2.5 border-r border-slate-200">312원</td>
+                <td class="p-2.5 font-bold text-blue-900 bg-blue-50/30">772원</td>
+                <td class="p-2.5 font-bold text-purple-900 bg-purple-50/30">1,592원</td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="p-2.5 font-medium border-r border-slate-200">자기자본이익률 (ROE)</td>
+                <td class="p-2.5 border-r border-slate-200">5.74%</td>
+                <td class="p-2.5 border-r border-slate-200">6.81%</td>
+                <td class="p-2.5 border-r border-slate-200">9.17%</td>
+                <td class="p-2.5 border-r border-slate-200">6.72%</td>
+                <td class="p-2.5 font-bold text-purple-900 bg-purple-50/30">14.13% (연환산)</td>
+                <td class="p-2.5 font-bold text-purple-900 bg-purple-50/30">14.5% 수준</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 01: 비즈니스 모델 -->
+    <div id="tab-01" class="tab-content space-y-6">
+      <div class="bg-white rounded border border-slate-200 shadow-sm p-6 space-y-6">
+        <div class="border-b border-slate-100 pb-4">
+          <div class="inline-block px-2.5 py-1 rounded text-xs font-semibold bg-blue-50 text-blue-800 border border-blue-200 mb-2">
+            에이전트 01: 비즈니스 모델(BM) 수석 분석관 보고
+          </div>
+          <h2 class="text-xl font-bold text-slate-900">
+            5대 다각화 포트폴리오 및 밸류체인 P · Q · C 구조 분석
+          </h2>
+          <p class="text-sm text-slate-600 mt-1">
+            2025.09 일진전자산업 100% 흡수합병 완료에 따른 방산·소재 중심 체질 전환
+          </p>
+        </div>
+
+        <!-- 사업부문 설명 카드 그리드 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          
+          <div class="p-4 rounded border border-slate-200 bg-slate-50 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800">이익 기여도 51.2%</span>
+              <span class="text-xs text-slate-500 font-medium">구미 공단 사업장</span>
+            </div>
+            <h4 class="text-base font-bold text-slate-900">방산사업부 (특수 케이블 조립체/하네스)</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              • <strong>주요 제품:</strong> 국방 무기체계용 특수 케이블 조립체, 와이어링 하네스, 발사점검 자동시험장비<br>
+              • <strong>적용 체계:</strong> 천궁-II(M-SAM), 비궁(2.75인치 유도로켓), 현궁, 해성 등 정밀유도무기<br>
+              • <strong>핵심 고객사:</strong> LIG넥스원(전사 매출 19.8% 차지), 한화에어로스페이스, KAI, ADD<br>
+              • <strong>실적:</strong> 2026.1H 매출 257.8억 원, 영업이익 38.0억 원 (영업이익률 14.73%)
+            </p>
+          </div>
+
+          <div class="p-4 rounded border border-slate-200 bg-slate-50 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-800">매출 기여도 53.7%</span>
+              <span class="text-xs text-slate-500 font-medium">비엔에프머티리얼즈</span>
+            </div>
+            <h4 class="text-base font-bold text-slate-900">솔더사업부 (전자·반도체 접합소재)</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              • <strong>주요 제품:</strong> SMT 공정용 무연/유연 솔더(Bar, Wire, Paste), 대면적 FCBGA용 저온솔더 분말<br>
+              • <strong>전방 시장:</strong> 가전 SMT, 자동차 전장 PCB, 반도체 패키징<br>
+              • <strong>핵심 고객사:</strong> 삼성전자 베트남, 현대모비스 1차 협력사, 글로벌 15개국 수출<br>
+              • <strong>실적:</strong> 2026.1H 매출 429.9억 원, 영업이익 24.6억 원 (영업이익률 5.7%)
+            </p>
+          </div>
+
+          <div class="p-4 rounded border border-slate-200 bg-slate-50 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold px-2 py-0.5 rounded bg-purple-100 text-purple-800">OPM 21.1% 초고마진</span>
+              <span class="text-xs text-slate-500 font-medium">용인 본사 사업장</span>
+            </div>
+            <h4 class="text-base font-bold text-slate-900">철도 전장 및 산업전자</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              • <strong>주요 제품:</strong> KTX 차상컴퓨터시스템(OBCS), 보조컨버터, 전력변환 냉각(E-Tank)<br>
+              • <strong>원천 기술:</strong> 프랑스 알스톰(Alstom) 기술이전 기반 코레일 공동 국산화 독점 공급<br>
+              • <strong>수익 모델:</strong> 20~30년 KTX 내구연한 동안 법정 중정비 및 노후 부품 오버홀(MRO) 독점 납품<br>
+              • <strong>실적:</strong> 2026.1H 매출 39.7억 원, 영업이익 8.4억 원 (영업이익률 21.1%)
+            </p>
+          </div>
+
+          <div class="p-4 rounded border border-slate-200 bg-slate-50 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">AI 인프라 수혜</span>
+              <span class="text-xs text-slate-500 font-medium">이천 공장</span>
+            </div>
+            <h4 class="text-base font-bold text-slate-900">광통신 사업부 (Opticube 브랜드)</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              • <strong>주요 제품:</strong> 광접속함체(Closure), 국사/IDC용 광분배반(OFD/ODF), 광단자함<br>
+              • <strong>고객사:</strong> 통신 3사(KT, SKB, LGU+) 및 글로벌 50여 개국 직수출<br>
+              • <strong>모멘텀:</strong> AI 하이퍼스케일러 데이터센터 증설에 따른 초고속 광선로 접속 수요 대응<br>
+              • <strong>실적:</strong> 2026.1H 매출 33.3억 원, 영업이익 2.8억 원 (영업이익률 8.4%)
+            </p>
+          </div>
+
+          <div class="p-4 rounded border border-slate-200 bg-slate-50 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold px-2 py-0.5 rounded bg-cyan-100 text-cyan-800">유선망 유지보수</span>
+              <span class="text-xs text-slate-500 font-medium">구 동양텔레콤</span>
+            </div>
+            <h4 class="text-base font-bold text-slate-900">네트워크 사업부 (CATV HFC망)</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              • <strong>주요 제품:</strong> 종합유선방송(SO) 광송신기, 광수신기, 옥외 신호증폭기, RFoG 기기<br>
+              • <strong>고객사:</strong> LG헬로비전, SK브로드밴드, 딜라이브, HCN, CMB<br>
+              • <strong>특징:</strong> 전국 유선 케이블TV 가입자망 노후 유지보수 기자재 공급<br>
+              • <strong>실적:</strong> 2026.1H 매출 40.1억 원, 영업이익 0.5억 원 (영업이익률 1.2%)
+            </p>
+          </div>
+
+          <div class="p-4 rounded border border-slate-200 bg-slate-50 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold px-2 py-0.5 rounded bg-slate-200 text-slate-800">수직계열화 원천</span>
+              <span class="text-xs text-slate-500 font-medium">자체 브랜드 ViTron</span>
+            </div>
+            <h4 class="text-base font-bold text-slate-900">LED 사업부 (디스플레이 시스템)</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              • <strong>주요 제품:</strong> 고속도로 전광판(VMS), 버스정보단말기(BIS), 스포츠 스코어보드, 대형 옥외전광판<br>
+              • <strong>기술력:</strong> 1998년 삼성SDI 분사 기반 LED 모듈 패키징부터 완제품 세트 수직계열화<br>
+              • <strong>포지션:</strong> 공공조달 및 B2B 맞춤형 수주 납품
+            </p>
+          </div>
+
+        </div>
+
+        <!-- 사업부문별 매출 및 영업이익 비중 차트 -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-4 border-t border-slate-100">
+          <div class="space-y-3">
+            <h3 class="text-sm font-bold text-slate-900">P · Q · C 메커니즘 총괄 요약</h3>
+            <div class="text-xs space-y-2 text-slate-700">
+              <div class="p-3 bg-slate-50 rounded border border-slate-200">
+                <span class="font-bold text-blue-900">Price (단가 결정권):</span>
+                방산은 국가방산원가제도 및 체계업체 스펙 계약에 따라 안정적 원가 보상(Cost-plus)을 받으며, 솔더는 주석·은 LME 시세에 판가가 공식 연동되어 인플레이션을 방어합니다.
+              </div>
+              <div class="p-3 bg-slate-50 rounded border border-slate-200">
+                <span class="font-bold text-blue-900">Quantity (출하 물량 확장):</span>
+                천궁-II의 중동 10조 원 이상 수출 잭팟에 연동되어 2026~2030년 미사일용 하네스 출하량이 폭발하고 있으며, AI 데이터센터 광인프라 부품 수요가 가세하고 있습니다.
+              </div>
+              <div class="p-3 bg-slate-50 rounded border border-slate-200">
+                <span class="font-bold text-blue-900">Cost (원가 통제력):</span>
+                구 일진전자산업 완전 흡수합병으로 본사-자회사 간 중복비용을 전면 제거하고 판관비율을 5.54%로 억제하여 영업 레버리지를 극대화했습니다.
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <div class="text-xs font-semibold text-slate-700">2026년 상반기 사업부문별 영업이익 비중 (단위: %)</div>
+            <div class="h-60 flex items-center justify-center">
+              <canvas id="chartProfitBreakdown"></canvas>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 02: 경제적 해자 -->
+    <div id="tab-02" class="tab-content space-y-6">
+      <div class="bg-white rounded border border-slate-200 shadow-sm p-6 space-y-6">
+        <div class="border-b border-slate-100 pb-4">
+          <div class="inline-block px-2.5 py-1 rounded text-xs font-semibold bg-blue-50 text-blue-800 border border-blue-200 mb-2">
+            에이전트 02: 경제적 해자(Economic Moat) 수석 분석관 보고
+          </div>
+          <h2 class="text-xl font-bold text-slate-900">
+            방위산업 보안·품질 규격 및 국가기간망의 극단적 진입장벽
+          </h2>
+          <p class="text-sm text-slate-600 mt-1">
+            무기체계 설계동결(Design Freeze)과 철도 30년 형식승인 락인 효과
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <div class="p-5 rounded border border-slate-200 bg-slate-50 space-y-3">
+            <div class="text-xs font-bold text-blue-700 uppercase tracking-wide">해자 원천 01 (전환 비용)</div>
+            <h3 class="text-base font-bold text-slate-900">정밀유도무기 설계동결(Design Freeze)에 따른 대체 불가성</h3>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              정밀유도탄(천궁-II, 비궁 등)에 장착되는 와이어링 하네스는 음속 비행 시의 극단적 가속도(수십 G), 고열, 진동, 전자파(EMP) 교란을 완전히 방어해야 합니다. 국방 무기체계는 개발 완료 시 규격서가 영구 동결(Design Freeze)되므로, 배선 공급사 변경 시 **수백억 원의 재시험 비용과 2~3년의 전력화 지연 위험**이 발생하여 사실상 교체가 불가능합니다.
+            </p>
+            <div class="text-xs font-medium text-blue-900 bg-blue-100/50 p-2 rounded">
+              모닝스타 등급: <strong>Wide Moat (극단적 전환비용 락인)</strong>
+            </div>
+          </div>
+
+          <div class="p-5 rounded border border-slate-200 bg-slate-50 space-y-3">
+            <div class="text-xs font-bold text-blue-700 uppercase tracking-wide">해자 원천 02 (무형 자산)</div>
+            <h3 class="text-base font-bold text-slate-900">국방품질경영시스템(DQMS) 인증 및 국가 방산보안 시설</h3>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              국방기술품질원의 DQMS 인증, 우주항공 AS9100 인증, 유럽우주기구(ESA) 우주인증을 모두 보유하고 있으며, 2023년 국방품질경영상 국방부장관 표창을 수상했습니다. 또한 군사비밀 도면을 다룰 수 있는 물리적 방산보안 인가 시설을 갖추어 후발 업체의 입찰 진입 자체가 법적으로 차단됩니다.
+            </p>
+            <div class="text-xs font-medium text-blue-900 bg-blue-100/50 p-2 rounded">
+              모닝스타 등급: <strong>High (정부 인가 및 군사 규격 장벽)</strong>
+            </div>
+          </div>
+
+          <div class="p-5 rounded border border-slate-200 bg-slate-50 space-y-3">
+            <div class="text-xs font-bold text-blue-700 uppercase tracking-wide">해자 원천 03 (전환 비용 & 규제)</div>
+            <h3 class="text-base font-bold text-slate-900">KTX 차상컴퓨터(OBCS) 20~30년 수명 주기 독점 MRO</h3>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              프랑스 알스톰(Alstom) 원천기술을 국산화하여 KTX-1 도입 이래 코레일의 고속철 전장 계통을 독점 공급해왔습니다. 철도안전법상 안전 무결성(SIL 3/4) 형식승인 및 수십만 km 무사고 주행 실적이 필수이므로, 20~30년의 철도 차량 운행 기간 동안 정기 중정비 및 노후 부품 오버홀(영업이익률 21.1%)을 영구히 독점합니다.
+            </p>
+            <div class="text-xs font-medium text-blue-900 bg-blue-100/50 p-2 rounded">
+              모닝스타 등급: <strong>Wide Moat (장기 독점적 연금형 캐시카우)</strong>
+            </div>
+          </div>
+
+          <div class="p-5 rounded border border-slate-200 bg-slate-50 space-y-3">
+            <div class="text-xs font-bold text-blue-700 uppercase tracking-wide">해자 원천 04 (원가 우위)</div>
+            <h3 class="text-base font-bold text-slate-900">광소자-함체 및 친환경 솔더 전공정 수직계열화</h3>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              광소자 TO-CAN 패키징부터 정밀 사출 함체까지 일관 생산하여 통신 3사 표준 공법 매뉴얼(BMT)에 등록되어 있습니다. 또한 종속회사 비엔에프머티리얼즈는 국내 유일의 원자재 용해부터 완제품 솔더까지의 일관 설비를 보유하여 외부 외주 마진을 제거하고 있습니다.
+            </p>
+            <div class="text-xs font-medium text-blue-900 bg-blue-100/50 p-2 rounded">
+              모닝스타 등급: <strong>Narrow Moat (원가 우위 및 규격 표준화)</strong>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 03: 리스크 분석 -->
+    <div id="tab-03" class="tab-content space-y-6">
+      <div class="bg-white rounded border border-slate-200 shadow-sm p-6 space-y-6">
+        <div class="border-b border-slate-100 pb-4">
+          <div class="inline-block px-2.5 py-1 rounded text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200 mb-2">
+            에이전트 03: 리스크(Risk) 수석 분석관 심층 진단
+          </div>
+          <h2 class="text-xl font-bold text-slate-900">
+            방산 인도 스케줄 편차, 금속 원자재가 폭등 및 스트레스 테스트
+          </h2>
+          <p class="text-sm text-slate-600 mt-1">
+            냉정한 비판적 시각에서 점검한 4대 리스크와 133.8억 순현금 완충 방파제
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <!-- 리스크 1 -->
+          <div class="p-5 rounded border border-amber-200 bg-amber-50/30 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-amber-800 uppercase">Risk Factor 01</span>
+              <span class="text-xs px-2 py-0.5 rounded bg-amber-100 text-amber-900 font-semibold">경계 (실적 쏠림)</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">방산 납품 검수 시점('한 시점에 이전')에 따른 분기 실적 널뛰기</h3>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              방산 부문은 완성품 납품 후 고객사 수락 검사가 완료되는 시점에 100% 일괄 매출로 인식(진행기준 미적용)됩니다. LIG넥스원(매출 비중 19.8%)의 해외 수출 인도 일정이나 정부 검수원 일정에 따라 특정 분기로 매출이 몰리거나 지연될 수 있습니다. 또한 수주잔고가 정기 공시되지 않아 외부 투자자의 분기 가시성 예측에 한계가 있습니다.
+            </p>
+            <div class="p-2.5 bg-white rounded border border-amber-200 text-xs text-slate-600">
+              <strong>팀장 가이드:</strong> 분기 실적의 단순 외삽(Extrapolation)을 금지하고, 2026F 연간 누적 단위(매출 1,600억+, 영업익 150억+)로 실적을 추정해야 함.
+            </div>
+          </div>
+
+          <!-- 리스크 2 -->
+          <div class="p-5 rounded border border-amber-200 bg-amber-50/30 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-amber-800 uppercase">Risk Factor 02</span>
+              <span class="text-xs px-2 py-0.5 rounded bg-amber-100 text-amber-900 font-semibold">주의 요망</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">솔더사업부 주석(+94.5%)·은(+166.3%) 원자재가 폭등</h3>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              전사 원재료 매입의 69.6%(430.3억 원)를 차지하는 솔더사업부의 수입 주석 단가가 7.3만 원/kg, 은 단가가 377.6만 원/kg으로 2년 만에 폭등했습니다. 판가 공식 연동제가 있으나 1~2분기의 래깅(시차)이 발생하며, 기말 재고자산 급증(374억 원)에 따른 저가법 평가손실(상반기 6.13억 원 매출원가 반영)이 발생하고 있습니다.
+            </p>
+            <div class="p-2.5 bg-white rounded border border-amber-200 text-xs text-slate-600">
+              <strong>원자재 스트레스 테스트:</strong> 주석·은 단가 10% 추가 상승 시 솔더 미전가분으로 반기 영업이익 약 12.9억 원 압박 가능.
+            </div>
+          </div>
+
+          <!-- 리스크 3 -->
+          <div class="p-5 rounded border border-slate-200 bg-slate-50 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-600 uppercase">Risk Factor 03</span>
+              <span class="text-xs px-2 py-0.5 rounded bg-slate-200 text-slate-800 font-semibold">낮음 (디커플링 완료)</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">통신 3사의 유선 CAPEX 정체</h3>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              국내 이동통신 3사의 신규 유선 인프라 투자가 둔화되었으나, 광통신 및 네트워크 부문의 합산 매출 비중은 9.2%, 영업이익 비중은 4.4%로 축소되어 전사 실적에 미치는 부정적 영향은 완벽히 차단(디커플링)되었습니다.
+            </p>
+            <div class="p-2.5 bg-white rounded border border-slate-200 text-xs text-slate-600">
+              <strong>모니터링:</strong> AI 데이터센터향 초고속 광분배반(OFD) 수요 전환 추이 확인 필요.
+            </div>
+          </div>
+
+          <!-- 리스크 4 -->
+          <div class="p-5 rounded border border-slate-200 bg-slate-50 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-600 uppercase">Risk Factor 04</span>
+              <span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold">극상 (무차입 순현금)</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">차입금 및 유동성 구조: "흠잡을 데 없는 초우량"</h3>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              2026년 6월말 기준 보유 유동성 현금자산은 233.8억 원(현금 91.3억 + 단기예금 142.5억)이며, 총차입금은 100.0억 원(정책 저금리 0.64%~3.82%)으로 **순현금 133.8억 원** 상태입니다. 부채비율은 37.5%에 불과하며 용인·구미·이천·인천 사업장의 토지 장부금액만 260억 원에 달해 유동성 리스크는 제로입니다.
+            </p>
+            <div class="p-2.5 bg-white rounded border border-slate-200 text-xs text-slate-600">
+              <strong>안전판:</strong> 계약부채(선수금) 84.6억 원을 미리 확보하여 자체 운전자본으로 제작 투입 중.
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 04: 재무 정밀 분석 & 인과 해부 (기존 풀 테이블 100% 보존 + 6대 심층 인과분석 결합) -->
+    <div id="tab-04" class="tab-content space-y-8">
+      
+      <!-- [섹션 1: DART 원천 정기보고서 재무제표 풀 데이터 (100% 완전 보존)] -->
+      <div class="bg-white rounded border border-slate-200 shadow-sm p-6 space-y-6">
+        <div class="border-b border-slate-100 pb-4">
+          <div class="inline-block px-2.5 py-1 rounded text-xs font-semibold bg-blue-50 text-blue-800 border border-blue-200 mb-2">
+            PART 1. DART 공시 원천 XBRL 재무제표 정밀 데이터베이스
+          </div>
+          <h2 class="text-xl font-bold text-slate-900">
+            연결 포괄손익계산서 및 재무상태표 시계열 풀 데이터 (2023 ~ 2026.1H)
+          </h2>
+          <p class="text-sm text-slate-600 mt-1">
+            금융감독원 전자공시시스템(DART) 정기보고서 원천 계정 및 비율 전수 수록
+          </p>
+        </div>
+
+        <!-- 3대 재무 건전성 하이라이트 카드 -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="p-4 rounded border border-slate-200 bg-slate-50">
+            <div class="text-xs text-slate-500 font-medium">부채비율 (안정성)</div>
+            <div class="text-2xl font-bold text-slate-900 mt-1">37.47%</div>
+            <div class="text-xs text-slate-600 mt-1">자본총계 900.5억 / 부채총계 337.4억 (초우량)</div>
+          </div>
+          <div class="p-4 rounded border border-slate-200 bg-slate-50">
+            <div class="text-xs text-slate-500 font-medium">유동비율 (지급능력)</div>
+            <div class="text-2xl font-bold text-emerald-700 mt-1">283.0%</div>
+            <div class="text-xs text-slate-600 mt-1">유동자산 804.7억 / 유동부채 284.3억 (200% 초과)</div>
+          </div>
+          <div class="p-4 rounded border border-slate-200 bg-slate-50">
+            <div class="text-xs text-slate-500 font-medium">순현금 자산 (가용 현금력)</div>
+            <div class="text-2xl font-bold text-blue-900 mt-1">+133.8억 원</div>
+            <div class="text-xs text-slate-600 mt-1">현금성 233.8억 - 총차입금 100.0억</div>
+          </div>
+        </div>
+
+        <!-- 1-1. 연결 포괄손익계산서 전체 풀 데이터 테이블 -->
+        <div class="pt-2">
+          <h3 class="text-sm font-bold text-slate-900 mb-2">① 연결 포괄손익계산서 4개년 및 상반기 전체 시계열 (단위: 백만원, %)</h3>
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-xs text-left border border-slate-200">
+              <thead class="bg-slate-100 text-slate-700 font-semibold border-b border-slate-200">
+                <tr>
+                  <th class="p-2.5 border-r border-slate-200">계정과목</th>
+                  <th class="p-2.5 border-r border-slate-200">2023년</th>
+                  <th class="p-2.5 border-r border-slate-200">2024년</th>
+                  <th class="p-2.5 border-r border-slate-200">2025년</th>
+                  <th class="p-2.5 border-r border-slate-200">2025.1H</th>
+                  <th class="p-2.5 font-bold text-blue-900 bg-blue-50/50">2026.1H</th>
+                  <th class="p-2.5 font-bold text-emerald-800">YoY 증감률</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50 font-bold">
+                  <td class="p-2.5 border-r border-slate-200">수익(매출액)</td>
+                  <td class="p-2.5 border-r border-slate-200">74,105</td>
+                  <td class="p-2.5 border-r border-slate-200">85,121</td>
+                  <td class="p-2.5 border-r border-slate-200">120,859</td>
+                  <td class="p-2.5 border-r border-slate-200">57,286</td>
+                  <td class="p-2.5 font-bold text-blue-900 bg-blue-50/30">80,083</td>
+                  <td class="p-2.5 font-semibold text-emerald-700">+39.79%</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 border-r border-slate-200 pl-4 text-slate-500">매출원가</td>
+                  <td class="p-2.5 border-r border-slate-200">64,600</td>
+                  <td class="p-2.5 border-r border-slate-200">72,630</td>
+                  <td class="p-2.5 border-r border-slate-200">103,119</td>
+                  <td class="p-2.5 border-r border-slate-200">49,978</td>
+                  <td class="p-2.5 bg-blue-50/20">68,221</td>
+                  <td class="p-2.5">+36.50%</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 border-r border-slate-200 pl-6 text-slate-400">매출원가율</td>
+                  <td class="p-2.5 border-r border-slate-200">87.17%</td>
+                  <td class="p-2.5 border-r border-slate-200">85.33%</td>
+                  <td class="p-2.5 border-r border-slate-200">85.32%</td>
+                  <td class="p-2.5 border-r border-slate-200">87.24%</td>
+                  <td class="p-2.5 font-semibold text-emerald-700 bg-blue-50/20">85.19%</td>
+                  <td class="p-2.5 font-semibold text-emerald-700">-2.05%p</td>
+                </tr>
+                <tr class="hover:bg-slate-50 font-bold bg-slate-50/80">
+                  <td class="p-2.5 border-r border-slate-200">매출총이익 (GPM)</td>
+                  <td class="p-2.5 border-r border-slate-200">9,504 (12.8%)</td>
+                  <td class="p-2.5 border-r border-slate-200">12,491 (14.7%)</td>
+                  <td class="p-2.5 border-r border-slate-200">17,740 (14.7%)</td>
+                  <td class="p-2.5 border-r border-slate-200">7,308 (12.8%)</td>
+                  <td class="p-2.5 text-blue-900 bg-blue-50/50">11,862 (14.8%)</td>
+                  <td class="p-2.5 font-semibold text-emerald-700">+62.32%</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 border-r border-slate-200 pl-4 text-slate-500">판매비와관리비</td>
+                  <td class="p-2.5 border-r border-slate-200">5,837</td>
+                  <td class="p-2.5 border-r border-slate-200">7,418</td>
+                  <td class="p-2.5 border-r border-slate-200">8,750</td>
+                  <td class="p-2.5 border-r border-slate-200">4,288</td>
+                  <td class="p-2.5 bg-blue-50/20">4,440</td>
+                  <td class="p-2.5 font-semibold text-blue-800">+3.52% (통제)</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 border-r border-slate-200 pl-6 text-slate-400">판관비율</td>
+                  <td class="p-2.5 border-r border-slate-200">7.88%</td>
+                  <td class="p-2.5 border-r border-slate-200">8.71%</td>
+                  <td class="p-2.5 border-r border-slate-200">7.24%</td>
+                  <td class="p-2.5 border-r border-slate-200">7.49%</td>
+                  <td class="p-2.5 font-semibold text-emerald-700 bg-blue-50/20">5.54%</td>
+                  <td class="p-2.5 font-semibold text-emerald-700">-1.95%p</td>
+                </tr>
+                <tr class="hover:bg-slate-50 font-bold bg-emerald-50/40">
+                  <td class="p-2.5 border-r border-slate-200 text-emerald-950">영업이익 (OPM)</td>
+                  <td class="p-2.5 border-r border-slate-200">3,668 (4.95%)</td>
+                  <td class="p-2.5 border-r border-slate-200">5,073 (5.96%)</td>
+                  <td class="p-2.5 border-r border-slate-200">8,990 (7.44%)</td>
+                  <td class="p-2.5 border-r border-slate-200">3,020 (5.27%)</td>
+                  <td class="p-2.5 font-bold text-emerald-800 bg-emerald-100/50">7,422 (9.27%)</td>
+                  <td class="p-2.5 font-bold text-emerald-700">+145.81%</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 border-r border-slate-200 pl-4 text-slate-500">기타이익 / 기타손실</td>
+                  <td class="p-2.5 border-r border-slate-200">304 / 175</td>
+                  <td class="p-2.5 border-r border-slate-200">334 / 369</td>
+                  <td class="p-2.5 border-r border-slate-200">342 / 260</td>
+                  <td class="p-2.5 border-r border-slate-200">147 / 163</td>
+                  <td class="p-2.5 bg-blue-50/20">298 / 107</td>
+                  <td class="p-2.5 text-blue-700 font-semibold">순기타이익 +190</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 border-r border-slate-200 pl-4 text-slate-500">금융수익 / 금융원가</td>
+                  <td class="p-2.5 border-r border-slate-200">1,362 / 277</td>
+                  <td class="p-2.5 border-r border-slate-200">991 / 230</td>
+                  <td class="p-2.5 border-r border-slate-200">515 / 600</td>
+                  <td class="p-2.5 border-r border-slate-200">261 / 250</td>
+                  <td class="p-2.5 bg-blue-50/20">492 / 250</td>
+                  <td class="p-2.5 text-blue-700 font-semibold">순금융이익 +242</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 border-r border-slate-200 pl-4 text-slate-500">지분법손익</td>
+                  <td class="p-2.5 border-r border-slate-200">23</td>
+                  <td class="p-2.5 border-r border-slate-200">39</td>
+                  <td class="p-2.5 border-r border-slate-200">131</td>
+                  <td class="p-2.5 border-r border-slate-200">84</td>
+                  <td class="p-2.5 bg-blue-50/20">124</td>
+                  <td class="p-2.5">+47.31%</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 border-r border-slate-200 pl-4 text-slate-500">법인세비용차감전순이익</td>
+                  <td class="p-2.5 border-r border-slate-200">4,903</td>
+                  <td class="p-2.5 border-r border-slate-200">5,839</td>
+                  <td class="p-2.5 border-r border-slate-200">9,119</td>
+                  <td class="p-2.5 border-r border-slate-200">3,098</td>
+                  <td class="p-2.5 font-bold text-blue-900 bg-blue-50/20">7,979</td>
+                  <td class="p-2.5 font-semibold text-emerald-700">+157.53%</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 border-r border-slate-200 pl-4 text-slate-500">법인세비용</td>
+                  <td class="p-2.5 border-r border-slate-200">792</td>
+                  <td class="p-2.5 border-r border-slate-200">674</td>
+                  <td class="p-2.5 border-r border-slate-200">1,393</td>
+                  <td class="p-2.5 border-r border-slate-200">569</td>
+                  <td class="p-2.5 bg-blue-50/20">1,616</td>
+                  <td class="p-2.5">(실효세율 20.25%)</td>
+                </tr>
+                <tr class="hover:bg-slate-50 font-bold bg-blue-50/40">
+                  <td class="p-2.5 border-r border-slate-200 text-blue-950">당기순이익</td>
+                  <td class="p-2.5 border-r border-slate-200">4,111</td>
+                  <td class="p-2.5 border-r border-slate-200">5,165</td>
+                  <td class="p-2.5 border-r border-slate-200">7,726</td>
+                  <td class="p-2.5 border-r border-slate-200">2,529</td>
+                  <td class="p-2.5 font-bold text-blue-900 bg-blue-100/50">6,363</td>
+                  <td class="p-2.5 font-bold text-blue-900">+151.57%</td>
+                </tr>
+                <tr class="hover:bg-slate-50 font-bold bg-blue-50/40">
+                  <td class="p-2.5 border-r border-slate-200 text-blue-950">지배기업 소유주지분 순이익</td>
+                  <td class="p-2.5 border-r border-slate-200">4,024</td>
+                  <td class="p-2.5 border-r border-slate-200">5,044</td>
+                  <td class="p-2.5 border-r border-slate-200">7,556</td>
+                  <td class="p-2.5 border-r border-slate-200">2,498</td>
+                  <td class="p-2.5 font-bold text-blue-900 bg-blue-100/50">6,186</td>
+                  <td class="p-2.5 font-bold text-blue-900">+147.64%</td>
+                </tr>
+                <tr class="hover:bg-slate-50 font-bold">
+                  <td class="p-2.5 border-r border-slate-200">기본 EPS (원)</td>
+                  <td class="p-2.5 border-r border-slate-200">504원</td>
+                  <td class="p-2.5 border-r border-slate-200">630원</td>
+                  <td class="p-2.5 border-r border-slate-200">943원</td>
+                  <td class="p-2.5 border-r border-slate-200">312원</td>
+                  <td class="p-2.5 font-bold text-blue-900 bg-blue-50/30">772원</td>
+                  <td class="p-2.5 font-bold text-blue-900">+147.44%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 1-2. 연결 재무상태표 전체 풀 데이터 테이블 -->
+        <div class="pt-4">
+          <h3 class="text-sm font-bold text-slate-900 mb-2">② 연결 요약 재무상태표 전체 계정 시계열 (단위: 억 원)</h3>
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-xs text-left border border-slate-200">
+              <thead class="bg-slate-100 text-slate-700 font-semibold border-b border-slate-200">
+                <tr>
+                  <th class="p-2.5 border-r border-slate-200">재무상태표 계정과목</th>
+                  <th class="p-2.5 border-r border-slate-200">2023년 (제26기)</th>
+                  <th class="p-2.5 border-r border-slate-200">2024년 (제27기)</th>
+                  <th class="p-2.5 border-r border-slate-200">2025년 (제28기)</th>
+                  <th class="p-2.5 font-bold text-blue-900 bg-blue-50/50">2026.1H (제29기 반기)</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50 font-bold">
+                  <td class="p-2.5 border-r border-slate-200">유동자산</td>
+                  <td class="p-2.5 border-r border-slate-200">528.7</td>
+                  <td class="p-2.5 border-r border-slate-200">581.7</td>
+                  <td class="p-2.5 border-r border-slate-200">732.5</td>
+                  <td class="p-2.5 font-bold text-blue-900 bg-blue-50/30">804.7</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 pl-6 border-r border-slate-200 text-slate-500">현금및현금성자산</td>
+                  <td class="p-2.5 border-r border-slate-200">67.1</td>
+                  <td class="p-2.5 border-r border-slate-200">65.8</td>
+                  <td class="p-2.5 border-r border-slate-200">64.0</td>
+                  <td class="p-2.5 font-medium bg-blue-50/20">91.3</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 pl-6 border-r border-slate-200 text-slate-500">기타유동금융자산 (단기예금)</td>
+                  <td class="p-2.5 border-r border-slate-200">279.6</td>
+                  <td class="p-2.5 border-r border-slate-200">111.8</td>
+                  <td class="p-2.5 border-r border-slate-200">154.5</td>
+                  <td class="p-2.5 font-medium bg-blue-50/20">142.5</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 pl-6 border-r border-slate-200 text-slate-500">매출채권 및 기타유동채권</td>
+                  <td class="p-2.5 border-r border-slate-200">97.1</td>
+                  <td class="p-2.5 border-r border-slate-200">143.3</td>
+                  <td class="p-2.5 border-r border-slate-200">177.4</td>
+                  <td class="p-2.5 font-medium bg-blue-50/20">187.7</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 pl-6 border-r border-slate-200 text-slate-500">유동재고자산</td>
+                  <td class="p-2.5 border-r border-slate-200">77.6</td>
+                  <td class="p-2.5 border-r border-slate-200">242.6</td>
+                  <td class="p-2.5 border-r border-slate-200">331.1</td>
+                  <td class="p-2.5 font-medium bg-blue-50/20">374.1</td>
+                </tr>
+                <tr class="hover:bg-slate-50 font-bold">
+                  <td class="p-2.5 border-r border-slate-200">비유동자산</td>
+                  <td class="p-2.5 border-r border-slate-200">303.4</td>
+                  <td class="p-2.5 border-r border-slate-200">430.9</td>
+                  <td class="p-2.5 border-r border-slate-200">438.9</td>
+                  <td class="p-2.5 font-bold text-blue-900 bg-blue-50/30">433.2</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 pl-6 border-r border-slate-200 text-slate-500">유형자산 (토지·건물·기계)</td>
+                  <td class="p-2.5 border-r border-slate-200">265.2</td>
+                  <td class="p-2.5 border-r border-slate-200">338.9</td>
+                  <td class="p-2.5 border-r border-slate-200">351.9</td>
+                  <td class="p-2.5 font-medium bg-blue-50/20">349.6</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 pl-6 border-r border-slate-200 text-slate-500">영업권 및 무형자산</td>
+                  <td class="p-2.5 border-r border-slate-200">13.0</td>
+                  <td class="p-2.5 border-r border-slate-200">64.7</td>
+                  <td class="p-2.5 border-r border-slate-200">61.8</td>
+                  <td class="p-2.5 font-medium bg-blue-50/20">60.6</td>
+                </tr>
+                <tr class="hover:bg-slate-50 bg-slate-50/80 font-bold">
+                  <td class="p-2.5 border-r border-slate-200 text-slate-900">자산총계</td>
+                  <td class="p-2.5 border-r border-slate-200">832.1</td>
+                  <td class="p-2.5 border-r border-slate-200">1,012.6</td>
+                  <td class="p-2.5 border-r border-slate-200">1,171.4</td>
+                  <td class="p-2.5 text-blue-900 bg-blue-50/50">1,237.9</td>
+                </tr>
+                <tr class="hover:bg-slate-50 font-bold">
+                  <td class="p-2.5 border-r border-slate-200">유동부채</td>
+                  <td class="p-2.5 border-r border-slate-200">91.7</td>
+                  <td class="p-2.5 border-r border-slate-200">222.8</td>
+                  <td class="p-2.5 border-r border-slate-200">296.2</td>
+                  <td class="p-2.5 font-bold text-slate-800">284.3</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 pl-6 border-r border-slate-200 text-slate-500">단기차입금</td>
+                  <td class="p-2.5 border-r border-slate-200">44.0</td>
+                  <td class="p-2.5 border-r border-slate-200">60.0</td>
+                  <td class="p-2.5 border-r border-slate-200">84.5</td>
+                  <td class="p-2.5 font-medium">80.0</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 pl-6 border-r border-slate-200 text-slate-500">매입채무 및 기타유동채무</td>
+                  <td class="p-2.5 border-r border-slate-200">25.3</td>
+                  <td class="p-2.5 border-r border-slate-200">54.6</td>
+                  <td class="p-2.5 border-r border-slate-200">76.9</td>
+                  <td class="p-2.5 font-medium">66.7</td>
+                </tr>
+                <tr class="hover:bg-slate-50 font-bold">
+                  <td class="p-2.5 border-r border-slate-200">비유동부채 (장기차입금 20억 포함)</td>
+                  <td class="p-2.5 border-r border-slate-200">23.5</td>
+                  <td class="p-2.5 border-r border-slate-200">31.1</td>
+                  <td class="p-2.5 border-r border-slate-200">32.9</td>
+                  <td class="p-2.5 font-bold text-slate-800">53.1</td>
+                </tr>
+                <tr class="hover:bg-slate-50 bg-slate-50/80 font-bold">
+                  <td class="p-2.5 border-r border-slate-200 text-slate-900">부채총계</td>
+                  <td class="p-2.5 border-r border-slate-200">115.3</td>
+                  <td class="p-2.5 border-r border-slate-200">253.9</td>
+                  <td class="p-2.5 border-r border-slate-200">329.1</td>
+                  <td class="p-2.5 text-slate-800">337.4</td>
+                </tr>
+                <tr class="hover:bg-slate-50 bg-purple-50/50 font-bold">
+                  <td class="p-2.5 border-r border-slate-200 text-purple-950">자본총계 (지배기업 소유주지분)</td>
+                  <td class="p-2.5 border-r border-slate-200">716.8 (708.7)</td>
+                  <td class="p-2.5 border-r border-slate-200">758.6 (749.3)</td>
+                  <td class="p-2.5 border-r border-slate-200">842.3 (829.7)</td>
+                  <td class="p-2.5 text-purple-950 bg-purple-50/70">900.5 (886.1)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 1-3. DART 주석 기반 판매비와관리비 세부 내역 (Note 27 풀 테이블) -->
+        <div class="pt-4">
+          <h3 class="text-sm font-bold text-slate-900 mb-2">③ DART 주석 27번: 판매비와관리비 세부 계정 내역 (단위: 천원, %)</h3>
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-xs text-left border border-slate-200">
+              <thead class="bg-slate-100 text-slate-700 font-semibold border-b border-slate-200">
+                <tr>
+                  <th class="p-2.5 border-r border-slate-200">판관비 세부 계정</th>
+                  <th class="p-2.5 border-r border-slate-200">2025년 상반기</th>
+                  <th class="p-2.5 border-r border-slate-200">2026년 상반기</th>
+                  <th class="p-2.5 border-r border-slate-200">증감액</th>
+                  <th class="p-2.5 border-r border-slate-200">증감률</th>
+                  <th class="p-2.5">판관비 내 비중</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 font-bold border-r border-slate-200">급여</td>
+                  <td class="p-2.5 border-r border-slate-200">1,985,037</td>
+                  <td class="p-2.5 border-r border-slate-200 font-medium">2,104,447</td>
+                  <td class="p-2.5 border-r border-slate-200">+119,410</td>
+                  <td class="p-2.5 border-r border-slate-200">+6.02%</td>
+                  <td class="p-2.5">47.4%</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 border-r border-slate-200">퇴직급여 / 복리후생비</td>
+                  <td class="p-2.5 border-r border-slate-200">361,791</td>
+                  <td class="p-2.5 border-r border-slate-200">331,875</td>
+                  <td class="p-2.5 border-r border-slate-200">-29,916</td>
+                  <td class="p-2.5 border-r border-slate-200">-8.27%</td>
+                  <td class="p-2.5">7.5%</td>
+                </tr>
+                <tr class="hover:bg-slate-50 bg-slate-50/80 font-bold">
+                  <td class="p-2.5 border-r border-slate-200">인건비 소계</td>
+                  <td class="p-2.5 border-r border-slate-200">2,346,828</td>
+                  <td class="p-2.5 border-r border-slate-200">2,436,322</td>
+                  <td class="p-2.5 border-r border-slate-200">+89,494</td>
+                  <td class="p-2.5 border-r border-slate-200">+3.81%</td>
+                  <td class="p-2.5 text-blue-900">54.9% (핵심 고정비)</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 border-r border-slate-200">경상연구개발비</td>
+                  <td class="p-2.5 border-r border-slate-200">494,409</td>
+                  <td class="p-2.5 border-r border-slate-200 font-medium">501,512</td>
+                  <td class="p-2.5 border-r border-slate-200">+7,103</td>
+                  <td class="p-2.5 border-r border-slate-200">+1.44%</td>
+                  <td class="p-2.5">11.3%</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 border-r border-slate-200">지급수수료</td>
+                  <td class="p-2.5 border-r border-slate-200">294,811</td>
+                  <td class="p-2.5 border-r border-slate-200 font-medium">407,800</td>
+                  <td class="p-2.5 border-r border-slate-200">+112,989</td>
+                  <td class="p-2.5 border-r border-slate-200">+38.33%</td>
+                  <td class="p-2.5">9.2%</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 border-r border-slate-200">감가상각비 및 무형자산상각비</td>
+                  <td class="p-2.5 border-r border-slate-200">312,779</td>
+                  <td class="p-2.5 border-r border-slate-200 font-medium">291,261</td>
+                  <td class="p-2.5 border-r border-slate-200">-21,518</td>
+                  <td class="p-2.5 border-r border-slate-200">-6.88%</td>
+                  <td class="p-2.5">6.6%</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 border-r border-slate-200">운반비 및 기타 판관비</td>
+                  <td class="p-2.5 border-r border-slate-200">839,597</td>
+                  <td class="p-2.5 border-r border-slate-200">802,616</td>
+                  <td class="p-2.5 border-r border-slate-200">-36,981</td>
+                  <td class="p-2.5 border-r border-slate-200">-4.40%</td>
+                  <td class="p-2.5">18.0%</td>
+                </tr>
+                <tr class="hover:bg-slate-50 bg-blue-50/40 font-bold">
+                  <td class="p-2.5 border-r border-slate-200 text-blue-950">판관비 합계</td>
+                  <td class="p-2.5 border-r border-slate-200">4,288,424</td>
+                  <td class="p-2.5 border-r border-slate-200 text-blue-900 bg-blue-100/50">4,439,511</td>
+                  <td class="p-2.5 border-r border-slate-200">+151,087</td>
+                  <td class="p-2.5 border-r border-slate-200 text-blue-800">+3.52%</td>
+                  <td class="p-2.5 text-blue-900">100.0% (판관비율 5.54%)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 1-4. 분기별 실적 추이 풀 테이블 -->
+        <div class="pt-4">
+          <h3 class="text-sm font-bold text-slate-900 mb-2">④ 최근 4개 분기 실적 추이 및 성장률 분석 (단위: 백만원, %)</h3>
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-xs text-left border border-slate-200">
+              <thead class="bg-slate-100 text-slate-700 font-semibold border-b border-slate-200">
+                <tr>
+                  <th class="p-2.5 border-r border-slate-200">분기 구분</th>
+                  <th class="p-2.5 border-r border-slate-200">2025년 1분기</th>
+                  <th class="p-2.5 border-r border-slate-200">2025년 2분기</th>
+                  <th class="p-2.5 border-r border-slate-200">2026년 1분기</th>
+                  <th class="p-2.5 font-bold text-blue-900 bg-blue-50/50">2026년 2분기</th>
+                  <th class="p-2.5 font-bold text-emerald-800">2Q YoY 성장률</th>
+                  <th class="p-2.5 font-bold text-purple-800">2Q QoQ 성장률</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50 font-bold">
+                  <td class="p-2.5 border-r border-slate-200">매출액</td>
+                  <td class="p-2.5 border-r border-slate-200">28,066</td>
+                  <td class="p-2.5 border-r border-slate-200">29,220</td>
+                  <td class="p-2.5 border-r border-slate-200">38,858</td>
+                  <td class="p-2.5 font-bold text-blue-900 bg-blue-50/30">41,225</td>
+                  <td class="p-2.5 font-semibold text-emerald-700">+41.08%</td>
+                  <td class="p-2.5 font-semibold text-purple-700">+6.09%</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 border-r border-slate-200 pl-4 text-slate-500">매출원가율</td>
+                  <td class="p-2.5 border-r border-slate-200">86.92%</td>
+                  <td class="p-2.5 border-r border-slate-200">87.56%</td>
+                  <td class="p-2.5 border-r border-slate-200">85.01%</td>
+                  <td class="p-2.5 font-medium bg-blue-50/20">85.36%</td>
+                  <td class="p-2.5 font-semibold text-emerald-700">-2.20%p</td>
+                  <td class="p-2.5">+0.35%p</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 border-r border-slate-200 pl-4 text-slate-500">매출총이익률 (GPM)</td>
+                  <td class="p-2.5 border-r border-slate-200">13.08%</td>
+                  <td class="p-2.5 border-r border-slate-200">12.44%</td>
+                  <td class="p-2.5 border-r border-slate-200">14.99%</td>
+                  <td class="p-2.5 font-medium bg-blue-50/20">14.64%</td>
+                  <td class="p-2.5 font-semibold text-emerald-700">+2.20%p</td>
+                  <td class="p-2.5">-0.35%p</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 border-r border-slate-200 pl-4 text-slate-500">판관비율</td>
+                  <td class="p-2.5 border-r border-slate-200">7.59%</td>
+                  <td class="p-2.5 border-r border-slate-200">7.38%</td>
+                  <td class="p-2.5 border-r border-slate-200">5.23%</td>
+                  <td class="p-2.5 font-medium bg-blue-50/20">5.84%</td>
+                  <td class="p-2.5 font-semibold text-emerald-700">-1.54%p</td>
+                  <td class="p-2.5">+0.61%p</td>
+                </tr>
+                <tr class="hover:bg-slate-50 font-bold bg-emerald-50/40">
+                  <td class="p-2.5 border-r border-slate-200 text-emerald-950">영업이익 (OPM)</td>
+                  <td class="p-2.5 border-r border-slate-200">1,541 (5.49%)</td>
+                  <td class="p-2.5 border-r border-slate-200">1,478 (5.06%)</td>
+                  <td class="p-2.5 border-r border-slate-200">3,792 (9.76%)</td>
+                  <td class="p-2.5 font-bold text-emerald-800 bg-emerald-100/50">3,630 (8.81%)</td>
+                  <td class="p-2.5 font-bold text-emerald-700">+145.53%</td>
+                  <td class="p-2.5">-4.28%</td>
+                </tr>
+                <tr class="hover:bg-slate-50 font-bold">
+                  <td class="p-2.5 border-r border-slate-200">지배주주순이익</td>
+                  <td class="p-2.5 border-r border-slate-200">1,322</td>
+                  <td class="p-2.5 border-r border-slate-200">1,176</td>
+                  <td class="p-2.5 border-r border-slate-200">3,269</td>
+                  <td class="p-2.5 font-bold text-blue-900 bg-blue-50/30">2,918</td>
+                  <td class="p-2.5 font-bold text-blue-900">+148.17%</td>
+                  <td class="p-2.5">-10.73%</td>
+                </tr>
+                <tr class="hover:bg-slate-50 font-bold">
+                  <td class="p-2.5 border-r border-slate-200">분기 EPS (원)</td>
+                  <td class="p-2.5 border-r border-slate-200">165원</td>
+                  <td class="p-2.5 border-r border-slate-200">147원</td>
+                  <td class="p-2.5 border-r border-slate-200">408원</td>
+                  <td class="p-2.5 font-bold text-blue-900 bg-blue-50/30">364원</td>
+                  <td class="p-2.5 font-bold text-blue-900">+147.62%</td>
+                  <td class="p-2.5">-10.78%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 4대 차트 시각화 그리드 -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-4 border-t border-slate-100">
+          <div>
+            <div class="text-xs font-semibold text-slate-700 mb-2">마진율(GPM/OPM/판관비율) 추이 라인 차트 (%)</div>
+            <div class="h-64">
+              <canvas id="chartMarginTrends"></canvas>
+            </div>
+          </div>
+          <div>
+            <div class="text-xs font-semibold text-slate-700 mb-2">분기별 매출액 및 영업이익 추이 바 차트 (단위: 억 원)</div>
+            <div class="h-64">
+              <canvas id="chartQuarterlyTrends"></canvas>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- [섹션 2: 6대 재무 심층 인과분석 (Deep-Dive Analysis) 신규 확장 결합] -->
+      <div class="bg-white rounded border border-slate-200 shadow-sm p-6 space-y-6">
+        <div class="border-b border-slate-100 pb-4">
+          <div class="inline-block px-2.5 py-1 rounded text-xs font-semibold bg-purple-100 text-purple-900 border border-purple-200 mb-2">
+            PART 2. 재무제표 이면의 6대 심층 인과분석 (Deep-Dive Analysis)
+          </div>
+          <h2 class="text-xl font-bold text-slate-900">
+            수치 이면의 메커니즘 해부: P·Q 효과, 제조원가 3요소, BEP 및 듀퐁 ROE 분해
+          </h2>
+          <p class="text-sm text-slate-600 mt-1">
+            원가구조의 변동비·고정비 분해와 안전한계율(42.3%), 현금흐름 연계성 및 민감도 스트레스 모델링
+          </p>
+        </div>
+
+        <!-- 심층 01. Top-line 질적 분해: P(판가) 효과 vs Q(물량) 효과 -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-bold text-slate-900 flex items-center">
+            <span class="w-1.5 h-4 bg-purple-700 mr-2 rounded-sm inline-block"></span>
+            1. 매출액(Top-line)의 질적 분해: P(판가) 효과 vs Q(출하량) 효과
+          </h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            상반기 매출액 800.8억 원(+39.8% YoY) 성장의 동력은 사업부문별로 상이한 구조적 원인에 기인합니다:
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <div class="p-4 bg-slate-50 rounded border border-slate-200 space-y-2">
+              <div class="font-bold text-blue-900">방산사업부: 압도적인 [Volume Q 효과] 중심 성장</div>
+              <p class="text-slate-700 leading-relaxed">
+                • <strong>성장 동인:</strong> LIG넥스원 천궁-II(M-SAM)의 중동 수출 계약(10조 원+) 및 국내 양산 본격화에 따라 유도탄 내부 배선 하네스 출하 물량(Q)이 전년비 <strong>+80% 이상 폭증</strong>했습니다.<br>
+                • <strong>판가(P) 특성:</strong> 방위산업 특성상 판가는 국방 원가보상 계약에 연동되어 급변하지 않으며, 물량 증가에 따른 전형적인 양산 볼륨 확대 효과가 실적을 견인했습니다.
+              </p>
+            </div>
+            <div class="p-4 bg-slate-50 rounded border border-slate-200 space-y-2">
+              <div class="font-bold text-amber-900">솔더사업부: 원자재 시세 전동에 따른 [Price P 효과] 중심 외형 확대</div>
+              <p class="text-slate-700 leading-relaxed">
+                • <strong>성장 동인:</strong> LME 국제 주석 시세(+94.5%) 및 은 시세(+166.3%) 급등에 따라 납품 단가 공식(Formula)에 기반한 판가(P)가 40~50% 상향되었습니다.<br>
+                • <strong>출하량(Q) 특성:</strong> 실제 물리적 솔더 출하량(Q)은 전장 및 가전 수요 호조로 5~8% 증가 수준이었으나, 명목 판가 상승분이 매출액(429.9억)을 크게 부풀린 'Cost-Push형 외형 성장'입니다.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 심층 02. 제조원가 3요소 및 변동비·고정비 분해 -->
+        <div class="space-y-3 pt-2">
+          <h3 class="text-sm font-bold text-slate-900 flex items-center">
+            <span class="w-1.5 h-4 bg-purple-700 mr-2 rounded-sm inline-block"></span>
+            2. 제조원가(Cost of Sales) 3요소 및 변동비·고정비 분해
+          </h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            상반기 연결 매출원가 682.2억 원(매출원가율 85.19%)을 원가 회계적 관점에서 재분류한 결과입니다:
+          </p>
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-xs text-left border border-slate-200">
+              <thead class="bg-slate-100 text-slate-700 font-semibold border-b border-slate-200">
+                <tr>
+                  <th class="p-2.5 border-r border-slate-200">원가 3요소</th>
+                  <th class="p-2.5 border-r border-slate-200">2026.1H 추정액</th>
+                  <th class="p-2.5 border-r border-slate-200">원가 내 비중</th>
+                  <th class="p-2.5 border-r border-slate-200">비용 성격</th>
+                  <th class="p-2.5">원가율 변동 요인 및 분석</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 font-bold text-blue-900 border-r border-slate-200">직접 원재료비</td>
+                  <td class="p-2.5 border-r border-slate-200">598.2억 원</td>
+                  <td class="p-2.5 border-r border-slate-200 font-semibold">87.7%</td>
+                  <td class="p-2.5 border-r border-slate-200 text-amber-700">순수 변동비</td>
+                  <td class="p-2.5">솔더 주석/은 매입 430.3억, 방산 군용선재 132.2억 원. 매출 증가에 비례하여 증가</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 font-bold text-blue-900 border-r border-slate-200">제조 노무비</td>
+                  <td class="p-2.5 border-r border-slate-200">48.5억 원</td>
+                  <td class="p-2.5 border-r border-slate-200 font-semibold">7.1%</td>
+                  <td class="p-2.5 border-r border-slate-200 text-blue-700">준고정비</td>
+                  <td class="p-2.5">구미/인천/이천 공장 생산직 인건비. 물량 증가 대비 인력 충원이 억제되어 고정비 분산 효과 발생</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 font-bold text-blue-900 border-r border-slate-200">제조 경비</td>
+                  <td class="p-2.5 border-r border-slate-200">35.5억 원</td>
+                  <td class="p-2.5 border-r border-slate-200 font-semibold">5.2%</td>
+                  <td class="p-2.5 border-r border-slate-200 text-blue-700">고정비 / 혼합비</td>
+                  <td class="p-2.5">기계장치 감가상각비(16.5억), 외주가공비, 전력비 등으로 구성. 설비 가동률 상승으로 단위당 경비 절감</td>
+                </tr>
+                <tr class="hover:bg-slate-50 bg-slate-50/80 font-bold">
+                  <td class="p-2.5 border-r border-slate-200">매출원가 합계</td>
+                  <td class="p-2.5 border-r border-slate-200">682.2억 원</td>
+                  <td class="p-2.5 border-r border-slate-200">100.0%</td>
+                  <td class="p-2.5 border-r border-slate-200">-</td>
+                  <td class="p-2.5 text-emerald-700">원가율이 87.24% ➔ 85.19%로 -2.05%p 개선된 결정적 배경: 제조 고정비 분산</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 심층 03. 공헌이익 및 손익분기점(BEP) 분석 -->
+        <div class="space-y-3 pt-2">
+          <h3 class="text-sm font-bold text-slate-900 flex items-center">
+            <span class="w-1.5 h-4 bg-purple-700 mr-2 rounded-sm inline-block"></span>
+            3. 공헌이익 및 손익분기점(BEP: Break-Even Point) 모델링
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+            <div class="p-4 bg-purple-50/50 rounded border border-purple-200 space-y-1">
+              <span class="text-slate-500 font-medium">변동비율 및 공헌이익률</span>
+              <div class="text-lg font-bold text-purple-950 mt-1">공헌이익률 22.8%</div>
+              <p class="text-slate-600 leading-tight">변동비(원재료+외주비) 비율 약 77.2%, 공헌이익 182.6억 원 창출</p>
+            </div>
+            <div class="p-4 bg-purple-50/50 rounded border border-purple-200 space-y-1">
+              <span class="text-slate-500 font-medium">총 고정비 (반기 / 분기)</span>
+              <div class="text-lg font-bold text-slate-900 mt-1">108.4억 원 (분기당 54.2억)</div>
+              <p class="text-slate-600 leading-tight">제조 고정비 64.0억 + 판관비 44.4억 원으로 완벽히 통제됨</p>
+            </div>
+            <div class="p-4 bg-purple-50/50 rounded border border-purple-200 space-y-1">
+              <span class="text-slate-500 font-medium">분기 손익분기점(BEP) 및 안전한계율</span>
+              <div class="text-lg font-bold text-emerald-700 mt-1">BEP 237.7억 (안전율 42.3%)</div>
+              <p class="text-slate-600 leading-tight">분기 매출이 238억 원만 넘으면 흑자. 2분기 매출 412억으로 안전마진 42% 확보</p>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 rounded border border-slate-200 text-xs text-slate-700 leading-relaxed">
+            <strong>BEP 시사점:</strong> 과거 2023년 분기 매출 180~200억 원 시절에는 BEP를 간신히 넘겨 영업이익률이 3~4%대에 머물렀으나, 2026년 들어 분기 매출이 400억 원을 돌파하면서 <strong>BEP 초과 매출액(약 175억 원)에 공헌이익률(22.8%)이 곱해진 금액(약 40억 원)이 대부분 영업이익으로 쏟아지는 구조</strong>로 탈바꿈했습니다.
+          </div>
+        </div>
+
+        <!-- 심층 04. 듀퐁 분석(DuPont Analysis)을 통한 자기자본이익률(ROE) 해부 -->
+        <div class="space-y-3 pt-2">
+          <h3 class="text-sm font-bold text-slate-900 flex items-center">
+            <span class="w-1.5 h-4 bg-purple-700 mr-2 rounded-sm inline-block"></span>
+            4. 듀퐁 분석(DuPont Analysis): ROE 퀀텀점프의 본질 해부
+          </h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            자기자본이익률(ROE)을 **순이익률(수익성) × 총자산회전율(효율성) × 재무레버리지(안전성)**로 3단계 분해하여 이익 성장의 건전성을 검증했습니다:
+          </p>
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-xs text-left border border-slate-200">
+              <thead class="bg-slate-100 text-slate-700 font-semibold border-b border-slate-200">
+                <tr>
+                  <th class="p-2.5 border-r border-slate-200">분석 시점</th>
+                  <th class="p-2.5 border-r border-slate-200">당기순이익률 (NPM)</th>
+                  <th class="p-2.5 border-r border-slate-200">총자산회전율 (ATO)</th>
+                  <th class="p-2.5 border-r border-slate-200">재무레버리지 (EM)</th>
+                  <th class="p-2.5 font-bold text-purple-900 bg-purple-50/50">자기자본이익률 (ROE)</th>
+                  <th class="p-2.5">듀퐁 분해 총평</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 font-bold border-r border-slate-200">2023년</td>
+                  <td class="p-2.5 border-r border-slate-200">5.55%</td>
+                  <td class="p-2.5 border-r border-slate-200">0.89회</td>
+                  <td class="p-2.5 border-r border-slate-200">1.16배</td>
+                  <td class="p-2.5 font-semibold text-slate-800">5.74%</td>
+                  <td class="p-2.5">저마진 부품 위주, 낮은 자산 활용도</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 font-bold border-r border-slate-200">2024년</td>
+                  <td class="p-2.5 border-r border-slate-200">6.07%</td>
+                  <td class="p-2.5 border-r border-slate-200">0.84회</td>
+                  <td class="p-2.5 border-r border-slate-200">1.33배</td>
+                  <td class="p-2.5 font-semibold text-slate-800">6.81%</td>
+                  <td class="p-2.5">일진전자산업 인수 초기 자산 편입 효과</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 font-bold border-r border-slate-200">2025년</td>
+                  <td class="p-2.5 border-r border-slate-200">6.39%</td>
+                  <td class="p-2.5 border-r border-slate-200">1.03회</td>
+                  <td class="p-2.5 border-r border-slate-200">1.39배</td>
+                  <td class="p-2.5 font-semibold text-slate-800">9.17%</td>
+                  <td class="p-2.5">합병 완료로 자산회전율 1회 돌파, ROE 9%대 진입</td>
+                </tr>
+                <tr class="hover:bg-slate-50 bg-purple-50/40 font-bold">
+                  <td class="p-2.5 border-r border-slate-200 text-purple-950">2026.1H (연환산)</td>
+                  <td class="p-2.5 border-r border-slate-200 text-emerald-700">7.94% (+1.87%p)</td>
+                  <td class="p-2.5 border-r border-slate-200 text-blue-900">1.29회 (+0.26회)</td>
+                  <td class="p-2.5 border-r border-slate-200 text-slate-700">1.37배 (건전 저레버리지)</td>
+                  <td class="p-2.5 text-purple-900 bg-purple-100/50">14.13% (퀀텀점프)</td>
+                  <td class="p-2.5 text-emerald-800 font-semibold">순이익률과 자산회전율의 쌍끌이 개선 (가장 이상적)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="p-3 bg-purple-50/50 rounded border border-purple-200 text-xs text-slate-700 leading-relaxed">
+            <strong>듀퐁 분석 결론:</strong> 부채(차입금)를 무리하게 끌어들여 재무레버리지(EM)로 만든 인위적 ROE 상승이 아닙니다. **재무레버리지는 1.37배(부채비율 37.5%)로 극도로 안정적인 상태를 유지**한 채, 방산 고마진에 의한 **순이익률 상승(5.55% ➔ 7.94%)**과 생산라인 풀가동에 따른 **자산회전율 개선(0.89회 ➔ 1.29회)**이 맞물린 **'진짜 펀더멘털 혁신'**입니다.
+          </div>
+        </div>
+
+        <!-- 심층 05. 이익의 질(Quality of Earnings) 및 현금흐름 연계성 분석 -->
+        <div class="space-y-3 pt-2">
+          <h3 class="text-sm font-bold text-slate-900 flex items-center">
+            <span class="w-1.5 h-4 bg-purple-700 mr-2 rounded-sm inline-block"></span>
+            5. 이익의 질(Quality of Earnings) 및 현금흐름 연계성 해부
+          </h3>
+          <div class="p-4 bg-slate-50 rounded border border-slate-200 space-y-3 text-xs text-slate-700">
+            <div class="font-bold text-slate-900 text-sm">영업이익 74.2억 원 vs 영업현금흐름(OCF) 7.2억 원의 일시적 괴리 원인 규명</div>
+            <p class="leading-relaxed">
+              2026년 상반기 당기순이익 63.6억 원, 감가상각비 등 현금 미유출 가산액 34.9억 원을 합산한 **영업창출 현금흐름은 98.5억 원에 달했으나, 실제 장부상 영업활동현금흐름은 7.2억 원으로 일시적 축소**되었습니다. 이를 정밀 추적한 결과:
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
+              <div class="p-3 bg-white rounded border border-slate-200">
+                <span class="font-bold text-blue-900">① 재고자산 선확보 (-42.9억 원):</span><br>
+                천궁-II 유도무기 납기 대응용 특수 하네스 자재 및 주석/은 가격 상승에 대비한 전략적 원재료 비축으로 재고가 331억에서 374억으로 일시 증가.
+              </div>
+              <div class="p-3 bg-white rounded border border-slate-200">
+                <span class="font-bold text-blue-900">② 매출채권 일시 증가 (-10.3억 원):</span><br>
+                2분기 매출 급증(412억 원)에 따른 정상 외상매출 증가. 상대처가 LIG넥스원 및 대기업으로 대손 위험이 전무하며 3분기 회수 예정.
+              </div>
+              <div class="p-3 bg-white rounded border border-slate-200">
+                <span class="font-bold text-blue-900">③ 법인세 실제 납부 (-10.9억 원):</span><br>
+                2025년 호실적에 따른 정기 법인세 현금 납부 완료.
+              </div>
+            </div>
+            <p class="pt-2 text-slate-600 border-t border-slate-200">
+              <strong>현금전환주기(CCC) 검증:</strong> 매출채권 회수일수(DSO 41.5일)는 매우 건전하며, 하반기 고객사의 방산 검수 통과 및 대금 결제가 완료되면 **상반기에 묶였던 약 50억 원의 운전자본이 대거 현금으로 환원되며 OCF가 영업이익을 큰 폭으로 초과하는 '현금 유입 사이클'이 전개**될 것으로 확증됩니다.
+            </p>
+          </div>
+        </div>
+
+        <!-- 심층 06. 핵심 변수 민감도 분석 및 연간 추정 모델링 -->
+        <div class="space-y-3 pt-2">
+          <h3 class="text-sm font-bold text-slate-900 flex items-center">
+            <span class="w-1.5 h-4 bg-purple-700 mr-2 rounded-sm inline-block"></span>
+            6. 핵심 변수(원자재가·방산납품) 시나리오별 민감도 분석 및 밸류에이션
+          </h3>
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-xs text-left border border-slate-200">
+              <thead class="bg-slate-100 text-slate-700 font-semibold border-b border-slate-200">
+                <tr>
+                  <th class="p-2.5 border-r border-slate-200">시나리오 구분</th>
+                  <th class="p-2.5 border-r border-slate-200">주요 변수 가정</th>
+                  <th class="p-2.5 border-r border-slate-200">연간 예상 매출액</th>
+                  <th class="p-2.5 border-r border-slate-200">연간 예상 영업이익</th>
+                  <th class="p-2.5 border-r border-slate-200">예상 영업이익률</th>
+                  <th class="p-2.5">Forward EPS 및 시사점</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50 bg-emerald-50/30 font-semibold">
+                  <td class="p-2.5 border-r border-slate-200 text-emerald-900">Base Case (기준)</td>
+                  <td class="p-2.5 border-r border-slate-200">방산 납기 정상, 원자재가 현행 유지</td>
+                  <td class="p-2.5 border-r border-slate-200">1,680억 원</td>
+                  <td class="p-2.5 border-r border-slate-200 text-emerald-700 font-bold">156.2억 원</td>
+                  <td class="p-2.5 border-r border-slate-200">9.30%</td>
+                  <td class="p-2.5">EPS 1,592원 (PER 9.7배)</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 border-r border-slate-200 text-blue-900">Bull Case (낙관)</td>
+                  <td class="p-2.5 border-r border-slate-200">천궁-II 추가 인도, 주석 시세 안정화</td>
+                  <td class="p-2.5 border-r border-slate-200">1,780억 원</td>
+                  <td class="p-2.5 border-r border-slate-200 text-blue-700 font-bold">172.7억 원</td>
+                  <td class="p-2.5 border-r border-slate-200">9.70%</td>
+                  <td class="p-2.5">EPS 1,754원 (PER 8.8배)</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 border-r border-slate-200 text-amber-900">Stress 1 (원자재 급등)</td>
+                  <td class="p-2.5 border-r border-slate-200">주석·은 시세 +15% 추가 급등</td>
+                  <td class="p-2.5 border-r border-slate-200">1,720억 원 (판가연동)</td>
+                  <td class="p-2.5 border-r border-slate-200 text-amber-700 font-bold">137.5억 원</td>
+                  <td class="p-2.5 border-r border-slate-200">7.99%</td>
+                  <td class="p-2.5">EPS 1,390원 (마진 압박 방어)</td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5 border-r border-slate-200 text-red-900">Stress 2 (납품 지연)</td>
+                  <td class="p-2.5 border-r border-slate-200">방산 수출 검수 4Q ➔ 1Q로 이연</td>
+                  <td class="p-2.5 border-r border-slate-200">1,520억 원</td>
+                  <td class="p-2.5 border-r border-slate-200 text-red-700 font-bold">128.0억 원</td>
+                  <td class="p-2.5 border-r border-slate-200">8.42%</td>
+                  <td class="p-2.5">EPS 1,295원 (실적 이연일 뿐 이익 훼손 아님)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- 하단 푸터 -->
+  <footer class="bg-white border-t border-slate-200 py-4 mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500">
+      <div>
+        본 보고서는 4인의 독립 전문 서브에이전트(BM, 해자, 리스크, 재무 손익계산서) 협업 분석 및 DART 공시 원천 데이터를 바탕으로 작성되었습니다.
+      </div>
+      <div class="mt-2 sm:mt-0 font-medium text-slate-600">
+        최종 갱신: 2026-09-30 13:38 | 파일 경로: C:\Users\HOME\Desktop\기업분석\빛샘전자_기업분석_보고서.html
+      </div>
+    </div>
+  </footer>
+
+  <!-- 탭 전환 및 인터랙티브 차트 스크립트 -->
+  <script>
+    // 탭 전환 로직
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => {
+        el.className = 'tab-btn px-3.5 py-1.5 rounded text-xs sm:text-sm font-medium text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition';
+      });
+
+      const selectedTab = document.getElementById(tabId);
+      if (selectedTab) selectedTab.classList.add('active');
+
+      const selectedBtn = document.getElementById('btn-' + tabId);
+      if (selectedBtn) {
+        selectedBtn.className = 'tab-btn px-3.5 py-1.5 rounded text-xs sm:text-sm font-bold bg-purple-700 text-white shadow-sm transition';
+      }
+    }
+
+    // Chart.js 초기화
+    document.addEventListener('DOMContentLoaded', function() {
+      // 1. 연간 매출 및 영업이익 성장 차트 (Tab 00)
+      const ctxAnnual = document.getElementById('chartAnnualPerformance').getContext('2d');
+      new Chart(ctxAnnual, {
+        type: 'bar',
+        data: {
+          labels: ['2023년', '2024년', '2025년', '2026.1H(확정)', '2026F(추정)'],
+          datasets: [
+            {
+              label: '매출액 (억 원)',
+              data: [741.0, 851.2, 1208.6, 800.8, 1680.0],
+              backgroundColor: '#3b82f6',
+              borderRadius: 4,
+              yAxisID: 'y'
+            },
+            {
+              label: '영업이익 (억 원)',
+              data: [36.7, 50.7, 89.9, 74.2, 156.2],
+              backgroundColor: '#10b981',
+              borderRadius: 4,
+              yAxisID: 'y'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: { color: '#f1f5f9' },
+              ticks: { color: '#64748b' }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { color: '#64748b' }
+            }
+          },
+          plugins: {
+            legend: { position: 'top', labels: { boxWidth: 12, color: '#334155' } }
+          }
+        }
+      });
+
+      // 2. 사업부문별 영업이익 비중 도넛 차트 (Tab 01)
+      const ctxProf = document.getElementById('chartProfitBreakdown').getContext('2d');
+      new Chart(ctxProf, {
+        type: 'doughnut',
+        data: {
+          labels: ['방산사업부 (51.2%)', '솔더사업부 (33.1%)', '철도전장/LED (11.3%)', '광통신사업부 (3.8%)', '네트워크사업부 (0.6%)'],
+          datasets: [{
+            data: [51.2, 33.1, 11.3, 3.8, 0.6],
+            backgroundColor: ['#1e3a8a', '#d97706', '#8b5cf6', '#0284c7', '#94a3b8']
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'right', labels: { boxWidth: 10, font: { size: 11 }, color: '#334155' } }
+          }
+        }
+      });
+
+      // 3. 이익률 추이 라인 차트 (Tab 04)
+      const ctxMargin = document.getElementById('chartMarginTrends').getContext('2d');
+      new Chart(ctxMargin, {
+        type: 'line',
+        data: {
+          labels: ['2023년', '2024년', '2025년', '2025.1H', '2026.1H', '2026F(추정)'],
+          datasets: [
+            {
+              label: '매출총이익률 (GPM %)',
+              data: [12.83, 14.67, 14.68, 12.76, 14.81, 14.80],
+              borderColor: '#2563eb',
+              backgroundColor: '#eff6ff',
+              borderWidth: 2,
+              pointRadius: 4,
+              tension: 0.2
+            },
+            {
+              label: '영업이익률 (OPM %)',
+              data: [4.95, 5.96, 7.44, 5.27, 9.27, 9.30],
+              borderColor: '#059669',
+              backgroundColor: '#ecfdf5',
+              borderWidth: 2,
+              pointRadius: 4,
+              tension: 0.2
+            },
+            {
+              label: '판관비율 (SG&A %)',
+              data: [7.88, 8.71, 7.24, 7.49, 5.54, 5.50],
+              borderColor: '#7c3aed',
+              borderWidth: 2,
+              borderDash: [4, 4],
+              pointRadius: 3,
+              tension: 0.2
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: { color: '#f1f5f9' },
+              ticks: { color: '#64748b' }
+            },
+            x: { grid: { display: false }, ticks: { color: '#64748b' } }
+          },
+          plugins: {
+            legend: { position: 'top', labels: { boxWidth: 12, color: '#334155' } }
+          }
+        }
+      });
+
+      // 4. 분기별 실적 추이 바 차트 (Tab 04)
+      const ctxQuarter = document.getElementById('chartQuarterlyTrends').getContext('2d');
+      new Chart(ctxQuarter, {
+        type: 'bar',
+        data: {
+          labels: ['2025.1Q', '2025.2Q', '2026.1Q', '2026.2Q'],
+          datasets: [
+            {
+              label: '분기 매출액 (억 원)',
+              data: [280.7, 292.2, 388.6, 412.2],
+              backgroundColor: '#93c5fd',
+              borderRadius: 3
+            },
+            {
+              label: '분기 영업이익 (억 원)',
+              data: [15.4, 14.8, 37.9, 36.3],
+              backgroundColor: '#10b981',
+              borderRadius: 3
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { color: '#64748b' } },
+            x: { grid: { display: false }, ticks: { color: '#64748b' } }
+          },
+          plugins: {
+            legend: { position: 'top', labels: { boxWidth: 12, color: '#334155' } }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
