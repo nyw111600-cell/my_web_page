@@ -10,8 +10,11 @@ import os
 import sys
 import datetime
 import requests
+import urllib3
 import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA_DIR = os.path.join(BASE_DIR, "data", "trade")
@@ -53,7 +56,8 @@ def fetch_latest_tradedata(start_ym=None, end_ym=None):
         print(f"[경고] 세션 초기화 중 예외 (계속 진행): {e}", flush=True)
 
     # 1. Check maxYear
-    max_year = "202609"
+    now_ym = datetime.datetime.now().strftime("%Y%m")
+    max_year = now_ym
     try:
         r_box = session.post('https://tradedata.go.kr/cts/hmpg/retrieveSetSelectBoxTentative.do', data={'statsKind': 'P'}, verify=False, timeout=10)
         j_box = r_box.json()
@@ -102,6 +106,24 @@ def fetch_latest_tradedata(start_ym=None, end_ym=None):
 
     raw_items = j_data['items']
     print(f">> [성공] 관세청 서버로부터 총 {len(raw_items)}개 잠정치 행을 수신했습니다.", flush=True)
+
+    # 중복 검사: 기존 엑셀 파일에 이미 최신 공시 행이 반영되어 있는지 확인
+    existing_data = update_trade_dashboard.parse_excel_files(DATA_DIR)
+    if existing_data and existing_data.get("rows"):
+        last_row = existing_data["rows"][-1]
+        latest_item = raw_items[-1]
+        cur_mon = str(latest_item.get("priodMon", "")).strip().replace("-", "")
+        cur_dt = str(latest_item.get("priodDt", "")).strip()
+        try:
+            cur_total = float(str(latest_item.get("itemUsdAmt00", 0)).replace(",", "").strip())
+        except (ValueError, TypeError):
+            cur_total = 0.0
+
+        if (last_row.get("month") == cur_mon and 
+            last_row.get("period") == cur_dt and 
+            abs(last_row.get("전체", 0) - cur_total) < 1.0):
+            print(f">> [알림] 최신 통계 데이터({cur_mon} {cur_dt})가 이미 반영되어 있습니다. (신규 공시 없음)", flush=True)
+            return True
 
     # 2. Build Excel File
     print(">> [3/4] 엑셀(.xlsx) 파일 생성 및 데이터 포맷팅 중...", flush=True)

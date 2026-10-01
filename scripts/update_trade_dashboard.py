@@ -1115,7 +1115,26 @@ def generate_html_dashboard(dataset):
         f.write(html)
 
     print(f"[완료] 대시보드 파일 갱신 완료: {OUT_FILE}")
+    update_index_timestamp()
     return True
+
+def update_index_timestamp():
+    index_file = os.path.join(BASE_DIR, "index.html")
+    if not os.path.exists(index_file):
+        return
+    try:
+        import re
+        with open(index_file, "r", encoding="utf-8") as f:
+            content = f.read()
+        now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+        pattern = r'(href="trade_10days\.html"[^>]*>[\s\S]*?<div class="card-footer-date">🕒\s*)[0-9]{4}-[0-9]{2}-[0-9]{2}\s+[0-9]{2}:[0-9]{2}(</div>)'
+        new_content, count = re.subn(pattern, rf'\g<1>{now_str}\2', content)
+        if count > 0:
+            with open(index_file, "w", encoding="utf-8") as f:
+                f.write(new_content)
+            print(f"[정보] index.html 대시보드 카드 일시 동기화 완료: {now_str}")
+    except Exception as e:
+        print(f"[경고] index.html 타임스탬프 갱신 실패 (무시): {e}")
 
 def main():
     print(f"=== [관세청 10일 수출입통계 대시보드 자동 빌더] ===")
