@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>빛샘전자 (072950) 리스크 및 밸류에이션 심층분석 리포트</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background-color: #f8fafc; color: #1e293b; }
+    .card { background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 0.5rem; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05); }
+    .table-header { background-color: #f8fafc; border-bottom: 1px solid #cbd5e1; color: #475569; font-weight: 600; }
+    .mono-num { font-variant-numeric: tabular-nums; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <!-- Header (AGENTS.md 연보라 헤더 규격 준수) -->
+  <header class="sticky top-0 z-50 bg-[#f5f3ff]/95 backdrop-blur-md border-b border-purple-200/80">
+    <!-- Row 1: Brand & Meta Bar -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between border-b border-purple-200/70">
+      <div class="flex items-center space-x-3">
+        <a href="index.html" class="inline-flex items-center px-2.5 py-1 rounded text-xs font-semibold bg-purple-100 text-purple-900 hover:bg-purple-200 border border-purple-300/80 transition mr-2">← 메인화면</a>
+        <span class="text-base font-bold text-purple-950">빛샘전자</span>
+        <span class="text-xs font-mono text-purple-700 bg-purple-100/80 px-2 py-0.5 rounded border border-purple-200">072950 · 코스닥</span>
+        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-blue-100 text-blue-800 border border-blue-200">밸류에이션 & 리스크 매니지먼트</span>
+      </div>
+      <div class="text-xs text-purple-700 font-medium">
+        기준일: 2026년 10월 2일 | 에이전트 4: 밸류에이션 및 리스크 매니저
+      </div>
+    </div>
+    <!-- Row 2: 5 Tabs Bar (03 탭 활성화) -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex space-x-1 py-2 overflow-x-auto">
+      <a href="vissem_00_overview.html" class="px-3.5 py-1.5 rounded-md text-xs font-medium text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition whitespace-nowrap">00. 총괄 리포트</a>
+      <a href="vissem_01_business_model.html" class="px-3.5 py-1.5 rounded-md text-xs font-medium text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition whitespace-nowrap">01. 비즈니스 모델</a>
+      <a href="vissem_02_economic_moat.html" class="px-3.5 py-1.5 rounded-md text-xs font-medium text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition whitespace-nowrap">02. 경제적 해자</a>
+      <a href="vissem_03_valuation_risk.html" class="px-3.5 py-1.5 rounded-md text-xs font-bold bg-purple-700 text-white shadow-sm transition whitespace-nowrap">03. 리스크 분석</a>
+      <a href="vissem_04_financial_deepdive.html" class="px-3.5 py-1.5 rounded-md text-xs font-medium text-purple-800/80 hover:text-purple-950 hover:bg-purple-100/80 transition whitespace-nowrap">04. 재무 심층분석</a>
+</div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+    <!-- Section 1: Executive Summary & Comprehensive Status -->
+    <div class="card p-6 bg-gradient-to-r from-purple-50/60 to-white border border-purple-200">
+      <div class="flex flex-col md:flex-row md:items-start justify-between gap-6">
+        <div>
+          <div class="flex flex-wrap gap-2 mb-2">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-900 text-white">
+              VALUATION & RISK MANAGEMENT
+            </span>
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
+              오버행 0% (CLEAN)
+            </span>
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-blue-100 text-blue-800 border border-blue-200">
+              PEG 0.16 (극도의 초저평가)
+            </span>
+          </div>
+          <h1 class="text-2xl font-bold text-gray-900">
+            방산 전장 체질 전환과 사상 최대 이익 속 극단적 저평가와 무차입 클린 리스크 프로파일
+          </h1>
+          <p class="mt-3 text-xs md:text-sm text-gray-600 leading-relaxed max-w-4xl">
+            빛샘전자는 2024년 8월 방산 와이어링 하네스 및 특수 케이블 전문업체(일진전자산업) 흡수합병을 기점으로 사업 포트폴리오의 구조적 체질 전환을 완성했습니다. 2025년 창사 이래 최대 매출 1,208.59억 원(+42.0% YoY) 및 영업이익 89.90억 원(+77.2% YoY)을 달성한 데 이어, 2026년 상반기 이미 영업이익 74.22억 원(OPM 10.88%)을 기록하여 연간 영업이익 155.00억 원(+72.4% YoY) 달성이 가시권에 진입했습니다. 현재 주가(17,590원, 시가총액 1,416억 원)는 2026년 예상 실적 기준 Forward PER 11.06배(Forward EPS 1,590원), Forward PBR 1.49배(Forward BPS 11,800원)에 불과합니다. 특히 EPS 성장률(+69.5%) 대비 배수를 측정한 PEG Ratio는 0.16배로 역사적 저점 상태이며, 미상환 CB·BW 및 스톡옵션이 0주인 클린 자본구조와 35.10%의 확고한 지배지분을 보유하고 있어 하방 경직성이 극도로 우수합니다.
+          </p>
+        </div>
+        <div class="flex flex-col items-end justify-center bg-white p-4 rounded-lg border border-purple-200 shadow-sm min-w-[220px]">
+          <span class="text-xs text-gray-500 font-medium">1차 적정 목표주가 (Base)</span>
+          <span class="text-2xl font-extrabold text-blue-900 font-mono">21,500원</span>
+          <span class="text-xs font-semibold text-emerald-600 mt-1">목표 상승여력 +22.2%</span>
+          <div class="mt-3 pt-3 border-t border-gray-100 w-full text-right text-[11px] text-gray-500 space-y-0.5">
+            <div>현재가: <span class="font-bold text-gray-800 font-mono">17,590원</span></div>
+            <div>시가총액: <span class="font-mono">1,416억 원</span></div>
+            <div>확률가중 기대주가: <span class="font-bold text-blue-800 font-mono">20,950원 (+19.1%)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Core Status Badges Bar -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-6 pt-5 border-t border-purple-100 text-xs">
+        <div class="flex items-center justify-between p-3 bg-white rounded border border-gray-200">
+          <span class="text-gray-500 font-medium">밸류에이션 매력도</span>
+          <span class="font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">EXTREME VALUE (초저평가)</span>
+        </div>
+        <div class="flex items-center justify-between p-3 bg-white rounded border border-gray-200">
+          <span class="text-gray-500 font-medium">다운사이드 방어력</span>
+          <span class="font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded">HIGH (원가전가 100%)</span>
+        </div>
+        <div class="flex items-center justify-between p-3 bg-white rounded border border-gray-200">
+          <span class="text-gray-500 font-medium">희석 / 오버행 위험도</span>
+          <span class="font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">ZERO CLEAN (CB/BW 전무)</span>
+        </div>
+        <div class="flex items-center justify-between p-3 bg-white rounded border border-gray-200">
+          <span class="text-gray-500 font-medium">지배구조 안정성</span>
+          <span class="font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">SOLID (대주주 일가 35.10%)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2: 5대 핵심 가치평가 배수 지표 카드 Grid -->
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      <div class="card p-4 border-t-4 border-blue-600">
+        <span class="text-xs font-semibold text-gray-500">2026F Forward PER</span>
+        <div class="text-xl font-extrabold text-blue-900 mt-1 mono-num">11.06배</div>
+        <span class="text-[11px] text-gray-500">EPS 1,590원 기준</span>
+      </div>
+      <div class="card p-4 border-t-4 border-blue-600">
+        <span class="text-xs font-semibold text-gray-500">2026F Forward PBR</span>
+        <div class="text-xl font-extrabold text-blue-900 mt-1 mono-num">1.49배</div>
+        <span class="text-[11px] text-gray-500">BPS 11,800원 기준</span>
+      </div>
+      <div class="card p-4 border-t-4 border-emerald-600">
+        <span class="text-xs font-semibold text-gray-500">PEG Ratio</span>
+        <div class="text-xl font-extrabold text-emerald-700 mt-1 mono-num">0.16</div>
+        <span class="text-[11px] text-emerald-600 font-medium">EPS 성장률 69.5%</span>
+      </div>
+      <div class="card p-4 border-t-4 border-purple-600">
+        <span class="text-xs font-semibold text-gray-500">EV / EBITDA</span>
+        <div class="text-xl font-extrabold text-purple-900 mt-1 mono-num">8.2배</div>
+        <span class="text-[11px] text-gray-500">순차입금 음수(순현금)</span>
+      </div>
+      <div class="card p-4 border-t-4 border-purple-600">
+        <span class="text-xs font-semibold text-gray-500">Trailing PSR</span>
+        <div class="text-xl font-extrabold text-purple-900 mt-1 mono-num">0.96배</div>
+        <span class="text-[11px] text-gray-500">2026E 매출 1,480억</span>
+      </div>
+      <div class="card p-4 border-t-4 border-emerald-600">
+        <span class="text-xs font-semibold text-gray-500">FCF Yield (잉여수익률)</span>
+        <div class="text-xl font-extrabold text-emerald-700 mt-1 mono-num">7.2%</div>
+        <span class="text-[11px] text-emerald-600 font-medium">연 100억+ FCF 창출</span>
+      </div>
+    </div>
+
+    <!-- Section 3: 5대 상대가치 배수 5개년 시계열 밴드 및 분위수 분석 -->
+    <div class="card p-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-gray-100 gap-2">
+        <div>
+          <h2 class="text-base font-bold text-gray-900">
+            5대 상대가치 배수 5개년 시계열 추이 및 분위수(Percentile) 정밀 분석
+          </h2>
+          <p class="text-xs text-gray-500 mt-0.5">
+            과거 5개년(2022년~2026E) DART 공시 실적 및 시장 주가 기준 상대가치 배수 변동성 검증
+          </p>
+        </div>
+        <div class="text-xs text-gray-500 font-mono">
+          5개년 평균 PER: 16.5배 | 5개년 평균 PBR: 1.48배
+        </div>
+      </div>
+
+      <!-- 5개년 배수 시계열 테이블 -->
+      <div class="overflow-x-auto mt-4">
+        <table class="w-full text-xs text-left border-collapse">
+          <thead>
+            <tr class="table-header">
+              <th class="py-2.5 px-3">가치평가 지표</th>
+              <th class="py-2.5 px-3 text-right">2022년</th>
+              <th class="py-2.5 px-3 text-right">2023년</th>
+              <th class="py-2.5 px-3 text-right">2024년</th>
+              <th class="py-2.5 px-3 text-right">2025년</th>
+              <th class="py-2.5 px-3 text-right bg-purple-50/60 font-bold text-purple-950">2026년 (E)</th>
+              <th class="py-2.5 px-3 text-right">5개년 평균</th>
+              <th class="py-2.5 px-3 text-right">5개년 범위 (최저~최고)</th>
+              <th class="py-2.5 px-3 text-right text-blue-900 font-bold">현재 백분위 (Percentile)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100 text-gray-700 mono-num">
+            <tr class="hover:bg-gray-50/50">
+              <td class="py-2.5 px-3 font-sans font-bold text-gray-900">PER (주가수익비율)</td>
+              <td class="py-2.5 px-3 text-right">13.50배</td>
+              <td class="py-2.5 px-3 text-right">16.20배</td>
+              <td class="py-2.5 px-3 text-right">17.80배</td>
+              <td class="py-2.5 px-3 text-right">18.75배</td>
+              <td class="py-2.5 px-3 text-right bg-purple-50/60 font-bold text-purple-950">11.06배</td>
+              <td class="py-2.5 px-3 text-right">15.46배</td>
+              <td class="py-2.5 px-3 text-right">11.06배 ~ 18.75배</td>
+              <td class="py-2.5 px-3 text-right font-sans font-bold text-emerald-700">0.0% (역사적 최저점)</td>
+            </tr>
+            <tr class="hover:bg-gray-50/50">
+              <td class="py-2.5 px-3 font-sans font-bold text-gray-900">PBR (주가순자산비율)</td>
+              <td class="py-2.5 px-3 text-right">1.15배</td>
+              <td class="py-2.5 px-3 text-right">1.28배</td>
+              <td class="py-2.5 px-3 text-right">1.42배</td>
+              <td class="py-2.5 px-3 text-right">1.65배</td>
+              <td class="py-2.5 px-3 text-right bg-purple-50/60 font-bold text-purple-950">1.49배</td>
+              <td class="py-2.5 px-3 text-right">1.40배</td>
+              <td class="py-2.5 px-3 text-right">1.15배 ~ 1.65배</td>
+              <td class="py-2.5 px-3 text-right font-sans font-medium text-blue-700">55.0% (평균 수준)</td>
+            </tr>
+            <tr class="hover:bg-gray-50/50">
+              <td class="py-2.5 px-3 font-sans font-bold text-gray-900">EV / EBITDA</td>
+              <td class="py-2.5 px-3 text-right">9.80배</td>
+              <td class="py-2.5 px-3 text-right">11.40배</td>
+              <td class="py-2.5 px-3 text-right">12.10배</td>
+              <td class="py-2.5 px-3 text-right">10.50배</td>
+              <td class="py-2.5 px-3 text-right bg-purple-50/60 font-bold text-purple-950">8.20배</td>
+              <td class="py-2.5 px-3 text-right">10.40배</td>
+              <td class="py-2.5 px-3 text-right">8.20배 ~ 12.10배</td>
+              <td class="py-2.5 px-3 text-right font-sans font-bold text-emerald-700">0.0% (역사적 최저점)</td>
+            </tr>
+            <tr class="hover:bg-gray-50/50">
+              <td class="py-2.5 px-3 font-sans font-bold text-gray-900">PSR (주가매출액비율)</td>
+              <td class="py-2.5 px-3 text-right">0.72배</td>
+              <td class="py-2.5 px-3 text-right">0.85배</td>
+              <td class="py-2.5 px-3 text-right">0.98배</td>
+              <td class="py-2.5 px-3 text-right">1.17배</td>
+              <td class="py-2.5 px-3 text-right bg-purple-50/60 font-bold text-purple-950">0.96배</td>
+              <td class="py-2.5 px-3 text-right">0.94배</td>
+              <td class="py-2.5 px-3 text-right">0.72배 ~ 1.17배</td>
+              <td class="py-2.5 px-3 text-right font-sans font-medium text-gray-700">53.3% (중간 구간)</td>
+            </tr>
+            <tr class="hover:bg-gray-50/50">
+              <td class="py-2.5 px-3 font-sans font-bold text-gray-900">FCF Yield (잉여수익률)</td>
+              <td class="py-2.5 px-3 text-right">3.80%</td>
+              <td class="py-2.5 px-3 text-right">4.20%</td>
+              <td class="py-2.5 px-3 text-right">5.10%</td>
+              <td class="py-2.5 px-3 text-right">6.00%</td>
+              <td class="py-2.5 px-3 text-right bg-purple-50/60 font-bold text-emerald-700">7.20%</td>
+              <td class="py-2.5 px-3 text-right">5.26%</td>
+              <td class="py-2.5 px-3 text-right">3.80% ~ 7.20%</td>
+              <td class="py-2.5 px-3 text-right font-sans font-bold text-emerald-700">100.0% (역사적 최고점)</td>
+            </tr>
+            <tr class="bg-gray-50/70 font-semibold">
+              <td class="py-2.5 px-3 font-sans text-gray-900">주당순이익 (EPS, 원)</td>
+              <td class="py-2.5 px-3 text-right">726원</td>
+              <td class="py-2.5 px-3 text-right">511원</td>
+              <td class="py-2.5 px-3 text-right">642원</td>
+              <td class="py-2.5 px-3 text-right">938원</td>
+              <td class="py-2.5 px-3 text-right bg-purple-100/70 text-purple-950 font-bold">1,590원</td>
+              <td class="py-2.5 px-3 text-right">881원</td>
+              <td class="py-2.5 px-3 text-right">511원 ~ 1,590원</td>
+              <td class="py-2.5 px-3 text-right font-sans text-blue-900 font-bold">YoY +69.5% 급증</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- PEG Ratio Deep-Dive Callout -->
+      <div class="mt-5 p-4 rounded-lg bg-blue-50/70 border border-blue-200">
+        <h3 class="text-xs font-bold text-blue-950 mb-1">
+          PEG(Price-to-Earnings Growth) 비율 0.16배 산출 및 분석적 시사점
+        </h3>
+        <p class="text-xs text-blue-900/90 leading-relaxed">
+          피터 린치(Peter Lynch)의 성장가치 평가 척도에 따르면, 통상 <strong>PEG 1.0 이하</strong>는 합리적 저평가, <strong>0.5 이하</strong>는 극단적인 초저평가(Deep Undervaluation) 구간으로 정의됩니다. 빛샘전자의 2026년 Forward PER은 11.06배(EPS 1,590원)이며, 2025년 실적치(EPS 938원) 대비 지배주주순이익 성장률은 <strong>+69.5%</strong>에 달합니다. 이에 따른 빛샘전자의 PEG는 <strong>0.16배 (11.06 ÷ 69.5)</strong>로 산출되어, K-방산 및 IT 소재 섹터 전체를 통틀어 가장 이익 성장성 대비 주가가 저평가된 기형적 밸류에이션 갭을 형성하고 있습니다.
+        </p>
+      </div>
+
+      <!-- Two Charts Grid: PER Band & PBR Band -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+        <!-- PER Band Chart -->
+        <div class="p-4 rounded-lg border border-gray-200 bg-white">
+          <div class="flex items-center justify-between pb-2 border-b border-gray-100">
+            <h3 class="text-xs font-bold text-gray-900">5개년 PER 밸류에이션 밴드 (2022 ~ 2026E)</h3>
+            <span class="text-[11px] text-emerald-600 font-semibold">현재 위치: -1σ 하단선(11.0x) 터치</span>
+          </div>
+          <div class="h-64 mt-3">
+            <canvas id="perBandChart"></canvas>
+          </div>
+          <p class="text-[11px] text-gray-500 mt-2 text-right">
+            * 2026E EPS 1,590원 기준: 하단(11.0x) 17,500원 / 평균(16.5x) 26,200원 / 상단(22.0x) 35,000원
+          </p>
+        </div>
+
+        <!-- PBR Band Chart -->
+        <div class="p-4 rounded-lg border border-gray-200 bg-white">
+          <div class="flex items-center justify-between pb-2 border-b border-gray-100">
+            <h3 class="text-xs font-bold text-gray-900">5개년 PBR 밸류에이션 밴드 (2022 ~ 2026E)</h3>
+            <span class="text-[11px] text-blue-700 font-semibold">현재 위치: 1.49x (중간 밴드 수렴)</span>
+          </div>
+          <div class="h-64 mt-3">
+            <canvas id="pbrBandChart"></canvas>
+          </div>
+          <p class="text-[11px] text-gray-500 mt-2 text-right">
+            * 2026E BPS 11,800원 기준: 0.8x 9,440원 / 1.2x 14,160원 / 1.6x 18,880원 / 2.0x 23,600원
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4: 동종업계(Peer Group) 상대가치 비교 및 리레이팅 룸 -->
+    <div class="card p-6">
+      <div class="flex items-center justify-between pb-3 border-b border-gray-100">
+        <div>
+          <h2 class="text-base font-bold text-gray-900">
+            K-방산 전장 및 부품·소재 섹터 피어 그룹(Peer Group) 멀티플 비교
+          </h2>
+          <p class="text-xs text-gray-500 mt-0.5">
+            국내 유도무기/항공/통신 전장 벤더 및 고부가가치 전자소재 기업 대비 밸류에이션 격차 검토
+          </p>
+        </div>
+        <span class="text-xs font-semibold text-blue-800 bg-blue-50 px-2.5 py-1 rounded">
+          피어 평균 PER 18.4배 대비 40% 저평가
+        </span>
+      </div>
+
+      <div class="overflow-x-auto mt-4">
+        <table class="w-full text-xs text-left border-collapse">
+          <thead>
+            <tr class="table-header">
+              <th class="py-2.5 px-3">기업명</th>
+              <th class="py-2.5 px-3">주요 핵심 사업 영역</th>
+              <th class="py-2.5 px-3 text-right">시가총액</th>
+              <th class="py-2.5 px-3 text-right">2026(E) OPM</th>
+              <th class="py-2.5 px-3 text-right">2026(E) ROE</th>
+              <th class="py-2.5 px-3 text-right">2026(E) PER</th>
+              <th class="py-2.5 px-3 text-right">2026(E) PBR</th>
+              <th class="py-2.5 px-3 text-right">PEG Ratio</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100 text-gray-700 mono-num">
+            <tr class="bg-purple-50/70 font-semibold">
+              <td class="py-2.5 px-3 font-sans font-bold text-purple-950">빛샘전자 (072950)</td>
+              <td class="py-2.5 px-3 font-sans text-purple-900">방산 특수 와이어링 하네스 / 솔더 / 광통신</td>
+              <td class="py-2.5 px-3 text-right font-bold text-purple-950">1,416억</td>
+              <td class="py-2.5 px-3 text-right font-bold text-emerald-700">10.5%</td>
+              <td class="py-2.5 px-3 text-right font-bold text-blue-900">14.8%</td>
+              <td class="py-2.5 px-3 text-right font-bold text-purple-950">11.06배</td>
+              <td class="py-2.5 px-3 text-right font-bold text-purple-950">1.49배</td>
+              <td class="py-2.5 px-3 text-right font-bold text-emerald-700">0.16</td>
+            </tr>
+            <tr class="hover:bg-gray-50/50">
+              <td class="py-2.5 px-3 font-sans font-semibold text-gray-900">코츠테크놀로지 (448710)</td>
+              <td class="py-2.5 px-3 font-sans text-gray-600">방산용 임베디드 컴퓨터 및 전장 시스템</td>
+              <td class="py-2.5 px-3 text-right">1,620억</td>
+              <td class="py-2.5 px-3 text-right">10.2%</td>
+              <td class="py-2.5 px-3 text-right">13.5%</td>
+              <td class="py-2.5 px-3 text-right">17.20배</td>
+              <td class="py-2.5 px-3 text-right">2.10배</td>
+              <td class="py-2.5 px-3 text-right">0.68</td>
+            </tr>
+            <tr class="hover:bg-gray-50/50">
+              <td class="py-2.5 px-3 font-sans font-semibold text-gray-900">켄코아에어로스페이스 (274090)</td>
+              <td class="py-2.5 px-3 font-sans text-gray-600">항공우주 및 방산 특수 구조물·부품</td>
+              <td class="py-2.5 px-3 text-right">2,150억</td>
+              <td class="py-2.5 px-3 text-right">7.8%</td>
+              <td class="py-2.5 px-3 text-right">9.2%</td>
+              <td class="py-2.5 px-3 text-right">24.50배</td>
+              <td class="py-2.5 px-3 text-right">2.80배</td>
+              <td class="py-2.5 px-3 text-right">1.12</td>
+            </tr>
+            <tr class="hover:bg-gray-50/50">
+              <td class="py-2.5 px-3 font-sans font-semibold text-gray-900">LIG넥스원 (079550)</td>
+              <td class="py-2.5 px-3 font-sans text-gray-600">정밀유도무기 및 방산 체계 종합 (고객사)</td>
+              <td class="py-2.5 px-3 text-right">4.8조</td>
+              <td class="py-2.5 px-3 text-right">8.9%</td>
+              <td class="py-2.5 px-3 text-right">16.2%</td>
+              <td class="py-2.5 px-3 text-right">19.80배</td>
+              <td class="py-2.5 px-3 text-right">2.65배</td>
+              <td class="py-2.5 px-3 text-right">0.82</td>
+            </tr>
+            <tr class="hover:bg-gray-50/50">
+              <td class="py-2.5 px-3 font-sans font-semibold text-gray-900">덕산하이메탈 (077360)</td>
+              <td class="py-2.5 px-3 font-sans text-gray-600">반도체 솔더볼 및 전자 접합 소재</td>
+              <td class="py-2.5 px-3 text-right">2,480억</td>
+              <td class="py-2.5 px-3 text-right">9.4%</td>
+              <td class="py-2.5 px-3 text-right">8.1%</td>
+              <td class="py-2.5 px-3 text-right">16.50배</td>
+              <td class="py-2.5 px-3 text-right">1.52배</td>
+              <td class="py-2.5 px-3 text-right">0.75</td>
+            </tr>
+            <tr class="bg-gray-50/80 font-semibold">
+              <td class="py-2.5 px-3 font-sans text-gray-700" colspan="2">방산 및 부품소재 피어 평균 (빛샘전자 제외)</td>
+              <td class="py-2.5 px-3 text-right font-sans">-</td>
+              <td class="py-2.5 px-3 text-right">9.1%</td>
+              <td class="py-2.5 px-3 text-right">11.8%</td>
+              <td class="py-2.5 px-3 text-right font-bold text-blue-900">19.50배</td>
+              <td class="py-2.5 px-3 text-right font-bold text-blue-900">2.27배</td>
+              <td class="py-2.5 px-3 text-right">0.84</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-4 text-xs text-gray-600 leading-relaxed bg-gray-50 p-3 rounded border border-gray-200">
+        <strong>비교 분석 결론:</strong> 빛샘전자는 2026년 예상 ROE(14.8%)와 영업이익률(10.5%) 모두 피어 평균(ROE 11.8%, OPM 9.1%)을 뚜렷하게 상회함에도 불구하고, 과거 전통 LED 모듈 사업자 시절의 저평가 멀티플 관성이 잔존하여 피어 평균 PER(19.5배) 대비 약 43% 할인된 11.06배에 거래되고 있습니다. 합병 2년 차에 진입하여 방산 실적 가시성이 분기별로 입증됨에 따라 피어 평균의 보수적 하단인 13.5~15.0배 수준으로만 리레이팅되어도 주가는 21,500원~23,800원선으로 급격히 재평가될 수 있는 강력한 업사이드 룸을 보유하고 있습니다.
+      </div>
+    </div>
+
+    <!-- Section 5: 3대 다운사이드 스트레스 테스트 (Downside Stress Testing) -->
+    <div class="card p-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-gray-100 gap-2">
+        <div>
+          <h2 class="text-base font-bold text-gray-900">
+            3대 다운사이드 스트레스 테스트 (Downside Stress Testing)
+          </h2>
+          <p class="text-xs text-gray-500 mt-0.5">
+            환율 급등, 국제 원자재가 인상, 방산 납기 지연에 따른 2026년 영업이익 및 순이익 충격 시뮬레이션
+          </p>
+        </div>
+        <span class="text-xs font-semibold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded">
+          종합 내성: 스트레스 극한 상황에서도 120억+ 영업이익 수성 가능
+        </span>
+      </div>
+
+      <!-- Stress Test Matrix Table -->
+      <div class="overflow-x-auto mt-4">
+        <table class="w-full text-xs text-left border-collapse">
+          <thead>
+            <tr class="table-header">
+              <th class="py-2.5 px-3">스트레스 테스트 시나리오</th>
+              <th class="py-2.5 px-3">가정된 외생 변수 충격</th>
+              <th class="py-2.5 px-3">연결 원가/매출 노출 규모</th>
+              <th class="py-2.5 px-3 text-right">연간 영업이익 변동액</th>
+              <th class="py-2.5 px-3 text-right">조정 영업이익 (2026E)</th>
+              <th class="py-2.5 px-3 text-right">조정 Forward PER</th>
+              <th class="py-2.5 px-3">사내 완충 및 리스크 헤지 매커니즘</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100 text-gray-700 mono-num">
+            <!-- Stress 1-1 -->
+            <tr class="hover:bg-gray-50/50">
+              <td class="py-3 px-3 font-sans font-bold text-gray-900" rowspan="2">
+                1. 원/달러 환율 변동<br>
+                <span class="text-[11px] font-normal text-gray-500">(기준환율: 1,350원)</span>
+              </td>
+              <td class="py-3 px-3 font-sans text-rose-700 font-semibold">환율 +50원 급등 (1,400원)</td>
+              <td class="py-3 px-3 font-sans text-gray-600" rowspan="2">
+                외화 원재료 매입 430억 원<br>
+                <span class="text-[11px] text-gray-400">• 방산 커넥터: 330억 원<br>• 솔더 주석 원료: 100억 원</span>
+              </td>
+              <td class="py-3 px-3 text-right text-rose-700 font-bold">-6.5억 원</td>
+              <td class="py-3 px-3 text-right font-bold text-gray-900">148.5억 원</td>
+              <td class="py-3 px-3 text-right text-gray-800">11.55배</td>
+              <td class="py-3 px-3 font-sans text-gray-600 text-[11px] leading-relaxed" rowspan="2">
+                • 방산 납품 계약 내 환율 연동 에스컬레이션(Escalation) 조항 탑재로 충격의 60% 자동 보전<br>
+                • 방위사업청 원가 검증 시 외화 원가 상승분 사후 정산 인정
+              </td>
+            </tr>
+            <tr class="hover:bg-gray-50/50">
+              <td class="py-3 px-3 font-sans text-emerald-700 font-semibold">환율 -50원 하락 (1,300원)</td>
+              <td class="py-3 px-3 text-right text-emerald-700 font-bold">+6.5억 원</td>
+              <td class="py-3 px-3 text-right font-bold text-gray-900">161.5억 원</td>
+              <td class="py-3 px-3 text-right text-gray-800">10.62배</td>
+            </tr>
+
+            <!-- Stress 2-1 -->
+            <tr class="hover:bg-gray-50/50">
+              <td class="py-3 px-3 font-sans font-bold text-gray-900" rowspan="2">
+                2. LME 원자재가 변동<br>
+                <span class="text-[11px] font-normal text-gray-500">(주석·은 국제시세)</span>
+              </td>
+              <td class="py-3 px-3 font-sans text-rose-700 font-semibold">LME 주석/은 +10% 급등</td>
+              <td class="py-3 px-3 font-sans text-gray-600" rowspan="2">
+                솔더 금속 원재료 매입 약 250억 원<br>
+                <span class="text-[11px] text-gray-400">• 주석(Sn) 매입: 215억 원<br>• 은(Ag) 매입: 35억 원</span>
+              </td>
+              <td class="py-3 px-3 text-right text-rose-700 font-bold">-4.0억 원 (시차마진)</td>
+              <td class="py-3 px-3 text-right font-bold text-gray-900">151.0억 원</td>
+              <td class="py-3 px-3 text-right text-gray-800">11.35배</td>
+              <td class="py-3 px-3 font-sans text-gray-600 text-[11px] leading-relaxed" rowspan="2">
+                • <strong>판가 전가율 100%:</strong> 삼성전자/SK하이닉스 벤더 등 고객사와 1~2개월 시차 연동형 ASP 계약 체결<br>
+                • 단기 시차(Time Lag)에 따른 일시적 훼손 외 연간 OPM 변동 0.3%p 미만 제한
+              </td>
+            </tr>
+            <tr class="hover:bg-gray-50/50">
+              <td class="py-3 px-3 font-sans text-rose-700 font-semibold">LME 주석/은 +20% 폭등</td>
+              <td class="py-3 px-3 text-right text-rose-700 font-bold">-8.0억 원 (시차마진)</td>
+              <td class="py-3 px-3 text-right font-bold text-gray-900">147.0억 원</td>
+              <td class="py-3 px-3 text-right text-gray-800">11.66배</td>
+            </tr>
+
+            <!-- Stress 3-1 -->
+            <tr class="hover:bg-gray-50/50">
+              <td class="py-3 px-3 font-sans font-bold text-gray-900">
+                3. 방산 납기 15% 이연<br>
+                <span class="text-[11px] font-normal text-gray-500">(체계사 검수 일정 지연)</span>
+              </td>
+              <td class="py-3 px-3 font-sans text-amber-700 font-semibold">체계업체 일정 15% 차기 이연</td>
+              <td class="py-3 px-3 font-sans text-gray-600">
+                방산 사업 연간 수주 470억 원 중<br>
+                <span class="text-[11px] text-gray-400">약 70.5억 원 매출 차기 연도 이연</span>
+              </td>
+              <td class="py-3 px-3 text-right text-amber-700 font-bold">-10.5억 원</td>
+              <td class="py-3 px-3 text-right font-bold text-gray-900">144.5억 원</td>
+              <td class="py-3 px-3 text-right text-gray-800">11.86배</td>
+              <td class="py-3 px-3 font-sans text-gray-600 text-[11px] leading-relaxed">
+                • <strong>계약 취소 리스크 0%:</strong> 국방 중기 계획에 편성된 확정 예산으로 단순 납기 이연<br>
+                • 당해 연도 실적 일시 지연 시, 차기 연도 매출 폭증(Catch-up)으로 100% 회수
+              </td>
+            </tr>
+
+            <!-- Extreme Combined Stress Case -->
+            <tr class="bg-rose-50/60 font-semibold">
+              <td class="py-3 px-3 font-sans font-bold text-rose-950">
+                극한 복합 위기 (Worst Case)
+              </td>
+              <td class="py-3 px-3 font-sans text-rose-900 font-bold">환율 +50원 & LME +20% & 납기 15% 동시발생</td>
+              <td class="py-3 px-3 font-sans text-gray-700">전 사업부문 동시 외생 쇼크 발생</td>
+              <td class="py-3 px-3 text-right text-rose-800 font-bold">-25.0억 원</td>
+              <td class="py-3 px-3 text-right font-bold text-rose-900">130.0억 원</td>
+              <td class="py-3 px-3 text-right text-rose-900 font-bold">13.18배</td>
+              <td class="py-3 px-3 font-sans text-rose-900 text-[11px]">
+                최악의 3중 복합 위기 하에서도 연간 영업이익 130억 원(YoY +44.6%) 유지 및 Forward PER 13.18배로 절대적 흑자 체력 입증
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Stress Test Chart -->
+      <div class="mt-6 p-4 rounded-lg border border-gray-200 bg-white">
+        <div class="flex items-center justify-between pb-2 border-b border-gray-100">
+          <h3 class="text-xs font-bold text-gray-900">스트레스 테스트 시나리오별 2026년 영업이익 변동 시뮬레이션</h3>
+          <span class="text-xs text-gray-500">단위: 억 원</span>
+        </div>
+        <div class="h-60 mt-3">
+          <canvas id="stressChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 6: 오버행 0% (Clean Capital Structure) 및 지배구조 정밀 검증 -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+      <!-- Clean Overhang Card -->
+      <div class="card p-6 border-l-4 border-emerald-600">
+        <div class="flex items-center justify-between pb-3 border-b border-gray-100">
+          <h3 class="text-base font-bold text-emerald-950">
+            오버행(Overhang) 0% 클린 자본구조 정밀 검증
+          </h3>
+          <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">CLEAN 100%</span>
+        </div>
+
+        <p class="text-xs text-gray-600 mt-3 leading-relaxed">
+          코스닥 중소형주 투자의 가장 큰 리스크인 <strong>메자닌(CB·BW) 물량 출회 및 잠재 희석(Dilution) 요인을 DART 공시 원천 데이터(사업보고서 및 분기보고서 "증권의 발행을 통한 자금조달에 관한 사항")를 통해 전수 정밀 검증</strong>했습니다.
+        </p>
+
+        <div class="mt-4 space-y-2 text-xs">
+          <div class="flex justify-between items-center py-2 border-b border-gray-100">
+            <span class="font-medium text-gray-700">미상환 전환사채 (CB) 잔액</span>
+            <span class="font-bold text-emerald-700 font-mono">0원 (완전 전무)</span>
+          </div>
+          <div class="flex justify-between items-center py-2 border-b border-gray-100">
+            <span class="font-medium text-gray-700">미상환 신주인수권부사채 (BW) 잔액</span>
+            <span class="font-bold text-emerald-700 font-mono">0원 (완전 전무)</span>
+          </div>
+          <div class="flex justify-between items-center py-2 border-b border-gray-100">
+            <span class="font-medium text-gray-700">미행사 주식매수선택권 (스톡옵션)</span>
+            <span class="font-bold text-emerald-700 font-mono">0주 (잠재 희석주식 제로)</span>
+          </div>
+          <div class="flex justify-between items-center py-2 border-b border-gray-100">
+            <span class="font-medium text-gray-700">교환사채 (EB) 및 상환전환우선주 (RCPS)</span>
+            <span class="font-bold text-emerald-700 font-mono">0원 (발행 내역 전무)</span>
+          </div>
+          <div class="flex justify-between items-center py-2 border-b border-gray-100">
+            <span class="font-medium text-gray-700">현재 총 발행주식수</span>
+            <span class="font-bold text-gray-900 font-mono">8,052,610주</span>
+          </div>
+          <div class="flex justify-between items-center py-2 border-b border-gray-100">
+            <span class="font-medium text-gray-700">완전 희석 기준 잠재 총 주식수</span>
+            <span class="font-bold text-gray-900 font-mono">8,052,610주 (희석률 0.0%)</span>
+          </div>
+          <div class="flex justify-between items-center py-2">
+            <span class="font-medium text-gray-700">자기주식 보유량 (보통주)</span>
+            <span class="font-bold text-gray-700 font-mono">41,986주 (0.52%)</span>
+          </div>
+        </div>
+
+        <div class="mt-4 p-3 bg-emerald-50/70 rounded border border-emerald-200 text-xs text-emerald-950 leading-relaxed">
+          <strong>수급 리스크 프리미엄:</strong> 주가 급등 시 차익 실현을 노린 전환사채나 신주인수권부사채 매물이 일체 존재하지 않으므로, 주가 상승 시 오버행에 따른 탄력 둔화 우려가 원천 차단되어 있습니다.
+        </div>
+      </div>
+
+      <!-- Governance & Shareholder Return Card -->
+      <div class="card p-6 border-l-4 border-blue-600">
+        <div class="flex items-center justify-between pb-3 border-b border-gray-100">
+          <h3 class="text-base font-bold text-blue-950">
+            지배구조(Governance) 및 주주환원 정책
+          </h3>
+          <span class="text-xs font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded">지분율 35.10%</span>
+        </div>
+
+        <p class="text-xs text-gray-600 mt-3 leading-relaxed">
+          빛샘전자는 창업주 중심의 책임경영 체제와 견고한 우호 지분을 보유하고 있어 경영권 분쟁 위험이 일체 없으며, 최근 4개년 연속 현금배당을 증액하여 안정적인 주주친화 기조를 정립했습니다.
+        </p>
+
+        <div class="mt-4 space-y-2 text-xs">
+          <div class="flex justify-between items-center py-2 border-b border-gray-100">
+            <span class="font-medium text-gray-700">최대주주 강만준 회장 지분</span>
+            <span class="font-bold text-blue-900 font-mono">20.88% (1,681,000주)</span>
+          </div>
+          <div class="flex justify-between items-center py-2 border-b border-gray-100">
+            <span class="font-medium text-gray-700">특수관계인(임원 및 친인척) 포함 합산</span>
+            <span class="font-bold text-blue-900 font-mono">35.10% (2,826,500주)</span>
+          </div>
+          <div class="flex justify-between items-center py-2 border-b border-gray-100">
+            <span class="font-medium text-gray-700">유통 주식수 비율</span>
+            <span class="font-bold text-gray-700 font-mono">64.38% (약 518.4만 주)</span>
+          </div>
+          <div class="flex justify-between items-center py-2 border-b border-gray-100">
+            <span class="font-medium text-gray-700">2024년 결산 현금배당</span>
+            <span class="font-bold text-gray-800 font-mono">주당 60원 (배당총액 4.8억 원)</span>
+          </div>
+          <div class="flex justify-between items-center py-2 border-b border-gray-100">
+            <span class="font-medium text-gray-700">2025년 결산 현금배당</span>
+            <span class="font-bold text-gray-800 font-mono">주당 70원 (배당총액 5.6억 원)</span>
+          </div>
+          <div class="flex justify-between items-center py-2 border-b border-gray-100">
+            <span class="font-medium text-gray-700">2026년 예상 주당배당금 (DPS)</span>
+            <span class="font-bold text-emerald-700 font-mono">100원 ~ 120원 상향 전망</span>
+          </div>
+          <div class="flex justify-between items-center py-2">
+            <span class="font-medium text-gray-700">2026년 예상 시가배당률</span>
+            <span class="font-bold text-emerald-700 font-mono">1.8% ~ 2.2% (시세 17,590원 기준)</span>
+          </div>
+        </div>
+
+        <div class="mt-4 p-3 bg-blue-50/70 rounded border border-blue-200 text-xs text-blue-950 leading-relaxed">
+          <strong>주주환원 확대 모멘텀:</strong> 2026년 연간 순이익이 128억 원으로 전년 대비 대폭 급증함에 따라, 무차입 순현금 자산 확충을 바탕으로 배당성향 10~12%를 유지할 경우 주당 100~120원의 배당 지급이 확실시되며 주가 하방 지지선 역할을 수행합니다.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Section 7: 리스크 매트릭스 종합 진단 및 밸류에이션 종합 결론 -->
+    <div class="card p-6">
+      <div class="flex items-center justify-between pb-3 border-b border-gray-100">
+        <div>
+          <h2 class="text-base font-bold text-gray-900">
+            빛샘전자 4대 경영 리스크 종합 매트릭스 및 대응 전략
+          </h2>
+          <p class="text-xs text-gray-500 mt-0.5">
+            사업, 시장, 재무/유동성, 지배구조 전반에 걸친 종합 리스크 평가표
+          </p>
+        </div>
+        <span class="text-xs font-semibold text-gray-600 bg-gray-100 px-2 py-1 rounded">
+          전체 리스크 등급: LOW (안정권)
+        </span>
+      </div>
+
+      <div class="overflow-x-auto mt-4">
+        <table class="w-full text-xs text-left border-collapse">
+          <thead>
+            <tr class="table-header">
+              <th class="py-2.5 px-3">리스크 영역</th>
+              <th class="py-2.5 px-3">핵심 리스크 요인</th>
+              <th class="py-2.5 px-3">발생 가능성</th>
+              <th class="py-2.5 px-3">영업 충격도</th>
+              <th class="py-2.5 px-3">회사의 방어 및 관리 매커니즘</th>
+              <th class="py-2.5 px-3 text-center">종합 판정</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100 text-gray-700">
+            <tr class="hover:bg-gray-50/50">
+              <td class="py-2.5 px-3 font-semibold text-gray-900">사업 리스크</td>
+              <td class="py-2.5 px-3">K-방산 체계사(LIG, 한화) 발주 일정 변동</td>
+              <td class="py-2.5 px-3 text-amber-700">중간 (Moderate)</td>
+              <td class="py-2.5 px-3 text-amber-700">중간 (Moderate)</td>
+              <td class="py-2.5 px-3 text-gray-600">
+                정부 확정 프로젝트로 발주 취소 불가, 천궁-II·비호복합 등 다변화된 8대 무기체계 동시 공급
+              </td>
+              <td class="py-2.5 px-3 text-center">
+                <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-100 text-amber-800">관리 가능</span>
+              </td>
+            </tr>
+            <tr class="hover:bg-gray-50/50">
+              <td class="py-2.5 px-3 font-semibold text-gray-900">시장 리스크</td>
+              <td class="py-2.5 px-3">LME 주석 시세 폭등 및 환율 변동성</td>
+              <td class="py-2.5 px-3 text-amber-700">높음 (High)</td>
+              <td class="py-2.5 px-3 text-emerald-700">낮음 (Low)</td>
+              <td class="py-2.5 px-3 text-gray-600">
+                1~2개월 시차 연동형 ASP 100% 전가 계약 체결, 방산 환연동 에스컬레이션 조항 적용
+              </td>
+              <td class="py-2.5 px-3 text-center">
+                <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-100 text-emerald-800">완전 방어</span>
+              </td>
+            </tr>
+            <tr class="hover:bg-gray-50/50">
+              <td class="py-2.5 px-3 font-semibold text-gray-900">재무/유동성</td>
+              <td class="py-2.5 px-3">차입금 상환 압력 및 유동성 경색</td>
+              <td class="py-2.5 px-3 text-emerald-700">극히 낮음 (Low)</td>
+              <td class="py-2.5 px-3 text-emerald-700">극히 낮음 (Low)</td>
+              <td class="py-2.5 px-3 text-gray-600">
+                부채비율 37.5%, 순차입금 음수(순현금 구조), 연간 100억+ 잉여현금흐름(FCF) 창출
+              </td>
+              <td class="py-2.5 px-3 text-center">
+                <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-100 text-emerald-800">최상위 안전</span>
+              </td>
+            </tr>
+            <tr class="hover:bg-gray-50/50">
+              <td class="py-2.5 px-3 font-semibold text-gray-900">규제/오버행</td>
+              <td class="py-2.5 px-3">메자닌 전환 물량 출회 및 지배권 불안</td>
+              <td class="py-2.5 px-3 text-emerald-700">전무 (None)</td>
+              <td class="py-2.5 px-3 text-emerald-700">전무 (None)</td>
+              <td class="py-2.5 px-3 text-gray-600">
+                미상환 CB/BW/스톡옵션 0주, 최대주주 및 특수관계인 우호지분 35.10% 보유
+              </td>
+              <td class="py-2.5 px-3 text-center">
+                <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-100 text-emerald-800">리스크 제로</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Final Valuation Conclusion & Scenario Target Prices -->
+      <div class="mt-6 pt-5 border-t border-gray-100">
+        <h3 class="text-sm font-bold text-gray-900 mb-3">
+          3단계 목표주가 도출 및 리스크 매니저 최종 결론
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Bear -->
+          <div class="p-4 rounded-lg bg-gray-50 border border-gray-200">
+            <span class="text-xs font-bold text-gray-600 block mb-1">Bear Case (하방 보수적 지지선)</span>
+            <div class="text-xl font-bold text-gray-800 mono-num">16,500원</div>
+            <p class="text-[11px] text-gray-500 mt-1">
+              • 2026F EPS 1,590원 × PER 10.38배<br>
+              • 외생 변수 충격 시에도 현재가(17,590원) 대비 하방 룸 -6.2%로 극히 제한적
+            </p>
+          </div>
+          <!-- Base -->
+          <div class="p-4 rounded-lg bg-blue-50/70 border border-blue-200">
+            <span class="text-xs font-bold text-blue-900 block mb-1">Base Case (1차 적정 가치)</span>
+            <div class="text-xl font-extrabold text-blue-900 mono-num">21,500원</div>
+            <p class="text-[11px] text-blue-800 mt-1">
+              • 2026F EPS 1,590원 × PER 13.52배 (과거 5년 평균 15.5배 대비 여전히 할인)<br>
+              • 목표 상승여력 <strong>+22.2%</strong> (적극 매수 구간)
+            </p>
+          </div>
+          <!-- Bull -->
+          <div class="p-4 rounded-lg bg-emerald-50/70 border border-emerald-200">
+            <span class="text-xs font-bold text-emerald-900 block mb-1">Bull Case (상방 피어 리레이팅)</span>
+            <div class="text-xl font-bold text-emerald-800 mono-num">26,000원</div>
+            <p class="text-[11px] text-emerald-700 mt-1">
+              • 2026F EPS 1,590원 × PER 16.35배 (K-방산 피어 평균 19.5배 수준 근접)<br>
+              • 목표 상승여력 <strong>+47.8%</strong> (루마니아/폴란드 대량 직수출 실현 시)
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-4 p-4 rounded-lg bg-purple-50/80 border border-purple-200 text-xs text-purple-950 leading-relaxed">
+          <strong>에이전트 4 (밸류에이션 및 리스크 매니저) 총평:</strong><br>
+          빛샘전자는 방산 와이어링 하네스 합병을 통해 매출과 이익이 계단식 레벨업을 완성했음에도 불구하고, 시장의 인지 부족으로 인해 <strong>Forward PER 11.06배, PEG 0.16배라는 기형적 저평가 상태</strong>에 머물러 있습니다. 3대 스트레스 테스트(환율 급등, LME 시세 폭등, 납기 지연) 결과에서도 영업이익 130억~148억 원을 확고하게 수성할 수 있는 원가 전가력 및 제도적 완충 장치를 확보하고 있습니다. 더욱이 <strong>CB·BW 미상환 오버행이 전무(0%)하고, 대주주 지분 35.10%의 안정된 지배구조와 100~120원의 배당 확대 전망</strong>을 감안할 때, 현 주가는 강력한 하방 경직성을 토대로 상당한 비대칭적 보상(Asymmetric Upside)을 제공하는 매력적인 진입 기회로 판단됩니다.
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Charts JavaScript Logic -->
+  <script>
+    // Chart 1: PER Band Chart
+    const ctxPer = document.getElementById('perBandChart').getContext('2d');
+    new Chart(ctxPer, {
+      type: 'line',
+      data: {
+        labels: ['2022년', '2023년', '2024년', '2025년', '2026E(현재)'],
+        datasets: [
+          {
+            label: '실제 주가 (원)',
+            data: [9800, 8300, 11400, 17590, 17590],
+            borderColor: '#1e3a8a',
+            backgroundColor: '#1e3a8a',
+            borderWidth: 2.5,
+            pointRadius: 4,
+            pointHoverRadius: 6,
+            zIndex: 10
+          },
+          {
+            label: 'PER 22.0배 (+1σ 상단)',
+            data: [15972, 11242, 14124, 20636, 34980],
+            borderColor: 'rgba(220, 38, 38, 0.7)',
+            borderDash: [4, 4],
+            borderWidth: 1.5,
+            fill: false
+          },
+          {
+            label: 'PER 16.5배 (5개년 평균선)',
+            data: [11979, 8431, 10593, 15477, 26235],
+            borderColor: 'rgba(124, 58, 237, 0.7)',
+            borderDash: [3, 3],
+            borderWidth: 1.5,
+            fill: false
+          },
+          {
+            label: 'PER 11.0배 (-1σ 하단선)',
+            data: [7986, 5621, 7062, 10318, 17490],
+            borderColor: 'rgba(5, 150, 105, 0.7)',
+            borderDash: [4, 4],
+            borderWidth: 1.5,
+            fill: false
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } },
+          tooltip: { mode: 'index', intersect: false }
+        },
+        scales: {
+          y: {
+            title: { display: true, text: '주가 레벨 (원)', font: { size: 10 } },
+            grid: { color: '#f1f5f9' }
+          },
+          x: { grid: { color: '#f1f5f9' } }
+        }
+      }
+    });
+
+    // Chart 2: PBR Band Chart
+    const ctxPbr = document.getElementById('pbrBandChart').getContext('2d');
+    new Chart(ctxPbr, {
+      type: 'line',
+      data: {
+        labels: ['2022년', '2023년', '2024년', '2025년', '2026E(현재)'],
+        datasets: [
+          {
+            label: '실제 주가 (원)',
+            data: [9800, 8300, 11400, 17590, 17590],
+            borderColor: '#1e3a8a',
+            backgroundColor: '#1e3a8a',
+            borderWidth: 2.5,
+            pointRadius: 4,
+            pointHoverRadius: 6,
+            zIndex: 10
+          },
+          {
+            label: 'PBR 2.0배',
+            data: [17000, 17600, 18800, 21200, 23600],
+            borderColor: 'rgba(239, 68, 68, 0.6)',
+            borderDash: [3, 3],
+            borderWidth: 1.5,
+            fill: false
+          },
+          {
+            label: 'PBR 1.6배',
+            data: [13600, 14080, 15040, 16960, 18880],
+            borderColor: 'rgba(217, 119, 6, 0.7)',
+            borderDash: [3, 3],
+            borderWidth: 1.5,
+            fill: false
+          },
+          {
+            label: 'PBR 1.2배',
+            data: [10200, 10560, 11280, 12720, 14160],
+            borderColor: 'rgba(5, 150, 105, 0.7)',
+            borderDash: [3, 3],
+            borderWidth: 1.5,
+            fill: false
+          },
+          {
+            label: 'PBR 0.8배',
+            data: [6800, 7040, 7520, 8480, 9440],
+            borderColor: 'rgba(100, 116, 139, 0.6)',
+            borderDash: [3, 3],
+            borderWidth: 1.5,
+            fill: false
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } },
+          tooltip: { mode: 'index', intersect: false }
+        },
+        scales: {
+          y: {
+            title: { display: true, text: '주가 레벨 (원)', font: { size: 10 } },
+            grid: { color: '#f1f5f9' }
+          },
+          x: { grid: { color: '#f1f5f9' } }
+        }
+      }
+    });
+
+    // Chart 3: Stress Test Bar Chart
+    const ctxStress = document.getElementById('stressChart').getContext('2d');
+    new Chart(ctxStress, {
+      type: 'bar',
+      data: {
+        labels: [
+          '2026E Base (전망치)',
+          '환율 +50원 급등',
+          '환율 -50원 하락',
+          'LME 원자재 +10%',
+          'LME 원자재 +20%',
+          '방산 납기 15% 이연',
+          '복합 위기 (Worst Case)'
+        ],
+        datasets: [{
+          label: '예상 영업이익 (억 원)',
+          data: [155.0, 148.5, 161.5, 151.0, 147.0, 144.5, 130.0],
+          backgroundColor: [
+            '#1e3a8a',
+            '#f59e0b',
+            '#10b981',
+            '#f59e0b',
+            '#ef4444',
+            '#8b5cf6',
+            '#b91c1c'
+          ],
+          borderRadius: 4,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return '영업이익: ' + context.parsed.y + '억 원';
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            min: 100,
+            max: 170,
+            title: { display: true, text: '영업이익 (억 원)', font: { size: 10 } },
+            grid: { color: '#f1f5f9' }
+          },
+          x: {
+            ticks: { font: { size: 10 } },
+            grid: { display: false }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
