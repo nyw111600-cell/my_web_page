@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>일본 반도체 소재 기업 심층 분석</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    body {
+      font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+      line-height: 1.6;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      height: 6px;
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background-color: #cbd5e1;
+      border-radius: 9999px;
+    }
+    .tab-btn.active {
+      background-color: #1e3a8a;
+      color: #ffffff;
+      font-weight: 700;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    }
+    .tab-btn {
+      background-color: #f1f5f9;
+      color: #475569;
+    }
+    @media print {
+      header { display: none; }
+      .tab-navigation { display: none; }
+      .tab-content { display: block !important; }
+      body { background-color: #ffffff; }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- 연보라 상단 헤더 (표준 공통 디자인 규격) -->
+  <header class="bg-[#f5f3ff]/95 backdrop-blur-md border-b border-purple-200/80 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <a href="index.html" class="inline-flex items-center px-2.5 py-1 rounded text-xs font-semibold bg-purple-100 text-purple-900 hover:bg-purple-200 border border-purple-300/80 transition mr-2">← 메인화면</a>
+        <h1 class="text-base sm:text-lg font-bold text-purple-950 tracking-tight">일본 반도체 소재 핵심 기업 심층 분석</h1>
+        <span class="hidden md:inline-block px-2 py-0.5 text-xs font-medium bg-purple-100 text-purple-800 rounded border border-purple-200">글로벌 밸류체인 독점 분석</span>
+      </div>
+      <div class="text-xs font-medium text-purple-700">
+        기준일: 2026년 10월
+      </div>
+    </div>
+  </header>
+
+  <!-- 메인 컨테이너 -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+    <!-- 상단 요약 브리핑 카드 -->
+    <div class="bg-white border border-slate-200 rounded-lg p-6 shadow-sm border-l-4 border-l-purple-700">
+      <div class="text-xs font-bold text-purple-800 tracking-wider uppercase mb-1">Global Semiconductor Materials Deep Dive</div>
+      <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+        일본 반도체 소재 10대 기업 및 글로벌 점유율 종합 분석
+      </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+        실리콘 웨이퍼(신에츠·섬코 55%+), EUV 포토레지스트(TOK·JSR 85%+), 차세대 패키징 ABF 절연필름(아지노모토 100%), EUV 펠리클(미쓰이화학), 3D NAND 초고순도 에칭가스(칸토덴카) 등 글로벌 반도체 제조 생태계에서 대체가 불가능한 일본 핵심 10대 소재 기업의 사업 포트폴리오와 기술적 해자를 원천 데이터 그대로 집대성한 리포트입니다.
+      </p>
+      <div class="mt-4 flex flex-wrap gap-2 text-xs">
+        <span class="px-2.5 py-1 rounded bg-purple-50 text-purple-800 font-semibold border border-purple-200">실리콘 웨이퍼 글로벌 55%+ 과점</span>
+        <span class="px-2.5 py-1 rounded bg-blue-50 text-blue-800 font-semibold border border-blue-200">EUV 레지스트 일본계 85%+ 장악</span>
+        <span class="px-2.5 py-1 rounded bg-emerald-50 text-emerald-800 font-semibold border border-emerald-200">ABF 층간절연필름 100% 독점</span>
+        <span class="px-2.5 py-1 rounded bg-amber-50 text-amber-800 font-semibold border border-amber-200">EUV 펠리클 ASML 독점 라이선스</span>
+      </div>
+    </div>
+
+    <!-- 탭 네비게이션 버튼 -->
+    <div class="tab-navigation flex flex-wrap gap-2 border-b border-slate-200 pb-2">
+      <button onclick="switchTab('tab1')" id="btn-tab1" class="tab-btn active px-4 py-2 rounded-md text-xs font-semibold transition">
+        01. 10대 기업 총괄표 (기술 해자 일체형)
+      </button>
+      <button onclick="switchTab('tab2')" id="btn-tab2" class="tab-btn px-4 py-2 rounded-md text-xs font-semibold transition">
+        02. 기업별 심층 분석 프로파일
+      </button>
+      <button onclick="switchTab('tab3')" id="btn-tab3" class="tab-btn px-4 py-2 rounded-md text-xs font-semibold transition">
+        03. 소재별 점유율 및 대체불가성 맵
+      </button>
+      <button onclick="switchTab('tabAll')" id="btn-tabAll" class="tab-btn px-4 py-2 rounded-md text-xs font-semibold transition">
+        전체 통합 보기
+      </button>
+    </div>
+
+    <!-- 탭 1: 10대 기업 총괄표 (일체형 2행 구조) -->
+    <section id="tab1" class="tab-content">
+      
+<div class="space-y-4">
+  <div class="bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+    <div class="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-slate-100 gap-2">
+      <div>
+        <h2 class="text-xl font-bold text-slate-900">일본 반도체 핵심 소재기업 심층 분석 리포트</h2>
+        <p class="text-xs text-slate-500 mt-1">기준일: 2026년 10월 | 저장위치: 구글드라이브 구글시트 폴더 | 출처: 각 사 IR 연차보고서, SEMI, 글로벌 소재 밸류체인 분석</p>
+      </div>
+      <div class="flex items-center space-x-2">
+        <input type="text" id="searchTable1" onkeyup="filterTable1()" placeholder="기업명 / 소재 / 해자 검색..." 
+               class="text-xs px-3 py-1.5 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-64 bg-slate-50">
+      </div>
+    </div>
+    
+    <div class="overflow-x-auto mt-4 custom-scrollbar">
+      <table id="table1" class="w-full text-left border-collapse text-xs">
+        <thead>
+          <tr class="bg-slate-100 border-y-2 border-slate-300 text-slate-700 font-bold">
+            <th class="py-3 px-4 w-48">기업명</th>
+            <th class="py-3 px-4 w-48">핵심 소재 분야</th>
+            <th class="py-3 px-4 w-60">주요 매출 제품</th>
+            <th class="py-3 px-4 w-56">매출 비중</th>
+            <th class="py-3 px-4 w-52">글로벌 점유율 &amp; 지위</th>
+            <th class="py-3 px-4 w-48 text-blue-950 font-extrabold">주요 고객사</th>
+          </tr>
+        </thead>
+        <tbody class="text-slate-800">
+
+          <tr class="company-row hover:bg-slate-50 transition border-t border-slate-200">
+            <td class="py-3.5 px-4 align-top bg-slate-50/30"><div class='font-bold text-slate-900 text-sm'>신에츠화학</div><div class='text-slate-500 text-[11px]'>(Shin-Etsu Chemical)</div><div class='inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-purple-50 text-purple-700 border border-purple-200'>[4063.T]</div></td>
+            <td class="py-3.5 px-4 align-top font-medium text-slate-900"><div>실리콘 웨이퍼 &amp; 포토레지스트</div><div>(전공정 원판/노광)</div></td>
+            <td class="py-3.5 px-4 align-top"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>300mm/200mm 반도체 실리콘 웨이퍼</li><li class='ml-3 list-disc text-slate-700'>ArF/EUV 포토레지스트</li><li class='ml-3 list-disc text-slate-700'>포토마스크용 합성석영 기판</li><li class='ml-3 list-disc text-slate-700'>고순도 실리콘 봉지재</li></ul></td>
+            <td class="py-3.5 px-4 align-top bg-slate-50/50"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>전자·기능재료 부문: 약 42%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>실리콘 웨이퍼: 부문 내 약 75%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>감광재/석영/희토류: 부문 내 약 25%</li><li class='ml-3 list-disc text-slate-700'>인프라(PVC/화성품): 약 38%</li><li class='ml-3 list-disc text-slate-700'>가공·기능수지: 약 20%</li></ul></td>
+            <td class="py-3.5 px-4 align-top"><div class="font-semibold text-blue-900"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>글로벌 실리콘 웨이퍼 1위 (약 30~32%)</li><li class='ml-3 list-disc text-slate-700'>포토레지스트 글로벌 상위 (Top 3)</li><li class='ml-3 list-disc text-slate-700'>마스크용 합성석영 1위</li></ul></div></td>
+            <td class="py-3.5 px-4 align-top bg-blue-50/20"><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>TSMC</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>삼성전자</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>인텔</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>SK하이닉스</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>마이크론</div></td>
+          </tr>
+          <!-- 2행: 바로 아래 1칸 추가 (기술적 해자 통합 행) -->
+          <tr class="moat-row bg-[#faf8ff] border-b-2 border-slate-300">
+            <td colspan="6" class="py-3 px-4">
+              <div class="flex flex-col sm:flex-row items-start gap-2.5 bg-white border border-purple-200/90 rounded p-3 shadow-2xs">
+                <div class="inline-flex items-center px-2 py-1 rounded text-[11px] font-bold bg-purple-100 text-purple-900 border border-purple-300 shrink-0 whitespace-nowrap">
+                  글로벌 핵심경쟁력 (기술적 해자)
+                </div>
+                <div class="text-xs leading-relaxed text-slate-800 flex-1">
+                  <ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>최선단 300mm 에피택셜(Epitaxial) 웨이퍼의 초평탄도 및 무결함 단결정 잉곳 인상 기술 독점</li><li class='ml-3 list-disc text-slate-700'>실리콘 원자재부터 완제품 웨이퍼, 포토레지스트, 석영 블랭크까지 반도체 소재 풀체인 구축</li><li class='ml-3 list-disc text-slate-700'>글로벌 웨이퍼 시장 1위 지위를 바탕으로 장기공급계약(LTA) 기반 막강한 가격결정력</li></ul>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="company-row hover:bg-slate-50 transition border-t border-slate-200">
+            <td class="py-3.5 px-4 align-top bg-slate-50/30"><div class='font-bold text-slate-900 text-sm'>섬코</div><div class='text-slate-500 text-[11px]'>(SUMCO Corporation)</div><div class='inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-purple-50 text-purple-700 border border-purple-200'>[3436.T]</div></td>
+            <td class="py-3.5 px-4 align-top font-medium text-slate-900"><div>반도체 실리콘 웨이퍼</div><div>(전공정 기초 기판)</div></td>
+            <td class="py-3.5 px-4 align-top"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>300mm 최선단 폴리시드/에피 웨이퍼</li><li class='ml-3 list-disc text-slate-700'>200mm 및 레거시 웨이퍼</li><li class='ml-3 list-disc text-slate-700'>SOI(Silicon-on-Insulator) 웨이퍼</li></ul></td>
+            <td class="py-3.5 px-4 align-top bg-slate-50/50"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>반도체 실리콘 웨이퍼 단일 사업 100%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>300mm 첨단 웨이퍼: 약 76%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>200mm 및 기타: 약 24%</li></ul></td>
+            <td class="py-3.5 px-4 align-top"><div class="font-semibold text-blue-900"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>글로벌 실리콘 웨이퍼 2위 (약 25%)</li><li class='ml-3 list-disc text-slate-700'>신에츠화학과 합산 시 글로벌 55%+ 과점</li></ul></div></td>
+            <td class="py-3.5 px-4 align-top bg-blue-50/20"><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>TSMC</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>삼성전자</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>SK하이닉스</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>인텔</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>키오시아</div></td>
+          </tr>
+          <!-- 2행: 바로 아래 1칸 추가 (기술적 해자 통합 행) -->
+          <tr class="moat-row bg-[#faf8ff] border-b-2 border-slate-300">
+            <td colspan="6" class="py-3 px-4">
+              <div class="flex flex-col sm:flex-row items-start gap-2.5 bg-white border border-purple-200/90 rounded p-3 shadow-2xs">
+                <div class="inline-flex items-center px-2 py-1 rounded text-[11px] font-bold bg-purple-100 text-purple-900 border border-purple-300 shrink-0 whitespace-nowrap">
+                  글로벌 핵심경쟁력 (기술적 해자)
+                </div>
+                <div class="text-xs leading-relaxed text-slate-800 flex-1">
+                  <ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>신에츠화학과 함께 전 세계 첨단 300mm 웨이퍼 시장을 양분하는 순수 실리콘 웨이퍼 전문 기업</li><li class='ml-3 list-disc text-slate-700'>초미세 로직 및 고적층 3D NAND/HBM 전용 극초평탄 웨이퍼 가공 기술력</li><li class='ml-3 list-disc text-slate-700'>글로벌 톱 반도체 제조사들과 다년간 체결된 안정적 장기공급계약(LTA) 체제</li></ul>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="company-row hover:bg-slate-50 transition border-t border-slate-200">
+            <td class="py-3.5 px-4 align-top bg-slate-50/30"><div class='font-bold text-slate-900 text-sm'>도쿄오카공업</div><div class='text-slate-500 text-[11px]'>(Tokyo Ohka Kogyo / TOK)</div><div class='inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-purple-50 text-purple-700 border border-purple-200'>[4186.T]</div></td>
+            <td class="py-3.5 px-4 align-top font-medium text-slate-900"><div>포토레지스트 (감광액)</div><div>(EUV / ArFi / KrF)</div></td>
+            <td class="py-3.5 px-4 align-top"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>EUV 포토레지스트</li><li class='ml-3 list-disc text-slate-700'>ArF 액침 / KrF / i-line 포토레지스트</li><li class='ml-3 list-disc text-slate-700'>박리액, 현상액 및 고순도 시약</li><li class='ml-3 list-disc text-slate-700'>3D 패키징용 후막 포토레지스트</li></ul></td>
+            <td class="py-3.5 px-4 align-top bg-slate-50/50"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>재료사업부(반도체 화학재료): 약 98%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>포토레지스트군: 약 65%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>고순도 세정/박리 화학품: 약 33%</li><li class='ml-3 list-disc text-slate-700'>장비사업부: 약 2%</li></ul></td>
+            <td class="py-3.5 px-4 align-top"><div class="font-semibold text-blue-900"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>전체 포토레지스트 글로벌 1위 (약 26%)</li><li class='ml-3 list-disc text-slate-700'>EUV 포토레지스트 글로벌 1위 (약 50%)</li><li class='ml-3 list-disc text-slate-700'>3D 패키징 후막 레지스트 1위</li></ul></div></td>
+            <td class="py-3.5 px-4 align-top bg-blue-50/20"><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>TSMC</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>삼성전자</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>SK하이닉스</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>인텔</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>SMIC</div></td>
+          </tr>
+          <!-- 2행: 바로 아래 1칸 추가 (기술적 해자 통합 행) -->
+          <tr class="moat-row bg-[#faf8ff] border-b-2 border-slate-300">
+            <td colspan="6" class="py-3 px-4">
+              <div class="flex flex-col sm:flex-row items-start gap-2.5 bg-white border border-purple-200/90 rounded p-3 shadow-2xs">
+                <div class="inline-flex items-center px-2 py-1 rounded text-[11px] font-bold bg-purple-100 text-purple-900 border border-purple-300 shrink-0 whitespace-nowrap">
+                  글로벌 핵심경쟁력 (기술적 해자)
+                </div>
+                <div class="text-xs leading-relaxed text-slate-800 flex-1">
+                  <ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>첨단 반도체 패터닝의 핵심인 EUV 포토레지스트 시장을 사실상 절반 장악</li><li class='ml-3 list-disc text-slate-700'>고감도 화학증폭형 레지스트(CAR) 특허 포트폴리오 및 초고순도 합성 노하우</li><li class='ml-3 list-disc text-slate-700'>TSMC의 3nm/2nm 공정 및 국내 최선단 1b/1c nm DRAM EUV 라인의 필수 1차 벤더</li></ul>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="company-row hover:bg-slate-50 transition border-t border-slate-200">
+            <td class="py-3.5 px-4 align-top bg-slate-50/30"><div class='font-bold text-slate-900 text-sm'>JSR 주식회사</div><div class='text-slate-500 text-[11px]'>(JSR Corporation)</div><div class='inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-purple-50 text-purple-700 border border-purple-200'>[JIC 자회사]</div></td>
+            <td class="py-3.5 px-4 align-top font-medium text-slate-900"><div>EUV 포토레지스트 &amp; 차세대 MOR</div><div>(첨단 노광 소재)</div></td>
+            <td class="py-3.5 px-4 align-top"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>EUV 포토레지스트 (CAR &amp; MOR)</li><li class='ml-3 list-disc text-slate-700'>ArF 액침 및 첨단 DUV 레지스트</li><li class='ml-3 list-disc text-slate-700'>CMP 슬러리 및 세정액</li><li class='ml-3 list-disc text-slate-700'>첨단 패키징 감광성 절연재</li></ul></td>
+            <td class="py-3.5 px-4 align-top bg-slate-50/50"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>디지털 솔루션(반도체 소재): 약 48%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>포토레지스트 및 리소그래피: 약 70%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>CMP 및 패키징 재료: 약 30%</li><li class='ml-3 list-disc text-slate-700'>생명과학 부문: 약 36%</li><li class='ml-3 list-disc text-slate-700'>플라스틱/기타: 약 16%</li></ul></td>
+            <td class="py-3.5 px-4 align-top"><div class="font-semibold text-blue-900"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>EUV 포토레지스트 글로벌 2위 (약 30~35%)</li><li class='ml-3 list-disc text-slate-700'>차세대 MOR(무기물 레지스트) 100% 독점</li><li class='ml-3 list-disc text-slate-700'>TOK와 합산 시 EUV 레지스트 80%+ 장악</li></ul></div></td>
+            <td class="py-3.5 px-4 align-top bg-blue-50/20"><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>TSMC</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>인텔</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>삼성전자</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>SK하이닉스</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>마이크론</div></td>
+          </tr>
+          <!-- 2행: 바로 아래 1칸 추가 (기술적 해자 통합 행) -->
+          <tr class="moat-row bg-[#faf8ff] border-b-2 border-slate-300">
+            <td colspan="6" class="py-3 px-4">
+              <div class="flex flex-col sm:flex-row items-start gap-2.5 bg-white border border-purple-200/90 rounded p-3 shadow-2xs">
+                <div class="inline-flex items-center px-2 py-1 rounded text-[11px] font-bold bg-purple-100 text-purple-900 border border-purple-300 shrink-0 whitespace-nowrap">
+                  글로벌 핵심경쟁력 (기술적 해자)
+                </div>
+                <div class="text-xs leading-relaxed text-slate-800 flex-1">
+                  <ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>미국 인프리아(Inpria)를 전격 인수하여 차세대 High-NA EUV용 &#x27;메탈 옥사이드 레지스트(MOR)&#x27; 원천 특허 독점</li><li class='ml-3 list-disc text-slate-700'>High-NA(0.55 NA) 2nm 이하 초미세 노광에서 붕괴 없는 초미세 선폭 패터닝의 유일한 해법 보유</li><li class='ml-3 list-disc text-slate-700'>일본 정부계 펀드(JIC)가 인수한 국가 전략 핵심 반도체 소재 국책 기업</li></ul>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="company-row hover:bg-slate-50 transition border-t border-slate-200">
+            <td class="py-3.5 px-4 align-top bg-slate-50/30"><div class='font-bold text-slate-900 text-sm'>아지노모토</div><div class='text-slate-500 text-[11px]'>(Ajinomoto Fine-Techno)</div><div class='inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-purple-50 text-purple-700 border border-purple-200'>[2802.T]</div></td>
+            <td class="py-3.5 px-4 align-top font-medium text-slate-900"><div>FC-BGA 층간 절연필름 (ABF)</div><div>(AI/서버 패키징 기판)</div></td>
+            <td class="py-3.5 px-4 align-top"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>ABF (Ajinomoto Build-up Film)</li><li class='ml-3 list-disc text-slate-700'>첨단 전자 패키징용 절연 필름</li><li class='ml-3 list-disc text-slate-700'>기능성 수지 첨가제</li></ul></td>
+            <td class="py-3.5 px-4 align-top bg-slate-50/50"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>기능성 화학소재 부문: 전사 매출의 약 7%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>ABF 필름이 부문 내 85% 이상</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>(전사 영업이익 기여도는 22~25%로 초고수익)</li><li class='ml-3 list-disc text-slate-700'>식품/바이오 부문: 전사 93%</li></ul></td>
+            <td class="py-3.5 px-4 align-top"><div class="font-semibold text-blue-900"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>글로벌 ABF 시장 점유율 사실상 100% 독점</li><li class='ml-3 list-disc text-slate-700'>고성능 FC-BGA 기판 절연재 대체 불가</li></ul></div></td>
+            <td class="py-3.5 px-4 align-top bg-blue-50/20"><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>이비덴(Ibiden)</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>신코(Shinko)</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>유니마이크론</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>대덕전자 (최종: 엔비디아, 인텔, AMD)</div></td>
+          </tr>
+          <!-- 2행: 바로 아래 1칸 추가 (기술적 해자 통합 행) -->
+          <tr class="moat-row bg-[#faf8ff] border-b-2 border-slate-300">
+            <td colspan="6" class="py-3 px-4">
+              <div class="flex flex-col sm:flex-row items-start gap-2.5 bg-white border border-purple-200/90 rounded p-3 shadow-2xs">
+                <div class="inline-flex items-center px-2 py-1 rounded text-[11px] font-bold bg-purple-100 text-purple-900 border border-purple-300 shrink-0 whitespace-nowrap">
+                  글로벌 핵심경쟁력 (기술적 해자)
+                </div>
+                <div class="text-xs leading-relaxed text-slate-800 flex-1">
+                  <ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>전 세계 모든 고성능 CPU, GPU, AI 가속기(NVIDIA H100/B200 등)의 FC-BGA 기판 필수 층간 절연 소재</li><li class='ml-3 list-disc text-slate-700'>아미노산 합성 기술에서 파생된 독보적 절연성, 초저열팽창계수(CTE), 미세 회로 접합 신뢰성</li><li class='ml-3 list-disc text-slate-700'>30년 이상 축적된 독점 레퍼런스로 전 세계 기판 제조사(이비덴, 신코, 유니마이크론 등)가 100% 표준 채택</li></ul>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="company-row hover:bg-slate-50 transition border-t border-slate-200">
+            <td class="py-3.5 px-4 align-top bg-slate-50/30"><div class='font-bold text-slate-900 text-sm'>레조낙 홀딩스</div><div class='text-slate-500 text-[11px]'>(Resonac Holdings)</div><div class='inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-purple-50 text-purple-700 border border-purple-200'>[4004.T]</div></td>
+            <td class="py-3.5 px-4 align-top font-medium text-slate-900"><div>후공정 첨단 패키징 소재 &amp; HBM</div><div>(쇼와덴코+히타치케미칼)</div></td>
+            <td class="py-3.5 px-4 align-top"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>에폭시 몰딩 컴파운드 (EMC 봉지재)</li><li class='ml-3 list-disc text-slate-700'>다이본딩 필름 (DAF) / 비전도성 필름(NCF)</li><li class='ml-3 list-disc text-slate-700'>CMP 슬러리 (실리카/세리아)</li><li class='ml-3 list-disc text-slate-700'>초고순도 에칭 가스 (C4F6, Cl2 등)</li><li class='ml-3 list-disc text-slate-700'>SiC 에피택셜 웨이퍼 기판</li></ul></td>
+            <td class="py-3.5 px-4 align-top bg-slate-50/50"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>반도체·전자소재 부문: 약 36%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>첨단 패키징 소재(EMC/필름): 약 50%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>전공정 재료(가스/슬러리/SiC): 약 50%</li><li class='ml-3 list-disc text-slate-700'>모빌리티 및 화학 부문: 약 64%</li></ul></td>
+            <td class="py-3.5 px-4 align-top"><div class="font-semibold text-blue-900"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>반도체 후공정 소재 글로벌 1위 포트폴리오</li><li class='ml-3 list-disc text-slate-700'>HBM 패키징 필름(NCF) 최상위</li><li class='ml-3 list-disc text-slate-700'>고순도 불소 에칭가스 글로벌 Top 3</li></ul></div></td>
+            <td class="py-3.5 px-4 align-top bg-blue-50/20"><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>SK하이닉스</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>삼성전자</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>TSMC</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>인피니언</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>ASE</div></td>
+          </tr>
+          <!-- 2행: 바로 아래 1칸 추가 (기술적 해자 통합 행) -->
+          <tr class="moat-row bg-[#faf8ff] border-b-2 border-slate-300">
+            <td colspan="6" class="py-3 px-4">
+              <div class="flex flex-col sm:flex-row items-start gap-2.5 bg-white border border-purple-200/90 rounded p-3 shadow-2xs">
+                <div class="inline-flex items-center px-2 py-1 rounded text-[11px] font-bold bg-purple-100 text-purple-900 border border-purple-300 shrink-0 whitespace-nowrap">
+                  글로벌 핵심경쟁력 (기술적 해자)
+                </div>
+                <div class="text-xs leading-relaxed text-slate-800 flex-1">
+                  <ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>구 히타치케미칼의 패키징 소재 역량과 쇼와덴코의 고순도 화학 가스 역량을 결합한 글로벌 소재 공룡</li><li class='ml-3 list-disc text-slate-700'>HBM 수직 적층에 필수적인 비전도성 접착 필름(NCF) 및 칩 보호용 EMC 분야 독보적 기술력</li><li class='ml-3 list-disc text-slate-700'>차세대 SiC 전력반도체 에피택셜 웨이퍼 시장 점유율 글로벌 1위</li></ul>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="company-row hover:bg-slate-50 transition border-t border-slate-200">
+            <td class="py-3.5 px-4 align-top bg-slate-50/30"><div class='font-bold text-slate-900 text-sm'>스미토모 화학</div><div class='text-slate-500 text-[11px]'>(Sumitomo Chemical)</div><div class='inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-purple-50 text-purple-700 border border-purple-200'>[4005.T]</div></td>
+            <td class="py-3.5 px-4 align-top font-medium text-slate-900"><div>ArF 포토레지스트 &amp; 초고순도 약품</div><div>(노광 및 세정 화학재)</div></td>
+            <td class="py-3.5 px-4 align-top"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>ArF 액침 / EUV 포토레지스트</li><li class='ml-3 list-disc text-slate-700'>초고순도 황산 (H2SO4, 세정용)</li><li class='ml-3 list-disc text-slate-700'>고순도 암모니아수 및 과산화수소</li><li class='ml-3 list-disc text-slate-700'>고순도 알루미나 (CMP 연마재용)</li></ul></td>
+            <td class="py-3.5 px-4 align-top bg-slate-50/50"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>전자·IT소재 부문: 약 20%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>포토레지스트 및 고순도 약품: 약 60%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>디스플레이 재료: 약 40%</li><li class='ml-3 list-disc text-slate-700'>석유화학/정밀화학/농업/의약: 80%</li></ul></td>
+            <td class="py-3.5 px-4 align-top"><div class="font-semibold text-blue-900"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>ArF 액침 포토레지스트 글로벌 Top 3</li><li class='ml-3 list-disc text-slate-700'>초고순도 세정용 황산 글로벌 1~2위</li><li class='ml-3 list-disc text-slate-700'>CMP용 고순도 알루미나 최상위</li></ul></div></td>
+            <td class="py-3.5 px-4 align-top bg-blue-50/20"><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>삼성전자</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>TSMC</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>SK하이닉스</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>마이크론</div></td>
+          </tr>
+          <!-- 2행: 바로 아래 1칸 추가 (기술적 해자 통합 행) -->
+          <tr class="moat-row bg-[#faf8ff] border-b-2 border-slate-300">
+            <td colspan="6" class="py-3 px-4">
+              <div class="flex flex-col sm:flex-row items-start gap-2.5 bg-white border border-purple-200/90 rounded p-3 shadow-2xs">
+                <div class="inline-flex items-center px-2 py-1 rounded text-[11px] font-bold bg-purple-100 text-purple-900 border border-purple-300 shrink-0 whitespace-nowrap">
+                  글로벌 핵심경쟁력 (기술적 해자)
+                </div>
+                <div class="text-xs leading-relaxed text-slate-800 flex-1">
+                  <ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>10나노급 이하 첨단 메모리 및 로직 패터닝에 가장 널리 쓰이는 ArF 액침 레지스트의 핵심 공급사</li><li class='ml-3 list-disc text-slate-700'>초미세 패턴 세정에 필수적인 ppt(1조분의 1) 단위 불순물 관리 초고순도 황산 공급망 장악</li><li class='ml-3 list-disc text-slate-700'>삼성전자, TSMC의 글로벌 팹 인근에 대규모 고순도 황산 플랜트를 구축하여 락인 효과 극대화</li></ul>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="company-row hover:bg-slate-50 transition border-t border-slate-200">
+            <td class="py-3.5 px-4 align-top bg-slate-50/30"><div class='font-bold text-slate-900 text-sm'>미쓰이화학</div><div class='text-slate-500 text-[11px]'>(Mitsui Chemicals)</div><div class='inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-purple-50 text-purple-700 border border-purple-200'>[4183.T]</div></td>
+            <td class="py-3.5 px-4 align-top font-medium text-slate-900"><div>EUV 펠리클 &amp; 웨이퍼 공정 테이프</div><div>(노광 보호 및 이송)</div></td>
+            <td class="py-3.5 px-4 align-top"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>EUV 펠리클 (ASML 독점 라이선스)</li><li class='ml-3 list-disc text-slate-700'>DUV(ArF/KrF) 펠리클</li><li class='ml-3 list-disc text-slate-700'>백그라인딩/다이싱 보호 테이프 (ICROS)</li><li class='ml-3 list-disc text-slate-700'>광학용 폴리머 및 접착 소재</li></ul></td>
+            <td class="py-3.5 px-4 align-top bg-slate-50/50"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>ICT/전자재료 솔루션: 약 18%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>반도체 공정재료/펠리클: 약 55%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>광학/디스플레이: 약 45%</li><li class='ml-3 list-disc text-slate-700'>모빌리티/기초화학: 82%</li></ul></td>
+            <td class="py-3.5 px-4 align-top"><div class="font-semibold text-blue-900"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>EUV 펠리클 글로벌 1위 (ASML 공인 양산)</li><li class='ml-3 list-disc text-slate-700'>웨이퍼 백그라인딩 보호 테이프 1위</li></ul></div></td>
+            <td class="py-3.5 px-4 align-top bg-blue-50/20"><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>ASML</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>TSMC</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>삼성전자</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>인텔</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>ASE</div></td>
+          </tr>
+          <!-- 2행: 바로 아래 1칸 추가 (기술적 해자 통합 행) -->
+          <tr class="moat-row bg-[#faf8ff] border-b-2 border-slate-300">
+            <td colspan="6" class="py-3 px-4">
+              <div class="flex flex-col sm:flex-row items-start gap-2.5 bg-white border border-purple-200/90 rounded p-3 shadow-2xs">
+                <div class="inline-flex items-center px-2 py-1 rounded text-[11px] font-bold bg-purple-100 text-purple-900 border border-purple-300 shrink-0 whitespace-nowrap">
+                  글로벌 핵심경쟁력 (기술적 해자)
+                </div>
+                <div class="text-xs leading-relaxed text-slate-800 flex-1">
+                  <ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>네덜란드 ASML로부터 CNT(탄소나노튜브) 기반 EUV 펠리클 양산 기술 라이선스를 독점 확보한 유일한 기업</li><li class='ml-3 list-disc text-slate-700'>고출력(600W+) EUV 광원 하에서 마스크 오염을 방지하는 필수 소모품 독점 공급</li><li class='ml-3 list-disc text-slate-700'>HBM 제조 시 웨이퍼 박형화 공정에서 웨이퍼 파손을 방지하는 ICROS 테이프 점유율 압도적 1위</li></ul>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="company-row hover:bg-slate-50 transition border-t border-slate-200">
+            <td class="py-3.5 px-4 align-top bg-slate-50/30"><div class='font-bold text-slate-900 text-sm'>후지필름 홀딩스</div><div class='text-slate-500 text-[11px]'>(FUJIFILM Holdings)</div><div class='inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-purple-50 text-purple-700 border border-purple-200'>[4901.T]</div></td>
+            <td class="py-3.5 px-4 align-top font-medium text-slate-900"><div>CIS 이미지센서 레지스트 &amp; CMP 슬러리</div><div>(전자소재 사업부)</div></td>
+            <td class="py-3.5 px-4 align-top"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>이미지센서(CIS)용 컬러 레지스트</li><li class='ml-3 list-disc text-slate-700'>EUV용 고선명 네거티브 현상액 (NPD)</li><li class='ml-3 list-disc text-slate-700'>첨단 구리(Cu)/코발트(Co) CMP 슬러리</li><li class='ml-3 list-disc text-slate-700'>감광성 폴리이미드 (패키징 재료)</li></ul></td>
+            <td class="py-3.5 px-4 align-top bg-slate-50/50"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>전자소재 부문: 전사 매출의 약 9%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>첨단 반도체 화학소재: 부문 내 85%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>(엔카트 인수로 전공정 풀라인업 구축)</li><li class='ml-3 list-disc text-slate-700'>헬스케어/바이오: 약 35%</li><li class='ml-3 list-disc text-slate-700'>비즈니스 솔루션: 약 38%</li><li class='ml-3 list-disc text-slate-700'>이미징: 약 18%</li></ul></td>
+            <td class="py-3.5 px-4 align-top"><div class="font-semibold text-blue-900"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>이미지센서 컬러 필터 레지스트: 80%+ (독점)</li><li class='ml-3 list-disc text-slate-700'>EUV 네거티브 현상액(NPD): 글로벌 1위</li><li class='ml-3 list-disc text-slate-700'>첨단 CMP 슬러리: 글로벌 Top 3</li></ul></div></td>
+            <td class="py-3.5 px-4 align-top bg-blue-50/20"><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>소니(Sony)</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>삼성전자</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>TSMC</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>옴니비전</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>인텔</div></td>
+          </tr>
+          <!-- 2행: 바로 아래 1칸 추가 (기술적 해자 통합 행) -->
+          <tr class="moat-row bg-[#faf8ff] border-b-2 border-slate-300">
+            <td colspan="6" class="py-3 px-4">
+              <div class="flex flex-col sm:flex-row items-start gap-2.5 bg-white border border-purple-200/90 rounded p-3 shadow-2xs">
+                <div class="inline-flex items-center px-2 py-1 rounded text-[11px] font-bold bg-purple-100 text-purple-900 border border-purple-300 shrink-0 whitespace-nowrap">
+                  글로벌 핵심경쟁력 (기술적 해자)
+                </div>
+                <div class="text-xs leading-relaxed text-slate-800 flex-1">
+                  <ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>스마트폰, 차량용 자율주행 카메라 CIS 이미지센서의 빛을 분별하는 컬러 모자이크 레지스트 글로벌 독점</li><li class='ml-3 list-disc text-slate-700'>극초미세 패턴의 해상도를 획기적으로 높여주는 EUV 전용 유기용제 네거티브 현상액 시장 장악</li><li class='ml-3 list-disc text-slate-700'>엔카트(Entegris 화학재료 사업부) 인수를 통해 반도체 전공정 케미컬 포트폴리오를 대폭 강화</li></ul>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="company-row hover:bg-slate-50 transition border-t border-slate-200">
+            <td class="py-3.5 px-4 align-top bg-slate-50/30"><div class='font-bold text-slate-900 text-sm'>칸토덴카공업</div><div class='text-slate-500 text-[11px]'>(Kanto Denka Kogyo)</div><div class='inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-purple-50 text-purple-700 border border-purple-200'>[4047.T]</div></td>
+            <td class="py-3.5 px-4 align-top font-medium text-slate-900"><div>초고순도 특수 에칭·세정 가스</div><div>(불소계 화학 소재)</div></td>
+            <td class="py-3.5 px-4 align-top"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>삼불화질소 (NF3, CVD 챔버 세정 가스)</li><li class='ml-3 list-disc text-slate-700'>육불화텅스텐 (WF6, 메탈 배선 형성)</li><li class='ml-3 list-disc text-slate-700'>사불화탄소 (CF4) 및 팔불화프로판(C3F8)</li><li class='ml-3 list-disc text-slate-700'>초고순도 C4F6 (3D NAND 수직홀 식각 가스)</li><li class='ml-3 list-disc text-slate-700'>이차전지 전해질염 (LiPF6)</li></ul></td>
+            <td class="py-3.5 px-4 align-top bg-slate-50/50"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>화성품 및 전자재료 부문: 약 68%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>반도체/디스플레이 특수가스: 약 50%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>배터리 재료: 약 18%</li><li class='ml-3 list-disc text-slate-700'>기초화학 및 기타: 약 32%</li></ul></td>
+            <td class="py-3.5 px-4 align-top"><div class="font-semibold text-blue-900"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>초고순도 C4F6 특수 식각가스 글로벌 1위</li><li class='ml-3 list-disc text-slate-700'>반도체용 WF6 글로벌 Top 3</li><li class='ml-3 list-disc text-slate-700'>3D NAND 에칭가스 필수 벤더</li></ul></div></td>
+            <td class="py-3.5 px-4 align-top bg-blue-50/20"><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>삼성전자</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>SK하이닉스</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>TSMC</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>마이크론</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>키오시아</div></td>
+          </tr>
+          <!-- 2행: 바로 아래 1칸 추가 (기술적 해자 통합 행) -->
+          <tr class="moat-row bg-[#faf8ff] border-b-2 border-slate-300">
+            <td colspan="6" class="py-3 px-4">
+              <div class="flex flex-col sm:flex-row items-start gap-2.5 bg-white border border-purple-200/90 rounded p-3 shadow-2xs">
+                <div class="inline-flex items-center px-2 py-1 rounded text-[11px] font-bold bg-purple-100 text-purple-900 border border-purple-300 shrink-0 whitespace-nowrap">
+                  글로벌 핵심경쟁력 (기술적 해자)
+                </div>
+                <div class="text-xs leading-relaxed text-slate-800 flex-1">
+                  <ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>불소(Fluorine) 화합물 원천 합성 및 고도 정제 기술에 기반한 초고순도 특수가스 세계 최고 기술력</li><li class='ml-3 list-disc text-slate-700'>3D NAND 300단 이상 초고층 적층 시 수직 채널홀을 깊고 곧게 파내려가는 C4F6 에칭 가스 대체 불가</li><li class='ml-3 list-disc text-slate-700'>극미량의 금속 불순물 및 수분을 ppb(10억분의 1) 단위로 제거하는 독보적 가스 정제 노하우</li></ul>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+    </section>
+
+    <!-- 탭 2: 기업별 심층 분석 리포트 -->
+    <section id="tab2" class="tab-content hidden">
+      
+<div class="space-y-6">
+  <div class="bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+    <div class="pb-3 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+      <div>
+        <h2 class="text-xl font-bold text-slate-900">일본 반도체 소재 10대 기업별 심층 프로파일 (Deep Dive Analysis)</h2>
+        <p class="text-xs text-slate-500 mt-1">웨이퍼, EUV 포토레지스트, ABF, 펠리클, 고순도가스 등 글로벌 칩 제조의 목줄을 쥔 독점적 해자 정밀 분석</p>
+      </div>
+      <div>
+        <span class="px-2.5 py-1 rounded text-xs font-semibold bg-purple-100 text-purple-800 border border-purple-200">10대 기업 Deep Dive</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 gap-6">
+
+    <div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-2">
+        <h3 class="text-base font-bold text-purple-950 flex items-center">
+          <span class="w-2 h-4 bg-purple-600 rounded-sm mr-2 inline-block"></span>
+          [1] 신에츠화학 (Shin-Etsu Chemical) | [4063.T]
+        </h3>
+        <span class='text-xs font-semibold text-blue-800 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded'>핵심 소재: 실리콘 웨이퍼 &amp; 포토레지스트 (전공정 원판/노광)</span>
+      </div>
+      
+      <div class="p-5">
+        <table class="w-full text-xs text-left border border-slate-200 rounded">
+          <tbody class="divide-y divide-slate-200">
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 매출 제품</th>
+              <td class="py-3 px-4 text-slate-900 align-top bg-white"><div>300mm/200mm 반도체 실리콘 웨이퍼 / ArF/EUV 포토레지스트 / 포토마스크용 합성석영 기판 / 고순도 실리콘 봉지재</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">매출 비중 상세</th>
+              <td class="py-3 px-4 text-slate-800 align-top bg-white"><ul class='space-y-1'><div>전자·기능재료 부문: 약 42%</div><li class='ml-6 list-[circle] text-slate-600 text-xs'>실리콘 웨이퍼: 부문 내 약 75%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>감광재/석영/희토류: 부문 내 약 25%</li><div>인프라(PVC/화성품): 약 38%</div><div>가공·기능수지: 약 20%</div></ul></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 점유율 &amp; 시장 지위</th>
+              <td class="py-3 px-4 font-semibold text-blue-900 align-top bg-white"><div>글로벌 실리콘 웨이퍼 1위 (약 30~32%) | 포토레지스트 글로벌 상위 (Top 3) | 마스크용 합성석영 1위</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 핵심 경쟁력 (기술 해자)</th>
+              <td class="py-3 px-4 text-slate-800 leading-relaxed align-top bg-white"><div>최선단 300mm 에피택셜(Epitaxial) 웨이퍼의 초평탄도 및 무결함 단결정 잉곳 인상 기술 독점</div><div>실리콘 원자재부터 완제품 웨이퍼, 포토레지스트, 석영 블랭크까지 반도체 소재 풀체인 구축</div><div>글로벌 웨이퍼 시장 1위 지위를 바탕으로 장기공급계약(LTA) 기반 막강한 가격결정력</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 고객사 &amp; 서플라이체인</th>
+              <td class="py-3 px-4 text-slate-700 font-semibold align-top bg-white"><div>TSMC, 삼성전자, 인텔, SK하이닉스, 마이크론</div></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-2">
+        <h3 class="text-base font-bold text-purple-950 flex items-center">
+          <span class="w-2 h-4 bg-purple-600 rounded-sm mr-2 inline-block"></span>
+          [2] 섬코 (SUMCO Corporation) | [3436.T]
+        </h3>
+        <span class='text-xs font-semibold text-blue-800 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded'>핵심 소재: 반도체 실리콘 웨이퍼 (전공정 기초 기판)</span>
+      </div>
+      
+      <div class="p-5">
+        <table class="w-full text-xs text-left border border-slate-200 rounded">
+          <tbody class="divide-y divide-slate-200">
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 매출 제품</th>
+              <td class="py-3 px-4 text-slate-900 align-top bg-white"><div>300mm 최선단 폴리시드/에피 웨이퍼 / 200mm 및 레거시 웨이퍼 / SOI(Silicon-on-Insulator) 웨이퍼</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">매출 비중 상세</th>
+              <td class="py-3 px-4 text-slate-800 align-top bg-white"><ul class='space-y-1'><div>반도체 실리콘 웨이퍼 단일 사업 100%</div><li class='ml-6 list-[circle] text-slate-600 text-xs'>300mm 첨단 웨이퍼: 약 76%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>200mm 및 기타: 약 24%</li></ul></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 점유율 &amp; 시장 지위</th>
+              <td class="py-3 px-4 font-semibold text-blue-900 align-top bg-white"><div>글로벌 실리콘 웨이퍼 2위 (약 25%) | 신에츠화학과 합산 시 글로벌 55%+ 과점</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 핵심 경쟁력 (기술 해자)</th>
+              <td class="py-3 px-4 text-slate-800 leading-relaxed align-top bg-white"><div>신에츠화학과 함께 전 세계 첨단 300mm 웨이퍼 시장을 양분하는 순수 실리콘 웨이퍼 전문 기업</div><div>초미세 로직 및 고적층 3D NAND/HBM 전용 극초평탄 웨이퍼 가공 기술력</div><div>글로벌 톱 반도체 제조사들과 다년간 체결된 안정적 장기공급계약(LTA) 체제</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 고객사 &amp; 서플라이체인</th>
+              <td class="py-3 px-4 text-slate-700 font-semibold align-top bg-white"><div>TSMC, 삼성전자, SK하이닉스, 인텔, 키오시아</div></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-2">
+        <h3 class="text-base font-bold text-purple-950 flex items-center">
+          <span class="w-2 h-4 bg-purple-600 rounded-sm mr-2 inline-block"></span>
+          [3] 도쿄오카공업 (Tokyo Ohka Kogyo / TOK) | [4186.T]
+        </h3>
+        <span class='text-xs font-semibold text-blue-800 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded'>핵심 소재: 포토레지스트 (감광액) (EUV / ArFi / KrF)</span>
+      </div>
+      
+      <div class="p-5">
+        <table class="w-full text-xs text-left border border-slate-200 rounded">
+          <tbody class="divide-y divide-slate-200">
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 매출 제품</th>
+              <td class="py-3 px-4 text-slate-900 align-top bg-white"><div>EUV 포토레지스트 / ArF 액침 / KrF / i-line 포토레지스트 / 박리액, 현상액 및 고순도 시약 / 3D 패키징용 후막 포토레지스트</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">매출 비중 상세</th>
+              <td class="py-3 px-4 text-slate-800 align-top bg-white"><ul class='space-y-1'><div>재료사업부(반도체 화학재료): 약 98%</div><li class='ml-6 list-[circle] text-slate-600 text-xs'>포토레지스트군: 약 65%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>고순도 세정/박리 화학품: 약 33%</li><div>장비사업부: 약 2%</div></ul></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 점유율 &amp; 시장 지위</th>
+              <td class="py-3 px-4 font-semibold text-blue-900 align-top bg-white"><div>전체 포토레지스트 글로벌 1위 (약 26%) | EUV 포토레지스트 글로벌 1위 (약 50%) | 3D 패키징 후막 레지스트 1위</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 핵심 경쟁력 (기술 해자)</th>
+              <td class="py-3 px-4 text-slate-800 leading-relaxed align-top bg-white"><div>첨단 반도체 패터닝의 핵심인 EUV 포토레지스트 시장을 사실상 절반 장악</div><div>고감도 화학증폭형 레지스트(CAR) 특허 포트폴리오 및 초고순도 합성 노하우</div><div>TSMC의 3nm/2nm 공정 및 국내 최선단 1b/1c nm DRAM EUV 라인의 필수 1차 벤더</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 고객사 &amp; 서플라이체인</th>
+              <td class="py-3 px-4 text-slate-700 font-semibold align-top bg-white"><div>TSMC, 삼성전자, SK하이닉스, 인텔, SMIC</div></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-2">
+        <h3 class="text-base font-bold text-purple-950 flex items-center">
+          <span class="w-2 h-4 bg-purple-600 rounded-sm mr-2 inline-block"></span>
+          [4] JSR 주식회사 (JSR Corporation) | [JIC 자회사]
+        </h3>
+        <span class='text-xs font-semibold text-blue-800 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded'>핵심 소재: EUV 포토레지스트 &amp; 차세대 MOR (첨단 노광 소재)</span>
+      </div>
+      
+      <div class="p-5">
+        <table class="w-full text-xs text-left border border-slate-200 rounded">
+          <tbody class="divide-y divide-slate-200">
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 매출 제품</th>
+              <td class="py-3 px-4 text-slate-900 align-top bg-white"><div>EUV 포토레지스트 (CAR &amp; MOR) / ArF 액침 및 첨단 DUV 레지스트 / CMP 슬러리 및 세정액 / 첨단 패키징 감광성 절연재</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">매출 비중 상세</th>
+              <td class="py-3 px-4 text-slate-800 align-top bg-white"><ul class='space-y-1'><div>디지털 솔루션(반도체 소재): 약 48%</div><li class='ml-6 list-[circle] text-slate-600 text-xs'>포토레지스트 및 리소그래피: 약 70%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>CMP 및 패키징 재료: 약 30%</li><div>생명과학 부문: 약 36%</div><div>플라스틱/기타: 약 16%</div></ul></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 점유율 &amp; 시장 지위</th>
+              <td class="py-3 px-4 font-semibold text-blue-900 align-top bg-white"><div>EUV 포토레지스트 글로벌 2위 (약 30~35%) | 차세대 MOR(무기물 레지스트) 100% 독점 | TOK와 합산 시 EUV 레지스트 80%+ 장악</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 핵심 경쟁력 (기술 해자)</th>
+              <td class="py-3 px-4 text-slate-800 leading-relaxed align-top bg-white"><div>미국 인프리아(Inpria)를 전격 인수하여 차세대 High-NA EUV용 &#x27;메탈 옥사이드 레지스트(MOR)&#x27; 원천 특허 독점</div><div>High-NA(0.55 NA) 2nm 이하 초미세 노광에서 붕괴 없는 초미세 선폭 패터닝의 유일한 해법 보유</div><div>일본 정부계 펀드(JIC)가 인수한 국가 전략 핵심 반도체 소재 국책 기업</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 고객사 &amp; 서플라이체인</th>
+              <td class="py-3 px-4 text-slate-700 font-semibold align-top bg-white"><div>TSMC, 인텔, 삼성전자, SK하이닉스, 마이크론</div></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-2">
+        <h3 class="text-base font-bold text-purple-950 flex items-center">
+          <span class="w-2 h-4 bg-purple-600 rounded-sm mr-2 inline-block"></span>
+          [5] 아지노모토 (Ajinomoto Fine-Techno) | [2802.T]
+        </h3>
+        <span class='text-xs font-semibold text-blue-800 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded'>핵심 소재: FC-BGA 층간 절연필름 (ABF) (AI/서버 패키징 기판)</span>
+      </div>
+      
+      <div class="p-5">
+        <table class="w-full text-xs text-left border border-slate-200 rounded">
+          <tbody class="divide-y divide-slate-200">
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 매출 제품</th>
+              <td class="py-3 px-4 text-slate-900 align-top bg-white"><div>ABF (Ajinomoto Build-up Film) / 첨단 전자 패키징용 절연 필름 / 기능성 수지 첨가제</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">매출 비중 상세</th>
+              <td class="py-3 px-4 text-slate-800 align-top bg-white"><ul class='space-y-1'><div>기능성 화학소재 부문: 전사 매출의 약 7%</div><li class='ml-6 list-[circle] text-slate-600 text-xs'>ABF 필름이 부문 내 85% 이상</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>(전사 영업이익 기여도는 22~25%로 초고수익)</li><div>식품/바이오 부문: 전사 93%</div></ul></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 점유율 &amp; 시장 지위</th>
+              <td class="py-3 px-4 font-semibold text-blue-900 align-top bg-white"><div>글로벌 ABF 시장 점유율 사실상 100% 독점 | 고성능 FC-BGA 기판 절연재 대체 불가</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 핵심 경쟁력 (기술 해자)</th>
+              <td class="py-3 px-4 text-slate-800 leading-relaxed align-top bg-white"><div>전 세계 모든 고성능 CPU, GPU, AI 가속기(NVIDIA H100/B200 등)의 FC-BGA 기판 필수 층간 절연 소재</div><div>아미노산 합성 기술에서 파생된 독보적 절연성, 초저열팽창계수(CTE), 미세 회로 접합 신뢰성</div><div>30년 이상 축적된 독점 레퍼런스로 전 세계 기판 제조사(이비덴, 신코, 유니마이크론 등)가 100% 표준 채택</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 고객사 &amp; 서플라이체인</th>
+              <td class="py-3 px-4 text-slate-700 font-semibold align-top bg-white"><div>이비덴(Ibiden), 신코(Shinko), 유니마이크론, 대덕전자 (최종: 엔비디아, 인텔, AMD)</div></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-2">
+        <h3 class="text-base font-bold text-purple-950 flex items-center">
+          <span class="w-2 h-4 bg-purple-600 rounded-sm mr-2 inline-block"></span>
+          [6] 레조낙 홀딩스 (Resonac Holdings) | [4004.T]
+        </h3>
+        <span class='text-xs font-semibold text-blue-800 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded'>핵심 소재: 후공정 첨단 패키징 소재 &amp; HBM (쇼와덴코+히타치케미칼)</span>
+      </div>
+      
+      <div class="p-5">
+        <table class="w-full text-xs text-left border border-slate-200 rounded">
+          <tbody class="divide-y divide-slate-200">
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 매출 제품</th>
+              <td class="py-3 px-4 text-slate-900 align-top bg-white"><div>에폭시 몰딩 컴파운드 (EMC 봉지재) / 다이본딩 필름 (DAF) / 비전도성 필름(NCF) / CMP 슬러리 (실리카/세리아) / 초고순도 에칭 가스 (C4F6, Cl2 등) / SiC 에피택셜 웨이퍼 기판</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">매출 비중 상세</th>
+              <td class="py-3 px-4 text-slate-800 align-top bg-white"><ul class='space-y-1'><div>반도체·전자소재 부문: 약 36%</div><li class='ml-6 list-[circle] text-slate-600 text-xs'>첨단 패키징 소재(EMC/필름): 약 50%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>전공정 재료(가스/슬러리/SiC): 약 50%</li><div>모빌리티 및 화학 부문: 약 64%</div></ul></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 점유율 &amp; 시장 지위</th>
+              <td class="py-3 px-4 font-semibold text-blue-900 align-top bg-white"><div>반도체 후공정 소재 글로벌 1위 포트폴리오 | HBM 패키징 필름(NCF) 최상위 | 고순도 불소 에칭가스 글로벌 Top 3</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 핵심 경쟁력 (기술 해자)</th>
+              <td class="py-3 px-4 text-slate-800 leading-relaxed align-top bg-white"><div>구 히타치케미칼의 패키징 소재 역량과 쇼와덴코의 고순도 화학 가스 역량을 결합한 글로벌 소재 공룡</div><div>HBM 수직 적층에 필수적인 비전도성 접착 필름(NCF) 및 칩 보호용 EMC 분야 독보적 기술력</div><div>차세대 SiC 전력반도체 에피택셜 웨이퍼 시장 점유율 글로벌 1위</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 고객사 &amp; 서플라이체인</th>
+              <td class="py-3 px-4 text-slate-700 font-semibold align-top bg-white"><div>SK하이닉스, 삼성전자, TSMC, 인피니언, ASE</div></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-2">
+        <h3 class="text-base font-bold text-purple-950 flex items-center">
+          <span class="w-2 h-4 bg-purple-600 rounded-sm mr-2 inline-block"></span>
+          [7] 스미토모 화학 (Sumitomo Chemical) | [4005.T]
+        </h3>
+        <span class='text-xs font-semibold text-blue-800 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded'>핵심 소재: ArF 포토레지스트 &amp; 초고순도 약품 (노광 및 세정 화학재)</span>
+      </div>
+      
+      <div class="p-5">
+        <table class="w-full text-xs text-left border border-slate-200 rounded">
+          <tbody class="divide-y divide-slate-200">
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 매출 제품</th>
+              <td class="py-3 px-4 text-slate-900 align-top bg-white"><div>ArF 액침 / EUV 포토레지스트 / 초고순도 황산 (H2SO4, 세정용) / 고순도 암모니아수 및 과산화수소 / 고순도 알루미나 (CMP 연마재용)</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">매출 비중 상세</th>
+              <td class="py-3 px-4 text-slate-800 align-top bg-white"><ul class='space-y-1'><div>전자·IT소재 부문: 약 20%</div><li class='ml-6 list-[circle] text-slate-600 text-xs'>포토레지스트 및 고순도 약품: 약 60%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>디스플레이 재료: 약 40%</li><div>석유화학/정밀화학/농업/의약: 80%</div></ul></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 점유율 &amp; 시장 지위</th>
+              <td class="py-3 px-4 font-semibold text-blue-900 align-top bg-white"><div>ArF 액침 포토레지스트 글로벌 Top 3 | 초고순도 세정용 황산 글로벌 1~2위 | CMP용 고순도 알루미나 최상위</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 핵심 경쟁력 (기술 해자)</th>
+              <td class="py-3 px-4 text-slate-800 leading-relaxed align-top bg-white"><div>10나노급 이하 첨단 메모리 및 로직 패터닝에 가장 널리 쓰이는 ArF 액침 레지스트의 핵심 공급사</div><div>초미세 패턴 세정에 필수적인 ppt(1조분의 1) 단위 불순물 관리 초고순도 황산 공급망 장악</div><div>삼성전자, TSMC의 글로벌 팹 인근에 대규모 고순도 황산 플랜트를 구축하여 락인 효과 극대화</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 고객사 &amp; 서플라이체인</th>
+              <td class="py-3 px-4 text-slate-700 font-semibold align-top bg-white"><div>삼성전자, TSMC, SK하이닉스, 마이크론</div></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-2">
+        <h3 class="text-base font-bold text-purple-950 flex items-center">
+          <span class="w-2 h-4 bg-purple-600 rounded-sm mr-2 inline-block"></span>
+          [8] 미쓰이화학 (Mitsui Chemicals) | [4183.T]
+        </h3>
+        <span class='text-xs font-semibold text-blue-800 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded'>핵심 소재: EUV 펠리클 &amp; 웨이퍼 공정 테이프 (노광 보호 및 이송)</span>
+      </div>
+      
+      <div class="p-5">
+        <table class="w-full text-xs text-left border border-slate-200 rounded">
+          <tbody class="divide-y divide-slate-200">
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 매출 제품</th>
+              <td class="py-3 px-4 text-slate-900 align-top bg-white"><div>EUV 펠리클 (ASML 독점 라이선스) / DUV(ArF/KrF) 펠리클 / 백그라인딩/다이싱 보호 테이프 (ICROS) / 광학용 폴리머 및 접착 소재</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">매출 비중 상세</th>
+              <td class="py-3 px-4 text-slate-800 align-top bg-white"><ul class='space-y-1'><div>ICT/전자재료 솔루션: 약 18%</div><li class='ml-6 list-[circle] text-slate-600 text-xs'>반도체 공정재료/펠리클: 약 55%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>광학/디스플레이: 약 45%</li><div>모빌리티/기초화학: 82%</div></ul></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 점유율 &amp; 시장 지위</th>
+              <td class="py-3 px-4 font-semibold text-blue-900 align-top bg-white"><div>EUV 펠리클 글로벌 1위 (ASML 공인 양산) | 웨이퍼 백그라인딩 보호 테이프 1위</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 핵심 경쟁력 (기술 해자)</th>
+              <td class="py-3 px-4 text-slate-800 leading-relaxed align-top bg-white"><div>네덜란드 ASML로부터 CNT(탄소나노튜브) 기반 EUV 펠리클 양산 기술 라이선스를 독점 확보한 유일한 기업</div><div>고출력(600W+) EUV 광원 하에서 마스크 오염을 방지하는 필수 소모품 독점 공급</div><div>HBM 제조 시 웨이퍼 박형화 공정에서 웨이퍼 파손을 방지하는 ICROS 테이프 점유율 압도적 1위</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 고객사 &amp; 서플라이체인</th>
+              <td class="py-3 px-4 text-slate-700 font-semibold align-top bg-white"><div>ASML, TSMC, 삼성전자, 인텔, ASE</div></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-2">
+        <h3 class="text-base font-bold text-purple-950 flex items-center">
+          <span class="w-2 h-4 bg-purple-600 rounded-sm mr-2 inline-block"></span>
+          [9] 후지필름 홀딩스 (FUJIFILM Holdings) | [4901.T]
+        </h3>
+        <span class='text-xs font-semibold text-blue-800 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded'>핵심 소재: CIS 이미지센서 레지스트 &amp; CMP 슬러리 (전자소재 사업부)</span>
+      </div>
+      
+      <div class="p-5">
+        <table class="w-full text-xs text-left border border-slate-200 rounded">
+          <tbody class="divide-y divide-slate-200">
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 매출 제품</th>
+              <td class="py-3 px-4 text-slate-900 align-top bg-white"><div>이미지센서(CIS)용 컬러 레지스트 / EUV용 고선명 네거티브 현상액 (NPD) / 첨단 구리(Cu)/코발트(Co) CMP 슬러리 / 감광성 폴리이미드 (패키징 재료)</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">매출 비중 상세</th>
+              <td class="py-3 px-4 text-slate-800 align-top bg-white"><ul class='space-y-1'><div>전자소재 부문: 전사 매출의 약 9%</div><li class='ml-6 list-[circle] text-slate-600 text-xs'>첨단 반도체 화학소재: 부문 내 85%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>(엔카트 인수로 전공정 풀라인업 구축)</li><div>헬스케어/바이오: 약 35%</div><div>비즈니스 솔루션: 약 38%</div><div>이미징: 약 18%</div></ul></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 점유율 &amp; 시장 지위</th>
+              <td class="py-3 px-4 font-semibold text-blue-900 align-top bg-white"><div>이미지센서 컬러 필터 레지스트: 80%+ (독점) | EUV 네거티브 현상액(NPD): 글로벌 1위 | 첨단 CMP 슬러리: 글로벌 Top 3</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 핵심 경쟁력 (기술 해자)</th>
+              <td class="py-3 px-4 text-slate-800 leading-relaxed align-top bg-white"><div>스마트폰, 차량용 자율주행 카메라 CIS 이미지센서의 빛을 분별하는 컬러 모자이크 레지스트 글로벌 독점</div><div>극초미세 패턴의 해상도를 획기적으로 높여주는 EUV 전용 유기용제 네거티브 현상액 시장 장악</div><div>엔카트(Entegris 화학재료 사업부) 인수를 통해 반도체 전공정 케미컬 포트폴리오를 대폭 강화</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 고객사 &amp; 서플라이체인</th>
+              <td class="py-3 px-4 text-slate-700 font-semibold align-top bg-white"><div>소니(Sony), 삼성전자, TSMC, 옴니비전, 인텔</div></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-2">
+        <h3 class="text-base font-bold text-purple-950 flex items-center">
+          <span class="w-2 h-4 bg-purple-600 rounded-sm mr-2 inline-block"></span>
+          [10] 칸토덴카공업 (Kanto Denka Kogyo) | [4047.T]
+        </h3>
+        <span class='text-xs font-semibold text-blue-800 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded'>핵심 소재: 초고순도 특수 에칭·세정 가스 (불소계 화학 소재)</span>
+      </div>
+      
+      <div class="p-5">
+        <table class="w-full text-xs text-left border border-slate-200 rounded">
+          <tbody class="divide-y divide-slate-200">
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 매출 제품</th>
+              <td class="py-3 px-4 text-slate-900 align-top bg-white"><div>삼불화질소 (NF3, CVD 챔버 세정 가스) / 육불화텅스텐 (WF6, 메탈 배선 형성) / 사불화탄소 (CF4) 및 팔불화프로판(C3F8) / 초고순도 C4F6 (3D NAND 수직홀 식각 가스) / 이차전지 전해질염 (LiPF6)</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">매출 비중 상세</th>
+              <td class="py-3 px-4 text-slate-800 align-top bg-white"><ul class='space-y-1'><div>화성품 및 전자재료 부문: 약 68%</div><li class='ml-6 list-[circle] text-slate-600 text-xs'>반도체/디스플레이 특수가스: 약 50%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>배터리 재료: 약 18%</li><div>기초화학 및 기타: 약 32%</div></ul></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 점유율 &amp; 시장 지위</th>
+              <td class="py-3 px-4 font-semibold text-blue-900 align-top bg-white"><div>초고순도 C4F6 특수 식각가스 글로벌 1위 | 반도체용 WF6 글로벌 Top 3 | 3D NAND 에칭가스 필수 벤더</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 핵심 경쟁력 (기술 해자)</th>
+              <td class="py-3 px-4 text-slate-800 leading-relaxed align-top bg-white"><div>불소(Fluorine) 화합물 원천 합성 및 고도 정제 기술에 기반한 초고순도 특수가스 세계 최고 기술력</div><div>3D NAND 300단 이상 초고층 적층 시 수직 채널홀을 깊고 곧게 파내려가는 C4F6 에칭 가스 대체 불가</div><div>극미량의 금속 불순물 및 수분을 ppb(10억분의 1) 단위로 제거하는 독보적 가스 정제 노하우</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 고객사 &amp; 서플라이체인</th>
+              <td class="py-3 px-4 text-slate-700 font-semibold align-top bg-white"><div>삼성전자, SK하이닉스, TSMC, 마이크론, 키오시아</div></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    </section>
+
+    <!-- 탭 3: 소재 분야별 글로벌 점유율 맵 -->
+    <section id="tab3" class="tab-content hidden">
+      
+<div class="space-y-4">
+  <div class="bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+    <div class="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-slate-100 gap-2">
+      <div>
+        <h2 class="text-xl font-bold text-slate-900">반도체 핵심 소재별 일본 기업 점유율 및 대체 불가성 맵</h2>
+        <p class="text-xs text-slate-500 mt-1">실리콘 웨이퍼부터 극자외선(EUV) 노광 소재, 패키징 기판 필름까지 글로벌 칩 생산의 병목 소재 총망라</p>
+      </div>
+      <div class="flex items-center space-x-2">
+        <input type="text" id="searchTable3" onkeyup="filterTable3()" placeholder="소재 카테고리 / 기업 검색..." 
+               class="text-xs px-3 py-1.5 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-64 bg-slate-50">
+      </div>
+    </div>
+    
+    <div class="overflow-x-auto mt-4 custom-scrollbar">
+      <table id="table3" class="w-full text-left border-collapse text-xs">
+        <thead>
+          <tr class="bg-slate-100 border-y-2 border-slate-300 text-slate-700 font-bold text-center">
+            <th class="py-3 px-3 w-28 whitespace-normal leading-tight">소재<br>카테고리</th>
+            <th class="py-3 px-3 w-36 whitespace-normal leading-tight">세부 핵심<br>소재</th>
+            <th class="py-3 px-3 w-36 whitespace-normal leading-tight">일본 대표<br>기업</th>
+            <th class="py-3 px-2 w-24 whitespace-normal leading-tight">글로벌<br>점유율</th>
+            <th class="py-3 px-2 w-28 whitespace-normal leading-tight">대체 불가성<br>(독점도)</th>
+            <th class="py-3 px-5 text-left">핵심 경쟁 포인트</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200 text-slate-800">
+
+          <tr class="hover:bg-blue-50/40 transition">
+            <td class="py-3.5 px-3 text-center font-semibold text-slate-900 bg-slate-50/50 align-middle">기판 소재 (Substrate)</td>
+            <td class="py-3.5 px-3 font-semibold text-blue-950 align-middle">300mm 실리콘 웨이퍼</td>
+            <td class="py-3.5 px-3 text-slate-800 align-middle">신에츠화학, 섬코 (SUMCO)</td>
+            <td class="py-3.5 px-2 text-center font-bold text-blue-900 align-middle">합산 약 55%~60%</td>
+            <td class="py-3.5 px-2 text-center align-middle">
+              <span class="inline-block px-2 py-0.5 rounded text-[11px] font-semibold bg-red-50 text-red-700 border border-red-200">
+                최상 (과점 체제)
+              </span>
+            </td>
+            <td class="py-3.5 px-5 leading-relaxed text-slate-800 align-middle font-normal">극초평탄도 및 무결함 잉곳 성장 원천 기술, 300mm LTA 장기계약</td>
+          </tr>
+
+          <tr class="hover:bg-blue-50/40 transition">
+            <td class="py-3.5 px-3 text-center font-semibold text-slate-900 bg-slate-50/50 align-middle">노광 소재 (Lithography)</td>
+            <td class="py-3.5 px-3 font-semibold text-blue-950 align-middle">EUV 포토레지스트 (감광액)</td>
+            <td class="py-3.5 px-3 text-slate-800 align-middle">도쿄오카공업(TOK), JSR, 신에츠</td>
+            <td class="py-3.5 px-2 text-center font-bold text-blue-900 align-middle">일본계 85%+</td>
+            <td class="py-3.5 px-2 text-center align-middle">
+              <span class="inline-block px-2 py-0.5 rounded text-[11px] font-semibold bg-red-50 text-red-700 border border-red-200">
+                최상 (절대 독점)
+              </span>
+            </td>
+            <td class="py-3.5 px-5 leading-relaxed text-slate-800 align-middle font-normal">13.5nm EUV 파장 반응 고감도 레지스트, 차세대 MOR 원천 특허 독점</td>
+          </tr>
+
+          <tr class="hover:bg-blue-50/40 transition">
+            <td class="py-3.5 px-3 text-center font-semibold text-slate-900 bg-slate-50/50 align-middle">노광 소재 (Lithography)</td>
+            <td class="py-3.5 px-3 font-semibold text-blue-950 align-middle">ArF 액침 포토레지스트</td>
+            <td class="py-3.5 px-3 text-slate-800 align-middle">도쿄오카공업, JSR, 스미토모화학</td>
+            <td class="py-3.5 px-2 text-center font-bold text-blue-900 align-middle">일본계 80%+</td>
+            <td class="py-3.5 px-2 text-center align-middle">
+              <span class="inline-block px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+                상 (지배적 과점)
+              </span>
+            </td>
+            <td class="py-3.5 px-5 leading-relaxed text-slate-800 align-middle font-normal">최첨단 DUV 패터닝 필수 화학약품, 장기 레퍼런스 및 신뢰성</td>
+          </tr>
+
+          <tr class="hover:bg-blue-50/40 transition">
+            <td class="py-3.5 px-3 text-center font-semibold text-slate-900 bg-slate-50/50 align-middle">노광 소재 (Lithography)</td>
+            <td class="py-3.5 px-3 font-semibold text-blue-950 align-middle">포토마스크용 합성석영</td>
+            <td class="py-3.5 px-3 text-slate-800 align-middle">신에츠화학, AGC</td>
+            <td class="py-3.5 px-2 text-center font-bold text-blue-900 align-middle">80%+</td>
+            <td class="py-3.5 px-2 text-center align-middle">
+              <span class="inline-block px-2 py-0.5 rounded text-[11px] font-semibold bg-red-50 text-red-700 border border-red-200">
+                최상 (절대 독점)
+              </span>
+            </td>
+            <td class="py-3.5 px-5 leading-relaxed text-slate-800 align-middle font-normal">초고순도 합성석영 블랭크 기판 원천 제조 기술</td>
+          </tr>
+
+          <tr class="hover:bg-blue-50/40 transition">
+            <td class="py-3.5 px-3 text-center font-semibold text-slate-900 bg-slate-50/50 align-middle">노광 소재 (Lithography)</td>
+            <td class="py-3.5 px-3 font-semibold text-blue-950 align-middle">EUV 펠리클 (Pellicle)</td>
+            <td class="py-3.5 px-3 text-slate-800 align-middle">미쓰이화학</td>
+            <td class="py-3.5 px-2 text-center font-bold text-blue-900 align-middle">양산 점유율 1위</td>
+            <td class="py-3.5 px-2 text-center align-middle">
+              <span class="inline-block px-2 py-0.5 rounded text-[11px] font-semibold bg-red-50 text-red-700 border border-red-200">
+                최상 (ASML 독점 라이선스)
+              </span>
+            </td>
+            <td class="py-3.5 px-5 leading-relaxed text-slate-800 align-middle font-normal">고출력 600W+ 극자외선 노광 시 마스크 손상 방지 탄소나노튜브 펠리클</td>
+          </tr>
+
+          <tr class="hover:bg-blue-50/40 transition">
+            <td class="py-3.5 px-3 text-center font-semibold text-slate-900 bg-slate-50/50 align-middle">패키징 소재 (Packaging)</td>
+            <td class="py-3.5 px-3 font-semibold text-blue-950 align-middle">FC-BGA 절연필름 (ABF)</td>
+            <td class="py-3.5 px-3 text-slate-800 align-middle">아지노모토 파인테크노</td>
+            <td class="py-3.5 px-2 text-center font-bold text-blue-900 align-middle">사실상 100%</td>
+            <td class="py-3.5 px-2 text-center align-middle">
+              <span class="inline-block px-2 py-0.5 rounded text-[11px] font-semibold bg-red-50 text-red-700 border border-red-200">
+                최상 (완전 독점)
+              </span>
+            </td>
+            <td class="py-3.5 px-5 leading-relaxed text-slate-800 align-middle font-normal">엔비디아·인텔·AMD 고성능 CPU/GPU/AI 가속기 기판 표준, 대체재 전무</td>
+          </tr>
+
+          <tr class="hover:bg-blue-50/40 transition">
+            <td class="py-3.5 px-3 text-center font-semibold text-slate-900 bg-slate-50/50 align-middle">패키징 소재 (Packaging)</td>
+            <td class="py-3.5 px-3 font-semibold text-blue-950 align-middle">에폭시 몰딩 컴파운드 (EMC)</td>
+            <td class="py-3.5 px-3 text-slate-800 align-middle">레조낙 홀딩스, 스미토모베이크라이트</td>
+            <td class="py-3.5 px-2 text-center font-bold text-blue-900 align-middle">합산 70%+</td>
+            <td class="py-3.5 px-2 text-center align-middle">
+              <span class="inline-block px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+                상 (지배적 과점)
+              </span>
+            </td>
+            <td class="py-3.5 px-5 leading-relaxed text-slate-800 align-middle font-normal">칩 밀봉 보호재, 고방열·저휨(Warpage) 신뢰성 기술</td>
+          </tr>
+
+          <tr class="hover:bg-blue-50/40 transition">
+            <td class="py-3.5 px-3 text-center font-semibold text-slate-900 bg-slate-50/50 align-middle">패키징 소재 (Packaging)</td>
+            <td class="py-3.5 px-3 font-semibold text-blue-950 align-middle">HBM용 비전도성 필름 (NCF)</td>
+            <td class="py-3.5 px-3 text-slate-800 align-middle">레조낙 홀딩스</td>
+            <td class="py-3.5 px-2 text-center font-bold text-blue-900 align-middle">글로벌 최상위</td>
+            <td class="py-3.5 px-2 text-center align-middle">
+              <span class="inline-block px-2 py-0.5 rounded text-[11px] font-semibold bg-red-50 text-red-700 border border-red-200">
+                최상 (HBM 핵심 병목)
+              </span>
+            </td>
+            <td class="py-3.5 px-5 leading-relaxed text-slate-800 align-middle font-normal">수직 적층 메모리 다이 간 접합 및 절연을 담당하는 핵심 필름</td>
+          </tr>
+
+          <tr class="hover:bg-blue-50/40 transition">
+            <td class="py-3.5 px-3 text-center font-semibold text-slate-900 bg-slate-50/50 align-middle">특수가스 (Specialty Gas)</td>
+            <td class="py-3.5 px-3 font-semibold text-blue-950 align-middle">3D NAND 고종횡비 식각가스 (C4F6)</td>
+            <td class="py-3.5 px-3 text-slate-800 align-middle">칸토덴카공업</td>
+            <td class="py-3.5 px-2 text-center font-bold text-blue-900 align-middle">글로벌 1위</td>
+            <td class="py-3.5 px-2 text-center align-middle">
+              <span class="inline-block px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+                상 (과점 체제)
+              </span>
+            </td>
+            <td class="py-3.5 px-5 leading-relaxed text-slate-800 align-middle font-normal">300단+ 3D NAND 수직 채널홀 식각에 필수적인 초고순도 특수 가스</td>
+          </tr>
+
+          <tr class="hover:bg-blue-50/40 transition">
+            <td class="py-3.5 px-3 text-center font-semibold text-slate-900 bg-slate-50/50 align-middle">공정 케미컬 (Chemicals)</td>
+            <td class="py-3.5 px-3 font-semibold text-blue-950 align-middle">초고순도 세정용 황산 (H2SO4)</td>
+            <td class="py-3.5 px-3 text-slate-800 align-middle">스미토모화학, 미쓰비시케미칼</td>
+            <td class="py-3.5 px-2 text-center font-bold text-blue-900 align-middle">글로벌 1~2위</td>
+            <td class="py-3.5 px-2 text-center align-middle">
+              <span class="inline-block px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+                상 (과점 체제)
+              </span>
+            </td>
+            <td class="py-3.5 px-5 leading-relaxed text-slate-800 align-middle font-normal">1조분의 1(ppt) 불순물 제어, 글로벌 선단 파운드리 필수 납품</td>
+          </tr>
+
+          <tr class="hover:bg-blue-50/40 transition">
+            <td class="py-3.5 px-3 text-center font-semibold text-slate-900 bg-slate-50/50 align-middle">이미지센서 (CIS)</td>
+            <td class="py-3.5 px-3 font-semibold text-blue-950 align-middle">CIS용 마이크로 컬러 레지스트</td>
+            <td class="py-3.5 px-3 text-slate-800 align-middle">후지필름 홀딩스</td>
+            <td class="py-3.5 px-2 text-center font-bold text-blue-900 align-middle">80%+</td>
+            <td class="py-3.5 px-2 text-center align-middle">
+              <span class="inline-block px-2 py-0.5 rounded text-[11px] font-semibold bg-red-50 text-red-700 border border-red-200">
+                최상 (절대 독점)
+              </span>
+            </td>
+            <td class="py-3.5 px-5 leading-relaxed text-slate-800 align-middle font-normal">스마트폰/자율주행용 이미지센서 화소 형성 컬러 모자이크 독점</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+    </section>
+
+  </main>
+
+  <!-- 푸터 -->
+  <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4">
+      출처: 각 사 IR 연차보고서, SEMI, 글로벌 소재 밸류체인 분석 | 원본 구글 스프레드시트 100% 일치
+    </div>
+  </footer>
+
+  <script>
+    function switchTab(tabId) {
+      const tabs = ['tab1', 'tab2', 'tab3'];
+      const btns = ['btn-tab1', 'btn-tab2', 'btn-tab3', 'btn-tabAll'];
+      
+      btns.forEach(b => {
+        const el = document.getElementById(b);
+        if (el) el.classList.remove('active');
+      });
+
+      if (tabId === 'tabAll') {
+        tabs.forEach(t => {
+          const el = document.getElementById(t);
+          if (el) el.classList.remove('hidden');
+        });
+        document.getElementById('btn-tabAll').classList.add('active');
+      } else {
+        tabs.forEach(t => {
+          const el = document.getElementById(t);
+          if (el) {
+            if (t === tabId) el.classList.remove('hidden');
+            else el.classList.add('hidden');
+          }
+        });
+        const activeBtn = document.getElementById('btn-' + tabId);
+        if (activeBtn) activeBtn.classList.add('active');
+      }
+    }
+
+    function filterTable1() {
+      const input = document.getElementById('searchTable1');
+      const filter = input.value.toLowerCase();
+      const tbody = document.querySelector('#table1 tbody');
+      if (!tbody) return;
+      const rows = tbody.querySelectorAll('.company-row');
+      
+      rows.forEach(mainRow => {
+        const moatRow = mainRow.nextElementSibling;
+        const text = (mainRow.textContent + ' ' + (moatRow ? moatRow.textContent : '')).toLowerCase();
+        if (text.indexOf(filter) > -1) {
+          mainRow.style.display = '';
+          if (moatRow && moatRow.classList.contains('moat-row')) moatRow.style.display = '';
+        } else {
+          mainRow.style.display = 'none';
+          if (moatRow && moatRow.classList.contains('moat-row')) moatRow.style.display = 'none';
+        }
+      });
+    }
+
+    function filterTable3() {
+      const input = document.getElementById('searchTable3');
+      const filter = input.value.toLowerCase();
+      const table = document.getElementById('table3');
+      if (!table) return;
+      const tr = table.getElementsByTagName('tr');
+
+      for (let i = 1; i < tr.length; i++) {
+        const text = tr[i].textContent || tr[i].innerText;
+        if (text.toLowerCase().indexOf(filter) > -1) {
+          tr[i].style.display = '';
+        } else {
+          tr[i].style.display = 'none';
+        }
+      }
+    }
+  </script>
+</body>
+</html>
