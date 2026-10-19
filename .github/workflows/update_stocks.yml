@@ -2,7 +2,10 @@ name: Update Semiconductor Stock Prices
 
 on:
   schedule:
-    - cron: '*/30 0-6 * * 1-5'
+    # GitHub 서버 큐 적체(정각/30분 트래픽 집중)를 피해 매시 12분, 42분에 분산 실행 (KST 09:12~14:42)
+    - cron: '12,42 0-5 * * 1-5'
+    # KST 15:35 장 마감 직후 확정 종가 및 16:00 시간외 마감 반영 (UTC 06:35, 07:00)
+    - cron: '35 6 * * 1-5'
     - cron: '0 7 * * 1-5'
   workflow_dispatch:
 
