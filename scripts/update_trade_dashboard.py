@@ -297,7 +297,7 @@ def generate_html_dashboard(dataset):
         <!-- Center: Batch Sync Controls -->
         <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 border-t lg:border-t-0 pt-3 lg:pt-0 border-slate-100">
           <div class="flex items-center gap-2">
-            <span class="text-xs font-bold text-slate-700 whitespace-nowrap">전체 품목 일괄 동기화:</span>
+            <span class="text-xs font-bold text-slate-700 whitespace-nowrap">비교 대상 구간 일괄 변경:</span>
             <select id="batchCompSelect" class="bg-slate-50 border border-slate-300 text-slate-900 text-xs rounded-lg p-1.5 font-medium">
               <!-- populated -->
             </select>
@@ -500,7 +500,7 @@ def generate_html_dashboard(dataset):
       select.innerHTML = '';
       const ds = getDataset();
       const defIdx = Math.max(0, ds.length - 4);
-      for (let i = ds.length - 2; i >= 0; i--) {{
+      for (let i = ds.length - 1; i >= 0; i--) {{
         const item = ds[i];
         const opt = document.createElement('option');
         opt.value = item.id;

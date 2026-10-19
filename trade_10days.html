@@ -67,7 +67,7 @@
       <span class="hidden sm:inline-flex px-2 py-0.5 rounded text-xs bg-emerald-100 text-emerald-900 font-semibold border border-emerald-300">자동 갱신 연동</span>
     </div>
     <div class="flex items-center space-x-3 text-xs text-purple-800 font-medium whitespace-nowrap">
-      <span class="hidden md:inline">최근 갱신: 2026.10.19 14:47:45</span>
+      <span class="hidden md:inline">최근 갱신: 2026.10.19 15:06:48</span>
       <span class="hidden lg:inline text-purple-300">|</span>
       <span>단위: 천 달러, %</span>
     </div>
@@ -93,7 +93,7 @@
         <!-- Center: Batch Sync Controls -->
         <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 border-t lg:border-t-0 pt-3 lg:pt-0 border-slate-100">
           <div class="flex items-center gap-2">
-            <span class="text-xs font-bold text-slate-700 whitespace-nowrap">전체 품목 일괄 동기화:</span>
+            <span class="text-xs font-bold text-slate-700 whitespace-nowrap">비교 대상 구간 일괄 변경:</span>
             <select id="batchCompSelect" class="bg-slate-50 border border-slate-300 text-slate-900 text-xs rounded-lg p-1.5 font-medium">
               <!-- populated -->
             </select>
@@ -296,7 +296,7 @@
       select.innerHTML = '';
       const ds = getDataset();
       const defIdx = Math.max(0, ds.length - 4);
-      for (let i = ds.length - 2; i >= 0; i--) {
+      for (let i = ds.length - 1; i >= 0; i--) {
         const item = ds[i];
         const opt = document.createElement('option');
         opt.value = item.id;
