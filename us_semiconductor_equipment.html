@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>미국 반도체 장비 기업 심층 분석</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    body {
+      font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+      line-height: 1.6;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      height: 6px;
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background-color: #cbd5e1;
+      border-radius: 9999px;
+    }
+    .tab-btn.active {
+      background-color: #1e3a8a;
+      color: #ffffff;
+      font-weight: 700;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    }
+    .tab-btn {
+      background-color: #f1f5f9;
+      color: #475569;
+    }
+    @media print {
+      header { display: none; }
+      .tab-navigation { display: none; }
+      .tab-content { display: block !important; }
+      body { background-color: #ffffff; }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- 연보라 상단 헤더 (표준 공통 디자인 규격) -->
+  <header class="bg-[#f5f3ff]/95 backdrop-blur-md border-b border-purple-200/80 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <a href="index.html" class="inline-flex items-center px-2.5 py-1 rounded text-xs font-semibold bg-purple-100 text-purple-900 hover:bg-purple-200 border border-purple-300/80 transition mr-2">← 메인화면</a>
+        <h1 class="text-base sm:text-lg font-bold text-purple-950 tracking-tight">미국 반도체 장비 핵심 기업 심층 분석</h1>
+        <span class="hidden md:inline-block px-2 py-0.5 text-xs font-medium bg-purple-100 text-purple-800 rounded border border-purple-200">글로벌 밸류체인 독점 분석</span>
+      </div>
+      <div class="text-xs font-medium text-purple-700">
+        기준일: 2026년 10월
+      </div>
+    </div>
+  </header>
+
+  <!-- 메인 컨테이너 -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+    <!-- 상단 요약 브리핑 카드 -->
+    <div class="bg-white border border-slate-200 rounded-lg p-6 shadow-sm border-l-4 border-l-purple-700">
+      <div class="text-xs font-bold text-purple-800 tracking-wider uppercase mb-1">Global Semiconductor Equipment Deep Dive</div>
+      <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+        미국 반도체 장비 10대 기업 및 공정별 글로벌 점유율 종합 분석
+      </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+        글로벌 반도체 전공정 종합 장비 1위 어플라이드 머티어리얼즈(AMAT), 고종횡비 유전체 식각 독점 램리서치(Lam Research), 전공정 공정제어 및 수율 검사 독점 KLA, 첨단 패키징 검사 온토 이노베이션, SoC/AI 프로세서 테스터 테라다인 등 글로벌 팹 제조의 핵심 하드웨어를 과점한 미국 10대 장비 기업의 사업 모델과 기술적 해자를 원천 데이터 그대로 집대성한 리포트입니다.
+      </p>
+      <div class="mt-4 flex flex-wrap gap-2 text-xs">
+        <span class="px-2.5 py-1 rounded bg-purple-50 text-purple-800 font-semibold border border-purple-200">PVD 증착 AMAT 80%+ 독점</span>
+        <span class="px-2.5 py-1 rounded bg-blue-50 text-blue-800 font-semibold border border-blue-200">3D NAND 식각 Lam Research 80%+</span>
+        <span class="px-2.5 py-1 rounded bg-emerald-50 text-emerald-800 font-semibold border border-emerald-200">광학 웨이퍼 결함 검사 KLA 55~60%</span>
+        <span class="px-2.5 py-1 rounded bg-amber-50 text-amber-800 font-semibold border border-amber-200">AI 프로세서 테스터 Teradyne 50%+</span>
+      </div>
+    </div>
+
+    <!-- 탭 네비게이션 버튼 -->
+    <div class="tab-navigation flex flex-wrap gap-2 border-b border-slate-200 pb-2">
+      <button onclick="switchTab('tab1')" id="btn-tab1" class="tab-btn active px-4 py-2 rounded-md text-xs font-semibold transition">
+        01. 10대 기업 총괄표 (기술 해자 일체형)
+      </button>
+      <button onclick="switchTab('tab2')" id="btn-tab2" class="tab-btn px-4 py-2 rounded-md text-xs font-semibold transition">
+        02. 기업별 심층 분석 프로파일
+      </button>
+      <button onclick="switchTab('tab3')" id="btn-tab3" class="tab-btn px-4 py-2 rounded-md text-xs font-semibold transition">
+        03. 공정별 점유율 및 대체불가성 맵
+      </button>
+      <button onclick="switchTab('tabAll')" id="btn-tabAll" class="tab-btn px-4 py-2 rounded-md text-xs font-semibold transition">
+        전체 통합 보기
+      </button>
+    </div>
+
+    <!-- 탭 1: 10대 기업 총괄표 (일체형 2행 구조) -->
+    <section id="tab1" class="tab-content">
+      
+<div class="space-y-4">
+  <div class="bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+    <div class="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-slate-100 gap-2">
+      <div>
+        <h2 class="text-xl font-bold text-slate-900">미국 반도체 핵심 장비기업 심층 분석 리포트</h2>
+        <p class="text-xs text-slate-500 mt-1">기준일: 2026년 10월 | 작성: Antigravity Equity Research | 출처: 각 사 IR 연차보고서, SEMI, SEC 10-K, 증권사 컨센서스</p>
+      </div>
+      <div class="flex items-center space-x-2">
+        <input type="text" id="searchTable1" onkeyup="filterTable1()" placeholder="기업명 / 공정 / 제품 / 해자 검색..." 
+               class="text-xs px-3 py-1.5 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-64 bg-slate-50">
+      </div>
+    </div>
+    
+    <div class="overflow-x-auto mt-4 custom-scrollbar">
+      <table id="table1" class="w-full text-left border-collapse text-xs">
+        <thead>
+          <tr class="bg-slate-100 border-y-2 border-slate-300 text-slate-700 font-bold">
+            <th class="py-3 px-4 w-48">기업명</th>
+            <th class="py-3 px-4 w-48">핵심 공정 분야</th>
+            <th class="py-3 px-4 w-60">주요 매출 제품</th>
+            <th class="py-3 px-4 w-56">매출 비중</th>
+            <th class="py-3 px-4 w-52">글로벌 점유율 &amp; 지위</th>
+            <th class="py-3 px-4 w-48 text-blue-950 font-extrabold">주요 고객사</th>
+          </tr>
+        </thead>
+        <tbody class="text-slate-800">
+
+          <tr class="company-row hover:bg-slate-50 transition border-t border-slate-200">
+            <td class="py-3.5 px-4 align-top bg-slate-50/30"><div class='font-bold text-slate-900 text-sm'>어플라이드 머티어리얼즈</div><div class='text-slate-500 text-[11px]'>(Applied Materials)</div><div class='inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-purple-50 text-purple-700 border border-purple-200'>[AMAT]</div></td>
+            <td class="py-3.5 px-4 align-top font-medium text-slate-900"><div>전공정 종합 장비</div><div>(증착, 식각, CMP, 이온주입, E-beam 계측)</div></td>
+            <td class="py-3.5 px-4 align-top"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>증착(PVD/CVD/ALD): Endura, Producer 시리즈</li><li class='ml-3 list-disc text-slate-700'>화학기계연마(CMP): Reflexion LK 시리즈</li><li class='ml-3 list-disc text-slate-700'>식각 장비: Centris Sym3 시리즈</li><li class='ml-3 list-disc text-slate-700'>이온주입 장비: Varian 시리즈</li><li class='ml-3 list-disc text-slate-700'>전자빔(E-beam) 결함 검사기: PROVision</li></ul></td>
+            <td class="py-3.5 px-4 align-top bg-slate-50/50"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>반도체 시스템(Semiconductor Systems): 73%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>박막 증착(PVD/CVD/ALD): 약 45%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>식각 및 선택적 제거: 약 25%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>화학기계연마(CMP): 약 15%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>기타 및 이온주입: 약 15%</li><li class='ml-3 list-disc text-slate-700'>글로벌 서비스(AGS - 소모품/유지보수): 22%</li><li class='ml-3 list-disc text-slate-700'>디스플레이 및 인접 시장: 5%</li></ul></td>
+            <td class="py-3.5 px-4 align-top"><div class="font-semibold text-blue-900"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>글로벌 반도체 장비 종합 1위 (연매출 기준)</li><li class='ml-3 list-disc text-slate-700'>PVD(물리적 기상증착): 80%+ (압도적 독점)</li><li class='ml-3 list-disc text-slate-700'>CMP(화학기계적연마): 65%+ (글로벌 1위)</li><li class='ml-3 list-disc text-slate-700'>이온주입: 글로벌 2위 (Axcelis와 양분)</li></ul></div></td>
+            <td class="py-3.5 px-4 align-top bg-blue-50/20"><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>TSMC</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>삼성전자</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>SK하이닉스</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>인텔</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>마이크론</div></td>
+          </tr>
+          <!-- 2행: 바로 아래 1칸 추가 (기술적 해자 통합 행) -->
+          <tr class="moat-row bg-[#faf8ff] border-b-2 border-slate-300">
+            <td colspan="6" class="py-3 px-4">
+              <div class="flex flex-col sm:flex-row items-start gap-2.5 bg-white border border-purple-200/90 rounded p-3 shadow-2xs">
+                <div class="inline-flex items-center px-2 py-1 rounded text-[11px] font-bold bg-purple-100 text-purple-900 border border-purple-300 shrink-0 whitespace-nowrap">
+                  글로벌 핵심경쟁력 (기술적 해자)
+                </div>
+                <div class="text-xs leading-relaxed text-slate-800 flex-1">
+                  <ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>통합 재료 솔루션(IMS): 증착-식각-CMP-검사를 단일 진공 챔버에서 원스톱 처리하는 세계 유일 플랫폼</li><li class='ml-3 list-disc text-slate-700'>2nm 이하 초미세 GAA 및 후면전력공급(BSPDN) 전환에 따른 신소재 박막 증착 수요 폭증</li><li class='ml-3 list-disc text-slate-700'>차세대 HBM 하이브리드 본딩을 위한 초평탄화 CMP 장비 독점 지위 장악</li></ul>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="company-row hover:bg-slate-50 transition border-t border-slate-200">
+            <td class="py-3.5 px-4 align-top bg-slate-50/30"><div class='font-bold text-slate-900 text-sm'>램리서치</div><div class='text-slate-500 text-[11px]'>(Lam Research)</div><div class='inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-purple-50 text-purple-700 border border-purple-200'>[LRCX]</div></td>
+            <td class="py-3.5 px-4 align-top font-medium text-slate-900"><div>전공정 고난도 식각 &amp; 증착</div><div>(유전체/도체 식각, 원자층 증착)</div></td>
+            <td class="py-3.5 px-4 align-top"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>유전체 식각기: Flex, Sense.i 시리즈</li><li class='ml-3 list-disc text-slate-700'>도체 식각기: Kiyo 시리즈</li><li class='ml-3 list-disc text-slate-700'>원자층 증착(ALD): VECTOR, Striker</li><li class='ml-3 list-disc text-slate-700'>극저온 식각(Cryogenic Etch) 장비</li><li class='ml-3 list-disc text-slate-700'>웨이퍼 세정: Da Vinci, Coronus</li></ul></td>
+            <td class="py-3.5 px-4 align-top bg-slate-50/50"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>반도체 시스템 부문: 67%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>메모리향(NAND/DRAM): 약 52%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>파운드리/로직향: 약 48%</li><li class='ml-3 list-disc text-slate-700'>고객 지원 서비스(CSBG - 유지보수/개조): 33%</li></ul></td>
+            <td class="py-3.5 px-4 align-top"><div class="font-semibold text-blue-900"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>글로벌 식각(Etch) 장비 시장 1위 (점유율 약 48%)</li><li class='ml-3 list-disc text-slate-700'>고종횡비(HAR) 유전체 식각: 80%+ (독점적)</li><li class='ml-3 list-disc text-slate-700'>구리 다마신 박막 증착: 글로벌 1위</li></ul></div></td>
+            <td class="py-3.5 px-4 align-top bg-blue-50/20"><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>삼성전자</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>SK하이닉스</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>TSMC</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>마이크론</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>키오시아</div></td>
+          </tr>
+          <!-- 2행: 바로 아래 1칸 추가 (기술적 해자 통합 행) -->
+          <tr class="moat-row bg-[#faf8ff] border-b-2 border-slate-300">
+            <td colspan="6" class="py-3 px-4">
+              <div class="flex flex-col sm:flex-row items-start gap-2.5 bg-white border border-purple-200/90 rounded p-3 shadow-2xs">
+                <div class="inline-flex items-center px-2 py-1 rounded text-[11px] font-bold bg-purple-100 text-purple-900 border border-purple-300 shrink-0 whitespace-nowrap">
+                  글로벌 핵심경쟁력 (기술적 해자)
+                </div>
+                <div class="text-xs leading-relaxed text-slate-800 flex-1">
+                  <ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>3D NAND 수백 단 수직 채널홀을 한 번에 뚫어내는 고종횡비(HAR) 플라즈마 식각 기술 절대 독점</li><li class='ml-3 list-disc text-slate-700'>극저온(-80℃ 이하)에서 실리콘 구조 붕괴 없이 고속 식각하는 극저온 식각 기술 상용화</li><li class='ml-3 list-disc text-slate-700'>첨단 HBM 패키징을 위한 TSV(실리콘 관통전극) 구리 식각 공정 핵심 표준 장비 공급</li></ul>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="company-row hover:bg-slate-50 transition border-t border-slate-200">
+            <td class="py-3.5 px-4 align-top bg-slate-50/30"><div class='font-bold text-slate-900 text-sm'>KLA 코퍼레이션</div><div class='text-slate-500 text-[11px]'>(KLA Corporation)</div><div class='inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-purple-50 text-purple-700 border border-purple-200'>[KLAC]</div></td>
+            <td class="py-3.5 px-4 align-top font-medium text-slate-900"><div>전공정 공정제어 &amp; 결함 검사</div><div>(광학/전자빔 검사 및 계측)</div></td>
+            <td class="py-3.5 px-4 align-top"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>광대역 플라즈마 결함 검사기 (29xx/39xx 시리즈)</li><li class='ml-3 list-disc text-slate-700'>전자빔(E-beam) 결함 리뷰 장비 (eSL10)</li><li class='ml-3 list-disc text-slate-700'>광학 오버레이(Overlay) 계측기 (Archer 시리즈)</li><li class='ml-3 list-disc text-slate-700'>박막 두께/성질 측정기 (SpectraShape)</li></ul></td>
+            <td class="py-3.5 px-4 align-top bg-slate-50/50"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>결함 검사(Inspection) 부문: 42%</li><li class='ml-3 list-disc text-slate-700'>패터닝 계측(Metrology) 부문: 23%</li><li class='ml-3 list-disc text-slate-700'>특수 반도체 공정(SPTS): 12%</li><li class='ml-3 list-disc text-slate-700'>고객 서비스 및 라이선스: 23%</li></ul></td>
+            <td class="py-3.5 px-4 align-top"><div class="font-semibold text-blue-900"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>글로벌 공정제어(Process Control) 시장 1위</li><li class='ml-3 list-disc text-slate-700'>광학식 웨이퍼 결함 검사: 55~60% (압도적 1위)</li><li class='ml-3 list-disc text-slate-700'>첨단 노드 패턴 결함 검사: 80%+ 독점</li><li class='ml-3 list-disc text-slate-700'>(2위 AMAT 12% 대비 압도적 격차 유지)</li></ul></div></td>
+            <td class="py-3.5 px-4 align-top bg-blue-50/20"><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>TSMC</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>삼성전자</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>인텔</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>SK하이닉스</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>마이크론</div></td>
+          </tr>
+          <!-- 2행: 바로 아래 1칸 추가 (기술적 해자 통합 행) -->
+          <tr class="moat-row bg-[#faf8ff] border-b-2 border-slate-300">
+            <td colspan="6" class="py-3 px-4">
+              <div class="flex flex-col sm:flex-row items-start gap-2.5 bg-white border border-purple-200/90 rounded p-3 shadow-2xs">
+                <div class="inline-flex items-center px-2 py-1 rounded text-[11px] font-bold bg-purple-100 text-purple-900 border border-purple-300 shrink-0 whitespace-nowrap">
+                  글로벌 핵심경쟁력 (기술적 해자)
+                </div>
+                <div class="text-xs leading-relaxed text-slate-800 flex-1">
+                  <ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>&#x27;수율(Yield)의 수호자&#x27;: KLA 장비 없이는 3nm/2nm 공정의 미세 결함을 잡을 수 없어 팹 양산 불가</li><li class='ml-3 list-disc text-slate-700'>레이저 산란 및 광대역 UV 광원을 활용한 나노미터급 초미세 결함 실시간 검출 특허 독점</li><li class='ml-3 list-disc text-slate-700'>첨단 패키징 2.5D/3D 결합 시 인터포저 및 마이크로 범프 결함 검사 영역으로 생태계 확장</li></ul>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="company-row hover:bg-slate-50 transition border-t border-slate-200">
+            <td class="py-3.5 px-4 align-top bg-slate-50/30"><div class='font-bold text-slate-900 text-sm'>테라다인</div><div class='text-slate-500 text-[11px]'>(Teradyne)</div><div class='inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-purple-50 text-purple-700 border border-purple-200'>[TER]</div></td>
+            <td class="py-3.5 px-4 align-top font-medium text-slate-900"><div>후공정 자동화 테스트 (ATE)</div><div>(SoC, AI 가속기, 메모리)</div></td>
+            <td class="py-3.5 px-4 align-top"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>SoC/AI 프로세서 테스터: UltraFLEXplus 시리즈</li><li class='ml-3 list-disc text-slate-700'>마이크로컨트롤러/아날로그 테스터: J750 시리즈</li><li class='ml-3 list-disc text-slate-700'>고속 메모리 테스터: Magnum 시리즈</li><li class='ml-3 list-disc text-slate-700'>무선 통신(RF) 테스트 시스템: LitePoint</li></ul></td>
+            <td class="py-3.5 px-4 align-top bg-slate-50/50"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>반도체 테스트 시스템(Semiconductor Test): 68%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>SoC/로직 테스터: 약 78%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>메모리 테스터: 약 22%</li><li class='ml-3 list-disc text-slate-700'>산업용 로보틱스(Universal Robots 협동로봇): 15%</li><li class='ml-3 list-disc text-slate-700'>무선/시스템 테스트 부문: 17%</li></ul></td>
+            <td class="py-3.5 px-4 align-top"><div class="font-semibold text-blue-900"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>글로벌 ATE(자동 테스트 장비) 시장 1~2위</li><li class='ml-3 list-disc text-slate-700'>모바일 AP 및 고성능 SoC 테스터: 1위 (50%+)</li><li class='ml-3 list-disc text-slate-700'>일본 Advantest와 전 세계 시장 90%+ 과점 양분</li></ul></div></td>
+            <td class="py-3.5 px-4 align-top bg-blue-50/20"><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>애플(Foxconn 조립라인)</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>퀄컴</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>AMD</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>브로드컴</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>TSMC</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>인텔</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>ASE</div></td>
+          </tr>
+          <!-- 2행: 바로 아래 1칸 추가 (기술적 해자 통합 행) -->
+          <tr class="moat-row bg-[#faf8ff] border-b-2 border-slate-300">
+            <td colspan="6" class="py-3 px-4">
+              <div class="flex flex-col sm:flex-row items-start gap-2.5 bg-white border border-purple-200/90 rounded p-3 shadow-2xs">
+                <div class="inline-flex items-center px-2 py-1 rounded text-[11px] font-bold bg-purple-100 text-purple-900 border border-purple-300 shrink-0 whitespace-nowrap">
+                  글로벌 핵심경쟁력 (기술적 해자)
+                </div>
+                <div class="text-xs leading-relaxed text-slate-800 flex-1">
+                  <ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>애플(Apple) 실리콘(A/M 시리즈), 퀄컴, AMD 핵심 칩 양산 라인의 표준 ATE 공급사</li><li class='ml-3 list-disc text-slate-700'>수천 개의 연산 코어가 결합된 고전력 AI 가속기의 발열 제어 및 초고속 병렬 테스트 기술 보유</li><li class='ml-3 list-disc text-slate-700'>자회사 유니버설 로봇(UR)의 협동로봇과 반도체 테스터를 결합한 무인 패키징 자동화 선도</li></ul>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="company-row hover:bg-slate-50 transition border-t border-slate-200">
+            <td class="py-3.5 px-4 align-top bg-slate-50/30"><div class='font-bold text-slate-900 text-sm'>온토 이노베이션</div><div class='text-slate-500 text-[11px]'>(Onto Innovation)</div><div class='inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-purple-50 text-purple-700 border border-purple-200'>[ONTO]</div></td>
+            <td class="py-3.5 px-4 align-top font-medium text-slate-900"><div>첨단 패키징 광학 검사 &amp; 계측</div><div>(2.5D/3D 서브마이크론 검사)</div></td>
+            <td class="py-3.5 px-4 align-top"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>2.5D/3D 패키징 및 웨이퍼 검사기: Dragonfly G2</li><li class='ml-3 list-disc text-slate-700'>광학 임계치수(OCD) 계측기: Atlas 시리즈</li><li class='ml-3 list-disc text-slate-700'>첨단 패키징용 리소그래피 노광기: JetStep</li><li class='ml-3 list-disc text-slate-700'>공정 제어 소프트웨어: TrueSpect, Discover</li></ul></td>
+            <td class="py-3.5 px-4 align-top bg-slate-50/50"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>첨단 패키징 및 특수 장비: 45%</li><li class='ml-3 list-disc text-slate-700'>첨단 웨이퍼 공정 제어(OCD/박막 계측): 35%</li><li class='ml-3 list-disc text-slate-700'>소프트웨어 분석 및 고객 서비스: 20%</li></ul></td>
+            <td class="py-3.5 px-4 align-top"><div class="font-semibold text-blue-900"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>첨단 패키징(Advanced Packaging) 광학 검사: 1위 (50%+)</li><li class='ml-3 list-disc text-slate-700'>HBM 및 칩렛 인터포저 결함 검사 지배적 지위</li><li class='ml-3 list-disc text-slate-700'>박막 필름 두께 계측: 글로벌 상위권</li></ul></div></td>
+            <td class="py-3.5 px-4 align-top bg-blue-50/20"><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>TSMC</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>인텔</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>삼성전자</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>SK하이닉스</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>ASE</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>앰코</div></td>
+          </tr>
+          <!-- 2행: 바로 아래 1칸 추가 (기술적 해자 통합 행) -->
+          <tr class="moat-row bg-[#faf8ff] border-b-2 border-slate-300">
+            <td colspan="6" class="py-3 px-4">
+              <div class="flex flex-col sm:flex-row items-start gap-2.5 bg-white border border-purple-200/90 rounded p-3 shadow-2xs">
+                <div class="inline-flex items-center px-2 py-1 rounded text-[11px] font-bold bg-purple-100 text-purple-900 border border-purple-300 shrink-0 whitespace-nowrap">
+                  글로벌 핵심경쟁력 (기술적 해자)
+                </div>
+                <div class="text-xs leading-relaxed text-slate-800 flex-1">
+                  <ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>엔비디아 CoWoS 및 인텔 EMIB 등 차세대 AI 가속기 첨단 패키징의 필수 검사 장비 독점</li><li class='ml-3 list-disc text-slate-700'>서브마이크론(1㎛ 미만) 단위의 미세 범프 균열, 잔여물, 브릿지 결함을 초고속 광학 스캔으로 전수 판독</li><li class='ml-3 list-disc text-slate-700'>3D NAND 구조의 깊이와 두께를 비파괴로 측정하는 광학 임계치수(OCD) 기술 독보적 경쟁력</li></ul>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="company-row hover:bg-slate-50 transition border-t border-slate-200">
+            <td class="py-3.5 px-4 align-top bg-slate-50/30"><div class='font-bold text-slate-900 text-sm'>악셀리스 테크놀로지스</div><div class='text-slate-500 text-[11px]'>(Axcelis Technologies)</div><div class='inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-purple-50 text-purple-700 border border-purple-200'>[ACLS]</div></td>
+            <td class="py-3.5 px-4 align-top font-medium text-slate-900"><div>전공정 이온주입 특화</div><div>(SiC 전력반도체 고에너지 임플란트)</div></td>
+            <td class="py-3.5 px-4 align-top"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>고에너지 이온주입기: Purion XE 시리즈</li><li class='ml-3 list-disc text-slate-700'>고전류/중전류 이온주입기: Purion H, Purion M</li><li class='ml-3 list-disc text-slate-700'>파워반도체 전용 고온 이온주입기: Purion Power Series</li><li class='ml-3 list-disc text-slate-700'>건식 웨이퍼 스트립(Strip) 장비</li></ul></td>
+            <td class="py-3.5 px-4 align-top bg-slate-50/50"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>이온주입 장비 제조: 80%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>전력반도체(SiC/GaN): 약 60%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>메모리/로직 제조: 약 40%</li><li class='ml-3 list-disc text-slate-700'>애프터마켓 유지보수 및 소모품: 20%</li></ul></td>
+            <td class="py-3.5 px-4 align-top"><div class="font-semibold text-blue-900"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>SiC(탄화규소) 전력반도체 이온주입: 70%+ (압도적 1위)</li><li class='ml-3 list-disc text-slate-700'>글로벌 이온주입기 시장 2위 (AMAT과 시장 양분)</li><li class='ml-3 list-disc text-slate-700'>고에너지(High-Energy) 이온주입 분야 독보적 기술력</li></ul></div></td>
+            <td class="py-3.5 px-4 align-top bg-blue-50/20"><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>울프스피드(Wolfspeed)</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>ST마이크로</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>온세미(onsemi)</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>인피니언</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>삼성전자</div></td>
+          </tr>
+          <!-- 2행: 바로 아래 1칸 추가 (기술적 해자 통합 행) -->
+          <tr class="moat-row bg-[#faf8ff] border-b-2 border-slate-300">
+            <td colspan="6" class="py-3 px-4">
+              <div class="flex flex-col sm:flex-row items-start gap-2.5 bg-white border border-purple-200/90 rounded p-3 shadow-2xs">
+                <div class="inline-flex items-center px-2 py-1 rounded text-[11px] font-bold bg-purple-100 text-purple-900 border border-purple-300 shrink-0 whitespace-nowrap">
+                  글로벌 핵심경쟁력 (기술적 해자)
+                </div>
+                <div class="text-xs leading-relaxed text-slate-800 flex-1">
+                  <ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>실리콘 대비 결합력이 단단한 SiC 소재에 500℃ 이상 초고온에서 이온을 주입하는 &#x27;핫 임플란트&#x27; 원천 기술 보유</li><li class='ml-3 list-disc text-slate-700'>수 메가전자볼트(MeV)급 초고에너지 가속 빔을 균일하게 웨이퍼 심층에 투과시키는 고전압 제어 특허</li><li class='ml-3 list-disc text-slate-700'>전기차(EV), 태양광 인버터, AI 데이터센터용 SiC 전력반도체 수요 폭증의 직접적 수혜</li></ul>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="company-row hover:bg-slate-50 transition border-t border-slate-200">
+            <td class="py-3.5 px-4 align-top bg-slate-50/30"><div class='font-bold text-slate-900 text-sm'>비코 인스트루먼츠</div><div class='text-slate-500 text-[11px]'>(Veeco Instruments)</div><div class='inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-purple-50 text-purple-700 border border-purple-200'>[VECO]</div></td>
+            <td class="py-3.5 px-4 align-top font-medium text-slate-900"><div>전공정 정밀 열처리 &amp; 박막 증착</div><div>(레이저 스파이크 어닐링, MOCVD, IBE)</div></td>
+            <td class="py-3.5 px-4 align-top"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>레이저 스파이크 어닐링(LSA) 시스템</li><li class='ml-3 list-disc text-slate-700'>화합물 반도체 MOCVD: Propel GaN 시리즈</li><li class='ml-3 list-disc text-slate-700'>이온빔 에칭(IBE) 및 이온빔 증착(IBD) 장비</li><li class='ml-3 list-disc text-slate-700'>첨단 패키징용 리소그래피 노광기: AP 시리즈</li></ul></td>
+            <td class="py-3.5 px-4 align-top bg-slate-50/50"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>반도체 전공정(LSA 레이저 열처리 등): 62%</li><li class='ml-3 list-disc text-slate-700'>화합물 반도체 MOCVD 및 데이터스토리지: 24%</li><li class='ml-3 list-disc text-slate-700'>서비스 및 유지보수: 14%</li></ul></td>
+            <td class="py-3.5 px-4 align-top"><div class="font-semibold text-blue-900"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>첨단 로직(3nm/2nm) 레이저 스파이크 어닐링: 1위 (70%+)</li><li class='ml-3 list-disc text-slate-700'>하드디스크(HDD) 자기헤드 이온빔 증착: 1위 (85%+)</li><li class='ml-3 list-disc text-slate-700'>전력반도체 GaN-on-Si MOCVD 글로벌 최상위</li></ul></div></td>
+            <td class="py-3.5 px-4 align-top bg-blue-50/20"><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>TSMC</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>인텔</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>삼성전자</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>마이크론</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>글로벌파운드리</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>씨게이트</div></td>
+          </tr>
+          <!-- 2행: 바로 아래 1칸 추가 (기술적 해자 통합 행) -->
+          <tr class="moat-row bg-[#faf8ff] border-b-2 border-slate-300">
+            <td colspan="6" class="py-3 px-4">
+              <div class="flex flex-col sm:flex-row items-start gap-2.5 bg-white border border-purple-200/90 rounded p-3 shadow-2xs">
+                <div class="inline-flex items-center px-2 py-1 rounded text-[11px] font-bold bg-purple-100 text-purple-900 border border-purple-300 shrink-0 whitespace-nowrap">
+                  글로벌 핵심경쟁력 (기술적 해자)
+                </div>
+                <div class="text-xs leading-relaxed text-slate-800 flex-1">
+                  <ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>웨이퍼 전체를 굽지 않고 밀리초(ms) 단위로 극표면만 고에너지 레이저로 급속 가열하는 LSA 원천 기술 독점</li><li class='ml-3 list-disc text-slate-700'>첨단 로직 공정에서 불순물이 원치 않는 영역으로 번지지 않고 활성화되도록 제어하는 유일한 기술</li><li class='ml-3 list-disc text-slate-700'>AI 데이터센터 고용량 HDD 수요 증가에 따른 자기헤드(PMR/HAMR) 이온빔 증착 장비 독점 수혜</li></ul>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="company-row hover:bg-slate-50 transition border-t border-slate-200">
+            <td class="py-3.5 px-4 align-top bg-slate-50/30"><div class='font-bold text-slate-900 text-sm'>엠케이에스 인스트루먼츠</div><div class='text-slate-500 text-[11px]'>(MKS Instruments)</div><div class='inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-purple-50 text-purple-700 border border-purple-200'>[MKSI]</div></td>
+            <td class="py-3.5 px-4 align-top font-medium text-slate-900"><div>장비 핵심 서브시스템 &amp; 파워</div><div>(RF 전원, 가스/진공 제어, 레이저 가공)</div></td>
+            <td class="py-3.5 px-4 align-top"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>고출력 RF 발생기 및 자동 매칭 네트워크 (Paragon 시리즈)</li><li class='ml-3 list-disc text-slate-700'>정밀 커패시턴스 압력 게이지 (Baratron 시리즈)</li><li class='ml-3 list-disc text-slate-700'>질량 유량 제어기(MFC - 초정밀 가스 공급)</li><li class='ml-3 list-disc text-slate-700'>고밀도 플라즈마 소스 및 오존 발생기</li><li class='ml-3 list-disc text-slate-700'>초정밀 PCB 드릴링 레이저 가공기 (ESI 자회사)</li></ul></td>
+            <td class="py-3.5 px-4 align-top bg-slate-50/50"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>반도체 서브시스템: 45%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>RF 파워 및 플라즈마 제어: 약 40%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>진공 게이지 및 가스 유량계: 약 35%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>포토닉스/광학 부품: 약 25%</li><li class='ml-3 list-disc text-slate-700'>첨단 전자 패키징 레이저 장비(ESI): 30%</li><li class='ml-3 list-disc text-slate-700'>일반 산업 정밀 가공 솔루션: 25%</li></ul></td>
+            <td class="py-3.5 px-4 align-top"><div class="font-semibold text-blue-900"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>반도체용 RF 플라즈마 전원 시스템: 1위 (약 40~45%)</li><li class='ml-3 list-disc text-slate-700'>진공 압력 게이지(Baratron): 80%+ (사실상 글로벌 표준)</li><li class='ml-3 list-disc text-slate-700'>고정밀 가스 질량유량제어기(MFC): 글로벌 최상위</li></ul></div></td>
+            <td class="py-3.5 px-4 align-top bg-blue-50/20"><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>어플라이드 머티어리얼즈(AMAT)</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>램리서치(Lam)</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>ASML</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>도쿄일렉트론(TEL)</div></td>
+          </tr>
+          <!-- 2행: 바로 아래 1칸 추가 (기술적 해자 통합 행) -->
+          <tr class="moat-row bg-[#faf8ff] border-b-2 border-slate-300">
+            <td colspan="6" class="py-3 px-4">
+              <div class="flex flex-col sm:flex-row items-start gap-2.5 bg-white border border-purple-200/90 rounded p-3 shadow-2xs">
+                <div class="inline-flex items-center px-2 py-1 rounded text-[11px] font-bold bg-purple-100 text-purple-900 border border-purple-300 shrink-0 whitespace-nowrap">
+                  글로벌 핵심경쟁력 (기술적 해자)
+                </div>
+                <div class="text-xs leading-relaxed text-slate-800 flex-1">
+                  <ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>AMAT, 램리서치, ASML의 식각·증착 장비 챔버 내부의 플라즈마를 발생시키고 제어하는 핵심 심장부 독점 납품</li><li class='ml-3 list-disc text-slate-700'>원자층 식각(ALE)/증착(ALD) 시 가스 유량을 나노초 단위로 정밀 차단하고 공급하는 초정밀 유량계 특허 락인</li><li class='ml-3 list-disc text-slate-700'>반도체 장비 메이커들의 설비 투자 시 필연적으로 동반 성장하는 장비 산업 내 최상위 부품 독점 해자</li></ul>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="company-row hover:bg-slate-50 transition border-t border-slate-200">
+            <td class="py-3.5 px-4 align-top bg-slate-50/30"><div class='font-bold text-slate-900 text-sm'>폼팩터</div><div class='text-slate-500 text-[11px]'>(FormFactor)</div><div class='inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-purple-50 text-purple-700 border border-purple-200'>[FORM]</div></td>
+            <td class="py-3.5 px-4 align-top font-medium text-slate-900"><div>후공정 웨이퍼 인터페이스</div><div>(초정밀 첨단 MEMS 프로브 카드)</div></td>
+            <td class="py-3.5 px-4 align-top"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>첨단 DRAM/HBM 프로브 카드: SmartMatrix 시리즈</li><li class='ml-3 list-disc text-slate-700'>SoC 및 고성능 AP 프로브 카드: Apollo 시리즈</li><li class='ml-3 list-disc text-slate-700'>플래시 메모리 프로브 카드: TouchMatrix</li><li class='ml-3 list-disc text-slate-700'>초정밀 엔지니어링 웨이퍼 프로버 시스템</li></ul></td>
+            <td class="py-3.5 px-4 align-top bg-slate-50/50"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>반도체 프로브 카드(Probe Cards): 80%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>첨단 DRAM/HBM 프로브: 약 45%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>파운드리 및 SoC/로직 프로브: 약 40%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>플래시 메모리 프로브: 약 15%</li><li class='ml-3 list-disc text-slate-700'>엔지니어링 및 측정 시스템: 20%</li></ul></td>
+            <td class="py-3.5 px-4 align-top"><div class="font-semibold text-blue-900"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>글로벌 반도체 프로브 카드 시장 1위 (점유율 약 30~32%)</li><li class='ml-3 list-disc text-slate-700'>첨단 MEMS 프로브 카드 분야 시장 점유율 최상위</li><li class='ml-3 list-disc text-slate-700'>고성능 HBM 웨이퍼 테스트 인터페이스 선도</li></ul></div></td>
+            <td class="py-3.5 px-4 align-top bg-blue-50/20"><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>인텔</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>SK하이닉스</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>삼성전자</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>마이크론</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>TSMC</div></td>
+          </tr>
+          <!-- 2행: 바로 아래 1칸 추가 (기술적 해자 통합 행) -->
+          <tr class="moat-row bg-[#faf8ff] border-b-2 border-slate-300">
+            <td colspan="6" class="py-3 px-4">
+              <div class="flex flex-col sm:flex-row items-start gap-2.5 bg-white border border-purple-200/90 rounded p-3 shadow-2xs">
+                <div class="inline-flex items-center px-2 py-1 rounded text-[11px] font-bold bg-purple-100 text-purple-900 border border-purple-300 shrink-0 whitespace-nowrap">
+                  글로벌 핵심경쟁력 (기술적 해자)
+                </div>
+                <div class="text-xs leading-relaxed text-slate-800 flex-1">
+                  <ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>웨이퍼 한 장당 수만 개의 초미세 탄성 마이크로 스프링 핀을 수 마이크론 오차 없이 직립 배열하는 MEMS 기술</li><li class='ml-3 list-disc text-slate-700'>고온(150℃)과 극저온(-40℃)에서도 접촉 핀의 열팽창 변형을 방지하는 특수 야금학적 합금 노하우 보유</li><li class='ml-3 list-disc text-slate-700'>고대역폭 메모리(HBM) 12단/16단 적층 시 웨이퍼 상태에서 불량을 사전 스크리닝하는 필수 인터페이스 독점</li></ul>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="company-row hover:bg-slate-50 transition border-t border-slate-200">
+            <td class="py-3.5 px-4 align-top bg-slate-50/30"><div class='font-bold text-slate-900 text-sm'>쿨릭앤소파</div><div class='text-slate-500 text-[11px]'>(Kulicke &amp; Soffa)</div><div class='inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-mono bg-purple-50 text-purple-700 border border-purple-200'>[KLIC]</div></td>
+            <td class="py-3.5 px-4 align-top font-medium text-slate-900"><div>후공정 와이어 본딩 &amp; 어드밴스드 본딩</div><div>(자동차·전력 패키징 및 초음파 접합)</div></td>
+            <td class="py-3.5 px-4 align-top"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>초고속 볼 본더: RAPID Pro 시리즈</li><li class='ml-3 list-disc text-slate-700'>파워반도체 웨지 본더: Asterion 시리즈</li><li class='ml-3 list-disc text-slate-700'>첨단 패키징 열압착 본더(TCB) 및 다이 어태치 장비</li><li class='ml-3 list-disc text-slate-700'>정밀 본딩 소모품 (캐필러리, 본딩 웨지, 다이 블레이드)</li></ul></td>
+            <td class="py-3.5 px-4 align-top bg-slate-50/50"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>볼 본더(Ball Bonder) 시스템: 65%</li><li class='ml-3 list-disc text-slate-700'>웨지 본더(Wedge Bonder - 전력/자동차): 15%</li><li class='ml-3 list-disc text-slate-700'>첨단 디스플레이/어드밴스드 패키징(TCB): 10%</li><li class='ml-3 list-disc text-slate-700'>본딩 툴 소모품 및 유지보수 서비스: 10%</li></ul></td>
+            <td class="py-3.5 px-4 align-top"><div class="font-semibold text-blue-900"><ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>글로벌 와이어본더(Wire Bonder) 시장 점유율 1위 (60%+)</li><li class='ml-3 list-disc text-slate-700'>전력반도체/자동차용 헤비 와이어 본더 시장 1위</li><li class='ml-3 list-disc text-slate-700'>반도체 인터커넥트 시장의 독보적 캐시카우 보유</li></ul></div></td>
+            <td class="py-3.5 px-4 align-top bg-blue-50/20"><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>ASE</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>앰코(Amkor)</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>JCET</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>삼성전자</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>인피니언</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>ST마이크로</div><div class='py-0.5 text-[13px] font-bold text-slate-900 tracking-tight flex items-center'><span class='w-1.5 h-1.5 rounded-full bg-blue-600 mr-1.5 shrink-0'></span>온세미</div></td>
+          </tr>
+          <!-- 2행: 바로 아래 1칸 추가 (기술적 해자 통합 행) -->
+          <tr class="moat-row bg-[#faf8ff] border-b-2 border-slate-300">
+            <td colspan="6" class="py-3 px-4">
+              <div class="flex flex-col sm:flex-row items-start gap-2.5 bg-white border border-purple-200/90 rounded p-3 shadow-2xs">
+                <div class="inline-flex items-center px-2 py-1 rounded text-[11px] font-bold bg-purple-100 text-purple-900 border border-purple-300 shrink-0 whitespace-nowrap">
+                  글로벌 핵심경쟁력 (기술적 해자)
+                </div>
+                <div class="text-xs leading-relaxed text-slate-800 flex-1">
+                  <ul class='space-y-1'><li class='ml-3 list-disc text-slate-700'>금/구리/은 와이어를 초당 수십 회의 고주파 초음파 진동과 열압착으로 접합하는 세계 최고의 기계 메카트로닉스</li><li class='ml-3 list-disc text-slate-700'>전기차 인버터 및 산업용 고전압 전력 모듈(IGBT/SiC)에 필수적인 두꺼운 알루미늄/구리 리본 본딩 기술 독점</li><li class='ml-3 list-disc text-slate-700'>칩렛(Chiplet) 구조의 다이-투-웨이퍼 결합을 위한 차세대 서브마이크론 초정밀 열압착(TCB) 솔루션 상용화</li></ul>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+    </section>
+
+    <!-- 탭 2: 기업별 심층 분석 리포트 -->
+    <section id="tab2" class="tab-content hidden">
+      
+<div class="space-y-6">
+  <div class="bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+    <div class="pb-3 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+      <div>
+        <h2 class="text-xl font-bold text-slate-900">미국 반도체 장비 10대 기업별 심층 프로파일 (Deep Dive Analysis)</h2>
+        <p class="text-xs text-slate-500 mt-1">기업별 비즈니스 모델, 세부 매출 구성비, 경제적 해자(Moat), AI/첨단패키징 수혜 요인 정밀 분석</p>
+      </div>
+      <div>
+        <span class="px-2.5 py-1 rounded text-xs font-semibold bg-purple-100 text-purple-800 border border-purple-200">10대 기업 Deep Dive</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 gap-6">
+
+    <div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-2">
+        <h3 class="text-base font-bold text-purple-950 flex items-center">
+          <span class="w-2 h-4 bg-purple-600 rounded-sm mr-2 inline-block"></span>
+          [1] 어플라이드 머티어리얼즈 (Applied Materials / AMAT) | [NASDAQ: AMAT]
+        </h3>
+        <span class='text-xs font-semibold text-blue-800 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded'>핵심 분야: 전공정 종합 장비 (증착, 식각, CMP, 이온주입, E-beam 계측)</span>
+      </div>
+      
+      <div class="p-5">
+        <table class="w-full text-xs text-left border border-slate-200 rounded">
+          <tbody class="divide-y divide-slate-200">
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 매출 제품</th>
+              <td class="py-3 px-4 text-slate-900 align-top bg-white"><div>박막 증착 장비 (PVD/CVD/ALD) / 화학기계연마(CMP) 장비 / 플라즈마 식각기 (Centris Sym3) / 이온주입기 (Varian) / 전자빔 결함 검사기 (PROVision)</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">매출 비중 상세</th>
+              <td class="py-3 px-4 text-slate-800 align-top bg-white"><ul class='space-y-1'><div>반도체 시스템 부문: 73%</div><li class='ml-6 list-[circle] text-slate-600 text-xs'>박막 증착(PVD/CVD/ALD): 약 45%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>식각 및 선택적 제거: 약 25%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>화학기계연마(CMP): 약 15%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>기타 및 이온주입: 약 15%</li><div>글로벌 서비스 부문(AGS): 22% (소모품/유지보수 고마진 구독형 모델)</div><div>디스플레이 부문: 5%</div></ul></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 점유율 &amp; 시장 지위</th>
+              <td class="py-3 px-4 font-semibold text-blue-900 align-top bg-white"><div>글로벌 반도체 장비 종합 매출 1위 | PVD(물리적 기상증착): 80%+ (압도적 독점) | CMP(화학기계적연마): 65%+ (글로벌 1위) | 이온주입: 글로벌 2위 | 전공정 장비 포트폴리오 최다 보유</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 핵심 경쟁력 (기술 해자)</th>
+              <td class="py-3 px-4 text-slate-800 leading-relaxed align-top bg-white"><div>단일 진공 챔버에서 증착-식각-CMP-검사를 원스톱 처리하는 &#x27;통합 재료 솔루션(IMS)&#x27; 플랫폼 독점</div><div>2nm 이하 초미세 GAA(Gate-All-Around) 및 후면전력공급(BSPDN) 전환에 따른 신소재 박막 증착 수요 폭증</div><div>차세대 HBM 하이브리드 본딩을 위한 초평탄화 CMP 장비 독점 지위 장악 및 팹 설치 장비 45,000대 기반의 강력한 락인(Lock-in)</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 고객사 &amp; 서플라이체인</th>
+              <td class="py-3 px-4 text-slate-700 font-semibold align-top bg-white"><div>TSMC, 삼성전자, SK하이닉스, 인텔, 마이크론 (상위 5대 고객사가 전체 매출의 약 60% 이상 차지)</div></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-2">
+        <h3 class="text-base font-bold text-purple-950 flex items-center">
+          <span class="w-2 h-4 bg-purple-600 rounded-sm mr-2 inline-block"></span>
+          [2] 램리서치 (Lam Research / LRCX) | [NASDAQ: LRCX]
+        </h3>
+        <span class='text-xs font-semibold text-blue-800 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded'>핵심 분야: 전공정 고난도 식각 &amp; 증착 (유전체/도체 식각, 원자층 증착)</span>
+      </div>
+      
+      <div class="p-5">
+        <table class="w-full text-xs text-left border border-slate-200 rounded">
+          <tbody class="divide-y divide-slate-200">
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 매출 제품</th>
+              <td class="py-3 px-4 text-slate-900 align-top bg-white"><div>유전체 식각기 (Flex, Sense.i) / 도체 식각기 (Kiyo) / 박막 원자층증착기 (VECTOR, Striker ALD/CVD) / 극저온 식각(Cryo Etch) 장비 / 웨이퍼 세정기 (Coronus)</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">매출 비중 상세</th>
+              <td class="py-3 px-4 text-slate-800 align-top bg-white"><ul class='space-y-1'><div>반도체 시스템 부문: 67%</div><li class='ml-6 list-[circle] text-slate-600 text-xs'>메모리 제조사향(3D NAND / DRAM): 약 52%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>파운드리 및 첨단 로직향: 약 48%</li><div>고객 지원 서비스 부문(CSBG): 33% (장비 개조, 업그레이드, 소모품 스페어 파트)</div></ul></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 점유율 &amp; 시장 지위</th>
+              <td class="py-3 px-4 font-semibold text-blue-900 align-top bg-white"><div>글로벌 플라즈마 식각(Etch) 장비 시장 1위 (점유율 약 48%) | 3D NAND 고종횡비(HAR) 채널홀 식각: 80%+ (독점적 지위) | 구리 다마신 도금/증착 1위</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 핵심 경쟁력 (기술 해자)</th>
+              <td class="py-3 px-4 text-slate-800 leading-relaxed align-top bg-white"><div>3D NAND 수백 단을 한 번에 수직으로 관통하는 고종횡비(HAR) 플라즈마 식각 기술 절대 독점</div><div>극저온(-80℃) 환경에서 초고속 무손상 식각을 구현하는 차세대 극저온 식각(Cryogenic Etch) 기술 선도</div><div>HBM 적층을 위한 실리콘 관통전극(TSV) 구리 식각 공정 핵심 장비 표준 공급사</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 고객사 &amp; 서플라이체인</th>
+              <td class="py-3 px-4 text-slate-700 font-semibold align-top bg-white"><div>삼성전자, SK하이닉스, TSMC, 마이크론, 키오시아(Kioxia)</div></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-2">
+        <h3 class="text-base font-bold text-purple-950 flex items-center">
+          <span class="w-2 h-4 bg-purple-600 rounded-sm mr-2 inline-block"></span>
+          [3] KLA 코퍼레이션 (KLA Corporation / KLAC) | [NASDAQ: KLAC]
+        </h3>
+        <span class='text-xs font-semibold text-blue-800 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded'>핵심 분야: 전공정 공정제어 &amp; 결함 검사 (광학/전자빔 검사 및 계측)</span>
+      </div>
+      
+      <div class="p-5">
+        <table class="w-full text-xs text-left border border-slate-200 rounded">
+          <tbody class="divide-y divide-slate-200">
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 매출 제품</th>
+              <td class="py-3 px-4 text-slate-900 align-top bg-white"><div>광대역 플라즈마 결함 검사기 (29xx/39xx 시리즈) / 전자빔 결함 리뷰기 (eSL10) / 광학 오버레이 계측기 (Archer) / 박막 두께 측정기 (SpectraShape)</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">매출 비중 상세</th>
+              <td class="py-3 px-4 text-slate-800 align-top bg-white"><div>웨이퍼 결함 검사(Inspection): 42%</div><div>패터닝 계측(Metrology): 23%</div><div>특수 반도체 공정(SPTS): 12%</div><div>고객 서비스 및 소프트웨어 알고리즘: 23%</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 점유율 &amp; 시장 지위</th>
+              <td class="py-3 px-4 font-semibold text-blue-900 align-top bg-white"><div>글로벌 공정제어(Process Control) 시장 1위 (점유율 55~60%) | 광학식 패턴 결함 검사: 80%+ (독점) | 2위 AMAT(12%) 대비 4배 이상의 압도적 시장 지배력</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 핵심 경쟁력 (기술 해자)</th>
+              <td class="py-3 px-4 text-slate-800 leading-relaxed align-top bg-white"><div>&#x27;수율(Yield)의 수호자&#x27;: 첨단 파운드리 팹 라인 구축 시 KLA 장비 없이는 수율 확보가 불가능하여 필수 팹 표준으로 장악</div><div>광대역 UV 광원과 딥러닝 결함 판독 알고리즘을 결합한 독보적 광학 계측 원천 특허</div><div>첨단 패키징 2.5D/3D 결합 시 인터포저 및 마이크로 범프 결함 검사로 포트폴리오 성공적 확장</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 고객사 &amp; 서플라이체인</th>
+              <td class="py-3 px-4 text-slate-700 font-semibold align-top bg-white"><div>TSMC, 삼성전자, 인텔, SK하이닉스, 마이크론 (전 세계 모든 첨단 팹의 필수 인프라)</div></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-2">
+        <h3 class="text-base font-bold text-purple-950 flex items-center">
+          <span class="w-2 h-4 bg-purple-600 rounded-sm mr-2 inline-block"></span>
+          [4] 테라다인 (Teradyne / TER) | [NASDAQ: TER]
+        </h3>
+        <span class='text-xs font-semibold text-blue-800 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded'>핵심 분야: 후공정 자동화 테스트 (ATE - SoC, AI 가속기, 메모리)</span>
+      </div>
+      
+      <div class="p-5">
+        <table class="w-full text-xs text-left border border-slate-200 rounded">
+          <tbody class="divide-y divide-slate-200">
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 매출 제품</th>
+              <td class="py-3 px-4 text-slate-900 align-top bg-white"><div>초고성능 SoC/AI 테스터 (UltraFLEXplus, UltraFLEX) / 마이크로컨트롤러 테스터 (J750) / 초고속 메모리 테스터 (Magnum) / 무선 통신 테스터 (LitePoint)</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">매출 비중 상세</th>
+              <td class="py-3 px-4 text-slate-800 align-top bg-white"><ul class='space-y-1'><div>반도체 테스트 시스템: 68%</div><li class='ml-6 list-[circle] text-slate-600 text-xs'>SoC 및 첨단 로직 테스터: 약 78%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>메모리 테스터: 약 22%</li><div>산업용 로보틱스(Universal Robots 협동로봇): 15%</div><div>무선 통신 및 시스템 테스트: 17%</div></ul></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 점유율 &amp; 시장 지위</th>
+              <td class="py-3 px-4 font-semibold text-blue-900 align-top bg-white"><div>글로벌 반도체 자동 테스트 장비(ATE) 1~2위 (약 40~45%) | 고성능 모바일 AP 및 SoC 테스터 시장 1위 | 일본 Advantest와 글로벌 ATE 시장 90%+ 과점 양분</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 핵심 경쟁력 (기술 해자)</th>
+              <td class="py-3 px-4 text-slate-800 leading-relaxed align-top bg-white"><div>애플(Apple) 실리콘, 퀄컴, AMD 등의 핵심 모바일 및 PC 프로세서 메인 양산 테스트 벤더로 군림</div><div>초고성능 AI 프로세서의 복잡한 연산 로직과 고발열을 제어하며 수천 핀을 동시 병렬 테스트하는 초정밀 인터페이스 기술</div><div>자회사 협동로봇과 결합하여 반도체 테스트 팹의 무인화 솔루션 구축</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 고객사 &amp; 서플라이체인</th>
+              <td class="py-3 px-4 text-slate-700 font-semibold align-top bg-white"><div>애플(Foxconn 조립라인), 퀄컴, AMD, 브로드컴, TSMC, 인텔, ASE, 앰코</div></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-2">
+        <h3 class="text-base font-bold text-purple-950 flex items-center">
+          <span class="w-2 h-4 bg-purple-600 rounded-sm mr-2 inline-block"></span>
+          [5] 온토 이노베이션 (Onto Innovation / ONTO) | [NYSE: ONTO]
+        </h3>
+        <span class='text-xs font-semibold text-blue-800 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded'>핵심 분야: 첨단 패키징 광학 검사 &amp; 계측 (2.5D/3D 서브마이크론 검사)</span>
+      </div>
+      
+      <div class="p-5">
+        <table class="w-full text-xs text-left border border-slate-200 rounded">
+          <tbody class="divide-y divide-slate-200">
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 매출 제품</th>
+              <td class="py-3 px-4 text-slate-900 align-top bg-white"><div>첨단 패키징 웨이퍼 결함 검사기 (Dragonfly G2) / 광학 임계치수(OCD) 계측기 (Atlas) / 패키징용 리소그래피 노광기 (JetStep) / 공정 분석 소프트웨어</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">매출 비중 상세</th>
+              <td class="py-3 px-4 text-slate-800 align-top bg-white"><div>첨단 패키징 및 특수 장비: 45%</div><div>첨단 노드 웨이퍼 공정제어(OCD 계측): 35%</div><div>소프트웨어 라이선스 및 고객 서비스: 20%</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 점유율 &amp; 시장 지위</th>
+              <td class="py-3 px-4 font-semibold text-blue-900 align-top bg-white"><div>첨단 패키징(Advanced Packaging) 광학 서브마이크론 검사: 1위 (50%+) | HBM 인터포저 및 마이크로 범프 검사 지배적 점유율</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 핵심 경쟁력 (기술 해자)</th>
+              <td class="py-3 px-4 text-slate-800 leading-relaxed align-top bg-white"><div>엔비디아 GPU 패키징인 TSMC CoWoS 공정의 마이크로 범프 결함 및 균열을 서브마이크론 단위로 고속 전수 검사하는 유일한 독점 솔루션</div><div>광학 임계치수(OCD) 기술을 통해 3D NAND의 깊은 트렌치 구조를 비파괴로 초정밀 측정</div><div>루돌프 테크놀로지스와 나노메트릭스 합병을 통해 패키징 검사 분야의 독보적 시너지 완성</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 고객사 &amp; 서플라이체인</th>
+              <td class="py-3 px-4 text-slate-700 font-semibold align-top bg-white"><div>TSMC, 인텔, 삼성전자, SK하이닉스, ASE, 앰코</div></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-2">
+        <h3 class="text-base font-bold text-purple-950 flex items-center">
+          <span class="w-2 h-4 bg-purple-600 rounded-sm mr-2 inline-block"></span>
+          [6] 악셀리스 테크놀로지스 (Axcelis Technologies / ACLS) | [NASDAQ: ACLS]
+        </h3>
+        <span class='text-xs font-semibold text-blue-800 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded'>핵심 분야: 전공정 이온주입 특화 (SiC 전력반도체 고에너지 임플란트)</span>
+      </div>
+      
+      <div class="p-5">
+        <table class="w-full text-xs text-left border border-slate-200 rounded">
+          <tbody class="divide-y divide-slate-200">
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 매출 제품</th>
+              <td class="py-3 px-4 text-slate-900 align-top bg-white"><div>SiC 전용 고온 이온주입기 (Purion Power Series) / 고에너지 이온주입기 (Purion XE) / 고전류/중전류 이온주입기 (Purion H, Purion M) / 건식 스트립 장비</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">매출 비중 상세</th>
+              <td class="py-3 px-4 text-slate-800 align-top bg-white"><ul class='space-y-1'><div>이온주입 장비 부문: 80%</div><li class='ml-6 list-[circle] text-slate-600 text-xs'>전력반도체(SiC/GaN): 약 60%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>메모리/로직: 약 40%</li><div>애프터마켓 유지보수 서비스: 20%</div></ul></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 점유율 &amp; 시장 지위</th>
+              <td class="py-3 px-4 font-semibold text-blue-900 align-top bg-white"><div>SiC(탄화규소) 전력반도체 이온주입 시장: 70%+ (압도적 1위) | 글로벌 이온주입 시장 2위 (AMAT과 시장 양분)</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 핵심 경쟁력 (기술 해자)</th>
+              <td class="py-3 px-4 text-slate-800 leading-relaxed align-top bg-white"><div>단단한 SiC 결정 구조에 도펀트를 주입하기 위한 500℃ 초고온 챔버 제어 기술 &#x27;핫 임플란트&#x27; 원천 기술 보유</div><div>수 메가전자볼트(MeV)급 초고에너지 빔을 정밀하게 제어하여 웨이퍼 손상 없이 깊은 층까지 주입하는 고전압 가속 특허</div><div>전기차(EV) 파워트레인 및 AI 서버용 고효율 SiC 전력반도체 양산 라인의 필수 병목 장비 장악</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 고객사 &amp; 서플라이체인</th>
+              <td class="py-3 px-4 text-slate-700 font-semibold align-top bg-white"><div>울프스피드(Wolfspeed), ST마이크로일렉트로닉스, 온세미(onsemi), 인피니언, 삼성전자</div></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-2">
+        <h3 class="text-base font-bold text-purple-950 flex items-center">
+          <span class="w-2 h-4 bg-purple-600 rounded-sm mr-2 inline-block"></span>
+          [7] 비코 인스트루먼츠 (Veeco Instruments / VECO) | [NASDAQ: VECO]
+        </h3>
+        <span class='text-xs font-semibold text-blue-800 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded'>핵심 분야: 전공정 정밀 열처리 &amp; 박막 증착 (레이저 스파이크 어닐링, MOCVD, IBE)</span>
+      </div>
+      
+      <div class="p-5">
+        <table class="w-full text-xs text-left border border-slate-200 rounded">
+          <tbody class="divide-y divide-slate-200">
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 매출 제품</th>
+              <td class="py-3 px-4 text-slate-900 align-top bg-white"><div>레이저 스파이크 어닐링(LSA) 시스템 / 화합물 반도체 MOCVD (Propel 시리즈) / 이온빔 에칭(IBE) 및 증착(IBD) 장비 / 첨단 패키징 노광기</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">매출 비중 상세</th>
+              <td class="py-3 px-4 text-slate-800 align-top bg-white"><div>반도체 전공정(LSA 레이저 열처리 등): 62%</div><div>화합물 반도체 MOCVD 및 데이터스토리지: 24%</div><div>고객 서비스 및 유지보수: 14%</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 점유율 &amp; 시장 지위</th>
+              <td class="py-3 px-4 font-semibold text-blue-900 align-top bg-white"><div>첨단 로직(3nm/2nm) 레이저 스파이크 어닐링: 1위 (70%+) | 고용량 HDD 자기헤드 이온빔 증착: 1위 (85%+)</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 핵심 경쟁력 (기술 해자)</th>
+              <td class="py-3 px-4 text-slate-800 leading-relaxed align-top bg-white"><div>웨이퍼 전체 가열 없이 밀리초(ms) 단위로 극표면만 고출력 레이저로 초고온 가열하여 불순물을 정밀 활성화하는 LSA 독점 기술</div><div>초미세 공정에서 도펀트가 원치 않는 영역으로 확산되는 것을 완벽히 방지하여 첨단 트랜지스터 수율 극대화</div><div>AI 데이터센터 고용량 하드디스크(PMR/HAMR) 자기헤드 이온빔 증착 장비 독점 수혜</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 고객사 &amp; 서플라이체인</th>
+              <td class="py-3 px-4 text-slate-700 font-semibold align-top bg-white"><div>TSMC, 인텔, 삼성전자, 마이크론, 글로벌파운드리, 씨게이트</div></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-2">
+        <h3 class="text-base font-bold text-purple-950 flex items-center">
+          <span class="w-2 h-4 bg-purple-600 rounded-sm mr-2 inline-block"></span>
+          [8] 엠케이에스 인스트루먼츠 (MKS Instruments / MKSI) | [NASDAQ: MKSI]
+        </h3>
+        <span class='text-xs font-semibold text-blue-800 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded'>핵심 분야: 장비 핵심 서브시스템 &amp; 파워 (RF 전원, 가스/진공 제어, 레이저 가공)</span>
+      </div>
+      
+      <div class="p-5">
+        <table class="w-full text-xs text-left border border-slate-200 rounded">
+          <tbody class="divide-y divide-slate-200">
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 매출 제품</th>
+              <td class="py-3 px-4 text-slate-900 align-top bg-white"><div>고출력 RF 전원 발생기 및 자동 매칭박스 (Paragon) / 정밀 진공 압력 게이지 (Baratron) / 가스 질량유량계(MFC) / 첨단 패키징 PCB 레이저 드릴링 머신</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">매출 비중 상세</th>
+              <td class="py-3 px-4 text-slate-800 align-top bg-white"><ul class='space-y-1'><div>반도체 서브시스템: 45%</div><li class='ml-6 list-[circle] text-slate-600 text-xs'>RF 파워 및 플라즈마 제어: 약 40%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>진공 게이지 및 가스 유량계: 약 35%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>포토닉스 광학 부품: 약 25%</li><div>첨단 전자 패키징 레이저 장비(ESI): 30%</div><div>일반 산업 레이저 가공: 25%</div></ul></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 점유율 &amp; 시장 지위</th>
+              <td class="py-3 px-4 font-semibold text-blue-900 align-top bg-white"><div>반도체 플라즈마 RF 전원 시스템: 1위 (약 40~45%) | 고정밀 진공 압력 게이지: 80%+ (글로벌 표준) | 초정밀 질량유량제어기: 글로벌 최상위</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 핵심 경쟁력 (기술 해자)</th>
+              <td class="py-3 px-4 text-slate-800 leading-relaxed align-top bg-white"><div>AMAT, 램리서치, ASML의 식각·증착 챔버 내부에 플라즈마를 형성하는 핵심 심장부(RF 전원 및 가스 공급) 서브시스템 독점</div><div>원자층 식각(ALE) 및 증착(ALD) 시 반응 가스를 나노초 단위로 초정밀 차단/공급하는 핵심 밸브 기술 보유</div><div>반도체 장비 메이커들의 설비 투자 시 필연적으로 동반 수혜를 누리는 대체 불가능한 부품 해자</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 고객사 &amp; 서플라이체인</th>
+              <td class="py-3 px-4 text-slate-700 font-semibold align-top bg-white"><div>어플라이드 머티어리얼즈(AMAT), 램리서치(Lam), ASML, 도쿄일렉트론(TEL)</div></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-2">
+        <h3 class="text-base font-bold text-purple-950 flex items-center">
+          <span class="w-2 h-4 bg-purple-600 rounded-sm mr-2 inline-block"></span>
+          [9] 폼팩터 (FormFactor / FORM) | [NASDAQ: FORM]
+        </h3>
+        <span class='text-xs font-semibold text-blue-800 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded'>핵심 분야: 후공정 웨이퍼 인터페이스 (초정밀 첨단 MEMS 프로브 카드)</span>
+      </div>
+      
+      <div class="p-5">
+        <table class="w-full text-xs text-left border border-slate-200 rounded">
+          <tbody class="divide-y divide-slate-200">
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 매출 제품</th>
+              <td class="py-3 px-4 text-slate-900 align-top bg-white"><div>HBM 및 DRAM 고속 프로브 카드 (SmartMatrix) / SoC/로직 프로브 카드 (Apollo) / 플래시 메모리 프로브 카드 / 정밀 웨이퍼 프로빙 시스템</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">매출 비중 상세</th>
+              <td class="py-3 px-4 text-slate-800 align-top bg-white"><ul class='space-y-1'><div>프로브 카드(Probe Cards): 80%</div><li class='ml-6 list-[circle] text-slate-600 text-xs'>첨단 DRAM 및 HBM 프로브: 약 45%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>파운드리 및 SoC/로직 프로브: 약 40%</li><li class='ml-6 list-[circle] text-slate-600 text-xs'>플래시 메모리 프로브: 약 15%</li><div>엔지니어링 시스템 부문: 20%</div></ul></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 점유율 &amp; 시장 지위</th>
+              <td class="py-3 px-4 font-semibold text-blue-900 align-top bg-white"><div>글로벌 반도체 프로브 카드 시장 1위 (점유율 약 30~32%) | 첨단 MEMS 프로브 카드 시장 독보적 지배력</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 핵심 경쟁력 (기술 해자)</th>
+              <td class="py-3 px-4 text-slate-800 leading-relaxed align-top bg-white"><div>웨이퍼 한 장당 수만 개의 초미세 탄성 마이크로 스프링 핀을 수 마이크론 오차 없이 직립 배열하는 독보적 MEMS 공정 기술</div><div>150℃ 고온과 -40℃ 저온의 가혹 테스트 환경에서도 접촉 핀의 열팽창 변형을 방지하는 특수 합금 설계 노하우</div><div>12단/16단 HBM 웨이퍼 적층 전 마이크로 범프 상태에서 전기적 불량을 사전 스크리닝하는 필수 테스트 인터페이스 독점</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 고객사 &amp; 서플라이체인</th>
+              <td class="py-3 px-4 text-slate-700 font-semibold align-top bg-white"><div>인텔, SK하이닉스, 삼성전자, 마이크론, TSMC</div></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-2">
+        <h3 class="text-base font-bold text-purple-950 flex items-center">
+          <span class="w-2 h-4 bg-purple-600 rounded-sm mr-2 inline-block"></span>
+          [10] 쿨릭앤소파 (Kulicke &amp; Soffa / KLIC) | [NASDAQ: KLIC]
+        </h3>
+        <span class='text-xs font-semibold text-blue-800 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded'>핵심 분야: 후공정 와이어 본딩 &amp; 어드밴스드 본딩 (자동차·전력 패키징 및 초음파 접합)</span>
+      </div>
+      
+      <div class="p-5">
+        <table class="w-full text-xs text-left border border-slate-200 rounded">
+          <tbody class="divide-y divide-slate-200">
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 매출 제품</th>
+              <td class="py-3 px-4 text-slate-900 align-top bg-white"><div>초고속 볼 본더 (RAPID Pro 시리즈) / 파워반도체 헤비 웨지 본더 (Asterion) / 첨단 패키징 열압착 본더(TCB) / 정밀 본딩 소모품 (캐필러리 등)</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">매출 비중 상세</th>
+              <td class="py-3 px-4 text-slate-800 align-top bg-white"><div>볼 본더(Ball Bonder) 시스템: 65%</div><div>웨지 본더(Wedge Bonder - 전력/자동차): 15%</div><div>첨단 디스플레이/어드밴스드 패키징(TCB): 10%</div><div>본딩 툴 소모품 및 유지보수: 10%</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 점유율 &amp; 시장 지위</th>
+              <td class="py-3 px-4 font-semibold text-blue-900 align-top bg-white"><div>글로벌 와이어본더(Wire Bonder) 시장 점유율 1위 (60%+) | 자동차 및 전력반도체 헤비 와이어 본더 시장 1위</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">글로벌 핵심 경쟁력 (기술 해자)</th>
+              <td class="py-3 px-4 text-slate-800 leading-relaxed align-top bg-white"><div>금/구리/은 와이어를 초당 수십 회의 고주파 초음파 진동과 열압착으로 접합하는 세계 최고의 정밀 기계 메카트로닉스</div><div>전기차 인버터 및 산업용 전력 모듈(SiC/IGBT)에 필수적인 두꺼운 구리 리본 본딩 기술 독점</div><div>칩렛 구조의 다이-투-웨이퍼 결합을 위한 차세대 서브마이크론 초정밀 열압착(TCB) 솔루션 상용화</div></td>
+            </tr>
+
+            <tr class="divide-x divide-slate-200">
+              <th class="py-3 px-4 w-48 bg-slate-50 text-slate-700 font-semibold align-top">주요 고객사 &amp; 서플라이체인</th>
+              <td class="py-3 px-4 text-slate-700 font-semibold align-top bg-white"><div>ASE, 앰코(Amkor), JCET, 삼성전자, 인피니언, ST마이크로, 온세미</div></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    </section>
+
+    <!-- 탭 3: 소재 분야별 글로벌 점유율 맵 -->
+    <section id="tab3" class="tab-content hidden">
+      
+<div class="space-y-4">
+  <div class="bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+    <div class="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-slate-100 gap-2">
+      <div>
+        <h2 class="text-xl font-bold text-slate-900">반도체 전·후공정 밸류체인별 미국 장비 점유율 및 독점도 맵</h2>
+        <p class="text-xs text-slate-500 mt-1">전공정(증착·식각·이온주입·계측)부터 후공정(어드밴스드 패키징·테스트)까지 미국 장비 기업의 글로벌 과점 및 독점도</p>
+      </div>
+      <div class="flex items-center space-x-2">
+        <input type="text" id="searchTable3" onkeyup="filterTable3()" placeholder="공정 분류 / 장비 / 기업 검색..." 
+               class="text-xs px-3 py-1.5 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-64 bg-slate-50">
+      </div>
+    </div>
+    
+    <div class="overflow-x-auto mt-4 custom-scrollbar">
+      <table id="table3" class="w-full text-left border-collapse text-xs">
+        <thead>
+          <tr class="bg-slate-100 border-y-2 border-slate-300 text-slate-700 font-bold text-center">
+            <th class="py-3 px-3 w-28 whitespace-normal leading-tight">공정<br>분류</th>
+            <th class="py-3 px-3 w-40 whitespace-normal leading-tight">세부 단위<br>공정</th>
+            <th class="py-3 px-3 w-44 whitespace-normal leading-tight">미국 대표<br>기업</th>
+            <th class="py-3 px-2 w-28 whitespace-normal leading-tight">글로벌<br>점유율</th>
+            <th class="py-3 px-2 w-28 whitespace-normal leading-tight">대체 불가성<br>(독점도)</th>
+            <th class="py-3 px-5 text-left">핵심 경쟁 포인트</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200 text-slate-800">
+
+          <tr class="hover:bg-blue-50/40 transition">
+            <td class="py-3.5 px-3 text-center font-semibold text-slate-900 bg-slate-50/50 align-middle">전공정 (Front-End)</td>
+            <td class="py-3.5 px-3 font-semibold text-blue-950 align-middle">PVD (물리적 기상증착)</td>
+            <td class="py-3.5 px-3 text-slate-800 align-middle">어플라이드 머티어리얼즈 (AMAT)</td>
+            <td class="py-3.5 px-2 text-center font-bold text-blue-900 align-middle">80%+</td>
+            <td class="py-3.5 px-2 text-center align-middle">
+              <span class="inline-block px-2 py-0.5 rounded text-[11px] font-semibold bg-red-50 text-red-700 border border-red-200">
+                최상 (절대 독점)
+              </span>
+            </td>
+            <td class="py-3.5 px-5 leading-relaxed text-slate-800 align-middle font-normal">구리 및 차세대 메탈 배선 공정에서 글로벌 팹 대체 불가 표준</td>
+          </tr>
+
+          <tr class="hover:bg-blue-50/40 transition">
+            <td class="py-3.5 px-3 text-center font-semibold text-slate-900 bg-slate-50/50 align-middle">전공정 (Front-End)</td>
+            <td class="py-3.5 px-3 font-semibold text-blue-950 align-middle">고종횡비(HAR) 유전체 식각</td>
+            <td class="py-3.5 px-3 text-slate-800 align-middle">램리서치 (Lam Research)</td>
+            <td class="py-3.5 px-2 text-center font-bold text-blue-900 align-middle">80%+</td>
+            <td class="py-3.5 px-2 text-center align-middle">
+              <span class="inline-block px-2 py-0.5 rounded text-[11px] font-semibold bg-red-50 text-red-700 border border-red-200">
+                최상 (절대 독점)
+              </span>
+            </td>
+            <td class="py-3.5 px-5 leading-relaxed text-slate-800 align-middle font-normal">3D NAND 고단화 채널홀 수직 관통 식각 장비 독점 지배력</td>
+          </tr>
+
+          <tr class="hover:bg-blue-50/40 transition">
+            <td class="py-3.5 px-3 text-center font-semibold text-slate-900 bg-slate-50/50 align-middle">전공정 (Front-End)</td>
+            <td class="py-3.5 px-3 font-semibold text-blue-950 align-middle">광학 웨이퍼 결함 검사</td>
+            <td class="py-3.5 px-3 text-slate-800 align-middle">KLA 코퍼레이션 (KLA)</td>
+            <td class="py-3.5 px-2 text-center font-bold text-blue-900 align-middle">55~60% (광학 패턴 80%+)</td>
+            <td class="py-3.5 px-2 text-center align-middle">
+              <span class="inline-block px-2 py-0.5 rounded text-[11px] font-semibold bg-red-50 text-red-700 border border-red-200">
+                최상 (글로벌 독점)
+              </span>
+            </td>
+            <td class="py-3.5 px-5 leading-relaxed text-slate-800 align-middle font-normal">첨단 노드(3nm/2nm) 수율 관리에 대체 불가한 광대역 플라즈마 검사 표준</td>
+          </tr>
+
+          <tr class="hover:bg-blue-50/40 transition">
+            <td class="py-3.5 px-3 text-center font-semibold text-slate-900 bg-slate-50/50 align-middle">전공정 (Front-End)</td>
+            <td class="py-3.5 px-3 font-semibold text-blue-950 align-middle">SiC 고에너지 이온주입</td>
+            <td class="py-3.5 px-3 text-slate-800 align-middle">악셀리스 테크놀로지스 (Axcelis)</td>
+            <td class="py-3.5 px-2 text-center font-bold text-blue-900 align-middle">70%+</td>
+            <td class="py-3.5 px-2 text-center align-middle">
+              <span class="inline-block px-2 py-0.5 rounded text-[11px] font-semibold bg-red-50 text-red-700 border border-red-200">
+                최상 (독점적 지위)
+              </span>
+            </td>
+            <td class="py-3.5 px-5 leading-relaxed text-slate-800 align-middle font-normal">단단한 SiC 결정 격자에 도펀트를 주입하는 초고온 핫 임플란트 독점</td>
+          </tr>
+
+          <tr class="hover:bg-blue-50/40 transition">
+            <td class="py-3.5 px-3 text-center font-semibold text-slate-900 bg-slate-50/50 align-middle">전공정 (Front-End)</td>
+            <td class="py-3.5 px-3 font-semibold text-blue-950 align-middle">CMP (화학기계연마)</td>
+            <td class="py-3.5 px-3 text-slate-800 align-middle">어플라이드 머티어리얼즈 (AMAT)</td>
+            <td class="py-3.5 px-2 text-center font-bold text-blue-900 align-middle">65%+</td>
+            <td class="py-3.5 px-2 text-center align-middle">
+              <span class="inline-block px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+                상 (시장 1위)
+              </span>
+            </td>
+            <td class="py-3.5 px-5 leading-relaxed text-slate-800 align-middle font-normal">초미세 다층 배선 평탄화 및 첨단 HBM 하이브리드 본딩 필수</td>
+          </tr>
+
+          <tr class="hover:bg-blue-50/40 transition">
+            <td class="py-3.5 px-3 text-center font-semibold text-slate-900 bg-slate-50/50 align-middle">전공정 (Front-End)</td>
+            <td class="py-3.5 px-3 font-semibold text-blue-950 align-middle">레이저 스파이크 어닐링 (LSA)</td>
+            <td class="py-3.5 px-3 text-slate-800 align-middle">비코 인스트루먼츠 (Veeco)</td>
+            <td class="py-3.5 px-2 text-center font-bold text-blue-900 align-middle">70%+</td>
+            <td class="py-3.5 px-2 text-center align-middle">
+              <span class="inline-block px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+                상 (지배적 과점)
+              </span>
+            </td>
+            <td class="py-3.5 px-5 leading-relaxed text-slate-800 align-middle font-normal">불순물 확산 없이 표면만 밀리초 단위로 급속 가열하는 정밀 열처리 표준</td>
+          </tr>
+
+          <tr class="hover:bg-blue-50/40 transition">
+            <td class="py-3.5 px-3 text-center font-semibold text-slate-900 bg-slate-50/50 align-middle">후공정 (Back-End)</td>
+            <td class="py-3.5 px-3 font-semibold text-blue-950 align-middle">고성능 SoC/AI 프로세서 테스터</td>
+            <td class="py-3.5 px-3 text-slate-800 align-middle">테라다인 (Teradyne)</td>
+            <td class="py-3.5 px-2 text-center font-bold text-blue-900 align-middle">50%+</td>
+            <td class="py-3.5 px-2 text-center align-middle">
+              <span class="inline-block px-2 py-0.5 rounded text-[11px] font-semibold bg-red-50 text-red-700 border border-red-200">
+                최상 (과점 체제)
+              </span>
+            </td>
+            <td class="py-3.5 px-5 leading-relaxed text-slate-800 align-middle font-normal">애플·퀄컴 AP 및 고전력 AI 가속기 대량 병렬 테스트 메인 공급사</td>
+          </tr>
+
+          <tr class="hover:bg-blue-50/40 transition">
+            <td class="py-3.5 px-3 text-center font-semibold text-slate-900 bg-slate-50/50 align-middle">후공정 (Back-End)</td>
+            <td class="py-3.5 px-3 font-semibold text-blue-950 align-middle">첨단 패키징 광학 검사/계측</td>
+            <td class="py-3.5 px-3 text-slate-800 align-middle">온토 이노베이션 (Onto Innovation)</td>
+            <td class="py-3.5 px-2 text-center font-bold text-blue-900 align-middle">50%+</td>
+            <td class="py-3.5 px-2 text-center align-middle">
+              <span class="inline-block px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+                상 (시장 1위)
+              </span>
+            </td>
+            <td class="py-3.5 px-5 leading-relaxed text-slate-800 align-middle font-normal">CoWoS 2.5D 인터포저 및 마이크로 범프 결함 서브마이크론 검사 독점</td>
+          </tr>
+
+          <tr class="hover:bg-blue-50/40 transition">
+            <td class="py-3.5 px-3 text-center font-semibold text-slate-900 bg-slate-50/50 align-middle">후공정 (Back-End)</td>
+            <td class="py-3.5 px-3 font-semibold text-blue-950 align-middle">첨단 MEMS 프로브 카드</td>
+            <td class="py-3.5 px-3 text-slate-800 align-middle">폼팩터 (FormFactor)</td>
+            <td class="py-3.5 px-2 text-center font-bold text-blue-900 align-middle">30~32% (글로벌 1위)</td>
+            <td class="py-3.5 px-2 text-center align-middle">
+              <span class="inline-block px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+                상 (핵심 공급사)
+              </span>
+            </td>
+            <td class="py-3.5 px-5 leading-relaxed text-slate-800 align-middle font-normal">수만 개의 극미세 스프링 핀을 배열하여 HBM 웨이퍼 전수 테스트</td>
+          </tr>
+
+          <tr class="hover:bg-blue-50/40 transition">
+            <td class="py-3.5 px-3 text-center font-semibold text-slate-900 bg-slate-50/50 align-middle">후공정 (Back-End)</td>
+            <td class="py-3.5 px-3 font-semibold text-blue-950 align-middle">초고속 와이어 본더</td>
+            <td class="py-3.5 px-3 text-slate-800 align-middle">쿨릭앤소파 (Kulicke &amp; Soffa)</td>
+            <td class="py-3.5 px-2 text-center font-bold text-blue-900 align-middle">60%+</td>
+            <td class="py-3.5 px-2 text-center align-middle">
+              <span class="inline-block px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+                상 (압도적 1위)
+              </span>
+            </td>
+            <td class="py-3.5 px-5 leading-relaxed text-slate-800 align-middle font-normal">자동차 전장, 전력 모듈 및 메모리 와이어 본딩 시장의 절대적 캐시카우</td>
+          </tr>
+
+          <tr class="hover:bg-blue-50/40 transition">
+            <td class="py-3.5 px-3 text-center font-semibold text-slate-900 bg-slate-50/50 align-middle">서브시스템 (Subsystem)</td>
+            <td class="py-3.5 px-3 font-semibold text-blue-950 align-middle">RF 플라즈마 발생 전원</td>
+            <td class="py-3.5 px-3 text-slate-800 align-middle">엠케이에스 인스트루먼츠 (MKS)</td>
+            <td class="py-3.5 px-2 text-center font-bold text-blue-900 align-middle">40~45%</td>
+            <td class="py-3.5 px-2 text-center align-middle">
+              <span class="inline-block px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+                상 (글로벌 1위)
+              </span>
+            </td>
+            <td class="py-3.5 px-5 leading-relaxed text-slate-800 align-middle font-normal">식각·증착 장비 챔버의 핵심 플라즈마 파워 및 압력 게이지 표준 납품</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+    </section>
+
+  </main>
+
+  <!-- 푸터 -->
+  <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4">
+      출처: 각 사 IR 연차보고서, SEMI, SEC 10-K, 증권사 컨센서스 | 원본 구글 스프레드시트 100% 일치
+    </div>
+  </footer>
+
+  <script>
+    function switchTab(tabId) {
+      const tabs = ['tab1', 'tab2', 'tab3'];
+      const btns = ['btn-tab1', 'btn-tab2', 'btn-tab3', 'btn-tabAll'];
+      
+      btns.forEach(b => {
+        const el = document.getElementById(b);
+        if (el) el.classList.remove('active');
+      });
+
+      if (tabId === 'tabAll') {
+        tabs.forEach(t => {
+          const el = document.getElementById(t);
+          if (el) el.classList.remove('hidden');
+        });
+        document.getElementById('btn-tabAll').classList.add('active');
+      } else {
+        tabs.forEach(t => {
+          const el = document.getElementById(t);
+          if (el) {
+            if (t === tabId) el.classList.remove('hidden');
+            else el.classList.add('hidden');
+          }
+        });
+        const activeBtn = document.getElementById('btn-' + tabId);
+        if (activeBtn) activeBtn.classList.add('active');
+      }
+    }
+
+    function filterTable1() {
+      const input = document.getElementById('searchTable1');
+      const filter = input.value.toLowerCase();
+      const tbody = document.querySelector('#table1 tbody');
+      if (!tbody) return;
+      const rows = tbody.querySelectorAll('.company-row');
+      
+      rows.forEach(mainRow => {
+        const moatRow = mainRow.nextElementSibling;
+        const text = (mainRow.textContent + ' ' + (moatRow ? moatRow.textContent : '')).toLowerCase();
+        if (text.indexOf(filter) > -1) {
+          mainRow.style.display = '';
+          if (moatRow && moatRow.classList.contains('moat-row')) moatRow.style.display = '';
+        } else {
+          mainRow.style.display = 'none';
+          if (moatRow && moatRow.classList.contains('moat-row')) moatRow.style.display = 'none';
+        }
+      });
+    }
+
+    function filterTable3() {
+      const input = document.getElementById('searchTable3');
+      const filter = input.value.toLowerCase();
+      const table = document.getElementById('table3');
+      if (!table) return;
+      const tr = table.getElementsByTagName('tr');
+
+      for (let i = 1; i < tr.length; i++) {
+        const text = tr[i].textContent || tr[i].innerText;
+        if (text.toLowerCase().indexOf(filter) > -1) {
+          tr[i].style.display = '';
+        } else {
+          tr[i].style.display = 'none';
+        }
+      }
+    }
+  </script>
+</body>
+</html>
