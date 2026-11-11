@@ -69,16 +69,17 @@ def fetch_latest_tradedata(start_ym=None, end_ym=None):
     if not end_ym:
         end_ym = max_year
     if not start_ym:
-        # 최근 3개월간 조회 (예: 202609 기준 202607 ~ 202609, 총 3개월)
+        # 최소 202607부터 최신월까지 조회 (5개월 이상 시계열 확보)
         y = int(end_ym[:4])
         m = int(end_ym[4:6])
-        m -= 2
+        m -= 4
         if m <= 0:
             m += 12
             y -= 1
-        start_ym = f"{y}{m:02d}"
+        calc_start = f"{y}{m:02d}"
+        start_ym = min(calc_start, "202607")
 
-    print(f">> [2/4] 최신 잠정치 데이터 3개월간 조회 (기간: {start_ym} ~ {end_ym})...", flush=True)
+    print(f">> [2/4] 최신 잠정치 데이터 조회 (기간: {start_ym} ~ {end_ym})...", flush=True)
 
     params = {
         'statsKind': 'ETS_MNK_1050000A', # 품목별
