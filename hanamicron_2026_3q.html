@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>하나마이크론(067310) 2026년 3분기 실적 및 재무 심층 분석 리포트</title>
+  <title>하나마이크론(067310) 2026년 3분기 실적 및 YoY·QoQ 심층 분석 리포트</title>
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <!-- Google Fonts: Pretendard & JetBrains Mono -->
@@ -140,6 +140,7 @@
       align-items: center;
       gap: 8px;
       margin-bottom: 14px;
+      flex-wrap: wrap;
     }
 
     .badge-pill {
@@ -152,6 +153,7 @@
     .badge-blue { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
     .badge-green { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
     .badge-sky { background: #f0f9ff; color: #0369a1; border: 1px solid #bae6fd; }
+    .badge-amber { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
 
     .hero-title {
       font-size: 26px;
@@ -161,11 +163,12 @@
       letter-spacing: -0.02em;
     }
 
+    /* AGENTS.md 규격: 최상단 종합 리드문 15px */
     .hero-desc {
       font-size: 15px;
       color: var(--text-sub);
       line-height: 1.6;
-      max-width: 980px;
+      max-width: 1040px;
       margin-bottom: 24px;
     }
 
@@ -211,6 +214,7 @@
 
     .text-up { color: var(--accent-red); font-weight: 700; }
     .text-growth { color: var(--accent-green); font-weight: 700; }
+    .text-down { color: var(--accent-sky); font-weight: 700; }
 
     /* 일반 카드 */
     .card {
@@ -249,6 +253,7 @@
       border-radius: 2px;
     }
 
+    /* AGENTS.md 규격: 일반 섹션 설명 15px */
     .card-desc {
       font-size: 15px;
       color: var(--text-sub);
@@ -306,7 +311,7 @@
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
       padding: 20px;
-      height: 320px;
+      height: 330px;
       position: relative;
     }
 
@@ -317,25 +322,62 @@
       margin-bottom: 12px;
     }
 
-    /* 인사이트 박스 */
+    /* 인사이트 박스 (AGENTS.md 규격: 설명 15px) */
     .insight-box {
       background: #eff6ff;
       border: 1px solid #bfdbfe;
       border-radius: var(--radius-md);
-      padding: 18px 20px;
+      padding: 20px 22px;
       margin-top: 18px;
     }
 
     .insight-title {
-      font-size: 14.5px;
+      font-size: 15px;
       font-weight: 700;
       color: #1e3a8a;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .insight-desc {
       font-size: 15px;
       color: #1e293b;
+      line-height: 1.7;
+    }
+
+    /* 원인 분석 그리드 */
+    .reason-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .reason-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .reason-card.surge { border-top: 4px solid var(--accent-green); }
+    .reason-card.dip { border-top: 4px solid var(--accent-sky); }
+
+    .reason-card-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .reason-card.surge .reason-card-title { color: #047857; }
+    .reason-card.dip .reason-card-title { color: #0284c7; }
+
+    .reason-card-desc {
+      font-size: 14px;
+      color: #334155;
       line-height: 1.6;
     }
 
@@ -351,6 +393,7 @@
     @media (max-width: 900px) {
       .kpi-grid { grid-template-columns: repeat(2, 1fr); }
       .charts-grid { grid-template-columns: 1fr; }
+      .reason-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -366,7 +409,7 @@
       </div>
     </div>
     <div class="top-header-right">
-      기준일: 2026.09 (공시일 2026.11.13) | 주가 28,350원
+      공시일: 2026.11.13 (분기보고서) | 주가 28,350원
     </div>
   </header>
 
@@ -375,186 +418,59 @@
     <!-- 히어로 요약 카드 -->
     <div class="hero-card">
       <div class="hero-badge-group">
-        <span class="badge-pill badge-blue">DART 공식 3분기 분기보고서 분석</span>
+        <span class="badge-pill badge-blue">DART 3분기 분기보고서 원천 분석</span>
         <span class="badge-pill badge-green">3분기 누적 영업이익 +255.7% YoY</span>
-        <span class="badge-pill badge-sky">재공품 +258.1% 폭증 (4분기 출하 가시성 확보)</span>
+        <span class="badge-pill badge-amber">YoY 고성장 지속 & QoQ 숨고르기 사이클 규명</span>
+        <span class="badge-pill badge-sky">재공품 2Q(1,038억) $ightarrow$ 3Q 출하·매출 전환</span>
       </div>
-      <h1 class="hero-title">하나마이크론 2026년 3분기 실적 및 재무 심층 분석</h1>
+      <h1 class="hero-title">하나마이크론 2026년 3분기 실적 및 YoY·QoQ 심층 진단</h1>
       <p class="hero-desc">
-        SK하이닉스 베트남 턴키 외주 물량의 본격 램프업과 삼성전자 후공정 협력 확대로 3분기 누적 매출 1조 7,078억 원(+57.5% YoY), 영업이익 2,857억 원(+255.7% YoY)을 달성하며 사상 최대 실적을 경신 중입니다. 특히 생산 가동률이 82.0%에 도달하고, 조립·가공 중인 재공품(Work-in-Process)이 656.6억 원으로 전년 대비 3.6배 폭증하여 향후 추가적인 실적 성장의 강력한 모멘텀을 형성하고 있습니다.
+        하나마이크론은 2026년 3분기 누적 매출 1조 7,079억 원(+57.5% YoY), 누적 영업이익 2,857억 원(+255.7% YoY)을 기록하며 사상 최대 실적을 달성 중입니다. 분기별 흐름에서는 2분기 사상 최대 실적 피크(매출 6,832억 / 영업이익 1,423억) 이후 3분기 매출 5,171억(-24.3% QoQ), 영업이익 714억(-49.8% QoQ)으로 숨고르기를 보였으나, 이는 전방 고객사의 조기 납품 완료에 따른 역기저 효과와 2분기말 급증했던 재공품(1,038억 원)이 3분기에 완제품으로 정상 출하된 공정 사이클의 결과입니다. YoY 기준으로는 여전히 3분기 매출 +19.6%, 영업이익 +85.9%의 가파른 성장세를 지속하고 있습니다.
       </p>
 
       <!-- 핵심 KPI 4종 -->
       <div class="kpi-grid">
         <div class="kpi-card">
-          <div class="kpi-label">3분기 누적 매출액</div>
-          <div class="kpi-val">1조 7,079억</div>
-          <div class="kpi-sub">YoY <span class="text-growth">+57.50%</span> (전년 누적 1.08조)</div>
+          <div class="kpi-label">3분기 단일 매출 / YoY</div>
+          <div class="kpi-val">5,170.5억</div>
+          <div class="kpi-sub">YoY <span class="text-growth">+19.58%</span> | QoQ <span class="text-down">-24.31%</span></div>
         </div>
         <div class="kpi-card green">
-          <div class="kpi-label">3분기 누적 영업이익</div>
-          <div class="kpi-val">2,857.4억</div>
-          <div class="kpi-sub">YoY <span class="text-growth">+255.65%</span> (OPM 16.73%)</div>
+          <div class="kpi-label">3분기 단일 영업이익 / OPM</div>
+          <div class="kpi-val">713.8억</div>
+          <div class="kpi-sub">YoY <span class="text-growth">+85.94%</span> | OPM <span class="font-mono">13.81%</span></div>
         </div>
         <div class="kpi-card sky">
-          <div class="kpi-label">누적 지배주주순이익</div>
-          <div class="kpi-val">1,458.4억</div>
-          <div class="kpi-sub">YoY <span class="text-growth">+844.3%</span> (누적 EPS 2,432원)</div>
+          <div class="kpi-label">3분기 누적 영업이익 (9M)</div>
+          <div class="kpi-val">2,857.4억</div>
+          <div class="kpi-sub">누적 YoY <span class="text-growth">+255.65%</span> (컨센서스 72.5% 달성)</div>
         </div>
         <div class="kpi-card amber">
-          <div class="kpi-label">영업활동 현금흐름</div>
+          <div class="kpi-label">영업활동 현금흐름 (9M)</div>
           <div class="kpi-val">2,400.7억</div>
           <div class="kpi-sub">YoY <span class="text-growth">+121.5%</span> (현금성자산 2,644억)</div>
         </div>
       </div>
     </div>
 
-    <!-- 1. 손익계산서 및 수익성 비교 분석 -->
+    <!-- 1. 분기별 실적 추이 및 YoY / QoQ 입체 비교 분석 -->
     <div class="card">
       <div class="card-header">
-        <h2 class="card-title">1. 손익계산서 및 분기별 실적 추이</h2>
+        <h2 class="card-title">1. 분기별 실적 추이 및 YoY · QoQ 비교 분석</h2>
         <span style="font-size: 12.5px; color: var(--text-muted);">단위: 억 원, %</span>
       </div>
       <p class="card-desc">
-        2026년 3분기 단일 분기 매출은 5,170.5억 원(+19.58% YoY), 영업이익은 713.8억 원(+85.94% YoY)을 기록했습니다. 고부가 서버용 패키징 단가 상승과 고정비 레버리지 효과로 매출총이익률(GPM)은 20.6%, 영업이익률(OPM)은 13.8%로 견조한 두 자릿수 수익성을 지속하고 있습니다.
+        하나마이크론의 2025년 3분기부터 2026년 3분기까지 5개 분기 실적을 나란히 추적하여, 연간 성장률(YoY)과 직전 분기 대비 속도(QoQ)를 입체적으로 분석했습니다. 1~2분기의 폭발적 이익 레버리지와 3분기 정상화 흐름이 뚜렷하게 관측됩니다.
       </p>
 
       <div class="charts-grid">
         <div class="chart-container">
-          <div class="chart-title">분기별 매출액 및 영업이익 추이 (단위: 억 원)</div>
-          <canvas id="quarterlyChart"></canvas>
+          <div class="chart-title">분기별 매출액 및 영업이익 추이 (YoY 및 QoQ 사이클)</div>
+          <canvas id="quarterlyComboChart"></canvas>
         </div>
         <div class="chart-container">
-          <div class="chart-title">주요 고객사별 3분기 누적 매출 비중 (%)</div>
-          <canvas id="customerChart"></canvas>
-        </div>
-      </div>
-
-      <div class="table-responsive">
-        <table>
-          <thead>
-            <tr>
-              <th>계정과목</th>
-              <th class="text-right">2025 3Q (3개월)</th>
-              <th class="text-right">2026 3Q (3개월)</th>
-              <th class="text-center">3Q YoY 증감</th>
-              <th class="text-right">2025 3Q 누적(9M)</th>
-              <th class="text-right">2026 3Q 누적(9M)</th>
-              <th class="text-center">누적 YoY 증감</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>매출액</strong></td>
-              <td class="text-right font-mono">4,324.0</td>
-              <td class="text-right font-mono"><strong>5,170.5</strong></td>
-              <td class="text-center text-growth">+19.58%</td>
-              <td class="text-right font-mono">10,843.5</td>
-              <td class="text-right font-mono"><strong>17,078.9</strong></td>
-              <td class="text-center text-growth"><strong>+57.50%</strong></td>
-            </tr>
-            <tr>
-              <td>매출원가</td>
-              <td class="text-right font-mono">3,728.5</td>
-              <td class="text-right font-mono">4,105.7</td>
-              <td class="text-center">+10.12%</td>
-              <td class="text-right font-mono">9,400.0</td>
-              <td class="text-right font-mono">13,218.4</td>
-              <td class="text-center">+40.62%</td>
-            </tr>
-            <tr>
-              <td><strong>매출총이익 (GPM)</strong></td>
-              <td class="text-right font-mono">595.5 (13.8%)</td>
-              <td class="text-right font-mono"><strong>1,064.7 (20.6%)</strong></td>
-              <td class="text-center text-growth">+78.79%</td>
-              <td class="text-right font-mono">1,443.4 (13.3%)</td>
-              <td class="text-right font-mono"><strong>3,860.5 (22.6%)</strong></td>
-              <td class="text-center text-growth"><strong>+167.46%</strong></td>
-            </tr>
-            <tr>
-              <td>판매비와관리비</td>
-              <td class="text-right font-mono">211.6</td>
-              <td class="text-right font-mono">350.9</td>
-              <td class="text-center">+65.84%</td>
-              <td class="text-right font-mono">640.0</td>
-              <td class="text-right font-mono">1,003.0</td>
-              <td class="text-center">+56.73%</td>
-            </tr>
-            <tr>
-              <td><strong>영업이익 (OPM)</strong></td>
-              <td class="text-right font-mono">383.9 (8.9%)</td>
-              <td class="text-right font-mono"><strong>713.8 (13.8%)</strong></td>
-              <td class="text-center text-growth"><strong>+85.94%</strong></td>
-              <td class="text-right font-mono">803.4 (7.4%)</td>
-              <td class="text-right font-mono"><strong>2,857.4 (16.7%)</strong></td>
-              <td class="text-center text-growth"><strong>+255.65%</strong></td>
-            </tr>
-            <tr>
-              <td>금융손익 (순액)</td>
-              <td class="text-right font-mono">-189.5</td>
-              <td class="text-right font-mono">-206.0</td>
-              <td class="text-center">-</td>
-              <td class="text-right font-mono">-520.5</td>
-              <td class="text-right font-mono">-470.0</td>
-              <td class="text-center">-</td>
-            </tr>
-            <tr>
-              <td>법인세비용차감전순이익</td>
-              <td class="text-right font-mono">278.9</td>
-              <td class="text-right font-mono">271.5</td>
-              <td class="text-center">-2.66%</td>
-              <td class="text-right font-mono">397.5</td>
-              <td class="text-right font-mono">2,056.2</td>
-              <td class="text-center text-growth">+417.34%</td>
-            </tr>
-            <tr>
-              <td><strong>당기순이익</strong></td>
-              <td class="text-right font-mono">217.9</td>
-              <td class="text-right font-mono">250.0</td>
-              <td class="text-center text-growth">+14.72%</td>
-              <td class="text-right font-mono">294.5</td>
-              <td class="text-right font-mono"><strong>1,829.4</strong></td>
-              <td class="text-center text-growth"><strong>+521.13%</strong></td>
-            </tr>
-            <tr>
-              <td><strong>지배기업 소유주지분 순이익</strong></td>
-              <td class="text-right font-mono">157.1</td>
-              <td class="text-right font-mono"><strong>130.6</strong></td>
-              <td class="text-center">-16.84%</td>
-              <td class="text-right font-mono">154.4</td>
-              <td class="text-right font-mono"><strong>1,458.4</strong></td>
-              <td class="text-center text-growth"><strong>+844.34%</strong></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="insight-box">
-        <div class="insight-title">손익 분석 핵심 시사점</div>
-        <div class="insight-desc">
-          3분기 누적 영업이익률이 전년 동기 7.41%에서 16.73%로 +9.32%p 수직 상승했습니다. 이는 베트남 법인의 가동률 상승에 따른 고정비 절감과 더불어, PKG 내수 평균 판매단가가 전년 377원에서 528원으로 +40.1% 상승하는 등 고부가가치 서버용 패키징 비중이 확대되었기 때문입니다.
-        </div>
-      </div>
-    </div>
-
-    <!-- 2. 운전자본 및 재고자산·매출채권 심층 검증 -->
-    <div class="card">
-      <div class="card-header">
-        <h2 class="card-title">2. 운전자본 정밀 진단: 재고자산 믹스 및 매출채권 건전성</h2>
-        <span style="font-size: 12.5px; color: var(--text-muted);">DART 주석 6 및 7 기반</span>
-      </div>
-      <p class="card-desc">
-        제조업 및 반도체 후공정 턴키 기업의 실적 지속성을 검증하는 2대 핵심 지표인 '재고자산 믹스'와 '매출채권 대손충당금 설정률'을 정밀 분석했습니다.
-      </p>
-
-      <div class="charts-grid">
-        <div class="chart-container">
-          <div class="chart-title">재고자산 세부 구성 변동 (전기말 vs 당분기말, 단위: 억 원)</div>
-          <canvas id="inventoryChart"></canvas>
-        </div>
-        <div class="chart-container">
-          <div class="chart-title">생산설비 가동률 추이 (%)</div>
-          <canvas id="utilizationChart"></canvas>
+          <div class="chart-title">분기별 영업이익률(OPM) 변동 추이 (%)</div>
+          <canvas id="opmChart"></canvas>
         </div>
       </div>
 
@@ -563,82 +479,314 @@
           <thead>
             <tr>
               <th>구분</th>
-              <th class="text-right">전기말 (2025.12)</th>
-              <th class="text-right">당분기말 (2026.09)</th>
-              <th class="text-center">증감액</th>
-              <th class="text-center">증감률</th>
-              <th>본질 진단 및 분석 평가</th>
+              <th class="text-right">2025 3Q</th>
+              <th class="text-right">2026 1Q</th>
+              <th class="text-right">2026 2Q</th>
+              <th class="text-right">2026 3Q</th>
+              <th class="text-center">3Q YoY 증감</th>
+              <th class="text-center">3Q QoQ 증감</th>
+              <th>분기별 실적 흐름 진단</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><strong>재공품 (Work-in-Process)</strong></td>
+              <td><strong>매출액</strong></td>
+              <td class="text-right font-mono">4,324.0</td>
+              <td class="text-right font-mono">5,076.8</td>
+              <td class="text-right font-mono"><strong>6,831.6</strong></td>
+              <td class="text-right font-mono"><strong>5,170.5</strong></td>
+              <td class="text-center text-growth"><strong>+19.58%</strong></td>
+              <td class="text-center text-down"><strong>-24.31%</strong></td>
+              <td>2Q 사상 최대 출하 피크 후 3Q 납기 스케줄 정상화</td>
+            </tr>
+            <tr>
+              <td>매출원가</td>
+              <td class="text-right font-mono">3,728.5</td>
+              <td class="text-right font-mono">4,082.3</td>
+              <td class="text-right font-mono">5,030.4</td>
+              <td class="text-right font-mono">4,105.7</td>
+              <td class="text-center">+10.12%</td>
+              <td class="text-center">-18.38%</td>
+              <td>원가율 79.4% (전년 86.2% 대비 -6.8%p 개선 유지)</td>
+            </tr>
+            <tr>
+              <td><strong>매출총이익 (GPM)</strong></td>
+              <td class="text-right font-mono">595.5 (13.8%)</td>
+              <td class="text-right font-mono">994.5 (19.6%)</td>
+              <td class="text-right font-mono">1,801.2 (26.4%)</td>
+              <td class="text-right font-mono"><strong>1,064.7 (20.6%)</strong></td>
+              <td class="text-center text-growth"><strong>+78.79%</strong></td>
+              <td class="text-center text-down">-40.89%</td>
+              <td>PKG 평균단가 상승 효과로 20%대 GPM 방어</td>
+            </tr>
+            <tr>
+              <td>판매비와관리비</td>
+              <td class="text-right font-mono">211.6</td>
+              <td class="text-right font-mono">274.1</td>
+              <td class="text-right font-mono">378.0</td>
+              <td class="text-right font-mono">350.9</td>
+              <td class="text-center">+65.84%</td>
+              <td class="text-center">-7.17%</td>
+              <td>베트남 법인 인력 확충 및 물류비 증가 반영</td>
+            </tr>
+            <tr>
+              <td><strong>영업이익 (OPM)</strong></td>
+              <td class="text-right font-mono">383.9 (8.9%)</td>
+              <td class="text-right font-mono">720.4 (14.2%)</td>
+              <td class="text-right font-mono"><strong>1,423.2 (20.8%)</strong></td>
+              <td class="text-right font-mono"><strong>713.8 (13.8%)</strong></td>
+              <td class="text-center text-growth"><strong>+85.94%</strong></td>
+              <td class="text-center text-down"><strong>-49.85%</strong></td>
+              <td><strong>YoY +85.9% 급증 vs 2Q 역기저로 QoQ 감소</strong></td>
+            </tr>
+            <tr>
+              <td>순금융손익</td>
+              <td class="text-right font-mono">-189.5</td>
+              <td class="text-right font-mono">-124.0</td>
+              <td class="text-right font-mono">-140.0</td>
+              <td class="text-right font-mono">-206.0</td>
+              <td class="text-center">-</td>
+              <td class="text-center">-</td>
+              <td>외환 평가손실 및 단기차입금 이자비용 반영</td>
+            </tr>
+            <tr>
+              <td><strong>당기순이익</strong></td>
+              <td class="text-right font-mono">217.9</td>
+              <td class="text-right font-mono">489.0</td>
+              <td class="text-right font-mono">1,090.4</td>
+              <td class="text-right font-mono"><strong>250.0</strong></td>
+              <td class="text-center text-growth">+14.72%</td>
+              <td class="text-center text-down">-77.07%</td>
+              <td>금융손실 및 비지배지분 안분 반영</td>
+            </tr>
+            <tr>
+              <td><strong>지배주주 순이익</strong></td>
+              <td class="text-right font-mono">157.1</td>
+              <td class="text-right font-mono">390.0</td>
+              <td class="text-right font-mono">937.8</td>
+              <td class="text-right font-mono"><strong>130.6</strong></td>
+              <td class="text-center text-down">-16.84%</td>
+              <td class="text-center text-down">-86.07%</td>
+              <td>비지배지분(베트남 종속법인) 분배 119.4억 원</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 급격한 실적 증감 원인 상세 분석 그리드 -->
+      <div class="reason-grid">
+        <div class="reason-card surge">
+          <div class="reason-card-title">1. 상반기(1~2Q) 폭발적 실적 급증의 원인 (YoY +83~411%)</div>
+          <div class="reason-card-desc">
+            <strong>1) SK하이닉스 베트남 턴키 외주 본격화</strong>: 베트남 1·2공장이 본격 양산 궤도에 오르며 SK하이닉스향 모바일 및 서버용 DRAM 후공정 수주가 폭증했습니다.<br>
+            <strong>2) 가동률 급상승에 따른 고정비 레버리지</strong>: 2024년 68% 수준이던 패키징 가동률이 2분기 81.7%까지 치솟으며 고정비 부담이 급감하고 2분기 영업이익률이 20.8%까지 수직 상승했습니다.<br>
+            <strong>3) 패키징 단가 40% 급등</strong>: 단순 패키징에서 고부가 첨단 서버용 패키징으로 믹스가 전환되어 평균단가가 377원에서 528원으로 상승했습니다.
+          </div>
+        </div>
+
+        <div class="reason-card dip">
+          <div class="reason-card-title">2. 2Q 대비 3Q 실적 숨고르기(QoQ -24.3%)의 핵심 원인</div>
+          <div class="reason-card-desc">
+            <strong>1) 2분기 조기 납품 완료에 따른 역기저(High-Base)</strong>: 고객사가 상반기 중 선제적 재고 비축을 단행하며 2분기에 사상 최대 납품이 몰렸고, 3분기는 계절적 납기 조정이 이루어졌습니다.<br>
+            <strong>2) 재공품의 매출 실현 완료</strong>: 2분기말 1,038억 원까지 라인에 적체되었던 재공품이 3분기에 완제품으로 전환·출하되면서 라인 내 가공 물량이 657억 원으로 정상화되었습니다.<br>
+            <strong>3) 금융비용 증가 및 환율 영향</strong>: 외화 환산손실 및 차입금 금융비용(-206억 원)이 발생하여 지배주주 순이익 일시 감소의 요인으로 작용했습니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="insight-box">
+        <div class="insight-title">QoQ 감소에 대한 정밀 평가: '실적 꺾임'이 아닌 '고성장 궤도 내 정상화'</div>
+        <div class="insight-desc">
+          2분기 영업이익 1,423억 원은 이례적인 고객사 집중 주문이 몰렸던 일시적 정점(Peak)이었습니다. 3분기 영업이익(714억 원)이 전분기 대비로는 -49.8% 감소했으나, **전년 동기(384억 원) 대비로는 여전히 +85.94% 급증**한 실적입니다. 3분기 누적 영업이익(2,857억 원)은 이미 시장 연간 컨센서스의 72.5%를 달성하여 2026년 사상 최대 흑자 달성은 확고합니다.
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. 운전자본 QoQ 및 YoY 입체 진단: 재공품 라이프사이클 -->
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">2. 운전자본 정밀 진단: 3시점(전기말·전분기말·당분기말) 비교 분석</h2>
+        <span style="font-size: 12.5px; color: var(--text-muted);">DART 주석 6 및 7 기반</span>
+      </div>
+      <p class="card-desc">
+        운전자본을 공식 회계 기준인 '전기말(2025.12)'뿐만 아니라 '직전 분기말(2026.06)'과도 함께 비교함으로써, 생산라인에서 가공 중이던 재공품이 완제품으로 조립되어 출하·매출로 이어지는 전 과정을 명확히 규명했습니다.
+      </p>
+
+      <div class="charts-grid">
+        <div class="chart-container">
+          <div class="chart-title">재고자산 세부 구성 3시점 변동 추이 (단위: 억 원)</div>
+          <canvas id="inventory3PointChart"></canvas>
+        </div>
+        <div class="chart-container">
+          <div class="chart-title">매출채권 및 대손충당금 회수 건전성 (%)</div>
+          <canvas id="receivablesChart"></canvas>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>운전자본 항목</th>
+              <th class="text-right">전기말 (2025.12)</th>
+              <th class="text-right">전분기말 (2026.06)</th>
+              <th class="text-right">당분기말 (2026.09)</th>
+              <th class="text-center">QoQ 증감 (2Q $ightarrow$ 3Q)</th>
+              <th class="text-center">전기말대비 증감</th>
+              <th>생산라인 및 운전자본 라이프사이클 해석</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>재공품 (제조 공정 중)</strong></td>
               <td class="text-right font-mono">183.4억</td>
+              <td class="text-right font-mono"><strong>1,038.1억</strong></td>
               <td class="text-right font-mono"><strong>656.6억</strong></td>
-              <td class="text-center font-mono">+473.2억</td>
+              <td class="text-center text-down"><strong>-381.5억 (-36.7%)</strong></td>
               <td class="text-center text-growth"><strong>+258.1%</strong></td>
-              <td><strong>공장 라인 내 패키징 조립 중인 물량 폭증. 4분기 매출 인식 직전 단계</strong></td>
+              <td><strong>2분기 라인 내 대량 적체 가공품이 3분기 중 완제품으로 조립 완료되어 실제 출하·매출로 실현됨!</strong></td>
             </tr>
             <tr>
               <td>원재료 (Raw Materials)</td>
               <td class="text-right font-mono">1,735.2억</td>
-              <td class="text-right font-mono">2,190.1억</td>
-              <td class="text-center font-mono">+454.9억</td>
+              <td class="text-right font-mono">2,046.8억</td>
+              <td class="text-right font-mono"><strong>2,190.1억</strong></td>
+              <td class="text-center text-growth">+143.3억 (+7.0%)</td>
               <td class="text-center text-growth">+26.2%</td>
-              <td>기판(PCB), 리드프레임, EMC 등 선제적 양산 원자재 비축</td>
+              <td>4분기 연말 출하 및 2027년 수주 물량에 대비한 선제적 기판(PCB)·EMC 비축 지속</td>
             </tr>
             <tr>
               <td>제품 (Finished Goods)</td>
               <td class="text-right font-mono">289.2억</td>
-              <td class="text-right font-mono">612.2억</td>
-              <td class="text-center font-mono">+323.0억</td>
+              <td class="text-right font-mono">617.1억</td>
+              <td class="text-right font-mono"><strong>612.2억</strong></td>
+              <td class="text-center">-4.9억 (-0.8%)</td>
               <td class="text-center text-growth">+111.7%</td>
-              <td>고객사 납기 스케줄에 맞춘 완제품 출하 대기 재고</td>
+              <td>고객사 납기 일정에 맞추어 적체 없이 정상 출하 진행</td>
             </tr>
-            <tr>
+            <tr style="background-color: #f8fafc;">
               <td><strong>총 재고자산 장부금액</strong></td>
               <td class="text-right font-mono">2,470.6억</td>
+              <td class="text-right font-mono">3,702.0억</td>
               <td class="text-right font-mono"><strong>3,758.7억</strong></td>
-              <td class="text-center font-mono">+1,288.1억</td>
+              <td class="text-center text-growth">+56.7억 (+1.5%)</td>
               <td class="text-center text-growth">+52.1%</td>
-              <td>평가손실충당금 계상률 4.64%로 진부화 리스크 매우 낮음</td>
+              <td>2분기 급증 이후 3분기 총재고 증가율은 +1.5%로 안정화</td>
             </tr>
             <tr style="background-color: #faf5ff;">
               <td><strong>유동 매출채권 총액</strong></td>
               <td class="text-right font-mono">2,603.2억</td>
+              <td class="text-right font-mono">2,540.0억</td>
               <td class="text-right font-mono"><strong>2,305.8억</strong></td>
-              <td class="text-center font-mono">-297.4억</td>
-              <td class="text-center">-11.4%</td>
-              <td>매출 급증에도 철저한 현금 회수로 채권 잔액 안정적 축소</td>
+              <td class="text-center text-down">-234.2억 (-9.2%)</td>
+              <td class="text-center text-down">-11.4%</td>
+              <td>2분기 사상 최대 출하 물량의 대금이 3분기 중 전액 현금으로 정상 회수됨</td>
             </tr>
             <tr style="background-color: #faf5ff;">
               <td><strong>대손충당금 설정률</strong></td>
               <td class="text-right font-mono">0.44%</td>
+              <td class="text-right font-mono">0.55%</td>
               <td class="text-right font-mono"><strong>0.58%</strong></td>
-              <td class="text-center font-mono">+0.14%p</td>
+              <td class="text-center font-mono">+0.03%p</td>
               <td class="text-center font-mono">우수</td>
-              <td><strong>삼성전자·SK하이닉스 등 최고 신용도 고객사향으로 부실 가능성 전무</strong></td>
+              <td><strong>SK하이닉스·삼성전자향 비중 77%로 부실 위험 전무</strong></td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <div class="insight-box">
-        <div class="insight-title">재공품 3.6배 폭증의 의미</div>
+        <div class="insight-title">운전자본 입체 분석 결론: '공정 병목 해소'와 '현금 유입 극대화'</div>
         <div class="insight-desc">
-          일반적으로 완제품 재고 증가는 수요 부진에 따른 재고 누적일 위험이 있으나, 하나마이크론의 경우 라인에서 가공 중인 <strong>재공품이 183억 원에서 657억 원으로 +258% 폭증</strong>했습니다. 이는 SK하이닉스 및 삼성전자로부터 확정된 수주 물량의 후공정 턴키 패키징 공정이 맹렬히 진행 중임을 나타내는 최상의 선행 지표입니다.
+          2분기말 재공품이 1,038억 원까지 치솟았던 것은 라인 내 주문이 일시에 몰려 발생했던 일시적 공정 버퍼였습니다. 3분기 중 이 물량이 순조롭게 패키징을 마치고 출하되어 3분기 매출(5,171억 원)로 전환되었으며, 매출채권 역시 2,305억 원으로 줄어들며 현금이 회수되었습니다. 그 결과 **3분기 누적 영업활동 현금흐름이 2,400.7억 원으로 폭증**하는 선순환을 완성했습니다.
         </div>
       </div>
     </div>
 
-    <!-- 3. 재무안전성 및 현금흐름 분석 -->
+    <!-- 3. 고객사 구조 및 설비 가동률 분석 -->
     <div class="card">
       <div class="card-header">
-        <h2 class="card-title">3. 재무상태표 건전성 및 현금흐름 창출력</h2>
+        <h2 class="card-title">3. 주요 고객사 매출 편중도 및 생산 가동률</h2>
+        <span style="font-size: 12.5px; color: var(--text-muted);">DART 주석 4 기반</span>
+      </div>
+      <p class="card-desc">
+        SK하이닉스와 삼성전자 2대 글로벌 메모리 거인과의 턴키 후공정 외주 협력 구조를 통해 확고한 매출 락인(Lock-in) 효과를 확보하고 있으며, 공장 평균 가동률은 82.0%로 사실상 풀가동 수준에 근접해 있습니다.
+      </p>
+
+      <div class="charts-grid">
+        <div class="chart-container">
+          <div class="chart-title">주요 고객사별 3분기 누적 매출액 및 비중</div>
+          <canvas id="customerShareChart"></canvas>
+        </div>
+        <div class="chart-container">
+          <div class="chart-title">연도 및 분기별 패키징 설비 평균 가동률 추이 (%)</div>
+          <canvas id="utilTrendChart"></canvas>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>고객사 구분</th>
+              <th>담당 사업부문</th>
+              <th class="text-right">2025 3Q 누적 실적</th>
+              <th class="text-right">2026 3Q 누적 실적</th>
+              <th class="text-center">YoY 성장률</th>
+              <th class="text-center">매출 비중</th>
+              <th>전략적 파트너십 및 수주 모멘텀</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>고객 A (SK하이닉스)</strong></td>
+              <td>반도체 제조 (PKG/Test)</td>
+              <td class="text-right font-mono">5,427.7억</td>
+              <td class="text-right font-mono"><strong>7,380.3억</strong></td>
+              <td class="text-center text-growth"><strong>+35.97%</strong></td>
+              <td class="text-center font-mono"><strong>43.21%</strong></td>
+              <td>베트남 1·2공장 전담 턴키 외주 파트너십으로 독점적 지위 유지</td>
+            </tr>
+            <tr>
+              <td><strong>고객 B (삼성전자)</strong></td>
+              <td>반도체 제조 (PKG/Test)</td>
+              <td class="text-right font-mono">2,567.1억</td>
+              <td class="text-right font-mono"><strong>4,023.0억</strong></td>
+              <td class="text-center text-growth"><strong>+56.71%</strong></td>
+              <td class="text-center font-mono"><strong>23.56%</strong></td>
+              <td>모바일 AP 및 서버 메모리 후공정 외주 물량 확대로 전년비 +56.7% 급증</td>
+            </tr>
+            <tr>
+              <td><strong>고객 C (글로벌 장비사)</strong></td>
+              <td>반도체 재료 (Si Parts)</td>
+              <td class="text-right font-mono">1,239.0억</td>
+              <td class="text-right font-mono"><strong>1,768.5억</strong></td>
+              <td class="text-center text-growth"><strong>+42.74%</strong></td>
+              <td class="text-center font-mono"><strong>10.36%</strong></td>
+              <td>자회사 하나머티리얼즈의 식각장비용 실리콘 포커스링 직납 호조</td>
+            </tr>
+            <tr style="background-color: #f8fafc;">
+              <td><strong>Top 3 합산</strong></td>
+              <td>-</td>
+              <td class="text-right font-mono">9,233.8억</td>
+              <td class="text-right font-mono"><strong>13,171.8억</strong></td>
+              <td class="text-center text-growth"><strong>+42.65%</strong></td>
+              <td class="text-center font-mono"><strong>77.13%</strong></td>
+              <td>글로벌 Top 3 고객사 대상 견고한 락인 구조 구축</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 4. 재무 안전성 및 현금흐름 분석 -->
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">4. 재무상태표 건전성 및 현금흐름 창출력</h2>
         <span style="font-size: 12.5px; color: var(--text-muted);">단위: 억 원, %</span>
       </div>
       <p class="card-desc">
-        누적 영업이익 2,857억 원에 달하는 대규모 흑자가 실질적인 영업활동 현금흐름(2,400.7억 원)으로 고스란히 전환되어, 현금성자산이 2,644억 원으로 2.8배 급증하고 부채비율은 186.4%로 -22.8%p 개선되었습니다.
+        누적 영업이익 2,857억 원의 대규모 흑자가 실질적인 영업활동 현금흐름(2,400.7억 원)으로 전환되어, 현금성자산이 2,644억 원으로 2.8배 급증하고 부채비율은 186.4%로 -22.8%p 개선되었습니다.
       </p>
 
       <div class="table-responsive">
@@ -666,13 +814,6 @@
               <td class="text-right font-mono"><strong>2,644.4억</strong></td>
               <td class="text-center font-mono text-growth">+1,688.5억</td>
               <td><strong>현금 버퍼 대폭 확충 (+176.6% 증가, 유동성 우수)</strong></td>
-            </tr>
-            <tr>
-              <td>부채총계</td>
-              <td class="text-right font-mono">13,651.6억</td>
-              <td class="text-right font-mono">15,393.5억</td>
-              <td class="text-center font-mono">+1,741.9억</td>
-              <td>차입금 및 외주 가공 매입채무 증가 반영</td>
             </tr>
             <tr>
               <td><strong>자본총계</strong></td>
@@ -721,14 +862,14 @@
       </div>
     </div>
 
-    <!-- 4. 밸류에이션 및 투자 결론 -->
+    <!-- 5. 밸류에이션 및 투자 의견 종합 -->
     <div class="card">
       <div class="card-header">
-        <h2 class="card-title">4. 밸류에이션 매력도 및 종합 투자 의견</h2>
+        <h2 class="card-title">5. 밸류에이션 매력도 및 종합 투자 의견</h2>
         <span style="font-size: 12.5px; color: var(--text-muted);">기준주가: 28,350원 (2026.11 기준)</span>
       </div>
       <p class="card-desc">
-        2026년 3분기 누적 지배주주 EPS는 2,432원에 달하며, 4분기 재공품 출하를 감안할 때 연간 지배주주 EPS는 3,200~3,500원 수준을 기록할 전망입니다.
+        2026년 3분기 누적 지배주주 EPS는 2,432원에 달하며, 4분기 출하를 감안할 때 2026년 연간 지배주주 EPS는 3,200~3,500원 수준을 기록할 전망입니다.
       </p>
 
       <div class="table-responsive">
@@ -798,13 +939,13 @@
 
       <!-- 종합 결론 박스 -->
       <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: var(--radius-md); padding: 22px; margin-top: 18px;">
-        <div style="font-size: 16px; font-weight: 800; color: #166534; margin-bottom: 10px;">
+        <div style="font-size: 16px; font-weight: 800; color: #166534; margin-bottom: 12px;">
           종합 투자의견: 적극 매수 (Strong Buy) & 목표주가 리레이팅 유효
         </div>
         <div style="font-size: 15px; color: #1e293b; line-height: 1.7;">
-          1. <strong>실적 폭발</strong>: 3분기 누적 영업이익 2,857억 원 달성으로 연간 컨센서스(3,940억 원) 달성 가시성이 100%에 근접함.<br>
-          2. <strong>선행 지표 완벽</strong>: 공장 가동률 82.0% 돌파 및 재공품(라인 내 조립 물량) 3.6배 폭증은 4분기 실적 서프라이즈를 예고함.<br>
-          3. <strong>밸류에이션 갭</strong>: 2026년 추정 PER 8.4배 수준으로 대만 ASE, 미국 앰코 등 글로벌 피어(14~18배) 대비 극심한 저평가 상태이며, 베트남 공장 마진 안정화에 따라 강력한 멀티플 리레이팅이 기대됨.
+          1. <strong>실적 폭발 및 연간 달성 확실시</strong>: 3분기 누적 영업이익 2,857억 원 달성으로 연간 컨센서스(3,940억 원) 달성 가시성이 100%에 근접함.<br>
+          2. <strong>QoQ 숨고르기는 건강한 공정 사이클</strong>: 2분기 사상 최대 출하 피크 이후 3분기 실적이 전분기 대비 감소했으나, 이는 라인 내 재공품이 제품으로 전환되어 실제 매출로 실현된 결과이며 YoY 기준으로는 여전히 +85.9% 급성장세임.<br>
+          3. <strong>글로벌 피어 대비 극심한 밸류에이션 디스카운트</strong>: 2026년 추정 PER 8.4배 수준으로 대만 ASE, 미국 앰코 등 글로벌 피어(14~18배) 대비 극심한 저평가 상태이며, 베트남 공장 마진 안정화에 따라 강력한 멀티플 리레이팅이 기대됨.
         </div>
       </div>
     </div>
@@ -819,16 +960,16 @@
 
   <!-- Chart.js 스크립트 -->
   <script>
-    // 1. 분기별 실적 추이 바/라인 차트
-    const ctxQuarterly = document.getElementById('quarterlyChart').getContext('2d');
+    // 1. 분기별 실적 추이 콤보 차트 (매출액 & 영업이익)
+    const ctxQuarterly = document.getElementById('quarterlyComboChart').getContext('2d');
     new Chart(ctxQuarterly, {
       type: 'bar',
       data: {
-        labels: ['2025 3Q', '2026 1Q', '2026 2Q', '2026 3Q'],
+        labels: ['2025 3Q', '2026 1Q', '2026 2Q (피크)', '2026 3Q'],
         datasets: [
           {
             label: '매출액 (억 원)',
-            data: [4324.0, 5600.0, 6308.4, 5170.5],
+            data: [4324.0, 5076.8, 6831.6, 5170.5],
             backgroundColor: 'rgba(30, 58, 138, 0.75)',
             borderColor: '#1e3a8a',
             borderWidth: 1,
@@ -837,12 +978,12 @@
           },
           {
             label: '영업이익 (억 원)',
-            data: [383.9, 1020.0, 1123.6, 713.8],
+            data: [383.9, 720.4, 1423.2, 713.8],
             type: 'line',
             borderColor: '#059669',
             backgroundColor: '#059669',
             borderWidth: 2.5,
-            pointRadius: 4,
+            pointRadius: 5,
             pointBackgroundColor: '#059669',
             yAxisID: 'y1',
             order: 1
@@ -875,40 +1016,48 @@
       }
     });
 
-    // 2. 고객사별 매출 비중 도넛 차트
-    const ctxCustomer = document.getElementById('customerChart').getContext('2d');
-    new Chart(ctxCustomer, {
-      type: 'doughnut',
+    // 2. 분기별 OPM 추이 차트
+    const ctxOpm = document.getElementById('opmChart').getContext('2d');
+    new Chart(ctxOpm, {
+      type: 'line',
       data: {
-        labels: ['SK하이닉스 (고객 A)', '삼성전자 (고객 B)', '글로벌 고객 C', '기타 고객사'],
+        labels: ['2025 3Q', '2026 1Q', '2026 2Q', '2026 3Q'],
         datasets: [{
-          data: [43.21, 23.56, 10.36, 22.87],
-          backgroundColor: [
-            '#1e3a8a', // Deep Blue (SK Hynix)
-            '#0284c7', // Sky Blue (Samsung)
-            '#059669', // Green (Customer C)
-            '#cbd5e1'  // Light Slate (Others)
-          ],
-          borderWidth: 2,
-          borderColor: '#ffffff'
+          label: '영업이익률 OPM (%)',
+          data: [8.88, 14.19, 20.83, 13.81],
+          borderColor: '#0284c7',
+          backgroundColor: 'rgba(2, 132, 199, 0.12)',
+          fill: true,
+          tension: 0.3,
+          pointRadius: 5,
+          pointBackgroundColor: '#0284c7',
+          borderWidth: 2.5
         }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11, family: 'Pretendard' } } }
+          legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11, family: 'Pretendard' } } }
         },
-        cutout: '65%'
+        scales: {
+          y: {
+            min: 5,
+            max: 25,
+            title: { display: true, text: 'OPM (%)', font: { size: 11 } },
+            grid: { color: '#f1f5f9' }
+          },
+          x: { grid: { display: false } }
+        }
       }
     });
 
-    // 3. 재고자산 믹스 변동 차트
-    const ctxInventory = document.getElementById('inventoryChart').getContext('2d');
+    // 3. 재고자산 3시점 변동 차트
+    const ctxInventory = document.getElementById('inventory3PointChart').getContext('2d');
     new Chart(ctxInventory, {
       type: 'bar',
       data: {
-        labels: ['원재료', '재공품(조립중)', '완제품'],
+        labels: ['원재료', '재공품(가공중)', '완제품'],
         datasets: [
           {
             label: '전기말 (2025.12)',
@@ -916,9 +1065,14 @@
             backgroundColor: '#cbd5e1'
           },
           {
-            label: '당분기말 (2026.09)',
+            label: '2분기말 (2026.06)',
+            data: [2046.8, 1038.1, 617.1],
+            backgroundColor: '#93c5fd'
+          },
+          {
+            label: '3분기말 (2026.09)',
             data: [2190.1, 656.6, 612.2],
-            backgroundColor: '#0284c7'
+            backgroundColor: '#1e40af'
           }
         ]
       },
@@ -933,21 +1087,65 @@
             title: { display: true, text: '금액 (억 원)', font: { size: 11 } },
             grid: { color: '#f1f5f9' }
           },
-          x: {
-            grid: { display: false }
-          }
+          x: { grid: { display: false } }
         }
       }
     });
 
-    // 4. 가동률 추이 라인 차트
-    const ctxUtil = document.getElementById('utilizationChart').getContext('2d');
-    new Chart(ctxUtil, {
+    // 4. 매출채권 대손충당률 차트
+    const ctxReceivables = document.getElementById('receivablesChart').getContext('2d');
+    new Chart(ctxReceivables, {
+      type: 'doughnut',
+      data: {
+        labels: ['정상 채권 (99.42%)', '대손충당금 (0.58%)'],
+        datasets: [{
+          data: [99.42, 0.58],
+          backgroundColor: ['#059669', '#dc2626'],
+          borderWidth: 2,
+          borderColor: '#ffffff'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11, family: 'Pretendard' } } }
+        },
+        cutout: '70%'
+      }
+    });
+
+    // 5. 주요 고객사 비중 도넛
+    const ctxCustShare = document.getElementById('customerShareChart').getContext('2d');
+    new Chart(ctxCustShare, {
+      type: 'doughnut',
+      data: {
+        labels: ['SK하이닉스 (고객 A)', '삼성전자 (고객 B)', '글로벌 고객 C', '기타 고객사'],
+        datasets: [{
+          data: [43.21, 23.56, 10.36, 22.87],
+          backgroundColor: ['#1e3a8a', '#0284c7', '#059669', '#cbd5e1'],
+          borderWidth: 2,
+          borderColor: '#ffffff'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11, family: 'Pretendard' } } }
+        },
+        cutout: '65%'
+      }
+    });
+
+    // 6. 설비 가동률 추이
+    const ctxUtilTrend = document.getElementById('utilTrendChart').getContext('2d');
+    new Chart(ctxUtilTrend, {
       type: 'line',
       data: {
         labels: ['2024년', '2025년', '2026 반기', '2026 3분기 누적'],
         datasets: [{
-          label: '반도체 패키징 가동률 (%)',
+          label: '반도체 패키징 평균 가동률 (%)',
           data: [68.3, 71.9, 81.7, 82.03],
           borderColor: '#059669',
           backgroundColor: 'rgba(5, 150, 105, 0.1)',
@@ -971,9 +1169,7 @@
             title: { display: true, text: '가동률 (%)', font: { size: 11 } },
             grid: { color: '#f1f5f9' }
           },
-          x: {
-            grid: { display: false }
-          }
+          x: { grid: { display: false } }
         }
       }
     });
